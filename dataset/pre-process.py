@@ -28,7 +28,7 @@ df['movie_id'] = le_movie.fit_transform(df['movie_id'])
 le_user = preprocessing.LabelEncoder()
 df['user_id'] = le_user.fit_transform(df['user_id'])
 
-df = df[df['user_id'] < 10000]
+df = df[df['user_id'] < 2000]
 
 le_movie = preprocessing.LabelEncoder()
 df['movie_id'] = le_movie.fit_transform(df['movie_id'])
