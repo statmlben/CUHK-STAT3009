@@ -12,7 +12,9 @@ This is a repository on code and notebook illustration for CUHK-STAT3009. [ [Hom
 - [Notebook6](notebook6.ipynb): Real Application in MovieLens dataset
 - [Notebook7](notebook7.ipynb): Neural Collaborative Filtering: Nonlinear Interaction
 - [Notebook8](notebook8.ipynb): Side Information: Continuous and Discrete features
-- [Notebook10(a)](notebook10(a).ipynb): Binary recommender systems
+- [Notebook10a](notebook10a.ipynb): Binary recommender systems
+- [Notebook10b](notebook10b.ipynb): Top-K recommendation via AdaRank
+
 
 ## Contributors
 <a href = "https://github.com/statmlben/CUHK-STAT3009/graphs/contributors">
