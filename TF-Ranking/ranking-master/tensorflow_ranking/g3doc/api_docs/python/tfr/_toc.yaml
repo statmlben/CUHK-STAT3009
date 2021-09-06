@@ -1,0 +1,433 @@
+toc:
+- title: tfr
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr
+- title: tfr.data
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/data
+  - title: build_ranking_dataset
+    path: /ranking/api_docs/python/tfr/data/build_ranking_dataset
+  - title: build_ranking_dataset_with_parsing_fn
+    path: /ranking/api_docs/python/tfr/data/build_ranking_dataset_with_parsing_fn
+  - title: build_ranking_serving_input_receiver_fn
+    path: /ranking/api_docs/python/tfr/data/build_ranking_serving_input_receiver_fn
+  - title: build_ranking_serving_input_receiver_fn_with_parsing_fn
+    path: /ranking/api_docs/python/tfr/data/build_ranking_serving_input_receiver_fn_with_parsing_fn
+  - title: build_sequence_example_serving_input_receiver_fn
+    path: /ranking/api_docs/python/tfr/data/build_sequence_example_serving_input_receiver_fn
+  - title: build_tf_example_serving_input_receiver_fn
+    path: /ranking/api_docs/python/tfr/data/build_tf_example_serving_input_receiver_fn
+  - title: make_parsing_fn
+    path: /ranking/api_docs/python/tfr/data/make_parsing_fn
+  - title: parse_from_example_in_example
+    path: /ranking/api_docs/python/tfr/data/parse_from_example_in_example
+  - title: parse_from_example_list
+    path: /ranking/api_docs/python/tfr/data/parse_from_example_list
+  - title: parse_from_sequence_example
+    path: /ranking/api_docs/python/tfr/data/parse_from_sequence_example
+  - title: parse_from_tf_example
+    path: /ranking/api_docs/python/tfr/data/parse_from_tf_example
+  - title: read_batched_sequence_example_dataset
+    path: /ranking/api_docs/python/tfr/data/read_batched_sequence_example_dataset
+- title: tfr.estimator
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/estimator
+  - title: EstimatorBuilder
+    path: /ranking/api_docs/python/tfr/estimator/EstimatorBuilder
+  - title: GAMEstimatorBuilder
+    path: /ranking/api_docs/python/tfr/estimator/GAMEstimatorBuilder
+  - title: make_dnn_ranking_estimator
+    path: /ranking/api_docs/python/tfr/estimator/make_dnn_ranking_estimator
+  - title: make_gam_ranking_estimator
+    path: /ranking/api_docs/python/tfr/estimator/make_gam_ranking_estimator
+- title: tfr.ext
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/ext
+  - title: pipeline
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/ext/pipeline
+    - title: RankingPipeline
+      path: /ranking/api_docs/python/tfr/ext/pipeline/RankingPipeline
+  - title: tfrbert
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/ext/tfrbert
+    - title: TFRBertRankingNetwork
+      path: /ranking/api_docs/python/tfr/ext/tfrbert/TFRBertRankingNetwork
+    - title: TFRBertUtil
+      path: /ranking/api_docs/python/tfr/ext/tfrbert/TFRBertUtil
+- title: tfr.feature
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/feature
+  - title: encode_features
+    path: /ranking/api_docs/python/tfr/feature/encode_features
+  - title: encode_listwise_features
+    path: /ranking/api_docs/python/tfr/feature/encode_listwise_features
+  - title: encode_pointwise_features
+    path: /ranking/api_docs/python/tfr/feature/encode_pointwise_features
+  - title: make_identity_transform_fn
+    path: /ranking/api_docs/python/tfr/feature/make_identity_transform_fn
+- title: tfr.head
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/head
+  - title: create_multi_ranking_head
+    path: /ranking/api_docs/python/tfr/head/create_multi_ranking_head
+  - title: create_ranking_head
+    path: /ranking/api_docs/python/tfr/head/create_ranking_head
+- title: tfr.keras
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/keras
+  - title: canned
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/canned
+    - title: DNNRankingNetwork
+      path: /ranking/api_docs/python/tfr/keras/canned/DNNRankingNetwork
+    - title: GAMRankingNetwork
+      path: /ranking/api_docs/python/tfr/keras/canned/GAMRankingNetwork
+    - title: dnn
+      section:
+      - title: Overview
+        path: /ranking/api_docs/python/tfr/keras/canned/dnn
+    - title: gam
+      section:
+      - title: Overview
+        path: /ranking/api_docs/python/tfr/keras/canned/gam
+  - title: estimator
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/estimator
+    - title: model_to_estimator
+      path: /ranking/api_docs/python/tfr/keras/estimator/model_to_estimator
+  - title: feature
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/feature
+    - title: EncodeListwiseFeatures
+      path: /ranking/api_docs/python/tfr/keras/feature/EncodeListwiseFeatures
+    - title: GenerateMask
+      path: /ranking/api_docs/python/tfr/keras/feature/GenerateMask
+    - title: create_keras_inputs
+      path: /ranking/api_docs/python/tfr/keras/feature/create_keras_inputs
+    - title: deserialize_feature_columns
+      path: /ranking/api_docs/python/tfr/keras/feature/deserialize_feature_columns
+    - title: serialize_feature_columns
+      path: /ranking/api_docs/python/tfr/keras/feature/serialize_feature_columns
+  - title: layers
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/layers
+    - title: ConcatFeatures
+      path: /ranking/api_docs/python/tfr/keras/layers/ConcatFeatures
+    - title: DocumentInteractionAttention
+      path: /ranking/api_docs/python/tfr/keras/layers/DocumentInteractionAttention
+    - title: FlattenList
+      path: /ranking/api_docs/python/tfr/keras/layers/FlattenList
+    - title: GAMLayer
+      path: /ranking/api_docs/python/tfr/keras/layers/GAMLayer
+    - title: RestoreList
+      path: /ranking/api_docs/python/tfr/keras/layers/RestoreList
+    - title: create_tower
+      path: /ranking/api_docs/python/tfr/keras/layers/create_tower
+  - title: losses
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/losses
+    - title: ApproxMRRLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/ApproxMRRLoss
+    - title: ApproxNDCGLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/ApproxNDCGLoss
+    - title: ClickEMLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/ClickEMLoss
+    - title: DCGLambdaWeight
+      path: /ranking/api_docs/python/tfr/keras/losses/DCGLambdaWeight
+    - title: GumbelApproxNDCGLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/GumbelApproxNDCGLoss
+    - title: ListMLELambdaWeight
+      path: /ranking/api_docs/python/tfr/keras/losses/ListMLELambdaWeight
+    - title: ListMLELoss
+      path: /ranking/api_docs/python/tfr/keras/losses/ListMLELoss
+    - title: MeanSquaredLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/MeanSquaredLoss
+    - title: NDCGLambdaWeight
+      path: /ranking/api_docs/python/tfr/keras/losses/NDCGLambdaWeight
+    - title: PairwiseHingeLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/PairwiseHingeLoss
+    - title: PairwiseLogisticLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/PairwiseLogisticLoss
+    - title: PairwiseSoftZeroOneLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/PairwiseSoftZeroOneLoss
+    - title: PrecisionLambdaWeight
+      path: /ranking/api_docs/python/tfr/keras/losses/PrecisionLambdaWeight
+    - title: RankingLossKey
+      path: /ranking/api_docs/python/tfr/keras/losses/RankingLossKey
+    - title: SigmoidCrossEntropyLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/SigmoidCrossEntropyLoss
+    - title: SoftmaxLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/SoftmaxLoss
+    - title: UniqueSoftmaxLoss
+      path: /ranking/api_docs/python/tfr/keras/losses/UniqueSoftmaxLoss
+    - title: get
+      path: /ranking/api_docs/python/tfr/keras/losses/get
+  - title: metrics
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/metrics
+    - title: ARPMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/ARPMetric
+    - title: AlphaDCGMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/AlphaDCGMetric
+    - title: DCGMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/DCGMetric
+    - title: MRRMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/MRRMetric
+    - title: MeanAveragePrecisionMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/MeanAveragePrecisionMetric
+    - title: NDCGMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/NDCGMetric
+    - title: OPAMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/OPAMetric
+    - title: PrecisionIAMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/PrecisionIAMetric
+    - title: PrecisionMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/PrecisionMetric
+    - title: RankingMetricKey
+      path: /ranking/api_docs/python/tfr/keras/metrics/RankingMetricKey
+    - title: RecallMetric
+      path: /ranking/api_docs/python/tfr/keras/metrics/RecallMetric
+    - title: default_keras_metrics
+      path: /ranking/api_docs/python/tfr/keras/metrics/default_keras_metrics
+    - title: get
+      path: /ranking/api_docs/python/tfr/keras/metrics/get
+  - title: model
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/model
+    - title: AbstractModelBuilder
+      path: /ranking/api_docs/python/tfr/keras/model/AbstractModelBuilder
+    - title: DNNScorer
+      path: /ranking/api_docs/python/tfr/keras/model/DNNScorer
+    - title: FeatureSpecInputCreator
+      path: /ranking/api_docs/python/tfr/keras/model/FeatureSpecInputCreator
+    - title: GAMScorer
+      path: /ranking/api_docs/python/tfr/keras/model/GAMScorer
+    - title: InputCreator
+      path: /ranking/api_docs/python/tfr/keras/model/InputCreator
+    - title: ModelBuilder
+      path: /ranking/api_docs/python/tfr/keras/model/ModelBuilder
+    - title: ModelBuilderWithMask
+      path: /ranking/api_docs/python/tfr/keras/model/ModelBuilderWithMask
+    - title: Preprocessor
+      path: /ranking/api_docs/python/tfr/keras/model/Preprocessor
+    - title: PreprocessorWithSpec
+      path: /ranking/api_docs/python/tfr/keras/model/PreprocessorWithSpec
+    - title: Scorer
+      path: /ranking/api_docs/python/tfr/keras/model/Scorer
+    - title: TensorDict
+      path: /ranking/api_docs/python/tfr/keras/model/TensorDict
+    - title: TensorLike
+      path: /ranking/api_docs/python/tfr/keras/model/TensorLike
+    - title: TypeSpecInputCreator
+      path: /ranking/api_docs/python/tfr/keras/model/TypeSpecInputCreator
+    - title: UnivariateScorer
+      path: /ranking/api_docs/python/tfr/keras/model/UnivariateScorer
+    - title: create_keras_model
+      path: /ranking/api_docs/python/tfr/keras/model/create_keras_model
+  - title: network
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/network
+    - title: RankingNetwork
+      path: /ranking/api_docs/python/tfr/keras/network/RankingNetwork
+    - title: UnivariateRankingNetwork
+      path: /ranking/api_docs/python/tfr/keras/network/UnivariateRankingNetwork
+    - title: listwise_scoring
+      path: /ranking/api_docs/python/tfr/keras/network/listwise_scoring
+  - title: pipeline
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/pipeline
+    - title: AbstractDatasetBuilder
+      path: /ranking/api_docs/python/tfr/keras/pipeline/AbstractDatasetBuilder
+    - title: AbstractPipeline
+      path: /ranking/api_docs/python/tfr/keras/pipeline/AbstractPipeline
+    - title: BaseDatasetBuilder
+      path: /ranking/api_docs/python/tfr/keras/pipeline/BaseDatasetBuilder
+    - title: DatasetHparams
+      path: /ranking/api_docs/python/tfr/keras/pipeline/DatasetHparams
+    - title: DatasetHparams.dataset_reader
+      path: /ranking/api_docs/python/tfr/keras/pipeline/DatasetHparams/dataset_reader
+    - title: ModelFitPipeline
+      path: /ranking/api_docs/python/tfr/keras/pipeline/ModelFitPipeline
+    - title: MultiLabelDatasetBuilder
+      path: /ranking/api_docs/python/tfr/keras/pipeline/MultiLabelDatasetBuilder
+    - title: MultiTaskPipeline
+      path: /ranking/api_docs/python/tfr/keras/pipeline/MultiTaskPipeline
+    - title: NullDatasetBuilder
+      path: /ranking/api_docs/python/tfr/keras/pipeline/NullDatasetBuilder
+    - title: PipelineHparams
+      path: /ranking/api_docs/python/tfr/keras/pipeline/PipelineHparams
+    - title: SimpleDatasetBuilder
+      path: /ranking/api_docs/python/tfr/keras/pipeline/SimpleDatasetBuilder
+    - title: SimplePipeline
+      path: /ranking/api_docs/python/tfr/keras/pipeline/SimplePipeline
+  - title: premade
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/premade
+    - title: TFRBertConfig
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertConfig
+    - title: TFRBertDataConfig
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertDataConfig
+    - title: TFRBertDataLoader
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertDataLoader
+    - title: TFRBertModelBuilder
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertModelBuilder
+    - title: TFRBertModelConfig
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertModelConfig
+    - title: TFRBertScorer
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertScorer
+    - title: TFRBertTask
+      path: /ranking/api_docs/python/tfr/keras/premade/TFRBertTask
+    - title: TensorDict
+      path: /ranking/api_docs/python/tfr/keras/premade/TensorDict
+    - title: tfrbert_task
+      section:
+      - title: Overview
+        path: /ranking/api_docs/python/tfr/keras/premade/tfrbert_task
+  - title: saved_model
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/saved_model
+    - title: Signatures
+      path: /ranking/api_docs/python/tfr/keras/saved_model/Signatures
+  - title: strategy_utils
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/strategy_utils
+    - title: NullContextManager
+      path: /ranking/api_docs/python/tfr/keras/strategy_utils/NullContextManager
+    - title: get_output_filepath
+      path: /ranking/api_docs/python/tfr/keras/strategy_utils/get_output_filepath
+    - title: get_strategy
+      path: /ranking/api_docs/python/tfr/keras/strategy_utils/get_strategy
+    - title: strategy_scope
+      path: /ranking/api_docs/python/tfr/keras/strategy_utils/strategy_scope
+  - title: task
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/task
+    - title: FeatureSpec
+      path: /ranking/api_docs/python/tfr/keras/task/FeatureSpec
+    - title: RankingDataConfig
+      path: /ranking/api_docs/python/tfr/keras/task/RankingDataConfig
+    - title: RankingDataLoader
+      path: /ranking/api_docs/python/tfr/keras/task/RankingDataLoader
+    - title: RankingTask
+      path: /ranking/api_docs/python/tfr/keras/task/RankingTask
+    - title: RankingTaskConfig
+      path: /ranking/api_docs/python/tfr/keras/task/RankingTaskConfig
+  - title: utils
+    section:
+    - title: Overview
+      path: /ranking/api_docs/python/tfr/keras/utils
+    - title: identity
+      path: /ranking/api_docs/python/tfr/keras/utils/identity
+    - title: inverse
+      path: /ranking/api_docs/python/tfr/keras/utils/inverse
+    - title: is_greater_equal_1
+      path: /ranking/api_docs/python/tfr/keras/utils/is_greater_equal_1
+    - title: log2_inverse
+      path: /ranking/api_docs/python/tfr/keras/utils/log2_inverse
+    - title: pow_minus_1
+      path: /ranking/api_docs/python/tfr/keras/utils/pow_minus_1
+- title: tfr.losses
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/losses
+  - title: RankingLossKey
+    path: /ranking/api_docs/python/tfr/losses/RankingLossKey
+  - title: create_ndcg_lambda_weight
+    path: /ranking/api_docs/python/tfr/losses/create_ndcg_lambda_weight
+  - title: create_p_list_mle_lambda_weight
+    path: /ranking/api_docs/python/tfr/losses/create_p_list_mle_lambda_weight
+  - title: create_reciprocal_rank_lambda_weight
+    path: /ranking/api_docs/python/tfr/losses/create_reciprocal_rank_lambda_weight
+  - title: make_loss_fn
+    path: /ranking/api_docs/python/tfr/losses/make_loss_fn
+  - title: make_loss_metric_fn
+    path: /ranking/api_docs/python/tfr/losses/make_loss_metric_fn
+- title: tfr.metrics
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/metrics
+  - title: RankingMetricKey
+    path: /ranking/api_docs/python/tfr/metrics/RankingMetricKey
+  - title: alpha_discounted_cumulative_gain
+    path: /ranking/api_docs/python/tfr/metrics/alpha_discounted_cumulative_gain
+  - title: average_relevance_position
+    path: /ranking/api_docs/python/tfr/metrics/average_relevance_position
+  - title: binary_preference
+    path: /ranking/api_docs/python/tfr/metrics/binary_preference
+  - title: compute_mean
+    path: /ranking/api_docs/python/tfr/metrics/compute_mean
+  - title: discounted_cumulative_gain
+    path: /ranking/api_docs/python/tfr/metrics/discounted_cumulative_gain
+  - title: eval_metric
+    path: /ranking/api_docs/python/tfr/metrics/eval_metric
+  - title: make_ranking_metric_fn
+    path: /ranking/api_docs/python/tfr/metrics/make_ranking_metric_fn
+  - title: mean_average_precision
+    path: /ranking/api_docs/python/tfr/metrics/mean_average_precision
+  - title: mean_reciprocal_rank
+    path: /ranking/api_docs/python/tfr/metrics/mean_reciprocal_rank
+  - title: normalized_discounted_cumulative_gain
+    path: /ranking/api_docs/python/tfr/metrics/normalized_discounted_cumulative_gain
+  - title: ordered_pair_accuracy
+    path: /ranking/api_docs/python/tfr/metrics/ordered_pair_accuracy
+  - title: precision
+    path: /ranking/api_docs/python/tfr/metrics/precision
+  - title: precision_ia
+    path: /ranking/api_docs/python/tfr/metrics/precision_ia
+  - title: recall
+    path: /ranking/api_docs/python/tfr/metrics/recall
+- title: tfr.model
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/model
+  - title: make_groupwise_ranking_fn
+    path: /ranking/api_docs/python/tfr/model/make_groupwise_ranking_fn
+- title: tfr.utils
+  section:
+  - title: Overview
+    path: /ranking/api_docs/python/tfr/utils
+  - title: de_noise
+    path: /ranking/api_docs/python/tfr/utils/de_noise
+  - title: gather_per_row
+    path: /ranking/api_docs/python/tfr/utils/gather_per_row
+  - title: is_label_valid
+    path: /ranking/api_docs/python/tfr/utils/is_label_valid
+  - title: organize_valid_indices
+    path: /ranking/api_docs/python/tfr/utils/organize_valid_indices
+  - title: padded_nd_indices
+    path: /ranking/api_docs/python/tfr/utils/padded_nd_indices
+  - title: ragged_to_dense
+    path: /ranking/api_docs/python/tfr/utils/ragged_to_dense
+  - title: reshape_first_ndims
+    path: /ranking/api_docs/python/tfr/utils/reshape_first_ndims
+  - title: reshape_to_2d
+    path: /ranking/api_docs/python/tfr/utils/reshape_to_2d
+  - title: shuffle_valid_indices
+    path: /ranking/api_docs/python/tfr/utils/shuffle_valid_indices
+  - title: sort_by_scores
+    path: /ranking/api_docs/python/tfr/utils/sort_by_scores
+  - title: sorted_ranks
+    path: /ranking/api_docs/python/tfr/utils/sorted_ranks
