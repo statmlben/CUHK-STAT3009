@@ -13,7 +13,6 @@ class Scorer(object):
     def __call__(self, *args):
         return self.score_func(*args, **self.kwargs)
 
-
 # Precision
 #
 def _p_score(y_true, y_pred, k=None):
