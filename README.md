@@ -1,8 +1,12 @@
 # **CUHK**-**STAT3009**: Recommender systems in Python
 
-![logo](./figs/logo.png)
+This is a repository on code and notebook illustration for CUHK-STAT3009. 
 
-This is a repository on code and notebook illustration for CUHK-STAT3009. [ [Homepage](https://www.bendai.org/STAT3009/) + [GitHub](https://github.com/statmlben/CUHK-STAT3009) + [Slides]() ]
+- 👨‍🏫 **Instructor**: [Ben Dai](http://www.bendai.org)
+- 💻 **GitHub**: [https://github.com/statmlben/CUHK-STAT3009](https://github.com/statmlben/CUHK-STAT3009)
+- ⏲️ **Course Page**: [https://www.bendai.org/STAT3009/](https://www.bendai.org/STAT3009/)
+
+## Notebook
 
 - [Notebook1](notebook1.ipynb): Baseline methods for Recommender Systems
 - [Notebook2](notebook2.ipynb): Correlation-based Recommender Systems
@@ -15,8 +19,3 @@ This is a repository on code and notebook illustration for CUHK-STAT3009. [ [Hom
 - [Notebook9](notebook9.ipynb): Side Information: Continuous and Discrete features
 - [Notebook10a](notebook10a.ipynb): Binary recommender systems
 - [Notebook10b](notebook10b.ipynb): Top-K recommendation via AdaRank
-
-## Contributors
-<a href = "https://github.com/statmlben/CUHK-STAT3009/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=statmlben/CUHK-STAT3009"/>
-</a>
