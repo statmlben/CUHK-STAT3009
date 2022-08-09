@@ -1,5 +1,0 @@
-relevant
-question
-answer
-irrelevant
-data
