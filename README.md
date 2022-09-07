@@ -1,4 +1,5 @@
 # **CUHK**-**STAT3009**: Recommender systems in Python
+[![Slides](https://img.shields.io/badge/CUHK-STAT3009-blueviolet)](https://www.bendai.org/STAT3009/) [![Github](https://badges.aleen42.com/src/github.svg)](https://github.com/statmlben/CUHK-STAT3009) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TLkXIaYA42JcVxrTZBk6adKY8w533Gym?authuser=2#scrollTo=jbpzja31GGj)
 
 This is a repository on code and notebook illustration for CUHK-STAT3009. 
 
@@ -8,8 +9,9 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 
 ## Notebook
 
-- [Notebook1](notebook1.ipynb): Baseline methods for Recommender Systems
-- [Notebook2](notebook2.ipynb): Correlation-based Recommender Systems
+- [nb - prepare](nb_prepare.ipynb): Software preparation 
+- [nb - background](nb_background.ipynb): Baseline methods for Recommender Systems
+<!-- - [Notebook2](notebook2.ipynb): Correlation-based Recommender Systems
 - [Notebook3](notebook3.ipynb): Latent Factor Models I: OOP in Python
 - [Notebook4](notebook4.ipynb): Latent Factor Models II: ALS and Cross-validation
 - [Notebook5](notebook5.ipynb): Latent Factor Models III: SGD
@@ -18,4 +20,8 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [Notebook8](notebook8.ipynb): Neural Collaborative Filtering: Nonlinear Interaction
 - [Notebook9](notebook9.ipynb): Side Information: Continuous and Discrete features
 - [Notebook10a](notebook10a.ipynb): Binary recommender systems
-- [Notebook10b](notebook10b.ipynb): Top-K recommendation via AdaRank
+- [Notebook10b](notebook10b.ipynb): Top-K recommendation via AdaRank -->
+
+## 🌟 STAR
+
+If you think the notebooks are useful, please star the repo. Thank you!
