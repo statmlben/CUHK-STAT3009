@@ -13,7 +13,8 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [nb - background](nb_background.ipynb): Baseline methods for Recommender Systems
 - [nb - correlation RS](nb_correlation.ipynb): Correlation-based Recommender Systems
 - [nb - ML](nb_ml.ipynb): Machine learning framework
-- [nb - MF](nb_mf.ipynb): Matrix factorization: BCD
+- [nb - MF](nb_mf.ipynb): Matrix factorization: BCD/ALS
+- [nb - SGD](nb_SGD.ipynb): Matrix factorization: GD, ALS+GD, SGD
 <!-- - [Notebook2](notebook2.ipynb): Correlation-based Recommender Systems
 - [Notebook3](notebook3.ipynb): Latent Factor Models I: OOP in Python
 - [Notebook4](notebook4.ipynb): Latent Factor Models II: ALS and Cross-validation
