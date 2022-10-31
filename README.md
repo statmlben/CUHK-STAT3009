@@ -17,6 +17,7 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [nb - SGD](nb_SGD.ipynb): Matrix factorization: GD, ALS+GD, SGD
 - [nb - MF++](nb_mfpp.ipynb): Matrix factorization: NSVD and SVD++
 - [nb - EDA](nb_EDA.ipynb): Real dataset: MovieLens and Data virtualization
+- [nb - NN](nb_nn.ipynb): Neural Networks
 <!-- - [Notebook2](notebook2.ipynb): Correlation-based Recommender Systems
 - [Notebook3](notebook3.ipynb): Latent Factor Models I: OOP in Python
 - [Notebook4](notebook4.ipynb): Latent Factor Models II: ALS and Cross-validation
