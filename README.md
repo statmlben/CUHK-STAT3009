@@ -19,6 +19,7 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [nb - EDA](nb_EDA.ipynb): Real dataset: MovieLens and Data Virtualization
 - [nb - NN](nb_nn.ipynb): Neural Networks
 - [nb - NCF](nb_ncf.ipynb): Neural Collaborative Filtering: Neural Networks in RS
+- [nb - side](nb_side.ipynb): Neural RS with Side Information
 <!-- - [Notebook2](notebook2.ipynb): Correlation-based Recommender Systems
 - [Notebook3](notebook3.ipynb): Latent Factor Models I: OOP in Python
 - [Notebook4](notebook4.ipynb): Latent Factor Models II: ALS and Cross-validation
