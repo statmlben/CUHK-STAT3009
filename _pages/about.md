@@ -17,11 +17,6 @@ Commercial entities, such as search engines, advertisers, media platforms (e.g.,
 
 🏗️ **Prerequisites:**
 
-
-    Python Programming: Familiarity with basic Python syntax and experience with Numpy, pandas, and TensorFlow libraries.
-    Machine Learning Background: It is recommended that students have completed a Machine Learning Crash Course (in-person, online, or self-study) or possess equivalent knowledge.
-
-
 - **Calculus & Linear algebra**: inner products, matrix-vector products, linear regression (OLS).
 - **Basic Statistics**: Basics of distributions, probabilities, mean, standard deviation, and other fundamental concepts.
 - **Python**: Familiarity with basic Python syntax and experience with Numpy, pandas, and TensorFlow libraries.
@@ -36,8 +31,10 @@ Commercial entities, such as search engines, advertisers, media platforms (e.g.,
 - 💻 **HW submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
 - ⌨️ **colab**: [notebook](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing) or click `Open in Colab`
 
-[![Homepage](https://img.shields.io/badge/CUHK-STAT1013-blueviolet)](https://www.bendai.org/CUHK-STAT1013/) 
+[![Homepage](https://img.shields.io/badge/CUHK-STAT3009-blueviolet)](https://www.bendai.org/CUHK-STAT3009/)
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/statmlben/CUHK-STAT3009) 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing)
+
 
 **All students welcome**: we are happy to have audiences in our lecture.
 

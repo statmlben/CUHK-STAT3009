@@ -6,11 +6,11 @@ permalink: /grading/
 
 👨‍💻 **Coursework:**
 
-Homework Assignments (15%): Three homework assignments will be given, each requiring submission of a well-documented *Jupyter Notebook*.
+- **Homework Assignments** (15%): Three homework assignments will be given, each requiring submission of a well-documented *Jupyter Notebook*.
 
-- Homework 1 (5%): Implementing k-fold cross-validation
-- Homework 2 (5%): Practicing ALS-related algorithms
-- Homework 3 (5%): Prototyping neural networks in recommender systems using TensorFlow
+  - Homework 1 (5%): Implementing k-fold cross-validation
+  - Homework 2 (5%): Practicing ALS-related algorithms
+  - Homework 3 (5%): Prototyping neural networks in recommender systems using TensorFlow
 
 - **InClass Kaggle Competition** (50%): Open-book InClass Kaggle Competition.
   - Round 1 (5%): Implement baseline recommender system methods and get familiar with the Kaggle competition platform.
@@ -22,4 +22,4 @@ Homework Assignments (15%): Three homework assignments will be given, each requi
 
 📝 **Honesty**: Our course places very high importance on honesty in coursework submitted by students, and adopts a policy of [*zero tolerance*](https://www.cuhk.edu.hk/policy/academichonesty/Eng_htm_files_(2013-14)/index_page2.htm) on academic dishonesty. 
 
-📢 **(Late) submission**: Homework/projects are submitted via [BlackBoard](https://blackboard.cuhk.edu.hk/ultra). We will *penalize* **10%** credits per 12 hours for the late submission (up to a maximum of 50% penalization.).
+📢 **(Late) submission**: Homework and submissions are submitted via [BlackBoard](https://blackboard.cuhk.edu.hk/ultra). We will *penalize* **10%** credits per 12 hours for the late submission (up to a maximum of 50% penalization.).

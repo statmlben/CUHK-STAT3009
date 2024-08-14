@@ -15,12 +15,12 @@ TAs:
       image: staff/gao.jpg
       # zoom: # https://cmu.zoom.us/j/2310497456
 
-    - name: Jianting Feng
-      email: jiantingfeng@link.cuhk.edu.hk
-      url: 
-      # office-hours: Tues 4:00pm - 5:00pm, Wed 6:00pm - 7:00pm
-      location: See Calendar Tab
-      image: staff/feng.jpg
-      # zoom: # https://cmu.zoom.us/j/2064967363
+    # - name: Jianting Feng
+    #   email: jiantingfeng@link.cuhk.edu.hk
+    #   url: 
+    #   # office-hours: Tues 4:00pm - 5:00pm, Wed 6:00pm - 7:00pm
+    #   location: See Calendar Tab
+    #   image: staff/feng.jpg
+    #   # zoom: # https://cmu.zoom.us/j/2064967363
 
 
