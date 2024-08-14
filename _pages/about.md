@@ -1,39 +1,43 @@
 ---
 layout: about
 permalink: /
-title: <b>D</b>ata <b>S</b>cience <b>T</b>oolbox
-description: CUHK • Department of Statistics • STAT1013 
+title: <b>R</b>ecommender <b>S</b>ystems
+description: CUHK • Department of Statistics • STAT3009
 logo: cuhk-logo.png
 news: true
 ---
 
-This course will give a conceptual introduction, implementation, and interpretation of the data scientist’s toolbox in practice. There are three components to this course. The first is a practical introduction to the tools that will be used in the project like Python, Colab, Jupyter notebook, markdown. The second is a conceptual introduction to A/B test. The third is about Case Studies of A/B Test based on the Toolbox.
+Commercial entities, such as search engines, advertisers, media platforms (e.g., Netflix, Amazon), and financial institutions, leverage recommender systems to recommend content, predict customer behavior, ensure compliance, and assess risk. This course offers a comprehensive overview of predictive models for recommender systems, encompassing content-based and collaborative filtering algorithms, matrix factorization, and deep learning models. Additionally, the course provides hands-on experience with implementing existing recommender systems using Python.
 
 👌 **What you'll learn:**
 
-- Understand principles behind statistical inference and A/B test;
-- Familiar with Data Science Toolbox: Python (numpy, pandas, seaborn, sklearn), Colab; Jupyter notebook, Markdown;
-- Analyze continuous and categorical data using statistics, Python programming based on Colab and software as appropriate;
-- Ability in using advanced Python tools to describe, summarize, and visualize dataset;
-- Understand and implement good coding practices, including statistical inference on A/B test, and statistical learning/prediction based on tabular data.
+- Gain insight into the fundamental principles underlying various recommender systems approaches, including correlation-based collaborative filtering, latent factor models, and neural recommender systems.
+- Develop hands-on experience implementing and analyzing recommender systems for real-world applications using [Python](https://www.python.org/), [sklearn](https://scikit-learn.org/stable/), and [TensorFlow](https://www.tensorflow.org/).
+- Learn to select and design suitable models tailored to specific applications.
 
 🏗️ **Prerequisites:**
 
-- **Calculus & Linear algebra**: inner product, matrix-vector product.
-- **Basic Statistics**: **STAT1011 level statistics**, basics of distributions, probabilities, conditional probability, mean, standard deviation, etc.
-- **Python**: basic grammar; numpy, pandas
+
+    Python Programming: Familiarity with basic Python syntax and experience with Numpy, pandas, and TensorFlow libraries.
+    Machine Learning Background: It is recommended that students have completed a Machine Learning Crash Course (in-person, online, or self-study) or possess equivalent knowledge.
+
+
+- **Calculus & Linear algebra**: inner products, matrix-vector products, linear regression (OLS).
+- **Basic Statistics**: Basics of distributions, probabilities, mean, standard deviation, and other fundamental concepts.
+- **Python**: Familiarity with basic Python syntax and experience with Numpy, pandas, and TensorFlow libraries.
+- (*Recommended*) Complete a Machine Learning Crash Course (in-person, online, or self-study) or possess equivalent knowledge
 
 ***
 
-- ⏲️ **Lectures:** Wed 11:30AM - 2:15PM
-- 🎒 **Lecture/Recitation Location:** Y.C. Liang Hall 103
+- ⏲️ **Lectures:** Thu 12:30PM - 3:15PM
+- 🎒 **Lecture/Recitation Location:** Mong Man Wai Bldg 710
 <!-- - **Office Hours Location:** [Gates-Hillman Center 8228](https://goo.gl/maps/74vUj6uoaTTzYM937){:target="\_blank"} -->
 <!-- - **Discussion:** [Piazza](https://piazza.com){:target="\_blank"} -->
 - 💻 **HW submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
 - ⌨️ **colab**: [notebook](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing) or click `Open in Colab`
 
 [![Homepage](https://img.shields.io/badge/CUHK-STAT1013-blueviolet)](https://www.bendai.org/CUHK-STAT1013/) 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing)
 
 **All students welcome**: we are happy to have audiences in our lecture.
 
@@ -41,10 +45,10 @@ This course will give a conceptual introduction, implementation, and interpretat
 
 📋 **Reference Textbooks** 
 
-The following textbooks are useful, but none are exactly same with our course.
+The following textbooks are relevant resources, although none of them perfectly align with the scope and content of our course.
 
-- VanderPlas, J. (2016). [Python data science handbook: Essential tools for working with data](https://jakevdp.github.io/PythonDataScienceHandbook/). *O'Reilly Media, Inc.*
-- Bruce, P. & Bruce, A. (2017) [Practical Statistics for Data Scientists](https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/). *O'Reilly Media, Inc.*
-- Kohavi, R., Tang, D., & Xu, Y. (2020). [Trustworthy online controlled experiments: A practical guide to A/B testing](https://www.amazon.com/Trustworthy-Online-Controlled-Experiments-Practical-ebook/dp/B0845Y3DJV). *Cambridge University Press*.
+- Charu C. Aggarwal. [Recommender Systems](https://doi.org/10.1007/978-3-319-29659-3) (2016). Springer Nature Switzerland.
+- Francesco Ricci, Lior Rokach, Bracha Shapira, Paul B. Kantor (2011). [Recommender Systems Handbook](https://doi.org/10.1007/978-0-387-85820-3). Springer New York, NY.
+- McAuley, J. (2022). [Personalized Machine Learning](https://cseweb.ucsd.edu/~jmcauley/pml/). Cambridge University Press.
 
 ***
