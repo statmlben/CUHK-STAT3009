@@ -1,0 +1,89 @@
+# -----------------------------------------------------------------------------
+# Site settings
+# -----------------------------------------------------------------------------
+author: Ben Dai
+name: CUHK-STAT3009
+title: Recommender Systems
+email: bendai@cuhk.edu.hk
+description: >
+  STAT3009 - Recommender Systems - CUHK
+footer_text: >
+  This page was powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme, and adopted from the <a href="https://cmudeeprl.github.io/403_website/" target="_blank">CMU 10-403</a> course page.
+
+url: https://www.bendai.org # the base hostname & protocol for your site
+baseurl:  # the subpath of your site, e.g. /blog/
+
+# -----------------------------------------------------------------------------
+# Social integration
+# -----------------------------------------------------------------------------
+github_username: statmlben
+google_analytics:
+youtube_channel:
+rss:  # notes rss
+
+# -----------------------------------------------------------------------------
+# Blog
+# -----------------------------------------------------------------------------
+blog_name: Course Notes
+blog_description: The course notes
+
+# Pagination
+paginate: 10
+permalink: /notes/:title/
+paginate_path: /notes/page:num/
+
+text:
+  pagination:
+    newer: 'Newer'
+    older: 'Older'
+
+# Comments
+disqus_shortname: # put your disqus shortname
+
+# Optional features
+show_social_icons:  true
+enable_anchorjs:    true
+enable_latexjs:     true
+enable_katex:       true
+
+# -----------------------------------------------------------------------------
+# Collections
+# -----------------------------------------------------------------------------
+collections:
+  announcements:
+    defaults:
+      layout: post
+    output: true
+    permalink: /announcements/:path/
+
+announcements_limit: 5
+
+# -----------------------------------------------------------------------------
+# Jekyll settings
+# -----------------------------------------------------------------------------
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Includes & excludes
+include: ['_pages']
+exclude: [vendor]
+
+# Plug-ins
+plugins:
+    - jekyll-email-protect
+    - jekyll-paginate
+    - jemoji
+    # - jekyll-remote-theme
+
+# -----------------------------------------------------------------------------
+# Other settings
+# -----------------------------------------------------------------------------
+jquery_version: "1.12.4"
+katex_version: "0.10.1"
+anchorjs_version: "3.2.2"
+latexjs_version: "0.11.1"
+
+theme: jekyll-theme-slate
+# remote_theme: pages-themes/hacker@v0.2.0

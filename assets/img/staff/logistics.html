@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="en">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>10-703 Deep RL | Logistics</title>
+  <meta name="description" content="10-703 - Deep Reinforcement Learning and Control - Carnegie Mellon University - Spring 2020
+">
+
+  <link rel="shortcut icon" href="/Spring202010403website/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/Spring202010403website/assets/css/main.css">
+  <link rel="canonical" href="/Spring202010403website/logistics/">
+
+
+  <!-- Load Latex JS -->
+  <script src="https://cdn.jsdelivr.net/npm/latex.js@0.11.1/dist/latex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/latex.js@0.11.1/dist/latex.component.js"></script>
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <span class="site-title">
+      <a class="page-link" href="https://cmudeeprl.github.io/Spring202010403website/">10-703 Deep RL</a>
+    </span>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        <a class="page-link" href="/Spring202010403website/logistics/">Logistics</a>
+        <a class="page-link" href="/Spring202010403website/lectures/">Lectures</a>
+        <a class="page-link" href="/Spring202010403website/calendar/">Calendar</a>
+        <a class="page-link" href="/Spring202010403website/homework/">Homework</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Logistics</h1>
+    <h2 class="post-description"></h2>
+  </header>
+
+  <article class="post-content Logistics clearfix">
+    <ul id="markdown-toc">
+  <li><a href="#learning-resources" id="markdown-toc-learning-resources">Learning Resources</a>    <ul>
+      <li><a href="#readings" id="markdown-toc-readings">Readings</a></li>
+      <li><a href="#general-references" id="markdown-toc-general-references">General References</a></li>
+      <li><a href="#online-courses" id="markdown-toc-online-courses">Online courses</a></li>
+       <li><a href="#online-courses" id="markdown-toc-recitations">Recitations</a></li>
+    </ul>
+  </li>
+  <li><a href="#communication" id="markdown-toc-communication">Communication</a></li>
+  <li><a href="#grading" id="markdown-toc-grading">Grading</a></li>
+  <li><a href="#homework-assignments" id="markdown-toc-homework-assignments">Homework Assignments</a></li>
+  <li><a href="#aws-resources" id="markdown-toc-aws-resources">AWS Resources</a></li>
+  <li><a href="#collaboration-policy" id="markdown-toc-collaboration-policy">Collaboration Policy</a></li>
+  <li><a href="#academic-integrity-read-this-carefully" id="markdown-toc-academic-integrity-read-this-carefully">Academic Integrity (Read this carefully!)</a>    <ul>
+      <li><a href="#previously-used-assignments" id="markdown-toc-previously-used-assignments">Previously Used Assignments</a></li>
+      <li><a href="#policy-regarding-found-code" id="markdown-toc-policy-regarding-found-code">Policy Regarding “Found Code”</a></li>
+      <li><a href="#duty-to-protect-ones-work" id="markdown-toc-duty-to-protect-ones-work">Duty to Protect One’s Work</a></li>
+    </ul>
+  </li>
+  <li><a href="#penalties-for-violations-of-course-policies" id="markdown-toc-penalties-for-violations-of-course-policies">Penalties for Violations of Course Policies</a></li>
+  <li><a href="#late-policy" id="markdown-toc-late-policy">Late Policy</a></li>
+  <li><a href="#regrade-policy" id="markdown-toc-regrade-policy">Regrade Policy</a></li>
+  <li><a href="#extensions" id="markdown-toc-extensions">Extensions</a></li>
+  <li><a href="#passfail-policy" id="markdown-toc-passfail-policy">Pass/Fail Policy</a></li>
+  <li><a href="#auditing" id="markdown-toc-auditing">Auditing</a></li>
+  <li><a href="#online-and-waitlisted-students" id="markdown-toc-online-and-waitlisted-students">Online and Waitlisted Students</a></li>
+  <li><a href="#students-with-course-conflicts" id="markdown-toc-students-with-course-conflicts">Students with Course Conflicts</a></li>
+  <li><a href="#accommodations-for-students-with-disabilities" id="markdown-toc-accommodations-for-students-with-disabilities">Accommodations for Students with Disabilities</a></li>
+  <li><a href="#take-care-of-yourself-read-this" id="markdown-toc-take-care-of-yourself-read-this">Take care of yourself (Read this!)</a></li>
+  <li><a href="#listeners-outside-cmu" id="markdown-toc-listeners-outside-cmu">Listeners outside CMU</a></li>
+</ul>
+
+<hr />
+
+<h3 id="learning-resources">Learning Resources</h3>
+
+<h4 id="readings">Readings</h4>
+
+<ul>
+  <li>[SB] <a href="http://incompleteideas.net/book/RLbook2018.pdf">Sutton &amp; Barto, Reinforcement Learning: An Introduction, 2nd edition</a></li>
+  <li>[GBC] <a href="http://www.deeplearningbook.org/">Goodfellow, Bengio &amp; Courville, Deep Learning</a></li>
+</ul>
+
+<p>Chapters from these two texts, as well as relevant academic papers, will be referenced alongside each lecture, under the <a href="/Spring202010403website/lectures">Lectures</a> section.</p>
+
+<p> The papers and chapters linked to each lecture are required unless noted as optional. They are instrumental to help you understand the concepts and algorithms taught in class. </p>
+
+<p>If you want additional resources, we recommend the following:</p>
+<!--
+<h4 id="general-references">General References</h4>
+
+<ul>
+  <li><a href="http://www.ualberta.ca/~szepesva/RLBook.html">Szepesvari, Algorithms for Reinforcement Learning</a></li>
+  <li><a href="http://www.athenasc.com/dpbook.html">Bertsekas, Dynamic Programming and Optimal Control, Vols I and II</a></li>
+  <li><a href="http://www.wiley.com/WileyCDA/WileyTitle/productCd-0471727822.html">Puterman, Markov Decision Processes: Discrete Stochastic Dynamic Programming</a></li>
+  <li><a href="http://adp.princeton.edu/">Powell, Approximate Dynamic Programming</a></li>
+</ul>
+-->
+<h4 id="online-courses">Online courses</h4>
+<ul>
+  <li><a href="http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html">David Silver’s class: Reinforcement learning</a></li>
+  <li><a href="https://www.youtube.com/watch?v=w2OtwL5T1ow&list=PLE6Wd9FR--EdyJ5lbFl8UuGjecvVw66F6">Nando de Freitas: Machine Learning, 2013</a></li>
+  <!-- <li><a href="http://incompleteideas.net/sutton/609%20dropbox/">Rich Sutton’s class: Reinforcement Learning for Artificial Intelligence, Fall 2016</a></li>
+
+ <li><a href="http://rll.berkeley.edu/deeprlcourse-fa15/">John Schulman’s and Pieter Abeel’s class: Deep Reinforcement Learning, Fall 2015</a></li>
+  <li><a href="http://rll.berkeley.edu/deeprlcourse/">Sergey Levine’s, Chelsea Finn’s and John Schulman’s class: Deep Reinforcement Learning, Spring 2017</a></li>
+  <li><a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa15/">Pieter Abeel’s class: Advanced Robotics, Fall 2015</a></li>
+  <li><a href="http://homes.cs.washington.edu/~todorov/courses/amath579/index.html">Emo Todorov’s class: Intelligent control through learning and optimization, Spring 2015</a></li>-->
+</ul>
+
+
+<h4 id="readings">Recitations</h4>
+
+<p>Recitations are usually given by TAs and their goal is to cover background material needed to understand the course, as well as to provide help for homeworks. You can control the material of the recitations every weekk by posting on Piazza the topics you wish to be discussed on friday's recitation. Take advantage of this privilege to better tailor your course to your needs. Since neither lectures nor recitations are  recorded this semester, your physical presence is necessary for both, for you to optimize your learning experience. </p>
+
+
+<hr />
+
+<h3 id="communication">Communication</h3>
+
+<p>Piazza is intended for all announcements, general questions about the course, clarifications about assignments, student questions to each other, discussions about material, and so on.</p>
+
+<p>We strongly encourage all students to participate in discussion, ask, and answer questions in class as well as through Piazza!</p>
+
+<p>We strongly encourage all students to form reading groups for joint study of the papers and the materials, to make the semester more fun and more productive.</p>
+
+<hr />
+
+<h3 id="grading">Grading</h3>
+
+<p>The class requirements include <em>5 homework assignments</em> (55% of the grade) and <em>3 quizzes</em> (45% of the grade). By the end of this class you should have a good understanding of the basic methodologies in deep reinforcement learning, and be able to use them to solve real problems of modest complexity.</p>
+
+<p>The entirety of your course grade will be based on the performance in the homework assignments and the quizzes.</p>
+
+<p>Individual homeworks may NOT necessarily be worth the same percentage. <strong>Some homework assignments may be worth more points than others</strong>, therefore weighing more towards the total.</p>
+
+<hr />
+
+<h3 id="homework-assignments">Homework Assignments</h3>
+
+<p>There will be 5 homework assignments over the course of the semester. For each, you may work in groups of up to three students total. Only one person should submit the writeup and code on Gradescope. Additionally you should upload your code to Autolab. Please make sure <strong>the same person who submitted the writeup and code to Gradescope is the one who submits it to Autolab</strong>. Make sure you <strong>mark your partner as a collaborator on Gradescope</strong> (you do not need to do this in Autolab) and that both names are listed in the writeup.</p>
+
+<p>These assignments may contain material that has been covered by published papers and webpages.
+We expect students to solve the problems themselves rather than search for answers.</p>
+
+<p>Students are required to <strong>typeset written homework solutions using <script type="math/tex">\LaTeX</script> and the provided template</strong>, and submit as PDF. All code, including auxiliary scripts used for testing should be submitted with a README file to explain/document them.</p>
+
+<hr />
+
+<h3 id="aws-resources">AWS Resources</h3>
+
+<p>For those of you who need GPU resources for future homeworks, please read through this section carefully.</p>
+
+<ul>
+  <li><strong>If you are not officially registered for this class, you are not allowed to request resources</strong>. We will be checking before we submit requests, so please do not request access to them.</li>
+  <li>We will be offering AWS resources. All students should join AWS educate using this link: <a href="https://aws.amazon.com/education/awseducate/">https://aws.amazon.com/education/awseducate/</a> using their <strong>@andrew.cmu.edu email address. If you do not use your andrew email address, your resources may be denied</strong>. You should do this as soon as possible, as it can take time to set up your accounts.</li>
+  <li>AWS NOTE: You need to back this account with your own credit/debit card and we will give out allocation codes of $50, this is important as <strong>should you go over this $50 it will start charging to your card</strong>, please be sure to keep an eye on your funds and not forget to terminate instances. <strong>The university holds no responsibility in paying for additional usage</strong>.</li>
+  <li>We will ask you to complete an Allocation Form in order to apply for your resources. This will be made available later in the semester. Note: HW1 does not require AWS resources.</li>
+</ul>
+
+<hr />
+
+<h3 id="collaboration-policy">Collaboration Policy</h3>
+
+<p>(Adapted from Roni Rosenfeld’s <a href="http://www.cs.cmu.edu/~roni/10601/">10-601 Spring 2016</a> Course Policies.)</p>
+
+<ul>
+  <li>
+    <p>The purpose of student collaboration is to facilitate learning, not to circumvent it. Studying the material in groups is strongly encouraged. It is also allowed to seek help from other students in understanding the material needed to solve a particular homework problem, provided no written notes (including code) are shared, or are taken at that time, and provided learning is facilitated, not circumvented. The actual solution must be done by each student alone.</p>
+  </li>
+  <li>
+    <p>The presence or absence of any form of help or collaboration, whether given or received, must be explicitly stated and disclosed in full by all involved. Specifically, each assignment solution must include answering the following questions:</p>
+  </li>
+</ul>
+
+<ol>
+  <li>Did you receive any help whatsoever from anyone in solving this assignment? Yes / No.
+    <ul>
+      <li>If you answered ‘yes’, give full details: <strong>__</strong><strong>__</strong></li>
+      <li>(e.g. “Jane Doe explained to me what is asked in Question 3.4”)</li>
+    </ul>
+  </li>
+  <li>Did you give any help whatsoever to anyone in solving this assignment? Yes / No.
+    <ul>
+      <li>If you answered ‘yes’, give full details: <strong>__</strong><strong>__</strong>_</li>
+      <li>(e.g. “I pointed Joe Smith to section 2.3 since he didn’t know how to proceed with Question 2”)</li>
+    </ul>
+  </li>
+  <li>Did you find or come across code that implements any part of this assignment ? Yes / No. (See below policy on “found code”)
+    <ul>
+      <li>If you answered ‘yes’, give full details: <strong>__</strong><strong>__</strong>_</li>
+      <li>(book &amp; page, URL &amp; location within the page, etc.).</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>
+    <p>If you gave help after turning in your own assignment and/or after answering the questions above, you must update your answers before the assignment’s deadline, if necessary by emailing the course staff.</p>
+  </li>
+  <li>
+    <p>Collaboration without full disclosure will be handled severely, in compliance with <a href="http://www.cmu.edu/policies/documents/Cheating.html">CMU’s Policy on Cheating and Plagiarism</a>.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="academic-integrity-read-this-carefully">Academic Integrity (Read this carefully!)</h3>
+
+<h4 id="previously-used-assignments">Previously Used Assignments</h4>
+
+<p>Some of the homework assignments used in this class may have been used in prior versions of this class, or in classes at other institutions, or elsewhere. Solutions to them may be, or may have been, available online, or from other people or sources.</p>
+
+<p>It is explicitly forbidden to use any such sources, or to consult people who have solved these problems before. It is explicitly forbidden to search for these problems or their solutions on the internet. You must solve the homework assignments completely on your own. We will be actively monitoring your compliance.</p>
+
+<p>Collaboration with other students who are currently taking the class is allowed, but only under the conditions stated above.</p>
+
+<h4 id="policy-regarding-found-code">Policy Regarding “Found Code”</h4>
+
+<p>You are encouraged to read books and other instructional materials, both online and offline, to help you understand the concepts and algorithms taught in class. These materials may contain example code or pseudo code, which may help you better understand an algorithm or an implementation detail.</p>
+
+<p>However, when you implement your own solution to an assignment, you must put all materials aside, and write your code completely on your own, starting <em>from scratch</em>. Specifically, you may not use any code you found or came across.</p>
+
+<p>If you find or come across code that implements any part of your assignment, you must disclose this fact in your collaboration statement.</p>
+
+<h4 id="duty-to-protect-ones-work">Duty to Protect One’s Work</h4>
+
+<p>Students are responsible for pro-actively protecting their work from copying and misuse by other students. If a student’s work is copied by another student, the original author is also considered to be at fault and in gross violation of the course policies. It does not matter whether the author allowed the work to be copied or was merely negligent in preventing it from being copied. When overlapping work is submitted by different students, both students will be punished.</p>
+
+<p>To protect future students, do not post your solutions publicly, neither during the course nor afterwards.</p>
+
+<hr />
+
+<h3 id="penalties-for-violations-of-course-policies">Penalties for Violations of Course Policies</h3>
+
+<p>All violations (even the first violation) of the academic integrity or collaboration policy will always be reported to the university authorities (your Department Head, Associate Dean, Dean of Student Affairs, etc.) as an official Academic Integrity Violation and will carry severe penalties.</p>
+
+<ol>
+  <li>
+    <p><strong>The penalty for the first violation is a one-and-a-half letter grade reduction</strong>. For example, if your final letter grade for the course was to be an A-, it would become a C+.</p>
+  </li>
+  <li>
+    <p>The penalty for the second violation is failure in the course, and can even lead to dismissal from the university.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="late-policy">Late Policy</h3>
+
+<p>Each student has a total of <strong>10 grace days</strong> that may be applied to the homework assignments.
+<strong>No more than 3 grace days may be used on any single assignment</strong>.</p>
+
+<p>Any assignment submitted more than 3 days past the deadline will get <strong>zero credit</strong>.</p>
+
+<p>Grace days will be <strong>subtracted from all students in the homework team</strong>. E.g. an assignment submitted 1 day late by a team of 2 people will result in both team members losing 1 grace day from their total allotment.</p>
+
+<hr />
+
+<h3 id="regrade-policy">Regrade Policy</h3>
+
+<p>If you feel that we have made a mistake in grading your homework, please request a regrade on Gradescope and we will consider your request.</p>
+
+<p>Please note that regrading of a homework may cause your grade to go either up or down.</p>
+
+<hr />
+
+<h3 id="extensions">Extensions</h3>
+
+<p>In general, we do not grant extensions on assignments. There are several exceptions:</p>
+
+<ul>
+  <li>
+    <p><strong>Medical Emergencies:</strong> If you are sick and unable to complete an assignment or attend class, please go to University Health Services. For minor illnesses, we expect grace days or our late penalties to provide sufficient accommodation. For medical emergencies (e.g. prolonged hospitalization), students may request an extension afterwards and should include a note from University Health Services.</p>
+  </li>
+  <li>
+    <p><strong>Family/Personal Emergencies:</strong> If you have a family emergency (e.g. death in the family) or a personal emergency (e.g. mental health crisis), please contact your academic adviser or Counseling and Psychological Services (CaPS). In addition to offering support, they will reach out to the instructors for all your courses on your behalf to request an extension.</p>
+  </li>
+  <li>
+    <p><strong>University-Approved Absences:</strong> If you are attending an out-of-town university approved event (e.g. multi-day athletic/academic trip organized by the university), you may request an extension for the duration of the trip. You must provide confirmation of your attendance, usually from a faculty or staff organizer of the event.</p>
+  </li>
+</ul>
+
+<p>For any of the above situations, you may request an extension by emailing <a href="mailto:shreyanb@andrew.cmu.edu">Shreyan</a>. The email should be sent as soon as you are aware of the conflict and <strong>at least 5 days prior to the deadline</strong>. In the case of an emergency, no notice is needed.</p>
+
+<hr />
+
+<h3 id="passfail-policy">Pass/Fail Policy</h3>
+
+<p>We allow you take the course as Pass/Fail. Instructor permission is not required. You must complete all aspects of the course (all homeworks) if you take the course as Pass/Fail.</p>
+
+<p>What grade is the cutoff for Pass will depend on your program. Be sure to check with your program / department as to whether you can count a Pass/Fail course towards your degree requirements, <strong>notify us that you want to take the course Pass/Fail, and notify us of the Pass threshold your department uses</strong> (i.e., does it correspond to a grade of A, B, C, or D?)</p>
+
+<hr />
+
+<h3 id="auditing">Auditing</h3>
+
+<ul>
+  <li>
+    <p>Official auditing of the course (i.e. taking the course for an  <em>Audit</em> grade) is not permitted this semester.</p>
+  </li>
+  <li>
+    <p>Unofficial auditing of the course (i.e. watching the lectures online or attending them in person, but not turning in homeworks to grade) is welcome and permitted without prior approval. We give priority to students who are officially registered for the course, so informal auditors may only take a seat in the classroom <strong>if there is one available 10 minutes after the start of class</strong>. Unofficial auditors will not be given access to course materials such as homework assignments and exams.</p>
+  </li>
+
+</ul>
+
+<hr />
+<!--
+<h3 id="online-and-waitlisted-students">Online and Waitlisted Students</h3>
+
+<ul>
+  <li>
+    <p>All lecture videos will be recorded and made available online.  We are currently working with the administration to try and create an online section for this course (10-703 B) so that we can work on getting everybody off of the waitlist and officially enrolled.  Please be patient, as this may take time to complete.  Past experience suggests that there will be sufficient seats in the classroom for everybody who wants to take the course, so we are optimistic that all students on the waitlist are likely to be able to register within the first few weeks.</p>
+  </li>
+  <li>
+    <p>Waitlisted students should complete all homework assignments with the rest of the class.</p>
+  </li>
+  <li>
+    <p>The first couple lectures are likely to be quite full – so it’d be best for waitlist students to use the livestream. We’ll let you know when seats start to become available. Once that happens, you are welcome to take a <strong>physical seat</strong> (GHC 4401) if there is an open one <strong>5 minutes after class has started</strong> (i.e. 12:05pm onwards)</p>
+  </li>
+</ul>
+-->
+<hr />
+
+<h3 id="students-with-course-conflicts">Students with Course Conflicts</h3>
+
+<p>Students with timing conflicts (i.e., who have another class offered at the same time)  will be permitted to take this course.</p>
+
+<p><strong>However, there may be occasional days when we need you to arrive in person during class time (e.g. for student presentations)</strong>.  We will let you know of any dates we require you to be available, as soon as we know them.</p>
+
+<hr />
+
+<h3 id="accommodations-for-students-with-disabilities">Accommodations for Students with Disabilities</h3>
+
+<p>If you have a disability and have an accommodations letter from the Disability Resources office, please discuss your accommodation needs with <a href="mailto:shreyanb@andrew.cmu.edu">Shreyan</a> or one of the instructors as early in the semester as possible. We will work with you to ensure that accommodations are provided as appropriate.</p>
+
+<p>If you suspect that you may have a disability and would benefit from accommodations but are not yet registered with the Office of Disability Resources, we encourage you to contact them at <a href="access@andrew.cmu.edu">access@andrew.cmu.edu</a>.</p>
+
+<hr />
+
+<h3 id="take-care-of-yourself-read-this">Take care of yourself (Read this!)</h3>
+
+<p>Do your best to maintain a healthy lifestyle this semester by eating well, exercising, avoiding drugs and alcohol, getting enough sleep and taking some time to relax. This will help you achieve your goals and cope with stress. All of us benefit from support during times of struggle. You are not alone. There are many helpful resources available on campus and an important part of the college experience is learning how to ask for help. Asking for support sooner rather than later is often helpful.</p>
+
+<p>If you or anyone you know experiences any academic stress, difficult life events, or feelings like anxiety or depression, we strongly encourage you to seek support. Counseling and Psychological Services (CaPS) is here to help: call 412-268-2922 and visit their website at <a href="http://www.cmu.edu/counseling/">www.cmu.edu/counseling</a>. Consider reaching out to a friend, faculty or family member you trust for help getting connected to the support that can help.</p>
+
+<hr />
+
+<h3 id="listeners-outside-cmu">Listeners outside CMU</h3>
+
+<p>Please feel free to reuse any of these course materials that you find of use in your own courses.</p>
+
+<p>We ask that you retain any copyright notices, and include a written notice indicating the source of any materials you use.</p>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Deep Reinforcement Learning</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">10-703 Staff</li><li><a class="u-email" href="mailto:ta-deeprl@lists.andrew.cmu.edu">ta-deeprl@lists.andrew.cmu.edu</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/cmudeeprl" target="_blank"><i class="fab fa-github"></i> <span class="username">cmudeeprl</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>&copy; Copyright 2020 Carnegie Mellon University. <br />
+        Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/Spring202010403website/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.js"></script>
+<script src="/Spring202010403website/assets/js/katex.js"></script>
+
+
+
+<!-- Load Anchor JS -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/anchor-js/3.2.2/anchor.min.js"></script>
+<script>
+  anchors.options.visible = 'hover';
+  anchors.add('article h2, article h3, article h4, article h5, article h6');
+</script>
+
+
+
+<!-- Adjust LaTeX JS -->
+<script src="/Spring202010403website/assets/js/latex.js"></script>
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/Spring202010403website/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/Spring202010403website/assets/css/academicons.min.css">
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', '', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,42 @@
+<div class="instructors clearfix">
+  {% for instructor in site.data.staff.Instructors %}
+  <div class="instructor-profile-two-col">
+    <a href="{{ instructor.url }}" target="_blank"><img src="{{ instructor.image | prepend: '/assets/img/' | relative_url }}" /></a>
+    <ul class="instructor-info">
+      <li><span>Instructor</span> <a href="{{ instructor.url }}" target="_blank">{{ instructor.name }}</a></li>
+      <li><span>Email:</span> <a href="mailto:{{ instructor.email | encode_email }}" target="_blank">{{ instructor.email }}</a></li>
+      <li><span>Office hours:</span> {{ instructor.office-hours }}</li>
+    </ul>
+  </div>
+  {% endfor %}
+
+  {% for instructor in site.data.staff.EducationAssociates %}
+  <div class="instructor-profile-two-col">
+    {% if instructor.image %}
+    <a href="{{ instructor.url }}" target="_blank"><img src="{{ instructor.image | prepend: '/assets/img/' | relative_url }}" /></a>
+    {% endif %}
+    <ul class="instructor-info">
+      <li><span>Education Associate</span> <a href="{{ instructor.url }}" target="_blank">{{ instructor.name }}</a></li>
+      <li><span>Email:</span> <a href="mailto:{{ instructor.email | encode_email }}" target="_blank">{{ instructor.email }}</a></li>
+      <li><span>Office hours:</span> {{ instructor.office-hours }}</li>
+    </ul>
+  </div>
+  {% endfor %}
+
+  {% for instructor in site.data.staff.TAs %}
+  <div class="instructor-profile-two-col">
+    {% if instructor.image %}
+    <a href="{{ instructor.url }}" target="_blank"><img src="{{ instructor.image | prepend: '/assets/img/' | relative_url }}" /></a>
+    {% endif %}
+    <ul class="instructor-info">
+      <li><span>TA</span> <a href="{{ instructor.url }}" target="_blank">{{ instructor.name }}</a>
+      <li><span>Email:</span> <a href="mailto:{{ instructor.email | encode_email }}" target="_blank">{{ instructor.email }}</a></li>
+      <li><span>Office hours:</span> {{ instructor.office-hours }}</li>
+      <!-- <li><span>Zoom:</span> <a href="{{ instructor.zoom }}" target="_blank">Link</a></li> -->
+      <li><span>Location:</span> {{ instructor.location }}</li>
+    </ul>
+    <br /><br />
+  </div>
+  <br /><br />
+  {% endfor %}
+</div>
