@@ -31,8 +31,8 @@ Commercial entities, such as search engines, advertisers, media platforms (e.g.,
 - 💻 **HW submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
 - ⌨️ **colab**: [notebook](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing) or click `Open in Colab`
 
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/statmlben/CUHK-STAT3009)
 [![Homepage](https://img.shields.io/badge/CUHK-STAT3009-blueviolet)](https://www.bendai.org/CUHK-STAT3009/)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/statmlben/CUHK-STAT3009) 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing)
 
 
