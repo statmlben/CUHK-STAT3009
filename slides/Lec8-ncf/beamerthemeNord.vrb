@@ -1,0 +1,12 @@
+\frametitle{NCF: embedding layer}
+^^ILet's summarize \red{Embedding Layer}...
+^^I\medskip
+^^I\begin{itemize}
+^^I^^I\item[Mapping] $u \to \mb{p}_u$, or \blue{cate\_feat} $\to$ \green{dense} representation
+^^I^^I\item[Params] Embedding matrix: \#User (or \#Item) $\times$ \#LatentFactor
+^^I^^I\item[hp] \#LatentFactor or \red{embedding size}
+^^I^^I\item[Opt] The model becomes
+^^I^^I\begin{equation*}
+^^I^^I^^I\widehat{f}_{\theta} = \argmin_{f_{\theta}} \ \frac{1}{|\Omega|} \sum_{(u,i) \in \Omega} (r_{ui} - f_{\pmb{\theta}}(u,i) )^2 + \lambda \text{Reg}(\pmb{\theta})
+^^I^^I\end{equation*}
+^^I\end{itemize}

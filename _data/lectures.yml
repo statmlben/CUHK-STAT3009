@@ -1,12 +1,14 @@
-- date: Th 09/07
+- date: Th 09/05
   lecturer: 
   title: >
     <strong>Overview of Recommender Systems</strong>
-  slides: 
+  slides: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
-    - <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets - UCSD CSE</a>
-    - <a href="https://www.cs.uic.edu/~liub/KDD-cup-2007/proceedings/The-Netflix-Prize-Bennett.pdf">The Netflix Prize</a>
-    - <a href="https://www.thrillist.com/entertainment/nation/the-netflix-prize">The Netflix Prize - How a $1 Million Contest Changed Binge-Watching Forever</a>
+    - <a href="https://cs231n.github.io/python-numpy-tutorial/">Python Numpy Tutorial - CS231n Stanford</a>
+    - <a href="https://youtu.be/rfscVS0vtbw">Python Tutorial</a>
+    # - <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets - UCSD CSE</a>
+    # - <a href="https://www.cs.uic.edu/~liub/KDD-cup-2007/proceedings/The-Netflix-Prize-Bennett.pdf">The Netflix Prize</a>
+    # - <a href="https://www.thrillist.com/entertainment/nation/the-netflix-prize">The Netflix Prize - How a $1 Million Contest Changed Binge-Watching Forever</a>
   logistics:
