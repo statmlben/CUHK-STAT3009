@@ -1,49 +1,4 @@
-> "*All models are wrong, but some are useful." — George E. P. Box*
 
-## <span style="color:#A04000"> 🗓️ Schedule (tentative) </span>
-
-<table class="table">
-  <colgroup>
-    <col style="width:10%">
-    <col style="width:20%">
-    <col style="width:40%">
-    <col style="width:10%">
-    <col style="width:10%">
-  </colgroup>
-  <thead>
-  <tr class="active">
-    <th>Date</th>
-    <th>Description</th>
-    <th>Course Materials</th>
-    <th>Events</th>
-    <th>Deadlines</th>
-  </tr>
-  </thead>
-  <tr>
-    <td>Prepare</td>
-    <td>Course information
-      <br>
-      [<a href="../_pages/STAT3009/Lec-pre/S.pdf">slides</a>]
-      <br><br>
-      Python Tutorial
-      <br>
-      [<a href="https://youtu.be/rfscVS0vtbw">YouTube</a>]
-      <br><br>
-      Numpy, Pandas, Matplotlib
-      <br>
-      [<a href="https://cs231n.github.io/python-numpy-tutorial/">notes</a>]
-      [<a href="https://youtu.be/LHBE6Q9XlzI">YouTube</a>]
-    </td>
-    <td>
-      Suggested Readings:
-      <ol>
-        <li><a href="https://www.learnpython.org/">learnpython.org</a></li>
-        <li><a href="https://docs.python.org/3/tutorial/">The Python Tutorial</a> (official Python documentation)</li>
-      </ol>
-    </td>
-    <td></td>
-    <td></td>
-  </tr>
 
   <tr>
     <td>Sep 07</td>
