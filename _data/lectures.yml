@@ -13,3 +13,18 @@
     # - <a href="https://www.cs.uic.edu/~liub/KDD-cup-2007/proceedings/The-Netflix-Prize-Bennett.pdf">The Netflix Prize</a>
     # - <a href="https://www.thrillist.com/entertainment/nation/the-netflix-prize">The Netflix Prize - How a $1 Million Contest Changed Binge-Watching Forever</a>
   logistics:
+
+- date: Th 09/12
+  lecturer: 
+  title: >
+    <strong>Background and baseline methods</strong>
+  note: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec1-baseline/note.pdf
+  video: 
+  pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
+  readings:
+    - <a href="https://en.wikipedia.org/wiki/Netflix_Prize">Wiki-Netflix Prize</a>
+    - <a href="https://www.cs.uic.edu/~liub/KDD-cup-2007/proceedings/The-Netflix-Prize-Bennett.pdf">The Netflix Prize</a>
+    - <a href="https://www.thrillist.com/entertainment/nation/the-netflix-prize">The Netflix Prize - How a $1 Million Contest Changed Binge-Watching Forever</a>
+    - <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets - UCSD CSE</a>
+  logistics:
