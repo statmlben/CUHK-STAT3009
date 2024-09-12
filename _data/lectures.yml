@@ -28,3 +28,11 @@
     - <a href="https://www.thrillist.com/entertainment/nation/the-netflix-prize">The Netflix Prize - How a $1 Million Contest Changed Binge-Watching Forever</a>
     - <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets - UCSD CSE</a>
   logistics:
+
+
+- date: Th 09/19
+  lecturer:
+  quiz: >
+    <strong> ⏰ Lab Quiz 1: implement baseline methods via Kaggle </strong> <br> <br>
+    <strong> G25 LSB </strong>
+  logistics:
