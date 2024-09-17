@@ -1,4 +1,3 @@
-
 - date: Th 09/05
   lecturer: 
   title: >
@@ -11,7 +10,6 @@
     - <a href="https://cs231n.github.io/python-numpy-tutorial/">Python Numpy Tutorial - CS231n Stanford</a>
     - <a href="https://youtu.be/rfscVS0vtbw">Python Tutorial</a>
   logistics:
-
 
 - date: Th 09/12
   lecturer: 
@@ -28,7 +26,6 @@
     - <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets - UCSD CSE</a>
   logistics:
 
-
 - date: Th 09/19
   lecturer: 
   title: >
@@ -39,7 +36,6 @@
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
   logistics:
-
 
 - date: Th 09/26
   lecturer:
