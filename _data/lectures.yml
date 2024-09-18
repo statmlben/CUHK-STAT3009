@@ -3,7 +3,7 @@
   title: >
     <strong>Overview of Recommender Systems</strong>
   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec0-pre/note.pdf
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-pre/note.pdf
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
@@ -16,7 +16,7 @@
   title: >
     <strong>Background and baseline methods</strong>
   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec1-baseline/note.pdf
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-baseline/note.pdf
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
@@ -31,7 +31,7 @@
   title: >
     <strong>Machine Learning</strong>
   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-  slides:
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-ML/note.pdf
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
