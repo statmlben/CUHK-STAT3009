@@ -11,7 +11,6 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 
 - [nb - prepare](nb_prepare.ipynb): Software preparation 
 - [nb - background](nb_background.ipynb): Baseline methods for Recommender Systems
-- [nb - correlation RS](nb_correlation.ipynb): Correlation-based Recommender Systems
 - [nb - ML](nb_ml.ipynb): Machine learning framework
 - [nb - MF](nb_mf.ipynb): Matrix factorization: BCD/ALS
 - [nb - SGD](nb_SGD.ipynb): Matrix factorization: GD, ALS+GD, SGD
@@ -20,6 +19,7 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [nb - NN](nb_nn.ipynb): Neural Networks
 - [nb - NCF](nb_ncf.ipynb): Neural Collaborative Filtering: Neural Networks in RS
 - [nb - side](nb_side.ipynb): Neural RS with Side Information
+<!-- - [nb - correlation RS](nb_correlation.ipynb): Correlation-based Recommender Systems -->
 
 ## 🌟 STAR
 

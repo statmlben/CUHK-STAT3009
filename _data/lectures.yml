@@ -35,6 +35,9 @@
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
+    - Chapters 2-3 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning
+    - <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear regression in sklearn</a>
+    - <a href="https://scikit-learn.org/1.1/tutorial/index.html">scikit-learn Tutorials</a>
   logistics:
 
 - date: Th 09/26
