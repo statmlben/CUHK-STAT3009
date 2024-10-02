@@ -29,13 +29,13 @@
 - date: Th 09/19
   lecturer: 
   title: >
-    <strong>Machine Learning</strong>
+    <strong>Machine Learning I</strong>
   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
   slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-ML/note.pdf
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
-    - Chapters 2-3 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning
+    - Chapters 2-3 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning</a>
     - <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear regression in sklearn</a>
     - <a href="https://scikit-learn.org/1.1/tutorial/index.html">scikit-learn Tutorials</a>
   logistics:
@@ -47,3 +47,17 @@
     <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/ryIm_U4aC" target="_blank">[Kaggle Tutorial]</a> </strong>
   logistics:
 
+- date: Th 09/19
+  lecturer: 
+  title: >
+    <strong>Machine Learning II</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-ML/note.pdf
+  video: 
+  pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
+  readings:
+    - <a href="https://scikit-learn.org/dev/modules/generated/sklearn.base.BaseEstimator.html">scikit-BaseEstimator</a>
+    - <a href="https://scikit-learn.org/stable/modules/compose.html">scikit-Pipelines</a>
+  logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 10) </span>
+
+  

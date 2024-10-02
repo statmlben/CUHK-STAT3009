@@ -1,4 +1,4 @@
-\frametitle{Cross-validation: Ridge regression}
+\frametitle{Holdout Cross-validation: Ridge regression}
 ^^I\begin{equation*}
 ^^I^^I\widehat{\mb{\theta}} = \argmin_{\mb{\theta}} \ \frac{1}{n} \sum_{i=1}^n \big( \text{out}_i - \mb{\theta}^\intercal(\text{feat}_i) \big)^2 + \lambda \| \mb{\theta} \|^2_2.
 ^^I\end{equation*}
