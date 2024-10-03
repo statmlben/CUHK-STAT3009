@@ -57,7 +57,8 @@
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
     - <a href="https://scikit-learn.org/dev/modules/generated/sklearn.base.BaseEstimator.html">scikit-BaseEstimator</a>
-    - <a href="https://scikit-learn.org/stable/modules/compose.html">scikit-Pipelines</a>
+    - <a href="https://machinelearningmastery.com/k-fold-cross-validation/">A Gentle Introduction to k-fold Cross-Validation</a>
+    - <a href="https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-performance-e51e5430ff85">Cross Validation Explained - Evaluating estimator performance</a>
   logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 10) </span>
 
   
