@@ -1,29 +1,5 @@
 
 
-
-  <tr>
-    <td>Sep 28</td>
-    <td>ML overview
-      <br>
-      [<a href="../_pages/STAT3009/Lec-ML/S.pdf">slides</a>]
-      [<a href="https://colab.research.google.com/drive/1hrpclpigZgRGFoAbgZ5V6Sk-iLS8QiYQ?usp=sharing">colab</a>]
-      [<a href="https://github.com/statmlben/CUHK-STAT3009/blob/main/nb_ml.ipynb">github</a>]
-    </td>
-    <td>
-      Suggested Readings:
-      <ol>
-        <li>Chapters 2-3 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning</a></li>
-        <li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear regression in sklearn</a></li>
-      </ol>
-    </td>
-    <td>
-    HW 1 <b><font color="#c0842b">release</font></b>
-    <br>
-    [<a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing">colab</a>]
-    </td>
-    <td></td>
-  </tr>
-
 <tr>
     <td>Oct 05</td>
     <td>Matrix factorization I: ALS/BCD

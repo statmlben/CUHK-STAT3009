@@ -61,4 +61,17 @@
     - <a href="https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-performance-e51e5430ff85">Cross Validation Explained - Evaluating estimator performance</a>
   logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 10) </span>
 
-  
+  - date: Th 10/10
+  lecturer: 
+  title: >
+    <strong>SVD / MF Model I</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-MF/note.pdf
+  video: 
+  pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
+  readings:
+    - <a href="https://sifter.org/simon/journal/20061211.html">Netflix Update - Try This at Home</a>
+    - <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5197422">Matrix factorization techniques for recommender systems</a>
+    - <a href="https://jmlr.org/papers/volume16/hastie15a/hastie15a.pdf">Matrix completion and low-Rank SVD via fast alternating least squares</a>
+    <a href="https://www.stat.cmu.edu/~ryantibs/convexopt-S15/lectures/22-coord-desc.pdf">Coordinate Descent (Slides by Ryan Tibshirani)</a>
+  logistics: 
