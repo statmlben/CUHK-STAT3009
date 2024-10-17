@@ -196,7 +196,7 @@ class SVD(BaseEstimator):
             obj_new = self.obj(X, y)
             diff = abs(obj_old - obj_new)
 
-            rmse_tmp = self.mse(X, y)
+            rmse_tmp = np.sqrt(self.mse(X, y))
             if self.verbose:
                 print("RegSVD-ALS: %d; obj: %.3f; rmse:%.3f, diff: %.3f"
                       %(l, obj_new, rmse_tmp, diff))
