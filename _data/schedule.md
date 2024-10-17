@@ -162,25 +162,6 @@
     </td>
 </tr>
 
-<tr>
-    <td><del>Nov 23</del></td>
-    <td><del>Model Averaging</del>
-      <br>
-      <!-- [<a href="https://www.dropbox.com/s/2iptwnmhw3v459x/beamerthemeNord.pdf?dl=0">slides</a>] -->
-      <!-- [<a href="https://www.dropbox.com/s/g28znbig02f6oiq/beamerthemeNord.pdf?dl=0">colab</a>]
-      [<a href="https://github.com/statmlben/CUHK-STAT3009/blob/main/notebook1.ipynb">github</a>] -->
-    </td>
-    <td>
-    Suggested Readings:
-      <ol>
-        <li>Chapters 8 and 16 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning</a></li>
-        <li><a href="https://builtin.com/machine-learning/ensemble-model">Ensemble Models: What Are They and When Should You Use Them?</a></li>
-        <li><a href="https://github.com/yzhao062/combo">combo: A Python Toolbox for Machine Learning Model Combination</a></li>
-      </ol>
-    </td>
-    <td></td>
-    <td></td>
-</tr>
 
   <tr class="warning">
     <td>Nov 30</td>
