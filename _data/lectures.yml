@@ -89,3 +89,10 @@
     - <a href="https://dl.acm.org/doi/abs/10.1145/1401890.1401944">Factorization meets the neighborhood - a multifaceted collaborative filtering model </a>
     - <a href="https://surpriselib.com/"> SurPRISE - A Python scikit for recommender systems. </a>
   logistics: 
+
+- date: Th 10/24
+  lecturer:
+  quiz: >
+    <strong> ⏰ Lab Quiz 2: Run SVD methods in Kaggle </strong> <br> <br>
+    <strong> G25 LSB </strong>
+  logistics:
