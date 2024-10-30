@@ -96,3 +96,18 @@
     <strong> ⏰ Lab Quiz 2: Run SVD methods in Kaggle </strong> <br> <br>
     <strong> G25 LSB </strong>
   logistics:
+
+- date: Th 10/31
+  lecturer: 
+  title: >
+    <strong>Neural Networks</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-NN/note.pdf
+  video: 
+  pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
+  readings:
+    - <a href="https://keras.io/">Keras Documentation</a>
+    - <a href="https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/">Keras Tutorial by Machine Learning Mastery</a>
+    - <a href="https://github.com/keras-team/keras/tree/master/examples">Keras Examples</a>
+  logistics: <span class="event">HW2 out <a href="https://colab.research.google.com/drive/1aD3mZUlg8FZRKVXJxAAj_vu-hDjWJxmY?usp=sharing" target="_blank">[colab link]</a> (due Nov 07) </span>
+  
