@@ -124,3 +124,9 @@
     - <a href="https://github.com/lyst/lightfm">LightFM GitHub Repository (for hybrid models)</a>
     - <a href="https://developers.google.com/machine-learning/recommendation">Google - ML - Recsys</a>
   logistics: 
+
+- date: Th 11/14
+  lecturer:
+  quiz: >
+    <strong> No lecture </strong> <br> <br>
+  logistics: <span class="event">HW3 out <a href="https://colab.research.google.com/drive/12ImcXQ8KY4G6hAa5Kq9UyLiWAZ2nVQc7?usp=sharing" target="_blank">[colab link]</a> (due Nov 21) </span>

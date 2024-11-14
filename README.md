@@ -23,4 +23,4 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 
 ## 🌟 STAR
 
-If you think the notebooks are useful, please star the repo. Thank you!
+If you find the materials useful, please star the repository. Thank you!

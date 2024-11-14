@@ -44,6 +44,8 @@ model.add(Dense(10, activation='softmax'))
 
 In this example, we create a Sequential model and add three Dense layers. The first layer has 64 units, the second layer has 32 units, and the final layer has 10 units. The activation function for each layer is 'relu' except for the final layer which is 'softmax'.
 
+
+
 **Embedding Layer:**
 
 An Embedding layer is a type of layer that converts positive integers (indexes) into dense vectors of fixed size. It's often used as the first layer in a neural network to convert categorical data into a numerical representation.
