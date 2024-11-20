@@ -116,7 +116,7 @@
   title: >
     <strong>Neural Matrix Factorization</strong>
   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-ncf/S.pdf
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-side/S.pdf
   video: 
   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
   readings:
@@ -130,3 +130,17 @@
   quiz: >
     <strong> No lecture </strong> <br> <br>
   logistics: <span class="event">HW3 out <a href="https://colab.research.google.com/drive/12ImcXQ8KY4G6hAa5Kq9UyLiWAZ2nVQc7?usp=sharing" target="_blank">[colab link]</a> (due Nov 21) </span>
+
+- date: Th 11/21
+  lecturer: 
+  title: >
+    <strong>Neural Recsys with Side Information</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
+  slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-side/S.pdf
+  video: 
+  pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
+  readings:
+     - <a href="https://research.netflix.com/publication/%20Deep%20Learning%20for%20Recommender%20Systems%3A%20A%20Netflix%20Case%20Study"> Deep learning for recommender systems - A Netflix case study </a>
+     - <a href="https://www.kaggle.com/competitions/home-depot-product-search-relevance">Home Depot Product Search Relevance </a>
+     -  <a href="https://arxiv.org/pdf/1707.07435">Deep Learning based Recommender System</a>
+  logistics: 
