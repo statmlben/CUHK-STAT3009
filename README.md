@@ -1,5 +1,7 @@
 # **CUHK**-**STAT3009**: Recommender systems in Python
-[![Slides](https://img.shields.io/badge/CUHK-STAT3009-blueviolet)](https://www.bendai.org/STAT3009/) [![Github](https://badges.aleen42.com/src/github.svg)](https://github.com/statmlben/CUHK-STAT3009) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TLkXIaYA42JcVxrTZBk6adKY8w533Gym?authuser=2#scrollTo=jbpzja31GGj)
+[![Slides](https://img.shields.io/badge/CUHK-STAT3009-blueviolet)](https://www.bendai.org/STAT3009/) 
+[![Github](https://badges.aleen42.com/src/github.svg)](https://github.com/statmlben/CUHK-STAT3009) 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TLkXIaYA42JcVxrTZBk6adKY8w533Gym?authuser=2#scrollTo=jbpzja31GGj)
 
 This is a repository on code and notebook illustration for CUHK-STAT3009. 
 
@@ -18,7 +20,7 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [nb - EDA](nb_EDA.ipynb): Real dataset: MovieLens and Data Virtualization
 - [nb - NN](nb_nn.ipynb): Neural Networks
 - [nb - NCF](nb_ncf.ipynb): Neural Collaborative Filtering: Neural Networks in RS
-- [nb - side](nb_side.ipynb): Neural RS with Side Information
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1V_UJQ_TLZMmRKx_ncmN1oVhp_yAX_I_b?usp=sharing) | **Neural RS with Side Information** 
 <!-- - [nb - correlation RS](nb_correlation.ipynb): Correlation-based Recommender Systems -->
 
 ## 🌟 STAR
