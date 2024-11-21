@@ -1,9 +1,15 @@
-\frametitle{Appendix: Embedding layers in NLP (Optional)}
-    \begin{itemize}
-        \item \yellow{\bf Embedding layers} is a \red{fundamental tool} for NLP tasks
-        \item[Data] Restaurant Review dataset
-        \begin{center}
-            \includegraphics[scale=.28]{figs/review_data.png}
-        \end{center}
-        \item[Goal] Given \pink{textual reviews}, can you provide a label to the \yellow{review}?
-    \end{itemize}
+\frametitle{What: Embedding Layer}
+    \begin{lstlisting}[language=python,basicstyle = \ttfamily\footnotesize,keywordstyle=\color{red}]
+tf.keras.layers.Embedding(
+   input_dim,
+   output_dim,
+   embeddings_regularizer=None,
+   activity_regularizer=None,
+   embeddings_constraint=None,
+   **kwargs)
+   \end{lstlisting}
+   \red{\bf Key Arguments}:
+   \begin{itemize}
+    \item[input\_dim]  $J$ - Integer. Size of the vocabulary, i.e., maximum integer index + 1.
+    \item[output\_dim]  $r$ - Integer. Dimension of the dense embedding.
+   \end{itemize}
