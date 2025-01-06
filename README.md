@@ -21,6 +21,4 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1V_UJQ_TLZMmRKx_ncmN1oVhp_yAX_I_b?usp=sharing) | Neural RS with Side Information
 
 
-## 🌟 STAR
-
-If you find the materials useful, please star the repository. Thank you!
+> If you find the materials useful, please consider starring 🌟 the repository. We appreciate your feedback!
