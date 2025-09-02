@@ -12,15 +12,15 @@ Commercial entities, such as search engines, advertisers, media platforms (e.g.,
 👌 **What you'll learn:**
 
 - Gain insight into the fundamental principles underlying various recommender systems approaches, including correlation-based collaborative filtering, latent factor models, and neural recommender systems.
-- Develop hands-on experience implementing and analyzing recommender systems for real-world applications using [Python](https://www.python.org/), [sklearn](https://scikit-learn.org/stable/), and [TensorFlow](https://www.tensorflow.org/).
+- Develop hands-on experience implementing and analyzing recommender systems for real-world applications using [Python](https://www.python.org/), [scikit-learn](https://scikit-learn.org/stable/), and [TensorFlow](https://www.tensorflow.org/).
 - Learn to select and design suitable models tailored to specific applications.
 
 🏗️ **Prerequisites:**
 
-- **Calculus & Linear algebra**: inner products, matrix-vector products, linear regression (OLS).
+- **Calculus & Linear Algebra**: Inner products, matrix-vector products, linear regression (OLS).
 - **Basic Statistics**: Basics of distributions, probabilities, mean, standard deviation, and other fundamental concepts.
-- **Python**: Familiarity with basic Python syntax and experience with Numpy, pandas, and TensorFlow libraries.
-- (*Recommended*) Complete a Machine Learning Crash Course (in-person, online, or self-study) or possess equivalent knowledge
+- **Python**: Familiarity with basic Python syntax and experience with NumPy, pandas, and TensorFlow libraries.
+- (*Recommended*) Complete a Machine Learning Crash Course (in-person, online, or self-study) or possess equivalent knowledge.
 
 ***
 
@@ -28,12 +28,12 @@ Commercial entities, such as search engines, advertisers, media platforms (e.g.,
 - 🎒 **Lecture/Recitation Location:** Mong Man Wai Bldg 710
 <!-- - **Office Hours Location:** [Gates-Hillman Center 8228](https://goo.gl/maps/74vUj6uoaTTzYM937){:target="\_blank"} -->
 <!-- - **Discussion:** [Piazza](https://piazza.com){:target="\_blank"} -->
-- 💻 **HW submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
-- ⌨️ **colab**: [notebook](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing) or click `Open in Colab`
+- 💻 **HW Submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
+- ⌨️ **Colab:** [notebook](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing) or click `Open in Colab`
 
 [![Homepage](https://img.shields.io/badge/homepage-blueviolet?logo=htmx)](https://www.bendai.org/CUHK-STAT3009/)
 [![GitHub](https://img.shields.io/badge/Github-black.svg?logo=github)](https://github.com/statmlben/CUHK-STAT3009)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing)
 
 
 **All students welcome**: we are happy to have audiences in our lecture.
