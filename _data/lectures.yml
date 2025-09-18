@@ -26,19 +26,19 @@
     - <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets - UCSD CSE</a>
   logistics:
 
-# - date: Th 09/19
-#   lecturer: 
-#   title: >
-#     <strong>Machine Learning I</strong>
-#   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-#   slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-ML/note.pdf
-#   video: 
-#   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
-#   readings:
-#     - Chapters 2-3 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning</a>
-#     - <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear regression in sklearn</a>
-#     - <a href="https://scikit-learn.org/1.1/tutorial/index.html">scikit-learn Tutorials</a>
-#   logistics:
+- date: Th 09/18
+  lecturer: 
+  title: >
+    <strong>Machine Learning I</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/Ei837V2a3hlPtySk2cZuRCABxHDzHBJj_9hDGvomwqEd4A?e=DVf5RZ
+  slides: 
+  video: 
+  pynb: https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing
+  readings:
+    - Chapters 2-3 in <a href="https://hastie.su.domains/Papers/ESLII.pdf">The Elements of Statistical Learning</a>
+    - <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear regression in sklearn</a>
+    - <a href="https://scikit-learn.org/1.1/tutorial/index.html">scikit-learn Tutorials</a>
+  logistics:
 
 # - date: Th 09/26
 #   lecturer:
