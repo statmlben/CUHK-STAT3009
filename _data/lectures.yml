@@ -40,6 +40,22 @@
     - <a href="https://scikit-learn.org/1.1/tutorial/index.html">scikit-learn Tutorials</a>
   logistics:
 
+- date: Th 09/26
+  lecturer: 
+  title: >
+    <strong>Machine Learning II</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/Ei837V2a3hlPtySk2cZuRCABxHDzHBJj_9hDGvomwqEd4A?e=fbkcCP
+  slides: https://files.catbox.moe/qvx66x.pdf
+  video: 
+  pynb: https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing
+  readings:
+    - <a href="https://scikit-learn.org/dev/modules/generated/sklearn.base.BaseEstimator.html">scikit-BaseEstimator</a>
+    - <a href="https://machinelearningmastery.com/k-fold-cross-validation/">A Gentle Introduction to k-fold Cross-Validation</a>
+    - <a href="https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-performance-e51e5430ff85">Cross Validation Explained - Evaluating estimator performance</a>
+  logistics:
+  # logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 10) </span>
+
+
 # - date: Th 09/26
 #   lecturer:
 #   quiz: >
