@@ -61,7 +61,9 @@
   quiz: >
     <strong> ⏰ Lab Quiz 1: Run baseline methods in Kaggle </strong> <br> <br>
     <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/ryIm_U4aC" target="_blank">[Kaggle Tutorial]</a> </strong>
-  logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 9) </span>
+  logistics: >
+    <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> <br>
+    (due Oct 9) </span>
 
 
 # - date: Th 10/03
@@ -126,7 +128,9 @@
 #     - <a href="https://keras.io/">Keras Documentation</a>
 #     - <a href="https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/">Keras Tutorial by Machine Learning Mastery</a>
 #     - <a href="https://github.com/keras-team/keras/tree/master/examples">Keras Examples</a>
-#   logistics: <span class="event">HW2 out <a href="https://colab.research.google.com/drive/1aD3mZUlg8FZRKVXJxAAj_vu-hDjWJxmY?usp=sharing" target="_blank">[colab link]</a> (due Nov 07) </span>
+#   logistics: >
+#     <span class="event">HW2 out <a href="https://colab.research.google.com/drive/1aD3mZUlg8FZRKVXJxAAj_vu-hDjWJxmY?usp=sharing" target="_blank">[colab link]</a> <br>
+#     (due Nov 07) </span>
   
 # - date: Th 11/07
 #   lecturer: 
@@ -146,7 +150,9 @@
 #   lecturer:
 #   quiz: >
 #     <strong> No lecture </strong> <br> <br>
-#   logistics: <span class="event">HW3 out <a href="https://colab.research.google.com/drive/12ImcXQ8KY4G6hAa5Kq9UyLiWAZ2nVQc7?usp=sharing" target="_blank">[colab link]</a> (due Nov 21) </span>
+#   logistics: >
+#     <span class="event">HW3 out <a href="https://colab.research.google.com/drive/12ImcXQ8KY4G6hAa5Kq9UyLiWAZ2nVQc7?usp=sharing" target="_blank">[colab link]</a> <br>
+#     (due Nov 21) </span>
 
 # - date: Th 11/21
 #   lecturer: 
