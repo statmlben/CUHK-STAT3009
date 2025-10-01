@@ -6,10 +6,9 @@ The item mean implementation idea is based on the assumption that an item's rati
 
 Mathematically, the item mean can be represented as:
 
-$
-		\bar{r}_{i} = \frac{1}{|\mathcal{U}_i|} \sum_{u \in \mathcal{U}_i} r_{ui}, \text{ for } i=1, \cdots, m; \quad \hat{r}_{ui} = \bar{r}_i,
-$
-
+$$
+\bar{r}_{i} = \frac{1}{|\mathcal{U}_i|} \sum_{u \in \mathcal{U}_i} r_{ui}, \text{ for } i=1, \cdots, m; \quad \hat{r}_{ui} = \bar{r}_i,
+$$
 where:
 
 * $\bar{r}_{i}$ is the average rating for item $i$

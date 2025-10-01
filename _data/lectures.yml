@@ -53,15 +53,16 @@
     - <a href="https://machinelearningmastery.com/k-fold-cross-validation/">A Gentle Introduction to k-fold Cross-Validation</a>
     - <a href="https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-performance-e51e5430ff85">Cross Validation Explained - Evaluating estimator performance</a>
   logistics:
-  # logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 10) </span>
+  # logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 9) </span>
 
 
-# - date: Th 09/26
-#   lecturer:
-#   quiz: >
-#     <strong> ⏰ Lab Quiz 1: Run baseline methods in Kaggle </strong> <br> <br>
-#     <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/ryIm_U4aC" target="_blank">[Kaggle Tutorial]</a> </strong>
-#   logistics:
+- date: Th 09/26
+  lecturer:
+  quiz: >
+    <strong> ⏰ Lab Quiz 1: Run baseline methods in Kaggle </strong> <br> <br>
+    <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/ryIm_U4aC" target="_blank">[Kaggle Tutorial]</a> </strong>
+  logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 9) </span>
+
 
 # - date: Th 10/03
 #   lecturer: 
