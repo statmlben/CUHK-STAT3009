@@ -29,7 +29,7 @@ Commercial entities, including search engines, advertisers, media platforms (e.g
 <!-- - **Office Hours Location:** [Gates-Hillman Center 8228](https://goo.gl/maps/74vUj6uoaTTzYM937){:target="\_blank"} -->
 <!-- - **Discussion:** [Piazza](https://piazza.com){:target="\_blank"} -->
 - 💻 **HW Submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
-- ⌨️ **Colab:** [Notebook](https://colab.research.google.com/drive/1zDZdebMX_v-3H57Ar4_b8qkyKRs7cEqX?usp=sharing) or click `Open in Colab`
+- ⌨️ **Colab:** [Notebook](https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing) or click `Open in Colab`
 
 [![Homepage](https://img.shields.io/badge/homepage-blueviolet?logo=htmx)](https://www.bendai.org/CUHK-STAT3009/)
 [![GitHub](https://img.shields.io/badge/Github-black.svg?logo=github)](https://github.com/statmlben/CUHK-STAT3009)
