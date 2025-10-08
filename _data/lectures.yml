@@ -55,17 +55,6 @@
   logistics:
   # logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 9) </span>
 
-
-- date: Th 09/26
-  lecturer:
-  quiz: >
-    <strong> ⏰ Lab Lecture: Run baseline methods in Kaggle </strong> <br> <br>
-    <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/ryIm_U4aC" target="_blank">[Kaggle Tutorial]</a> </strong>
-  logistics: >
-    <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> <br>
-    (due Oct 9) </span>
-
-
 # - date: Th 10/03
 #   lecturer: 
 #   title: >
@@ -80,20 +69,30 @@
 #     - <a href="https://towardsdatascience.com/cross-validation-explained-evaluating-estimator-performance-e51e5430ff85">Cross Validation Explained - Evaluating estimator performance</a>
 #   logistics: <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> (due Oct 10) </span>
 
-# - date: Th 10/10
-#   lecturer: 
-#   title: >
-#     <strong>MF Models I</strong>
-#   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-#   slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-MF/note.pdf
-#   video: 
-#   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
-#   readings:
-#     - <a href="https://sifter.org/simon/journal/20061211.html">Netflix Update - Try This at Home</a>
-#     - <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5197422">Matrix factorization techniques for recommender systems</a>
-#     - <a href="https://jmlr.org/papers/volume16/hastie15a/hastie15a.pdf">Matrix completion and low-Rank SVD via fast alternating least squares</a>
-#     - <a href="https://www.stat.cmu.edu/~ryantibs/convexopt-S15/lectures/22-coord-desc.pdf">Coordinate Descent (Slides by Ryan Tibshirani)</a>
-#   logistics: 
+
+- date: Th 09/26
+  lecturer:
+  quiz: >
+    <strong> ⏰ Lab Lecture: Run baseline methods in Kaggle </strong> <br> <br>
+    <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/ryIm_U4aC" target="_blank">[Kaggle Tutorial]</a> </strong>
+  logistics: >
+    <span class="event">HW1 out <a href="https://colab.research.google.com/drive/1CKvwWySUnvHVoSUmpzWXiQTdMnxLYgg8?usp=sharing" target="_blank">[colab link]</a> <br>
+    (due Oct 9) </span>
+
+- date: Th 10/09
+  lecturer: 
+  title: >
+    <strong>MF Models I</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/Ei837V2a3hlPtySk2cZuRCABgLyvT4v-WnMx1gAhyf9bCA?e=toi5hc
+  slides: 
+  video: 
+  pynb: https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing
+  readings:
+    - <a href="https://sifter.org/simon/journal/20061211.html">Netflix Update - Try This at Home</a>
+    - <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5197422">Matrix factorization techniques for recommender systems</a>
+    - <a href="https://jmlr.org/papers/volume16/hastie15a/hastie15a.pdf">Matrix completion and low-Rank SVD via fast alternating least squares</a>
+    - <a href="https://www.stat.cmu.edu/~ryantibs/convexopt-S15/lectures/22-coord-desc.pdf">Coordinate Descent (Slides by Ryan Tibshirani)</a>
+  logistics:
 
 # - date: Th 10/17
 #   lecturer: 
