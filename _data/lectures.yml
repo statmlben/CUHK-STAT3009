@@ -94,19 +94,19 @@
     - <a href="https://www.stat.cmu.edu/~ryantibs/convexopt-S15/lectures/22-coord-desc.pdf">Coordinate Descent (Slides by Ryan Tibshirani)</a>
   logistics:
 
-# - date: Th 10/17
-#   lecturer: 
-#   title: >
-#     <strong>MF Models II</strong>
-#   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-#   slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-SVD%2B%2B/note.pdf
-#   video: 
-#   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
-#   readings:
-#     - <a href="https://www.cs.uic.edu/~liub/KDD-cup-2007/proceedings/Regular-Paterek.pdf">Improving regularized singular value decomposition for collaborative filtering </a>
-#     - <a href="https://dl.acm.org/doi/abs/10.1145/1401890.1401944">Factorization meets the neighborhood - a multifaceted collaborative filtering model </a>
-#     - <a href="https://surpriselib.com/"> SurPRISE - A Python scikit for recommender systems. </a>
-#   logistics: 
+- date: Th 10/16
+  lecturer: 
+  title: >
+    <strong>MF Models II</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/Ei837V2a3hlPtySk2cZuRCABgLyvT4v-WnMx1gAhyf9bCA?e=toi5hc
+  slides: 
+  video: 
+  pynb: https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing
+  readings:
+    - <a href="https://www.cs.uic.edu/~liub/KDD-cup-2007/proceedings/Regular-Paterek.pdf">Improving regularized singular value decomposition for collaborative filtering </a>
+    - <a href="https://dl.acm.org/doi/abs/10.1145/1401890.1401944">Factorization meets the neighborhood - a multifaceted collaborative filtering model </a>
+    - <a href="https://surpriselib.com/"> SurPRISE - A Python scikit for recommender systems. </a>
+  logistics: 
 
 # - date: Th 10/24
 #   lecturer:
