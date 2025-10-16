@@ -108,12 +108,12 @@
     - <a href="https://surpriselib.com/"> SurPRISE - A Python scikit for recommender systems. </a>
   logistics: 
 
-# - date: Th 10/24
-#   lecturer:
-#   quiz: >
-#     <strong> ⏰ Lab Quiz 2: Run SVD methods in Kaggle </strong> <br> <br>
-#     <strong> G25 LSB </strong>
-#   logistics:
+- date: Th 10/23
+  lecturer:
+  quiz: >
+    <strong> ⏰ Kaggle Competition </strong> <br> <br>
+    <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/SJpccRaTel" target="_blank">[Instructions]</a> </strong>
+  logistics: 
 
 # - date: Th 10/31
 #   lecturer: 
