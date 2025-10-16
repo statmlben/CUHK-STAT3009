@@ -8,6 +8,8 @@ __pycache__/
 *.tex
 .DS_Store
 
+slides/
+
 # C extensions
 *.so
 
