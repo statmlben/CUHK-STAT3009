@@ -1,9 +1,0 @@
-\frametitle{Appendix: Embedding layers in NLP (Optional)}
-    \begin{itemize}
-        \item \yellow{\bf Embedding layers} is a \red{fundamental tool} for NLP tasks
-        \item[Data] Restaurant Review dataset
-        \begin{center}
-            \includegraphics[scale=.28]{figs/review_data.png}
-        \end{center}
-        \item[Goal] Given \pink{textual reviews}, can you provide a label to the \yellow{review}?
-    \end{itemize}
