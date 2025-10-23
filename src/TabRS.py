@@ -109,7 +109,7 @@ class SVD(BaseEstimator):
     This implementation uses the Alternating Least Squares (ALS) algorithm to learn the latent factors.
     """
 
-    def __init__(self, n_users, n_items, lam=.001, K=10, iterNum=10, tol=1e-4, verbose=1):
+    def __init__(self, n_users, n_items, lam=.01, K=5, iterNum=10, tol=1e-4, verbose=1):
         self.mu = 0.0
         self.a = np.zeros(n_users)
         self.b = np.zeros(n_items)
