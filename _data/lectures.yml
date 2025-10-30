@@ -115,21 +115,21 @@
     <strong> G25 LSB <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/SJpccRaTel" target="_blank">[Instructions]</a> </strong>
   logistics: 
 
-# - date: Th 10/31
-#   lecturer: 
-#   title: >
-#     <strong>Neural Networks</strong>
-#   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-#   slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-NN/note.pdf
-#   video: 
-#   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
-#   readings:
-#     - <a href="https://keras.io/">Keras Documentation</a>
-#     - <a href="https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/">Keras Tutorial by Machine Learning Mastery</a>
-#     - <a href="https://github.com/keras-team/keras/tree/master/examples">Keras Examples</a>
-#   logistics: >
-#     <span class="event">HW2 out <a href="https://colab.research.google.com/drive/1aD3mZUlg8FZRKVXJxAAj_vu-hDjWJxmY?usp=sharing" target="_blank">[colab link]</a> <br>
-#     (due Nov 07) </span>
+- date: Th 10/30
+  lecturer: 
+  title: >
+    <strong>Neural Networks</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/Ei837V2a3hlPtySk2cZuRCABgLyvT4v-WnMx1gAhyf9bCA?e=toi5hc
+  slides: https://files.catbox.moe/ubycfq.pdf
+  video: 
+  pynb: https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing
+  readings:
+    - <a href="https://keras.io/">Keras Documentation</a>
+    - <a href="https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/">Keras Tutorial by Machine Learning Mastery</a>
+    - <a href="https://github.com/keras-team/keras/tree/master/examples">Keras Examples</a>
+  logistics: >
+    <span class="event">HW2 out <a href="https://colab.research.google.com/drive/1aD3mZUlg8FZRKVXJxAAj_vu-hDjWJxmY?usp=sharing" target="_blank">[colab link]</a> <br>
+    (due Nov 06) </span>
   
 # - date: Th 11/07
 #   lecturer: 
