@@ -160,23 +160,23 @@
 #     <span class="event">HW3 out <a href="https://colab.research.google.com/drive/12ImcXQ8KY4G6hAa5Kq9UyLiWAZ2nVQc7?usp=sharing" target="_blank">[colab link]</a> <br>
 #     (due Nov 21) </span>
 
-# - date: Th 11/21
-#   lecturer: 
-#   title: >
-#     <strong>Neural Recsys with Side Information</strong>
-#   notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/EpxRUCS_PBdIj9FZ13K7APkBdB8BKyIsVU8B2ZNoDUrqUw?e=MBKuHo
-#   slides: https://github.com/statmlben/CUHK-STAT3009/blob/main/slides/Lec-side/S.pdf
-#   video: 
-#   pynb: https://colab.research.google.com/drive/16ZYCw19wTsPZt_tE05FEU1fTvQiOHcSS?usp=sharing
-#   readings:
-#      - <a href="https://research.netflix.com/publication/%20Deep%20Learning%20for%20Recommender%20Systems%3A%20A%20Netflix%20Case%20Study"> Deep learning for recommender systems - A Netflix case study </a>
-#      - <a href="https://www.kaggle.com/competitions/home-depot-product-search-relevance">Home Depot Product Search Relevance </a>
-#      -  <a href="https://arxiv.org/pdf/1707.07435">Deep Learning based Recommender System</a>
-#   logistics: 
+- date: Th 11/20
+  lecturer: 
+  title: >
+    <strong>Neural Recsys with Side Information</strong>
+  notes: https://gocuhk-my.sharepoint.com/:o:/g/personal/bendai_cuhk_edu_hk/Ei837V2a3hlPtySk2cZuRCABgLyvT4v-WnMx1gAhyf9bCA?e=toi5hc
+  slides: https://files.catbox.moe/qzoyyr.pdf
+  video: 
+  pynb: https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing
+  readings:
+     - <a href="https://research.netflix.com/publication/%20Deep%20Learning%20for%20Recommender%20Systems%3A%20A%20Netflix%20Case%20Study"> Deep learning for recommender systems - A Netflix case study </a>
+     - <a href="https://www.kaggle.com/competitions/home-depot-product-search-relevance">Home Depot Product Search Relevance </a>
+     -  <a href="https://arxiv.org/pdf/1707.07435">Deep Learning based Recommender System</a>
+  logistics: 
 
-# - date: Th 11/28
-#   lecturer:
-#   quiz: >
-#     <strong> ⏰ Lab Quiz 2: Question sets in Jupyter Notebook </strong> <br> <br>
-#     <strong> Lab Room: LSB C3 (Floor G) <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/HJe6M7if1l" target="_blank">[Final Quiz Instructions]</a> </strong>
-#   logistics:
+- date: Th 11/27
+  lecturer:
+  quiz: >
+    <strong> ⏰ Lab Quiz 2: Question sets in Jupyter Notebook </strong> <br> <br>
+    <strong> Lab Room: LSB G25 <a href="https://hackmd.io/@cTHE1QvtQuKo2qiAA5u0dA/HJe6M7if1l" target="_blank">[Final Quiz Instructions]</a> </strong>
+  logistics:
