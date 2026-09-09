@@ -2,38 +2,40 @@
 layout: about
 permalink: /
 title: <b>R</b>ecommender <b>S</b>ystems
-description: CUHK • Department of Statistics • STAT3009
+description: CUHK • STAT3009 • Fall 2026
 logo: cuhk-logo.png
 news: true
 ---
 
-Commercial entities, including search engines, advertisers, media platforms (e.g., Netflix, Amazon), and financial institutions, leverage recommender systems to recommend content, predict customer behavior, ensure compliance, and assess risk. This course provides a comprehensive overview of predictive models for recommender systems, covering content-based and collaborative filtering algorithms, matrix factorization, and deep learning models. Students will gain hands-on experience implementing recommender systems using Python.
+How do platforms decide which movies, products, or other items to recommend? This course studies how recommender systems use user feedback and item information to predict preferences and rank candidates. We cover content-based methods, collaborative filtering, matrix factorization, and neural recommender systems, with hands-on implementation and evaluation in Python.
+
+In the AI era, mathematical and coding foundations help us understand what a model assumes, inspect generated code, and judge whether results are trustworthy. The course helps students build a **knowledge landscape** connecting mathematical concepts, modeling methods, implementation, and evaluation.
 
 👌 **What you'll learn:**
 
-- Understand the fundamental principles underlying various recommender system approaches, including correlation-based collaborative filtering, latent factor models, and neural recommender systems.
-- Gain hands-on experience implementing and analyzing recommender systems for real-world applications using [Python](https://www.python.org/), [scikit-learn](https://scikit-learn.org/stable/), and [TensorFlow](https://www.tensorflow.org/).
-- Learn to select and design appropriate models tailored to specific applications.
+- Connect linear algebra and statistics to the assumptions and behavior of recommender models.
+- Implement and debug baseline methods, matrix factorization, and neural recommender systems in Python.
+- Use training, validation, and test data appropriately to compare models and interpret their results.
+- Explain and verify code, including code developed with AI assistance, and identify gaps in your own understanding.
 
 🏗️ **Prerequisites:**
 
 - **Calculus & Linear Algebra**: Inner products, matrix-vector products, linear regression (OLS).
 - **Basic Statistics**: Fundamentals of distributions, probabilities, mean, standard deviation, and other core concepts.
-- **Python**: Familiarity with basic Python syntax and experience with NumPy, pandas, and TensorFlow libraries.
-- (*Recommended*) Complete a Machine Learning Crash Course (in-person, online, or self-study) or possess equivalent knowledge.
+- **Python**: Familiarity with basic syntax, arrays, and data tables. The first lecture includes a refresher on Python, NumPy, and pandas.
+- (*Recommended*) An introductory machine learning course or equivalent self-study.
 
 ***
 
-- ⏲️ **Lectures:** Thu 12:30PM - 3:15PM
-- 🎒 **Lecture/Recitation Location:** Mong Man Wai Bldg 710
-<!-- - **Office Hours Location:** [Gates-Hillman Center 8228](https://goo.gl/maps/74vUj6uoaTTzYM937){:target="\_blank"} -->
-<!-- - **Discussion:** [Piazza](https://piazza.com){:target="\_blank"} -->
+- 📅 **Semester:** Fall 2026
+- ⏲️ **Lectures:** Th 12:30PM - 3:15PM
+- 🎒 **Location:** Mong Man Wai Bldg 710
 - 💻 **HW Submission:** [BlackBoard](https://blackboard.cuhk.edu.hk/){:target="\_blank"}
-- ⌨️ **Colab:** [Notebook](https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing) or click `Open in Colab`
+- ⌨️ **Colab:** [Open the course notebook](https://colab.research.google.com/drive/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK). For a local copy, use **File → Download → Download .ipynb** in Colab.
 
 [![Homepage](https://img.shields.io/badge/homepage-blueviolet?logo=htmx)](https://www.bendai.org/CUHK-STAT3009/)
 [![GitHub](https://img.shields.io/badge/Github-black.svg?logo=github)](https://github.com/statmlben/CUHK-STAT3009)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK/view?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EDHHDHJf4iYb452fEb70tEC2E9dbuLwK)
 
 
 **All students welcome**: We are happy to have auditors in our lectures.

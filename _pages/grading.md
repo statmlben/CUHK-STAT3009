@@ -12,11 +12,9 @@ permalink: /grading/
   - Homework 2 (5%): Practicing ALS-related algorithms
   - Homework 3 (5%): Prototyping neural networks in recommender systems using TensorFlow
 
-- **In-Class Kaggle Session** (50%): Open-book in-class Kaggle session.
-  - Lab Attendance (5%): Attendance in the lab sessions is mandatory. You will receive 5% credit if you attend all lab sessions.
-  - Kaggle Competition (45%): Implement SVD recommender system methods.
+- **In-Class Kaggle Session** (40%): Open-book in-class Kaggle session, held approximately mid-semester. Implement SVD recommender system methods.
 
-- **Final In-Class Quiz** (coding and/or exercises) (35%): Basic Python programming and implementation of recommender systems models (in the final lecture of the semester).
+- **Final In-Class Coding Quiz** (45%): Basic Python programming and implementation of recommender systems models, held in the last class of the semester.
 
 <!-- 👨🏻‍🤝‍👨🏾 **Collaboration policy**: We allow you to form a group to finish your real application projects. The number of group members should be no more than 2. The contribution of each member should be clearly stated in the final report. You will receive 5% bonus points (of the project) if you work solo on projects. -->
 

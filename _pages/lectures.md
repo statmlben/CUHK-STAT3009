@@ -2,6 +2,7 @@
 layout: schedule
 permalink: /lectures/
 title: Schedule
+description: Fall 2026. Additional lectures will be announced.
 ---
 
 {% assign current_module = 0 %}
@@ -23,14 +24,14 @@ title: Schedule
 {% assign prev_date = lecture_date %}
 
 <tr class="{{ event_type }}">
-    <th scope="row">{{ lecture.date }}</th>
-    {% if lecture.recitation != blank %} 
+    <th scope="row">{{ lecture.date | date: "%a %m/%d" }}</th>
+    {% if lecture.recitation and lecture.recitation != empty %}
     {% assign recitation_count = recitation_count | plus: 1 %}
     {%endif%}
     {% if lecture.title contains 'No class' or lecture.title contains 'cancelled' or lecture.title contains 'Buffer' %}
         {% assign skip_classes = skip_classes | plus: 1 %}
         <td colspan="4" align="center">{{ lecture.title }}<p align="right">{{ lecture.logistics }}</p></td>
-    {% elsif lecture.quiz != blank %}
+    {% elsif lecture.quiz and lecture.quiz != empty %}
         {% assign skip_classes = skip_classes | plus: 1 %}
         <td colspan="4" align="center">{{ lecture.quiz }}<p align="right">{{ lecture.logistics }}</p></td>
     {% else %}
