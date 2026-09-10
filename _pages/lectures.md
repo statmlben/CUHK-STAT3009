@@ -53,6 +53,9 @@ description: Fall 2026. Additional lectures will be announced.
             {% if lecture.slides %}
               <a href="{{ lecture.slides }}" target="_blank">slides</a>
             {% endif %}
+            {% if lecture.pdf %}
+              | <a href="{{ lecture.pdf }}" target="_blank">PDF</a>
+            {% endif %}
             {% if lecture.slides2 %}
               | <a href="{{ lecture.slides2 }}" target="_blank">slides 2</a>
             {% endif %}
