@@ -9,4 +9,8 @@
   readings:
     - <a href="https://cs231n.github.io/python-numpy-tutorial/">Python NumPy Tutorial - CS231n Stanford</a>
     - <a href="https://youtu.be/rfscVS0vtbw">Python Tutorial</a>
+    - >
+      VS Code &amp; Google Colab Setup:
+      <a href="https://marketplace.visualstudio.com/items?itemName=google.colab">Install &amp; Quick Start</a>
+      · <a href="https://github.com/googlecolab/colab-vscode/wiki/User-Guide">Step-by-step Guide</a>
   logistics:
