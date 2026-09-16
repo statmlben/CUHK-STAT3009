@@ -19,5 +19,6 @@
   title: >
     <strong>Baseline Methods for Rating Prediction</strong>
   slides: ../quarto/Lec-baseline/S.html
+  # Student warmup only; publish solutions separately after class.
   nb_warmup: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_01_Pandas_URL.ipynb
   pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_baseline_methods.ipynb
