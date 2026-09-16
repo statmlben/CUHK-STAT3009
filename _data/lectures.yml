@@ -14,3 +14,10 @@
       <a href="https://marketplace.visualstudio.com/items?itemName=google.colab">Install &amp; Quick Start</a>
       · <a href="https://github.com/googlecolab/colab-vscode/wiki/User-Guide">Step-by-step Guide</a>
   logistics:
+
+- date: "2026-09-17"
+  title: >
+    <strong>Baseline Methods for Rating Prediction</strong>
+  slides: ../quarto/Lec-baseline/S.html
+  nb_warmup: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_01_Pandas_URL.ipynb
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_baseline_methods.ipynb

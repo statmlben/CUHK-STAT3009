@@ -1,0 +1,1432 @@
+---
+title: "Baseline Methods for Rating Prediction"
+subtitle: "STAT3009 · Recommender Systems"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview-quarto/stat3009.scss, baseline.scss]
+    logo: ../Lec-overview-quarto/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls: true
+    controls-layout: edges
+    controls-tutorial: false
+    progress: true
+    slide-number: c/t
+    hash: true
+    transition: fade
+    background-transition: fade
+    transition-speed: default
+    code-line-numbers: true
+    code-copy: false
+    highlight-style: github-dark
+    preview-links: auto
+    link-external-newwindow: true
+    embed-resources: true
+    footer: "CUHK · STAT3009 · Recommender Systems"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## The Netflix rating-prediction pipeline {.detail-slide .netflix-workflow-slide}
+
+<div class="netflix-example-input" role="img" aria-label="One observed Netflix training triple and one Netflix test pair whose rating is hidden during prediction">
+<div class="netflix-train-example"><span>TRAIN.CSV: OBSERVED TRIPLE</span><b>(1960, 670, 4)</b><p>User 1960 gave movie 670 four stars. The model may learn from this row.</p></div>
+<div class="netflix-test-example"><span>TEST.CSV: PREDICTION PAIR</span><b>(1574, 2956, ?)</b><p>The model sees the user and movie. The rating stays hidden until evaluation.</p></div>
+</div>
+
+<div class="lesson-path five-stage-path netflix-five-stage" role="img" aria-label="The Netflix example moves from data inspection and preprocessing through baseline modeling, evaluation, and ranking">
+<div><span>01</span><b>Inspect</b><p><code>train</code> has 51,161 observed triples with user, movie and rating.</p></div>
+<i>then</i>
+<div class="preprocess-stage"><span>02</span><b>Standardize IDs</b><p>Fit shared ID maps. Create <code>X_train</code>, <code>y_train</code> and <code>X_test</code>.</p></div>
+<i>then</i>
+<div><span>03</span><b>Fit a predictor</b><p>Learn an abstract scoring rule <code>f_theta</code> from the training arrays.</p></div>
+<i>then</i>
+<div><span>04</span><b>Predict and evaluate</b><p>Compute <code>y_pred</code>. Reveal <code>y_test</code> only when calculating RMSE.</p></div>
+<i>then</i>
+<div><span>05</span><b>Rank</b><p>For user 1960, movies 2098, 898 and 2195 are ordered by <code>y_pred</code>.</p></div>
+</div>
+
+<p class="baseline-takeaway netflix-workflow-takeaway"><b>Row alignment stays fixed:</b> <code>X_test[j]</code> receives <code>y_pred[j]</code>, which is later compared with <code>y_test[j]</code>.</p>
+
+::: {.notes}
+[Sources]
+- The train and test sizes come from the course files in `dataset/netflix/` in the public STAT3009 repository.
+- The displayed training triple and test pair are the first rows of the public course `train.csv` and `test.csv` files. The test rating is shown as hidden because prediction code must not read it.
+- The predictor remains abstract here so that data preparation and the prediction contract appear before any specific baseline method.
+:::
+
+## Netflix data preparation and prediction {.detail-slide .netflix-flow-animation-slide}
+
+<div class="nf-flow-grid" role="img" aria-label="Animated two-lane workflow showing Netflix training triples and test pairs moving through shared ID standardization, array construction, abstract prediction, evaluation, and ranking">
+<div class="nf-flow-node nf-raw-train fragment fade-in" data-fragment-index="0">
+<span>TRAIN LANE: RAW DATA</span>
+<b>train.csv</b>
+<table aria-label="Example Netflix training triples"><thead><tr><th>u</th><th>i</th><th>r</th></tr></thead><tbody><tr><td>1960</td><td>670</td><td>4</td></tr><tr><td>1346</td><td>152</td><td>4</td></tr></tbody></table>
+</div>
+<div class="nf-flow-arrow nf-a1 fragment fade-in" data-fragment-index="1"><span>collect IDs</span><i></i></div>
+
+<div class="nf-flow-node nf-raw-test fragment fade-in" data-fragment-index="0">
+<span>TEST LANE: HIDDEN TARGET</span>
+<b>test.csv</b>
+<table aria-label="Example Netflix test pairs with hidden ratings"><thead><tr><th>u</th><th>i</th><th>r</th></tr></thead><tbody><tr><td>1574</td><td>2956</td><td>?</td></tr><tr><td>1670</td><td>791</td><td>?</td></tr></tbody></table>
+</div>
+<div class="nf-flow-arrow nf-b1 fragment fade-in" data-fragment-index="1"><span>collect IDs</span><i></i></div>
+
+<div class="nf-flow-node nf-standardize fragment fade-in" data-fragment-index="1">
+<span>1: DATA STANDARDIZATION</span>
+<b>One shared ID map</b>
+<code>fit on concat(train, test)</code>
+<div class="nf-standardize-map">
+<div><code>1960</code><i></i><strong>u_k</strong></div>
+<div><code>670</code><i></i><strong>i_l</strong></div>
+</div>
+<p>Raw IDs are labels. Encoded indices are contiguous and start at zero.</p>
+<em>The same raw ID must receive the same index in both splits.</em>
+</div>
+
+<div class="nf-flow-arrow nf-a2 fragment fade-in" data-fragment-index="2"><span>transform</span><i></i></div>
+<div class="nf-flow-node nf-train-array fragment fade-in" data-fragment-index="2">
+<span>2: TRAINING ARRAYS</span>
+<b>Inputs and targets</b>
+<code>X_train[j] = [u_idx, i_idx]</code>
+<code>y_train[j] = rating</code>
+<p>Each row remains aligned.</p>
+</div>
+<div class="nf-flow-arrow nf-a3 fragment fade-in" data-fragment-index="3"><span>learn</span><i></i></div>
+
+<div class="nf-flow-arrow nf-b2 fragment fade-in" data-fragment-index="2"><span>transform</span><i></i></div>
+<div class="nf-flow-node nf-test-array fragment fade-in" data-fragment-index="2">
+<span>2: PREDICTION INPUT</span>
+<b>Test pairs</b>
+<code>X_test[j] = [u_idx, i_idx]</code>
+<em>y_test stays hidden</em>
+<p>Keep the original test-row order.</p>
+</div>
+<div class="nf-flow-arrow nf-b3 fragment fade-in" data-fragment-index="3"><span>score</span><i></i></div>
+
+<div class="nf-flow-node nf-predict fragment fade-in" data-fragment-index="3">
+<span>3: ABSTRACT PREDICTOR</span>
+<b>Learn a scoring rule</b>
+<div class="nf-prediction-math"><code>f_theta = learn(X_train, y_train)</code><code>y_pred[j] = f_theta(X_test[j])</code><strong>one score per test pair</strong></div>
+<p>We will define how <code>f_theta</code> works later.</p>
+</div>
+<div class="nf-flow-arrow nf-a4 fragment fade-in" data-fragment-index="4"><span>compare</span><i></i></div>
+<div class="nf-flow-arrow nf-b4 fragment fade-in" data-fragment-index="4"><span>sort</span><i></i></div>
+
+<div class="nf-flow-node nf-evaluate fragment fade-in" data-fragment-index="4">
+<span>EVALUATE</span>
+<b>Reveal y_test</b>
+<code>RMSE(y_test, y_pred)</code>
+<p>One score over 51,161 test rows.</p>
+</div>
+<div class="nf-flow-node nf-rank fragment fade-in" data-fragment-index="4">
+<span>RANK</span>
+<b>User 1960</b>
+<ol><li><code>2098</code><strong>3.81</strong></li><li><code>898</code><strong>3.73</strong></li><li><code>2195</code><strong>3.28</strong></li></ol>
+</div>
+</div>
+
+<p class="baseline-takeaway nf-flow-takeaway fragment fade-in" data-fragment-index="4">The same ID maps transform both splits. The model learns from training ratings, then returns one prediction for every test pair.</p>
+
+::: {.notes}
+[Sources]
+- The displayed train rows and test pairs come from the public STAT3009 course files.
+- Ranking values for user 1960 match the later ranking example in this deck.
+- The symbols `u_k` and `i_l` denote contiguous zero-based indices. They do not claim specific encoded values for the displayed raw IDs.
+- The predictor remains abstract on this slide. Later slides define concrete baseline rules.
+- Animation sequence: raw train/test data, shared ID standardization, NumPy arrays, an abstract prediction rule, then evaluation and ranking.
+:::
+
+## A baseline must score every test pair {.detail-slide .baseline-contract-slide}
+
+<div class="baseline-contract compact-contract" role="img" aria-label="Training ratings produce a baseline model, which predicts each test pair and receives an RMSE score">
+<div><span>TRAINING RATINGS</span><b>Ω<sup>tr</sup></b><p>Information the model may use.</p></div>
+<i>fit</i>
+<div><span>PREDICTION RULE</span><b>f(u, i)</b><p>A complete rule, including fallbacks.</p></div>
+<i>predict</i>
+<div><span>TEST PAIRS</span><b>(u, i)</b><p>Pairs excluded from model fitting.</p></div>
+<i>score</i>
+<div><span>TEST RMSE</span><b>lower is better</b><p>One comparable number for every method.</p></div>
+</div>
+
+<div class="baseline-requirements">
+<p><b>Simple</b><span>We can explain every prediction.</span></p>
+<p><b>Complete</b><span>New users and movies still receive a score.</span></p>
+<p><b>Reproducible</b><span>The same training data gives the same benchmark.</span></p>
+</div>
+
+::: {.notes}
+[Sources]
+- The prediction and held-out evaluation contract follows the setup introduced in the overview lecture and the course notebook.
+:::
+
+## Data preprocessing: categorical IDs {.detail-slide .id-encoding-concept-slide}
+
+<p class="encoding-intro"><b>User and item IDs are labels.</b> The model needs stable array indices, but the spelling or numerical size of an ID carries no preference information.</p>
+
+<div class="encoding-demo encoding-demo-animated" role="img" aria-label="Separate user and movie label encoders map repeated string identifiers to consecutive integer indices">
+<div class="encoding-track">
+<span>USER LABELS</span>
+<code>[&quot;U_A&quot;, &quot;U_Z&quot;, &quot;U_A&quot;]</code>
+<i class="fragment fade-in" data-fragment-index="0">fit user vocabulary</i>
+<span class="fragment fade-in" data-fragment-index="0">USER INDICES</span>
+<code class="fragment fade-in" data-fragment-index="0">[0, 1, 0]</code>
+</div>
+<div class="encoding-track movie-track">
+<span>MOVIE LABELS</span>
+<code>[&quot;M_B&quot;, &quot;M_A&quot;, &quot;M_C&quot;]</code>
+<i class="fragment fade-in" data-fragment-index="1">fit movie vocabulary</i>
+<span class="fragment fade-in" data-fragment-index="1">MOVIE INDICES</span>
+<code class="fragment fade-in" data-fragment-index="1">[1, 0, 2]</code>
+</div>
+</div>
+
+<div class="id-index-explanation fragment fade-in" data-fragment-index="2">
+<div><span>RAW LABEL</span><b><code>"U_Z"</code></b><p>An identifier. Its characters carry no distance or order.</p></div>
+<i></i>
+<div><span>ARRAY INDEX</span><b><code>1</code></b><p>A valid zero-based position in a NumPy array.</p></div>
+</div>
+
+<p class="baseline-takeaway fragment fade-in" data-fragment-index="3"><b>Use two encoders:</b> users and movies have separate vocabularies, even when both happen to be integers.</p>
+
+::: {.notes}
+[Sources]
+- `LabelEncoder` maps a one-dimensional set of labels to integer values from zero to `n_classes - 1`: https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html.
+- The string IDs are illustrative. The course files already use compact numerical IDs, but the generic preprocessing interface should also work with arbitrary labels.
+- Animation sequence: encode user labels, encode movie labels, interpret the resulting index, then state the separate-vocabulary rule.
+:::
+
+## sklearn.preprocessing.LabelEncoder {.detail-slide .label-encoder-api-slide .code-slide}
+
+<div class="le-api-import fragment fade-in" data-fragment-index="0">
+<div><span>PACKAGE</span><b>sklearn</b></div>
+<i>.</i>
+<div><span>MODULE</span><b>preprocessing</b></div>
+<i>.</i>
+<div><span>CLASS</span><b>LabelEncoder</b></div>
+<code>from sklearn.preprocessing import LabelEncoder</code>
+</div>
+
+:::: {.columns .le-api-columns}
+::: {.column width="58%"}
+```python
+enc = LabelEncoder()
+labels = ["U_A", "U_Z", "U_A"]
+
+enc.fit(labels)
+enc.classes_                       # ["U_A", "U_Z"]
+
+enc.transform(["U_Z", "U_A"])    # [1, 0]
+enc.inverse_transform([0, 1])      # ["U_A", "U_Z"]
+```
+:::
+
+::: {.column width="38%"}
+<div class="le-api-steps">
+<p class="fragment fade-in" data-fragment-index="1"><span>01</span><b><code>LabelEncoder()</code></b><em>Creates an encoder with no learned vocabulary.</em></p>
+<p class="fragment fade-in" data-fragment-index="2"><span>02</span><b><code>fit(labels)</code></b><em>Finds the unique labels and stores them in <code>classes_</code>.</em></p>
+<p class="fragment fade-in" data-fragment-index="3"><span>03</span><b><code>transform(labels)</code></b><em>Applies the stored mapping to known labels.</em></p>
+<p class="fragment fade-in" data-fragment-index="4"><span>04</span><b><code>inverse_transform(indices)</code></b><em>Converts integer indices back to the original labels.</em></p>
+</div>
+:::
+::::
+
+<p class="baseline-takeaway le-api-takeaway fragment fade-in" data-fragment-index="5"><code>fit</code> changes the encoder's state. <code>transform</code> reuses that state and cannot invent an index for an unseen label.</p>
+
+::: {.notes}
+[Sources]
+- Class API and attributes: https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html.
+- Scikit-learn documents `LabelEncoder` primarily for one-dimensional target labels. In this lecture, separate instances act as simple vocabulary mappers for the one-dimensional user and movie ID columns.
+- `classes_` contains the label for each encoded index. `transform` accepts labels from this fitted set, and `inverse_transform` maps indices back to labels.
+- Animation sequence: locate the class in the package, create an object, fit its vocabulary, transform labels, invert the mapping, then state the unseen-label limitation.
+:::
+
+## Train-only ID vocabulary {.detail-slide .label-encoder-failure-slide}
+
+<div class="le-failure-flow" role="img" aria-label="Animation showing that label encoders fitted only on training IDs cannot transform users and movies that appear only in the test pairs">
+<div class="le-data-block le-train-block fragment fade-in" data-fragment-index="0">
+<span>TRAIN TRIPLES</span>
+<b>Observed ratings</b>
+<table><thead><tr><th>user</th><th>movie</th><th>rating</th></tr></thead><tbody><tr><td>U_A</td><td>M_A</td><td>4</td></tr><tr><td>U_C</td><td>M_B</td><td>5</td></tr><tr><td>U_A</td><td>M_B</td><td>3</td></tr></tbody></table>
+</div>
+<div class="le-flow-arrow le-failure-a1 fragment fade-in" data-fragment-index="1"><span>fit</span><i></i></div>
+<div class="le-train-vocab fragment fade-in" data-fragment-index="1">
+<span>FIT ON TRAIN ONLY</span>
+<b>User vocabulary</b>
+<code>U_A: 0&nbsp;&nbsp; U_C: 1</code>
+<b>Movie vocabulary</b>
+<code>M_A: 0&nbsp;&nbsp; M_B: 1</code>
+</div>
+<div class="le-flow-arrow le-failure-a2 fragment fade-in" data-fragment-index="2"><span>transform test</span><i></i></div>
+<div class="le-data-block le-test-block fragment fade-in" data-fragment-index="0">
+<span>TEST PAIRS</span>
+<b>Pairs to score</b>
+<table><thead><tr><th>user</th><th>movie</th></tr></thead><tbody><tr><td>U_B <strong class="le-unseen-id fragment fade-in" data-fragment-index="2">unseen</strong></td><td>M_A</td></tr><tr><td>U_C</td><td>M_C <strong class="le-unseen-id fragment fade-in" data-fragment-index="2">unseen</strong></td></tr></tbody></table>
+</div>
+</div>
+
+<div class="le-failure-result fragment fade-in" data-fragment-index="2">
+<span>TRANSFORM CANNOT CONTINUE</span>
+<code>U_B is absent from the user vocabulary</code>
+<code>M_C is absent from the movie vocabulary</code>
+</div>
+
+<p class="baseline-takeaway fragment fade-in" data-fragment-index="3">The course split contains test-only IDs. A train-only encoder cannot assign every scheduled test pair an index.</p>
+
+::: {.notes}
+[Sources]
+- The labels in the animation are illustrative.
+- In the course split, 74 users and 584 movies occur only in test. The counts come from the public course train/test files.
+- A `LabelEncoder` raises an error when `transform` receives a label outside its fitted classes.
+- Animation sequence: show the two splits, fit train-only vocabularies, expose the unseen test labels, then state the consequence.
+:::
+
+## Shared train–test ID vocabulary {.detail-slide .label-encoder-shared-slide}
+
+<div class="le-shared-flow" role="img" aria-label="Animation showing that train and test ID columns are combined to fit shared user and movie vocabularies, after which each split is transformed separately">
+<div class="le-shared-input fragment fade-in" data-fragment-index="0">
+<span>ID COLUMNS ONLY</span>
+<div><b>train users</b><code>U_A, U_C, U_A</code></div>
+<div><b>test users</b><code>U_B, U_C</code></div>
+<div><b>train movies</b><code>M_A, M_B, M_B</code></div>
+<div><b>test movies</b><code>M_A, M_C</code></div>
+</div>
+<div class="le-flow-arrow le-shared-a1 fragment fade-in" data-fragment-index="1"><span>concatenate IDs</span><i></i></div>
+<div class="le-shared-vocab fragment fade-in" data-fragment-index="1">
+<span>FIT ONCE</span>
+<b>Shared user map</b>
+<code>U_A: 0&nbsp;&nbsp; U_B: 1&nbsp;&nbsp; U_C: 2</code>
+<b>Shared movie map</b>
+<code>M_A: 0&nbsp;&nbsp; M_B: 1&nbsp;&nbsp; M_C: 2</code>
+</div>
+<div class="le-flow-arrow le-shared-a2 fragment fade-in" data-fragment-index="2"><span>transform separately</span><i></i></div>
+<div class="le-shared-output fragment fade-in" data-fragment-index="2">
+<span>KEEP THE SPLITS</span>
+<div><b>encoded train</b><code>[0,0] [2,1] [0,1]</code></div>
+<div><b>encoded test</b><code>[1,0] [2,2]</code></div>
+</div>
+</div>
+
+<div class="le-no-leakage fragment fade-in" data-fragment-index="3">
+<span>WHAT ENTERS THE ENCODER?</span>
+<b><code>user_id</code> and <code>movie_id</code></b>
+<i></i>
+<span>WHAT STAYS OUT?</span>
+<b><code>test.rating</code></b>
+</div>
+
+<p class="baseline-takeaway fragment fade-in" data-fragment-index="4">Concatenation defines a common vocabulary. It does not merge the ratings or move test rows into the training set.</p>
+
+::: {.notes}
+[Sources]
+- The example uses the same illustrative labels as the preceding slide.
+- This workflow fits vocabularies from the identifiers in a fixed competition-style test set. It does not use held-out ratings.
+- In a live system, IDs that arrive after fitting still require an unknown-index policy or a prediction fallback.
+- Animation sequence: show the four ID columns, fit shared maps, transform each split separately, then isolate the rating column from the encoder.
+:::
+
+## LabelEncoder implementation {.detail-slide .label-encoder-code-slide .code-slide}
+
+:::: {.columns .le-code-columns}
+::: {.column width="66%"}
+```python
+from sklearn.preprocessing import LabelEncoder
+
+all_users = pd.concat([train["user_id"], test["user_id"]])
+all_items = pd.concat([train["movie_id"], test["movie_id"]])
+
+user_enc = LabelEncoder().fit(all_users)
+item_enc = LabelEncoder().fit(all_items)
+
+train["u"] = user_enc.transform(train["user_id"])
+test["u"]  = user_enc.transform(test["user_id"])
+train["i"] = item_enc.transform(train["movie_id"])
+test["i"]  = item_enc.transform(test["movie_id"])
+
+n_users = len(user_enc.classes_)
+n_items = len(item_enc.classes_)
+```
+:::
+
+::: {.column width="30%"}
+<div class="le-code-reading">
+<p class="fragment fade-in" data-fragment-index="0"><span>01</span><b>Collect ID columns</b><em>No ratings enter <code>all_users</code> or <code>all_items</code>.</em></p>
+<p class="fragment fade-in" data-fragment-index="1"><span>02</span><b>Fit once</b><em>Each encoder stores one shared vocabulary.</em></p>
+<p class="fragment fade-in" data-fragment-index="2"><span>03</span><b>Transform separately</b><em>Train and test remain different datasets.</em></p>
+</div>
+:::
+::::
+
+<p class="baseline-takeaway le-code-takeaway fragment fade-in" data-fragment-index="3"><code>fit</code> defines the mapping. <code>transform</code> applies the same mapping wherever that entity appears.</p>
+
+::: {.notes}
+[Sources]
+- API behavior: https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html.
+- Separate encoders define unrelated user and movie vocabularies.
+- The course train/test files already contain compact numerical IDs. This code documents the general preprocessing contract and supports arbitrary string or sparse integer identifiers.
+:::
+
+## Data preprocessing: NumPy arrays {.detail-slide .array-contract-slide .code-slide}
+
+<div class="array-contract-flow" role="img" aria-label="Training and test DataFrames are converted into NumPy input matrices and rating vectors; the model predicts a vector aligned with y test">
+<div class="array-source train-array-source"><span>TRAIN DATAFRAME</span><b>u, i, rating</b><p>51,161 observed triples</p></div>
+<div class="array-split"><i></i><span>split columns</span><i></i></div>
+<div class="array-pair">
+<p><span>MODEL INPUT</span><b>X_train</b><code>(51161, 2)</code><em>columns [u, i]</em></p>
+<p><span>TRAINING TARGET</span><b>y_train</b><code>(51161,)</code><em>observed ratings</em></p>
+</div>
+<div class="array-model"><span>NUMPY METHOD</span><b>fit on train</b><i></i><b>predict X_test</b></div>
+<div class="array-pair test-array-pair">
+<p><span>MODEL INPUT</span><b>X_test</b><code>(51161, 2)</code><em>columns [u, i]</em></p>
+<p><span>MODEL OUTPUT</span><b>y_pred</b><code>(51161,)</code><em>one score per row</em></p>
+</div>
+</div>
+
+<div class="array-contract-bottom">
+<pre><code>X_train = train[["u", "i"]].to_numpy(dtype=np.int64)
+y_train = train["rating"].to_numpy(dtype=float)
+
+X_test = test[["u", "i"]].to_numpy(dtype=np.int64)
+y_test = test["rating"].to_numpy(dtype=float)  # evaluation only</code></pre>
+
+<div class="numpy-method-rule">
+<span>IMPLEMENTATION RULE</span>
+<b>Pandas prepares the tables.</b>
+<b>NumPy fits every baseline and produces <code>y_pred</code>.</b>
+<p>During prediction, the method receives <code>X_test</code>. We reveal <code>y_test</code> only when calculating RMSE.</p>
+</div>
+</div>
+
+::: {.notes}
+[Sources]
+- Array shapes follow the public course train/test files, each with 51,161 rows.
+- The diagram defines the data interface used by every method in the remainder of this lecture.
+- `y_test` is created for classroom evaluation but remains outside every fitting and prediction calculation.
+:::
+
+## Netflix data and evaluation {.section-break .netflix-section}
+
+<div class="section-number">01</div>
+<img class="section-crest" src="../Lec-overview-quarto/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Understand the observations, the missing pairs, and the information available at prediction time.</p>
+
+::: {.notes}
+[Sources]
+- Section statistics use the public STAT3009 Netflix course subset unless another source appears on the slide.
+:::
+
+## The Netflix Prize made rating prediction measurable {.netflix-prize-slide}
+
+<div class="prize-stats">
+<div><span>PRIZE</span><b>US$1 million</b><p>for reaching the competition target</p></div>
+<div><span>TARGET</span><b>10% improvement</b><p>over the Cinematch benchmark</p></div>
+<div><span>TASK</span><b>Predict hidden ratings</b><p>for specified customer–movie pairs</p></div>
+</div>
+
+<p class="prize-question">The competition reduced recommendation to a precise offline problem: estimate a customer's missing movie rating.</p>
+<p class="source-line">Source: <a href="https://www.netflixprize.com/">Netflix Prize</a> and the <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">Netflix dataset README</a>.</p>
+
+::: {.notes}
+[Sources]
+- Prize amount and target: https://www.netflixprize.com/.
+- Dataset task and file description: https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data.
+:::
+
+## The full data and the course subset {.detail-slide .dataset-compare-slide}
+
+<div class="dataset-compare-layout">
+<table class="baseline-table dataset-compare-table">
+<thead><tr><th></th><th>Netflix Prize</th><th>STAT3009 subset</th></tr></thead>
+<tbody>
+<tr><td>Training ratings</td><td>100,480,507</td><td>51,161</td></tr>
+<tr><td>Users</td><td>480,189</td><td>2,000</td></tr>
+<tr><td>Movies</td><td>17,770</td><td>3,568</td></tr>
+<tr><td>Rating scale</td><td>1–5 stars</td><td>1–5 stars</td></tr>
+<tr><td>Test labels</td><td>Hidden</td><td>Visible for teaching</td></tr>
+</tbody>
+</table>
+
+<div class="stat-code-panel dataset-code-panel">
+<span class="stat-code-label">PYTHON · COURSE FILES</span>
+<pre><code>both = pd.concat([train, test])
+
+len(train)
+both[["user_id", "movie_id"]].nunique()
+train["rating"].agg(["min", "max"])</code></pre>
+<p class="stat-code-output"><b>51,161</b> rows<br><b>2,000</b> users · <b>3,568</b> movies<br>ratings from <b>1</b> to <b>5</b></p>
+</div>
+</div>
+
+<p class="dataset-compare-note"><b>How to read the comparison</b><span>Python gives the subset counts. The original counts come from the competition README.</span></p>
+
+<p class="source-line">Sources: <a href="https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data">Netflix dataset README</a> and <a href="https://github.com/statmlben/CUHK-STAT3009/tree/main/dataset/netflix">STAT3009 course data</a>.</p>
+
+::: {.notes}
+[Sources]
+- Original dataset counts and rating scale come from the Netflix dataset README distributed with the competition data.
+- Course counts were calculated from the public `train.csv` and `test.csv` files on 8 September 2026.
+- The course subset sampling design is not claimed to reproduce the full dataset distribution.
+:::
+
+## Competition split and course split {.competition-split-slide}
+
+<figure class="baseline-wide-figure competition-figure compact-competition-figure">
+<img src="../Lec-baseline/figs/netflix-dataset.png" alt="Netflix Prize training, probe, quiz, and test partitions">
+<figcaption>Source: <a href="https://pantelis.github.io/cs301/docs/common/lectures/recommenders/netflix/">Pantelis Monogioudis, Netflix Prize lecture notes</a>.</figcaption>
+</figure>
+
+<div class="competition-details">
+<p><span>FIT</span><b>Training · 99,072,112</b><em>Released ratings used to estimate the model.</em></p>
+<p><span>VALIDATE</span><b>Probe · 1,408,395</b><em>Known ratings held out for local model checks.</em></p>
+<p><span>PUBLIC FEEDBACK</span><b>Quiz · 1,408,342</b><em>Hidden ratings produced the leaderboard score.</em></p>
+<p><span>FINAL DECISION</span><b>Test · 1,408,789</b><em>Hidden ratings determined the final ranking.</em></p>
+</div>
+
+<p class="competition-count-note"><code>100,480,507 = 99,072,112 + 1,408,395</code><span>The released rating total includes the fitting and probe portions.</span></p>
+
+<p class="course-split-map"><b>Course version</b><span><code>train.csv</code> fits the model. We hide the <code>test.csv</code> rating column while predicting, then reveal it to calculate RMSE.</span></p>
+
+::: {.notes}
+[Sources]
+- The diagram and partition counts follow the supplied original course slide and its cited lecture notes.
+- The distinction between hidden competition labels and visible teaching labels follows the course files.
+:::
+
+## The course tables {.detail-slide .course-table-slide .review-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="49%"}
+```python
+import numpy as np
+import pandas as pd
+
+base = (
+    "https://raw.githubusercontent.com/"
+    "statmlben/CUHK-STAT3009/main/"
+    "dataset/netflix/"
+)
+
+fields = ["movie_id", "user_id", "rating"]
+train = pd.read_csv(base + "train.csv", usecols=fields)
+test = pd.read_csv(base + "test.csv", usecols=fields)
+```
+:::
+
+::: {.column width="47%"}
+<div class="dataframe-preview compact-preview">
+<div class="preview-label">train.head()</div>
+<table aria-label="First five rows of the Netflix course training table">
+<thead><tr><th></th><th>movie_id</th><th>user_id</th><th>rating</th></tr></thead>
+<tbody>
+<tr><th>0</th><td>670</td><td>1960</td><td class="rating-cell">4</td></tr>
+<tr><th>1</th><td>152</td><td>1346</td><td class="rating-cell">4</td></tr>
+<tr><th>2</th><td>1741</td><td>785</td><td class="rating-cell">4</td></tr>
+<tr><th>3</th><td>3032</td><td>686</td><td class="rating-cell">5</td></tr>
+<tr><th>4</th><td>536</td><td>1894</td><td class="rating-cell">4</td></tr>
+</tbody>
+</table>
+<p><b>(1960, 670, 4)</b> means customer 1960 gave movie 670 four stars.</p>
+</div>
+:::
+::::
+
+<p class="baseline-takeaway">IDs identify categories. Their numerical distance carries no meaning.</p>
+
+::: {.notes}
+[Sources]
+- Code and displayed rows reproduce cells 22–23 of `STAT3009_nb/STAT3009_nb_Fall2025.ipynb`.
+- The date field exists in the source file but is deliberately excluded because this lecture does not model time.
+:::
+
+## Rating distribution in the training set {.detail-slide .rating-distribution-slide}
+
+<div class="stat-visual-layout rating-stat-layout">
+<div>
+<div class="rating-bars" role="img" aria-label="Distribution of 51,161 training ratings from one to five stars">
+<div><span class="star-label">1 star</span><div class="bar-track"><i style="width: 13.7%"></i></div><b>2,347</b><em>4.6%</em></div>
+<div><span class="star-label">2 stars</span><div class="bar-track"><i style="width: 29.5%"></i></div><b>5,051</b><em>9.9%</em></div>
+<div><span class="star-label">3 stars</span><div class="bar-track"><i style="width: 83.6%"></i></div><b>14,400</b><em>28.1%</em></div>
+<div><span class="star-label">4 stars</span><div class="bar-track"><i style="width: 100%"></i></div><b>17,202</b><em>33.6%</em></div>
+<div><span class="star-label">5 stars</span><div class="bar-track"><i style="width: 70.7%"></i></div><b>12,161</b><em>23.8%</em></div>
+</div>
+</div>
+
+<div class="stat-code-side">
+<div class="stat-code-panel">
+<span class="stat-code-label">PYTHON</span>
+<pre><code>train["rating"].value_counts(
+    normalize=True
+).sort_index()
+
+train["rating"].agg(["mean", "std"])</code></pre>
+</div>
+
+<div class="distribution-summary compact-stat-summary">
+<p><span>TRAINING MEAN</span><b>3.621</b></p>
+<p><span>TRAINING SD</span><b>1.088</b></p>
+<p><span>3–5 STAR RATINGS</span><b>85.5%</b></p>
+</div>
+</div>
+</div>
+
+<p class="baseline-takeaway">The target is not centered at three stars. A credible first prediction should reflect this.</p>
+
+::: {.notes}
+[Sources]
+- Counts, percentages, mean, and standard deviation were calculated from the public STAT3009 `train.csv` file.
+- Bar lengths are normalized to the most common category, four stars.
+:::
+
+## The observed matrix is 0.717% full {.detail-slide .sparsity-detail-slide}
+
+<div class="sparsity-main-layout">
+<div class="sparsity-equation">
+<div><span>POSSIBLE USER–MOVIE PAIRS</span><b>2,000 × 3,568</b><em>7,136,000 cells</em></div>
+<div><span>OBSERVED TRAINING RATINGS</span><b>51,161</b><em>one rating per observed pair</em></div>
+</div>
+
+<div class="stat-code-panel sparsity-code-panel">
+<span class="stat-code-label">PYTHON</span>
+<pre><code>both = pd.concat([train, test])
+n_user = both["user_id"].nunique()
+n_movie = both["movie_id"].nunique()
+
+density = len(train) / (n_user * n_movie)
+100 * density</code></pre>
+<p class="stat-code-output"><b>0.7169%</b></p>
+</div>
+</div>
+
+<div class="sparsity-meter" aria-label="Only 0.717 percent of possible user movie pairs are observed in training">
+<div class="observed-sliver"></div>
+<span><b>0.717%</b> observed</span>
+<em><b>99.283%</b> unobserved</em>
+</div>
+
+<p class="baseline-takeaway">A blank cell means “no observed rating.” It does not mean that the customer assigned zero stars.</p>
+
+::: {.notes}
+[Sources]
+- Density uses 51,161 training ratings divided by 2,000 users times 3,568 movies across the course train/test universe.
+- The train file contains no duplicate user–movie pairs.
+:::
+
+## Interaction counts vary sharply {.detail-slide .activity-detail-slide}
+
+<div class="activity-layout">
+<div class="activity-side">
+<span>RATINGS PER USER IN TRAIN</span>
+<div class="activity-scale"><i style="left: 2.4%"></i><i style="left: 12.1%"></i><i style="left: 100%"></i></div>
+<table class="baseline-table activity-table"><tbody>
+<tr><th>Median</th><td>13</td></tr>
+<tr><th>90th percentile</th><td>65</td></tr>
+<tr><th>Maximum</th><td>535</td></tr>
+</tbody></table>
+</div>
+<div class="activity-side movie-activity">
+<span>RATINGS PER MOVIE IN TRAIN</span>
+<div class="activity-scale"><i style="left: 0.7%"></i><i style="left: 10%"></i><i style="left: 100%"></i></div>
+<table class="baseline-table activity-table"><tbody>
+<tr><th>Median</th><td>3</td></tr>
+<tr><th>90th percentile</th><td>41</td></tr>
+<tr><th>Maximum</th><td>411</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<div class="stat-code-panel activity-code-panel">
+<span class="stat-code-label">PYTHON · GROUP SIZE, THEN SUMMARIZE</span>
+<pre><code>user_n = train.groupby("user_id").size()
+movie_n = train.groupby("movie_id").size()
+user_n.quantile([.5, .9]), user_n.max()
+movie_n.quantile([.5, .9]), movie_n.max()</code></pre>
+</div>
+
+<p class="baseline-takeaway">The group means summarize different amounts of evidence: some users and movies have many more ratings than others.</p>
+
+::: {.notes}
+[Sources]
+- Quantiles and maxima were calculated from group sizes in the public STAT3009 training file.
+- There are 1,926 observed training users and 2,984 observed training movies.
+:::
+
+## Train and test contain different pairs {.detail-slide .pair-split-slide}
+
+<div class="pair-split">
+<div><span>TRAIN</span><b>51,161 pairs</b><p>Used to estimate every mean and model parameter.</p></div>
+<div class="pair-separator"><b>0</b><span>overlapping user–movie pairs</span></div>
+<div><span>TEST</span><b>51,161 pairs</b><p>Ratings enter the RMSE calculation only.</p></div>
+</div>
+
+<div class="pair-novelty">
+<p><span>USERS</span><b>74 unseen in train</b><em>1,843 users occur in both files</em></p>
+<p><span>MOVIES</span><b>584 unseen in train</b><em>2,415 movies occur in both files</em></p>
+</div>
+
+<div class="stat-code-panel pair-code-panel">
+<span class="stat-code-label">PYTHON</span>
+<pre><code>keys = ["user_id", "movie_id"]
+n_overlap = train.merge(test, on=keys).shape[0]
+new_users = len(set(test.user_id) - set(train.user_id))
+new_movies = len(set(test.movie_id) - set(train.movie_id))</code></pre>
+<p class="stat-code-output"><b>0</b> overlapping pairs · <b>74</b> new users · <b>584</b> new movies</p>
+</div>
+
+::: {.notes}
+[Sources]
+- Pair overlap and ID overlap were calculated from the public STAT3009 course files.
+- Neither file contains duplicate user–movie pairs.
+:::
+
+## Four types of test pair {.detail-slide .test-cases-slide}
+
+<div class="test-case-layout">
+<table class="baseline-table test-case-table">
+<thead><tr><th>Test pair</th><th>User / movie seen?</th><th>Rows</th><th>Share</th></tr></thead>
+<tbody>
+<tr><td>Warm pair</td><td>Yes / Yes</td><td>50,159</td><td>98.04%</td></tr>
+<tr><td>New movie</td><td>Yes / No</td><td>850</td><td>1.66%</td></tr>
+<tr><td>New user</td><td>No / Yes</td><td>149</td><td>0.29%</td></tr>
+<tr><td>New user and movie</td><td>No / No</td><td>3</td><td>0.01%</td></tr>
+</tbody>
+</table>
+
+<div class="test-case-side">
+<div class="stat-code-panel">
+<span class="stat-code-label">PYTHON</span>
+<pre><code>seen_u = test.user_id.isin(train.user_id)
+seen_i = test.movie_id.isin(train.movie_id)
+
+pd.crosstab(seen_u, seen_i)</code></pre>
+</div>
+
+<p class="test-case-message"><b>A held-out pair can still contain familiar IDs.</b><span>Fallbacks cover the 1,002 rows with a new user or movie.</span></p>
+</div>
+</div>
+
+::: {.notes}
+[Sources]
+- Counts and shares were calculated by comparing test user and movie IDs with the corresponding training sets.
+- The four rows partition all 51,161 test observations.
+:::
+
+## Leakage-free evaluation {.detail-slide .leakage-slide}
+
+<div class="leakage-flow" role="img" aria-label="Training ratings are used to fit summaries, test pairs receive predictions, and test ratings are used only to calculate RMSE">
+<div><span>TRAIN RATINGS</span><b>Fit summaries</b><p>global mean, user effects, movie effects</p></div>
+<i>use fitted values</i>
+<div><span>TEST IDs</span><b>Generate predictions</b><p>one score for every test row</p></div>
+<i>after prediction</i>
+<div><span>TEST RATINGS</span><b>Calculate RMSE</b><p>compare truth with predictions</p></div>
+</div>
+
+<div class="leakage-warning">
+<span>DATA LEAKAGE</span>
+<b>Computing a user or movie mean from <code>pd.concat([train, test])</code> lets test ratings influence the prediction.</b>
+<p>Use both files only to describe the dataset universe, never to fit a predictive quantity.</p>
+</div>
+
+::: {.notes}
+[Sources]
+- The separation follows the train/test contract in the course notebook.
+- The leakage example is instructor-authored for this lecture.
+:::
+
+## RMSE as the common scoreboard {.detail-slide .metric-protocol-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="48%"}
+<div class="rmse-formula-large compact-rmse-formula">
+$$
+\operatorname{RMSE}
+=
+\sqrt{\frac{1}{n_{\mathrm{test}}}
+\sum_{j=1}^{n_{\mathrm{test}}}(y_j-\hat y_j)^2}
+$$
+</div>
+
+<p class="metric-reading"><b>Interpretation</b><span>Typical prediction error, expressed on the 1–5 rating scale, with larger misses penalized more heavily.</span></p>
+:::
+
+::: {.column width="48%"}
+```python
+def rmse(y_true, y_pred):
+    error = np.asarray(y_true) - np.asarray(y_pred)
+    return np.sqrt(np.mean(error ** 2))
+
+# test ratings enter only here
+score = rmse(y_test, y_pred)
+```
+
+<div class="metric-contract"><span>EVERY METHOD RETURNS</span><b>51,161 predictions</b><p>in the same row order as <code>test</code></p></div>
+:::
+::::
+
+::: {.notes}
+[Sources]
+- RMSE and the function signature follow cells 26 and 31–32 of the course notebook.
+- This is a compact recall of the metric introduced in the overview lecture.
+:::
+
+## From training triples to a prediction vector {.detail-slide .prediction-vector-slide}
+
+<div class="prediction-vector-flow" role="img" aria-label="Training triples determine a prediction rule, then each test user movie pair receives one prediction in a row-aligned rating vector">
+<div class="train-triples-stage">
+<span class="pipeline-label">TRAIN · THREE-COLUMN LIST OF (u, i, r)</span>
+<table aria-label="Example training user movie rating triples">
+<thead><tr><th>u</th><th>i</th><th>r</th></tr></thead>
+<tbody>
+<tr><td>1960</td><td>670</td><td>4</td></tr>
+<tr><td>1346</td><td>152</td><td>4</td></tr>
+<tr><td>785</td><td>1741</td><td>4</td></tr>
+<tr><td>686</td><td>3032</td><td>5</td></tr>
+</tbody>
+</table>
+<p>Learn which systematic patterns explain <i>r</i>.</p>
+</div>
+
+<div class="pipeline-connector fragment fade-in" data-fragment-index="0"><span>summarize</span><i></i></div>
+
+<div class="fitted-rule-stage fragment fade-in" data-fragment-index="1">
+<span class="pipeline-label">PREDICTION RULE</span>
+<b>r̂<sub>ui</sub> = rule(u, i)</b>
+<p>Use quantities calculated only from <code>train</code>.</p>
+<div class="model-patterns"><span>global level</span><span>user pattern</span><span>movie pattern</span></div>
+</div>
+
+<div class="pipeline-connector fragment fade-in" data-fragment-index="2"><span>apply row by row</span><i></i></div>
+
+<div class="test-vector-stage fragment fade-in" data-fragment-index="3">
+<span class="pipeline-label">TEST PAIRS AND ALIGNED OUTPUT</span>
+<div class="pair-vector-grid">
+<div>
+<b>test[["user_id", "movie_id"]]</b>
+<ol>
+<li><i class="pair-pulse fragment" data-fragment-index="4"></i><span>1574</span><span>2956</span></li>
+<li><i class="pair-pulse fragment" data-fragment-index="4"></i><span>1670</span><span>791</span></li>
+<li><i class="pair-pulse fragment" data-fragment-index="4"></i><span>837</span><span>1547</span></li>
+<li><i class="pair-pulse fragment" data-fragment-index="4"></i><span>1943</span><span>1846</span></li>
+</ol>
+</div>
+<div class="rating-vector">
+<b>y_pred</b>
+<ol>
+<li><span class="vector-fill fragment" data-fragment-index="4">3.84</span></li>
+<li><span class="vector-fill fragment" data-fragment-index="4">3.35</span></li>
+<li><span class="vector-fill fragment" data-fragment-index="4">3.43</span></li>
+<li><span class="vector-fill fragment" data-fragment-index="4">3.44</span></li>
+</ol>
+</div>
+</div>
+<p>Row <i>j</i> in the vector predicts row <i>j</i> in <code>test</code>.</p>
+</div>
+</div>
+
+<div class="prediction-vector-contract fragment fade-in" data-fragment-index="5">
+<div class="contract-code"><code>len(y_pred) == len(test)</code></div>
+<div class="contract-text">The model never reads <code>test["rating"]</code>. We use that column only after the vector is complete.</div>
+</div>
+
+::: {.notes}
+[Sources]
+- The displayed train triples and test pairs are the first four rows of the public STAT3009 course files.
+- The example prediction values were generated from the equal-weight three-mean baseline introduced later in the lecture and rounded to two decimals.
+- The diagram is instructor-authored to explain the row-alignment contract used by the course notebook.
+- Animation sequence: training triples, fitting step, fitted rule, application step, test pairs, row-aligned predictions, and the final prediction contract.
+:::
+
+## Mean baselines {.section-break .mean-section}
+
+<div class="section-number">02</div>
+<img class="section-crest" src="../Lec-overview-quarto/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Use progressively more specific averages while retaining a prediction for every test row.</p>
+
+::: {.notes}
+[Sources]
+- Section methods follow the baseline definitions in the original course materials.
+:::
+
+## Global mean baseline {.formula-slide .real-result-slide}
+
+<div class="formula-stage">
+<span>ONE NUMBER FROM TRAIN</span>
+$$
+\mu=\frac{1}{|\Omega^{\mathrm{tr}}|}\sum_{(u,i)\in\Omega^{\mathrm{tr}}}r_{ui}
+\qquad
+\hat r_{ui}=\mu
+$$
+</div>
+
+<div class="real-result-strip">
+<p><span>TRAINING MEAN</span><b>3.621</b></p>
+<p><span>TEST RMSE</span><b>1.085</b></p>
+<p><span>UNSEEN IDS</span><b>Always defined</b></p>
+</div>
+
+<p class="baseline-takeaway">The rating distribution gives us a stronger constant prediction than an arbitrary midpoint such as three stars.</p>
+
+::: {.notes}
+[Sources]
+- Values were calculated from the STAT3009 course train/test files using the displayed formula.
+:::
+
+## Global mean from the training triples {.detail-slide .global-mean-animation-slide}
+
+<div class="global-mean-flow" role="img" aria-label="The global mean calculation ignores the user and movie columns, sums all training ratings, divides by the number of training rows, and broadcasts the result to the test set">
+<div class="mean-triple-stage">
+<span class="pipeline-label">TRAIN · 51,161 TRIPLES</span>
+<table aria-label="Example rows from the training triple list">
+<thead><tr><th>u</th><th>i</th><th>r</th></tr></thead>
+<tbody>
+<tr><td><span class="mean-id-dim fragment" data-fragment-index="0">1960</span></td><td><span class="mean-id-dim fragment" data-fragment-index="0">670</span></td><td><span class="mean-rating-highlight fragment" data-fragment-index="0">4</span></td></tr>
+<tr><td><span class="mean-id-dim fragment" data-fragment-index="0">1346</span></td><td><span class="mean-id-dim fragment" data-fragment-index="0">152</span></td><td><span class="mean-rating-highlight fragment" data-fragment-index="0">4</span></td></tr>
+<tr><td><span class="mean-id-dim fragment" data-fragment-index="0">785</span></td><td><span class="mean-id-dim fragment" data-fragment-index="0">1741</span></td><td><span class="mean-rating-highlight fragment" data-fragment-index="0">4</span></td></tr>
+<tr><td><span class="mean-id-dim fragment" data-fragment-index="0">686</span></td><td><span class="mean-id-dim fragment" data-fragment-index="0">3032</span></td><td><span class="mean-rating-highlight fragment" data-fragment-index="0">5</span></td></tr>
+<tr><td><span class="mean-id-dim fragment" data-fragment-index="0">1894</span></td><td><span class="mean-id-dim fragment" data-fragment-index="0">536</span></td><td><span class="mean-rating-highlight fragment" data-fragment-index="0">4</span></td></tr>
+<tr class="mean-ellipsis"><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+</tbody>
+</table>
+<p class="mean-ignore-note fragment fade-in" data-fragment-index="0">The global mean uses the <code>r</code> column. It does not group by <code>u</code> or <code>i</code>.</p>
+</div>
+
+<div class="mean-flow-connector pipeline-connector fragment fade-in" data-fragment-index="1"><span>aggregate r</span><i></i></div>
+
+<div class="mean-aggregation-stage">
+<div class="mean-aggregation-values fragment fade-in" data-fragment-index="2">
+<p><span>SUM OF ALL RATINGS</span><b>185,262</b><code>y_train.sum()</code></p>
+<p><span>NUMBER OF RATINGS</span><b>51,161</b><code>y_train.size</code></p>
+</div>
+
+<div class="mean-division fragment fade-in" data-fragment-index="3">
+<span>GLOBAL MEAN</span>
+<div class="mean-fraction"><p><b>185,262</b><i></i><b>51,161</b></p><em>=</em><strong>3.621156...</strong></div>
+</div>
+
+<div class="mean-code-strip fragment fade-in" data-fragment-index="4">
+<p><span>CALCULATE</span><code>global_mean = y_train.mean()</code></p>
+<p><span>FILL THE TEST VECTOR</span><code>y_pred_global = np.full(X_test.shape[0], global_mean)</code></p>
+</div>
+</div>
+</div>
+
+::: {.notes}
+[Sources]
+- The displayed rows are the first five triples in the public STAT3009 training file.
+- The training ratings sum to 185,262 across 51,161 rows, giving a mean of 3.621156740485917.
+- Animation sequence: focus on the rating column, aggregate the ratings, reveal the sum and count, divide, and show the equivalent Python operations.
+:::
+
+## Systematic variation across users and movies {.detail-slide .variation-slide}
+
+<div class="variation-layout">
+<div>
+<span>USER RATING LEVELS</span>
+<p><b>User 589</b><em>74 ratings</em><strong>2.01</strong></p>
+<p><b>User 1190</b><em>74 ratings</em><strong>4.99</strong></p>
+</div>
+<div>
+<span>MOVIE RATING LEVELS</span>
+<p><b>Movie 2341</b><em>64 ratings</em><strong>2.75</strong></p>
+<p><b>Movie 205</b><em>81 ratings</em><strong>4.49</strong></p>
+</div>
+</div>
+
+<p class="baseline-takeaway">One global number leaves predictable structure in the prediction errors: some users rate low, and some movies receive stronger ratings.</p>
+
+::: {.notes}
+[Sources]
+- Examples are the lowest and highest means among training users with at least 50 ratings and among training movies with at least 50 ratings.
+- Values were calculated from the public STAT3009 training file.
+:::
+
+## User mean baseline {.formula-slide .real-result-slide}
+
+<div class="formula-stage user-formula">
+<span>ONE NUMBER PER OBSERVED USER</span>
+$$
+\bar r_u=\frac{1}{|\mathcal I_u^{\mathrm{tr}}|}
+\sum_{i\in\mathcal I_u^{\mathrm{tr}}}r_{ui}
+$$
+</div>
+
+<div class="baseline-rule-row">
+<p><span>KNOWN USER</span><b>r̂<sub>ui</sub> = r̄<sub>u</sub></b><em>same prediction for every movie</em></p>
+<p><span>NEW USER</span><b>r̂<sub>ui</sub> = μ</b><em>fall back to the global mean</em></p>
+</div>
+
+<div class="real-result-strip two-result-strip">
+<p><span>TEST RMSE</span><b>1.017</b></p>
+<p><span>CHANGE FROM GLOBAL</span><b>−0.069</b></p>
+</div>
+
+::: {.notes}
+[Sources]
+- Formula follows the user-average method in the original course deck.
+- Test result uses a global-mean fallback for the 74 test users unseen in training.
+:::
+
+## User means from training triples {.detail-slide .grouped-mean-slide .user-mean-animation-slide}
+
+<div class="grouped-mean-flow user-mean-flow" role="img" aria-label="Interleaved training triples are grouped by user ID, then each user group produces its own mean rating">
+<div class="grouped-triples-stage">
+<span class="pipeline-label">SELECTED TRAIN TRIPLES · USERS INTERLEAVED</span>
+<table aria-label="Selected training triples containing three different users">
+<thead><tr><th>u</th><th>i</th><th>r</th></tr></thead>
+<tbody>
+<tr class="grouped-triple-row group-a fragment" data-fragment-index="0"><td>1960</td><td>670</td><td>4</td></tr>
+<tr class="grouped-triple-row group-b fragment" data-fragment-index="0"><td>589</td><td>3181</td><td>1</td></tr>
+<tr class="grouped-triple-row group-c fragment" data-fragment-index="0"><td>1346</td><td>152</td><td>4</td></tr>
+<tr class="grouped-triple-row group-a fragment" data-fragment-index="0"><td>1960</td><td>2597</td><td>4</td></tr>
+<tr class="grouped-triple-row group-b fragment" data-fragment-index="0"><td>589</td><td>422</td><td>2</td></tr>
+<tr class="grouped-triple-row group-c fragment" data-fragment-index="0"><td>1346</td><td>2102</td><td>5</td></tr>
+</tbody>
+</table>
+<p class="grouping-note fragment fade-in" data-fragment-index="0">Rows with the same <code>u</code> belong to one group. The movie IDs may differ.</p>
+</div>
+
+<div class="grouped-flow-connector pipeline-connector fragment fade-in" data-fragment-index="1"><span>group by u</span><i></i></div>
+
+<div class="group-summary-stage">
+<div class="group-summary-table fragment fade-in" data-fragment-index="2">
+<span class="pipeline-label">ONE AVERAGE PER USER GROUP</span>
+<table aria-label="Rating counts, sums, and means for three example users">
+<thead><tr><th>User</th><th>Σr / n<sub>u</sub></th><th>User mean</th></tr></thead>
+<tbody>
+<tr class="group-a"><td>1960</td><td>1,324 / 347</td><td>3.816</td></tr>
+<tr class="group-b"><td>589</td><td>149 / 74</td><td>2.014</td></tr>
+<tr class="group-c"><td>1346</td><td>398 / 107</td><td>3.720</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="group-mean-rule fragment fade-in" data-fragment-index="3"><b>Same calculation, separate groups</b><span>Each observed user receives one value. User 1960 gets <code>1324 / 347 = 3.815562</code>.</span></p>
+
+<div class="mean-code-strip grouped-mean-code numpy-group-code fragment fade-in" data-fragment-index="4">
+<span>STORE ONE VALUE PER USER</span>
+<pre><code>user_mean[1960] = 3.816
+user_mean[589]  = 2.014
+user_mean[1346] = 3.720</code></pre>
+</div>
+</div>
+</div>
+
+::: {.notes}
+[Sources]
+- The displayed rows are genuine training observations selected to show three interleaved users.
+- User 1960 has 347 ratings with sum 1,324; user 589 has 74 with sum 149; user 1346 has 107 with sum 398.
+- Each observed user contributes one entry to the `user_mean` lookup vector.
+- Animation sequence: color interleaved rows by user, group by user ID, reveal several group means, and store those means in the vector.
+:::
+
+## User mean in NumPy {.detail-slide .numpy-group-helper-slide .code-slide}
+
+:::: {.columns .vcenter .numpy-helper-columns}
+::: {.column width="57%"}
+```python
+user_mean = np.full(n_users, global_mean)
+
+for u in np.unique(X_train[:, 0]):
+    user_mean[u] = np.mean(y_train[X_train[:, 0] == u])
+
+y_pred_user = user_mean[X_test[:, 0]]
+```
+:::
+
+::: {.column width="39%"}
+<div class="user-mask-example">
+<span>EXAMPLE · USER u = 1</span>
+<p><b>User column</b><code>[0, 1, 0, 2, 1]</code></p>
+<p class="fragment fade-in" data-fragment-index="0"><b>Boolean mask</b><code>[F, T, F, F, T]</code></p>
+<p class="fragment fade-in" data-fragment-index="1"><b>Selected ratings</b><code>[1, 2]</code></p>
+<div class="user-mask-result fragment fade-in" data-fragment-index="2">
+<b>user_mean[1]</b><code>1.5</code>
+</div>
+</div>
+:::
+::::
+
+<div class="group-helper-reading">
+<p><b>Build the lookup vector from train</b><span><code>X_train[:, 0] == u</code> selects the ratings from user <code>u</code>.</span></p>
+<p><b>Predict by array indexing</b><span>Each encoded test user retrieves one value from <code>user_mean</code>.</span></p>
+</div>
+
+::: {.notes}
+[Sources]
+- `user_mean` is a NumPy lookup vector indexed by the encoded user ID.
+- The loop visits only user IDs observed in training. Users seen only in the test set retain the pre-filled global mean.
+- The final line creates one prediction for every row of `X_test` without another Python loop.
+- Animation sequence: show one encoded user column, reveal the Boolean mask, reveal the selected ratings, and then their mean.
+:::
+
+## Item mean baseline {.formula-slide .real-result-slide}
+
+<div class="formula-stage item-formula">
+<span>ONE NUMBER PER OBSERVED MOVIE</span>
+$$
+\bar r_i=\frac{1}{|\mathcal U_i^{\mathrm{tr}}|}
+\sum_{u\in\mathcal U_i^{\mathrm{tr}}}r_{ui}
+$$
+</div>
+
+<div class="baseline-rule-row">
+<p><span>KNOWN MOVIE</span><b>r̂<sub>ui</sub> = r̄<sub>i</sub></b><em>same prediction for every user</em></p>
+<p><span>NEW MOVIE</span><b>r̂<sub>ui</sub> = μ</b><em>fall back to the global mean</em></p>
+</div>
+
+<div class="real-result-strip two-result-strip">
+<p><span>TEST RMSE</span><b>1.052</b></p>
+<p><span>CHANGE FROM GLOBAL</span><b>−0.034</b></p>
+</div>
+
+::: {.notes}
+[Sources]
+- Formula follows the item-average method in the original course deck.
+- Test result uses a global-mean fallback for the 584 test movies unseen in training.
+:::
+
+## Item mean uses the same pattern {.detail-slide .grouped-mean-slide .item-mean-animation-slide}
+
+<div class="grouped-mean-flow item-mean-flow" role="img" aria-label="Interleaved training triples are grouped by movie ID, then each movie group produces its own mean rating">
+<div class="grouped-triples-stage item-triples-stage">
+<span class="pipeline-label">SELECTED TRAIN TRIPLES · MOVIES INTERLEAVED</span>
+<table aria-label="Selected training triples containing three different movies">
+<thead><tr><th>u</th><th>i</th><th>r</th></tr></thead>
+<tbody>
+<tr class="grouped-triple-row group-a fragment" data-fragment-index="0"><td>1960</td><td>670</td><td>4</td></tr>
+<tr class="grouped-triple-row group-b fragment" data-fragment-index="0"><td>1346</td><td>152</td><td>4</td></tr>
+<tr class="grouped-triple-row group-c fragment" data-fragment-index="0"><td>785</td><td>1741</td><td>4</td></tr>
+<tr class="grouped-triple-row group-a fragment" data-fragment-index="0"><td>1882</td><td>670</td><td>4</td></tr>
+<tr class="grouped-triple-row group-b fragment" data-fragment-index="0"><td>657</td><td>152</td><td>2</td></tr>
+<tr class="grouped-triple-row group-c fragment" data-fragment-index="0"><td>961</td><td>1741</td><td>4</td></tr>
+</tbody>
+</table>
+<p class="grouping-note fragment fade-in" data-fragment-index="0">Rows with the same <code>i</code> belong to one group. The user IDs may differ.</p>
+</div>
+
+<div class="grouped-flow-connector pipeline-connector fragment fade-in" data-fragment-index="1"><span>group by i</span><i></i></div>
+
+<div class="group-summary-stage">
+<div class="group-summary-table fragment fade-in" data-fragment-index="2">
+<span class="pipeline-label">ONE AVERAGE PER MOVIE GROUP</span>
+<table aria-label="Rating counts, sums, and means for three example movies">
+<thead><tr><th>Movie</th><th>Σr / n<sub>i</sub></th><th>Item mean</th></tr></thead>
+<tbody>
+<tr class="group-a"><td>670</td><td>145 / 47</td><td>3.085</td></tr>
+<tr class="group-b"><td>152</td><td>292 / 74</td><td>3.946</td></tr>
+<tr class="group-c"><td>1741</td><td>416 / 108</td><td>3.852</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="group-mean-rule fragment fade-in" data-fragment-index="3"><b>Only the grouping column changes</b><span>User mean groups by column <code>0</code>. Item mean groups by column <code>1</code>.</span></p>
+
+<div class="mean-code-strip grouped-mean-code numpy-group-code fragment fade-in" data-fragment-index="4">
+<span>ALL MOVIES · NUMPY</span>
+<pre><code>item_mean = np.full(n_items, global_mean)
+for i in np.unique(X_train[:, 1]):
+    item_mean[i] = np.mean(y_train[X_train[:, 1] == i])
+y_pred_item = item_mean[X_test[:, 1]]</code></pre>
+</div>
+</div>
+</div>
+
+::: {.notes}
+[Sources]
+- The displayed rows are genuine training observations selected to show three interleaved movies.
+- Movie 670 has 47 ratings with sum 145; movie 152 has 74 with sum 292; movie 1741 has 108 with sum 416.
+- The item calculation repeats the same direct Boolean-indexing pattern using column 1 of `X_train`.
+- Animation sequence: color interleaved rows by movie, group by movie ID, reveal several group means, and show the corresponding NumPy calculation.
+:::
+
+## Three mean baselines on the test set {.detail-slide .mean-results-slide}
+
+<table class="baseline-table method-score-table">
+<thead><tr><th>Method</th><th>What varies?</th><th>Fallback</th><th>Test RMSE</th></tr></thead>
+<tbody>
+<tr><td>Global mean</td><td>Nothing</td><td>Always defined</td><td><b>1.085</b></td></tr>
+<tr class="best-mean-row"><td>User mean</td><td>User</td><td>Global mean for new user</td><td><b>1.017</b></td></tr>
+<tr><td>Item mean</td><td>Movie</td><td>Global mean for new movie</td><td><b>1.052</b></td></tr>
+</tbody>
+</table>
+
+<div class="mean-result-reading">
+<p><b>User effects explain more error in this split</b><span>The user mean improves more than the movie mean.</span></p>
+<p><b>Neither model combines both sources</b><span>User mean ignores which movie is scored. Movie mean ignores which user is scored.</span></p>
+</div>
+
+::: {.notes}
+[Sources]
+- Results were calculated from the public course train/test files with the displayed fallback rules.
+- The comparison applies to this split and should not be treated as a universal ranking of the methods.
+:::
+
+## Fallback behavior for unseen IDs {.detail-slide .fallback-detail-slide}
+
+<table class="baseline-table fallback-table">
+<thead><tr><th>Test case</th><th>Global</th><th>User mean</th><th>Item mean</th></tr></thead>
+<tbody>
+<tr><td>Known user, known movie</td><td>μ</td><td>r̄<sub>u</sub></td><td>r̄<sub>i</sub></td></tr>
+<tr><td>Known user, new movie</td><td>μ</td><td>r̄<sub>u</sub></td><td>μ</td></tr>
+<tr><td>New user, known movie</td><td>μ</td><td>μ</td><td>r̄<sub>i</sub></td></tr>
+<tr><td>New user, new movie</td><td>μ</td><td>μ</td><td>μ</td></tr>
+</tbody>
+</table>
+
+<p class="baseline-takeaway">The global mean is more than a weak model. It is the fallback that makes the other baselines complete.</p>
+
+::: {.notes}
+[Sources]
+- The fallback table applies the definitions from the preceding slides to the four test-pair types.
+:::
+
+## Three-mean baseline {.section-break .additive-section}
+
+<div class="section-number">03</div>
+<img class="section-crest" src="../Lec-overview-quarto/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Take the arithmetic average of the user mean, item mean, and global mean.</p>
+
+::: {.notes}
+[Sources]
+- This section uses an instructor-selected equal-weight combination of three previously calculated means.
+:::
+
+## Arithmetic average of three means {.additive-intuition-slide}
+
+<div class="additive-equation additive-equation-revised">
+<div class="additive-kicker">THREE NUMBERS · EQUAL WEIGHT</div>
+<div class="additive-term">user mean</div>
+<div class="additive-plus">+</div>
+<div class="additive-term">item mean</div>
+<div class="additive-plus">+</div>
+<div class="additive-term">global mean</div>
+</div>
+
+<div class="additive-interpretation">
+<p><span>r̄<sub>u</sub></span><b>User mean</b><em>User u's average training rating.</em></p>
+<p><span>r̄<sub>i</sub></span><b>Item mean</b><em>Movie i's average training rating.</em></p>
+<p><span>μ</span><b>Global mean</b><em>The average over every training rating.</em></p>
+</div>
+
+<div class="additive-main-formula compact-additive-formula">
+$$\hat r_{ui}=\frac{\bar r_u+\bar r_i+\mu}{3}$$
+</div>
+
+::: {.notes}
+[Sources]
+- The formula assigns equal weight to the user, item, and global means.
+:::
+
+## Flexible weights {.detail-slide .flex-weight-slide}
+
+<div class="flex-weight-formula">
+$$
+\hat r_{ui}
+=
+w_u\bar r_u+w_i\bar r_i+w_0\mu,
+\qquad
+w_u+w_i+w_0=1
+$$
+</div>
+
+<div class="flex-weight-reading">
+<p><span>USER WEIGHT</span><b>w<sub>u</sub></b><em>Controls how much the user's rating tendency contributes.</em></p>
+<p><span>ITEM WEIGHT</span><b>w<sub>i</sub></b><em>Controls how much the movie's average rating contributes.</em></p>
+<p><span>GLOBAL WEIGHT</span><b>w<sub>0</sub></b><em>Pulls the prediction toward the overall rating level.</em></p>
+</div>
+
+<div class="flex-weight-choice">
+<span>CHOICE USED TODAY</span>
+<b>w<sub>u</sub> = w<sub>i</sub> = w<sub>0</sub> = 1/3</b>
+<p>Equal weights give a simple average. Other weights give different averages without changing the prediction workflow.</p>
+</div>
+
+::: {.notes}
+[Sources]
+- This slide presents the general weighted-average form as a conceptual extension.
+- All calculations in this lecture continue to use one-third for each mean.
+:::
+
+## A three-number prediction {.detail-slide .three-number-example-slide}
+
+<div class="three-number-example" role="img" aria-label="For user 1960 and movie 2098, average the user mean, item mean, and global mean to obtain the predicted rating">
+<div class="three-number-term"><span>USER 1960 MEAN</span><b>3.816</b></div>
+<i class="fragment fade-in" data-fragment-index="0">+</i>
+<div class="three-number-term fragment fade-in" data-fragment-index="0"><span>MOVIE 2098 MEAN</span><b>4.000</b></div>
+<i class="fragment fade-in" data-fragment-index="1">+</i>
+<div class="three-number-term fragment fade-in" data-fragment-index="1"><span>GLOBAL MEAN</span><b>3.621</b></div>
+<div class="three-number-divide fragment fade-in" data-fragment-index="2"><span>DIVIDE THE SUM BY</span><b>3</b></div>
+<i class="three-number-equals fragment fade-in" data-fragment-index="2">=</i>
+<div class="three-number-result fragment fade-in" data-fragment-index="2"><span>PREDICTED RATING</span><b>3.812</b></div>
+</div>
+
+<p class="three-mean-fallback fragment fade-in" data-fragment-index="3"><b>Missing user or item mean</b><span>Put the global mean into the missing slot, then average the same three positions.</span></p>
+
+::: {.notes}
+[Sources]
+- User 1960's training mean is 3.8155619596541785 and movie 2098's training mean is 4.0.
+- Their equal-weight three-mean prediction is `(3.8155619596541785 + 4.0 + 3.621156740485917) / 3 = 3.8122395667133655`.
+:::
+
+## Three-mean baseline in Python {.review-slide .code-slide .three-mean-code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="62%"}
+```python
+u_test = X_test[:, 0]
+i_test = X_test[:, 1]
+
+# The mean arrays already contain the global fallback
+user_term = user_mean[u_test]
+item_term = item_mean[i_test]
+
+y_pred_three = (user_term + item_term + global_mean) / 3
+
+round(rmse(y_test, y_pred_three), 3)
+```
+:::
+
+::: {.column width="34%"}
+<div class="console-result additive-console-result">
+<span>OUTPUT</span>
+<b>1.005</b>
+</div>
+
+<div class="code-reading">
+<p><b>Equal weights</b><span>each mean contributes one third</span></p>
+<p><b>Missing group mean</b><span>replace it with the global mean</span></p>
+<p><b>Complete output</b><span>every test row receives a score</span></p>
+</div>
+:::
+::::
+
+::: {.notes}
+[Sources]
+- NumPy code implements the equal-weight average of user, item, and global means on the public course files.
+- Output was independently verified from those files.
+:::
+
+## Test-set results {.detail-slide .all-results-slide}
+
+<table class="baseline-table all-results-table">
+<thead><tr><th>Method</th><th>Test RMSE</th><th>Reduction from global</th><th>Information used</th></tr></thead>
+<tbody>
+<tr><td>Global mean</td><td>1.085</td><td>reference</td><td>overall rating level</td></tr>
+<tr><td>Item mean</td><td>1.052</td><td>0.034</td><td>movie history</td></tr>
+<tr><td>User mean</td><td>1.017</td><td>0.069</td><td>user history</td></tr>
+<tr class="best-result-row"><td>Three-mean average</td><td><b>1.005</b></td><td><b>0.081</b></td><td>user, movie, and global means</td></tr>
+</tbody>
+</table>
+
+<p class="baseline-takeaway">The equal-weight three-mean baseline reduces test RMSE by about 7.4% relative to the global baseline on this course split.</p>
+
+::: {.notes}
+[Sources]
+- All values were calculated from the public STAT3009 train/test files using the methods shown in this deck.
+- Relative reduction is `(1.0854886 - 1.0049437) / 1.0854886 = 7.4%`.
+:::
+
+## Performance by test-pair type {.detail-slide .segment-result-slide}
+
+<table class="baseline-table segment-result-table">
+<thead><tr><th>Test-pair type</th><th>Rows</th><th>Three-mean RMSE</th><th>Prediction used</th></tr></thead>
+<tbody>
+<tr><td>Known user, known movie</td><td>50,159</td><td>1.000</td><td>(r̄<sub>u</sub> + r̄<sub>i</sub> + μ) / 3</td></tr>
+<tr><td>Known user, new movie</td><td>850</td><td>1.264</td><td>(r̄<sub>u</sub> + 2μ) / 3</td></tr>
+<tr><td>New user, known movie</td><td>149</td><td>1.114</td><td>(r̄<sub>i</sub> + 2μ) / 3</td></tr>
+<tr class="tiny-segment-row"><td>New user, new movie</td><td>3</td><td>0.621</td><td>μ only</td></tr>
+</tbody>
+</table>
+
+<p class="segment-warning">
+<b>The final row has only three observations.</b>
+<span>Its small RMSE is sampling noise, not evidence that the global mean handles full cold start well.</span>
+</p>
+
+::: {.notes}
+[Sources]
+- Segment counts and RMSE values were calculated from the public course files.
+- The caution about the three-row segment reflects its inadequate sample size.
+:::
+
+## Prediction scores and ranking {.section-break .ranking-section}
+
+<div class="section-number">04</div>
+<img class="section-crest" src="../Lec-overview-quarto/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Return from rating prediction to the ordered recommendation list.</p>
+
+::: {.notes}
+[Sources]
+- Section reconnects the score-to-ranking loop established in the overview lecture.
+:::
+
+## From prediction scores to a ranking {.detail-slide .ranking-example-slide}
+
+<div class="ranking-user"><span>EXAMPLE TEST USER</span><b>User 1960</b><p>347 training ratings · training mean 3.82</p></div>
+
+<table class="baseline-table ranking-example-table">
+<thead><tr><th>Candidate movie</th><th>Global</th><th>User mean</th><th>Item mean</th><th>Three-mean</th><th>Observed test rating</th></tr></thead>
+<tbody>
+<tr><td>Movie 2098</td><td>3.62</td><td>3.82</td><td>4.00</td><td><b>3.81</b></td><td>4</td></tr>
+<tr><td>Movie 898</td><td>3.62</td><td>3.82</td><td>3.75</td><td><b>3.73</b></td><td>4</td></tr>
+<tr><td>Movie 2195</td><td>3.62</td><td>3.82</td><td>2.40</td><td><b>3.28</b></td><td>2</td></tr>
+</tbody>
+</table>
+
+<div class="ranking-observation">
+<p><b>Global and user means produce ties</b><span>They cannot order movies for one user.</span></p>
+<p><b>Three-mean scores vary by movie</b><span>Sorting the three-mean column gives 2098, 898, 2195.</span></p>
+</div>
+
+<p class="baseline-takeaway">For one user, the user and global terms are constant. The three-mean score therefore preserves the item-mean order while pulling scores toward the center.</p>
+
+<p class="source-line">Source: predictions calculated from the STAT3009 course files. Test ratings appear only for retrospective evaluation.</p>
+
+::: {.notes}
+[Sources]
+- The selected rows are real test observations for user 1960.
+- Predictions use only the training file. The last column shows test labels after prediction.
+:::
+
+## What the three-mean model cannot explain {.detail-slide .interaction-gap-slide}
+
+<div class="interaction-equation">
+<div><span>THREE-MEAN MODEL</span><b>(μ + r̄<sub>u</sub> + r̄<sub>i</sub>) / 3</b><p>Separate average tendencies with equal weights.</p></div>
+<i>leaves</i>
+<div><span>UNEXPLAINED ERROR</span><b>r<sub>ui</sub> − r̂<sub>ui</sub></b><p>Preference specific to this user–movie pairing.</p></div>
+</div>
+
+<div class="interaction-example">
+<p><b>A strict rater can still love one movie.</b><span>The user's low average pulls every prediction down, but it cannot represent a special match.</span></p>
+<p><b>A popular movie can still be wrong for one user.</b><span>The movie's high average pulls every prediction up, but it cannot represent individual incompatibility.</span></p>
+</div>
+
+<p class="baseline-takeaway">Collaborative filtering models the user–movie interaction that separate averages cannot represent.</p>
+
+::: {.notes}
+[Sources]
+- The limitation follows from using separate user and movie average summaries without a user–movie interaction term.
+- The examples are conceptual and do not identify specific Netflix customers or movies.
+:::
+
+## Baselines turn data properties into modeling choices {.closing-slide}
+
+<div class="closing-list four">
+<span><b>01</b> Rating imbalance sets the global level</span>
+<span><b>02</b> User and movie variation motivates group effects</span>
+<span><b>03</b> Cold-start rows require explicit fallbacks</span>
+<span><b>04</b> Unexplained user–movie interaction motivates collaborative filtering</span>
+</div>
+
+<p class="closing-link"><a href="https://www.bendai.org/CUHK-STAT3009/">bendai.org/CUHK-STAT3009 ↗</a></p>
+
+::: {.notes}
+[Sources]
+- Closing statements summarize the empirical course-data analysis and the baseline progression developed in this lecture.
+:::
