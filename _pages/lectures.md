@@ -70,9 +70,6 @@ description: Fall 2026. Additional lectures will be announced.
             {% if lecture.notes %}
               <a href="{{ lecture.notes }}" target="_blank">notes</a>
             {% endif %}
-            {% if lecture.nb_warmup %}
-              | <a href="{{ lecture.nb_warmup }}" target="_blank">nb_warmup</a>
-            {% endif %}
             {% if lecture.pynb %}
               | <a href="{{ lecture.pynb }}" target="_blank">pynb</a>
             {% endif %}
