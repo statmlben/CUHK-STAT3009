@@ -49,6 +49,15 @@ description: Fall 2026. Additional lectures will be announced.
         {% if lecture.recitation %}
             <br />{{ lecture.recitation }}<br />
         {% endif %}
+        {% if lecture.warmup %}
+            <a class="schedule-warmup" href="{{ lecture.warmup.href }}" target="_blank">
+                <span class="schedule-warmup__label">{{ lecture.warmup.label | default: "Warm-up" }}</span>
+                <strong class="schedule-warmup__title">{{ lecture.warmup.title }}</strong>
+                {% if lecture.warmup.meta %}
+                    <small class="schedule-warmup__meta">{{ lecture.warmup.meta }}</small>
+                {% endif %}
+            </a>
+        {% endif %}
         [
             {% if lecture.slides %}
               <a href="{{ lecture.slides }}" target="_blank">slides</a>

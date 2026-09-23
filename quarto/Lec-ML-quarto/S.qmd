@@ -1,0 +1,1296 @@
+---
+title: "Machine Learning I: Models and Estimators"
+subtitle: "From prediction rules to reusable code"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview/stat3009.scss, ml.scss]
+    logo: ../Lec-overview/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls: true
+    controls-layout: edges
+    controls-tutorial: false
+    progress: true
+    slide-number: c/t
+    hash: true
+    history: true
+    transition: fade
+    background-transition: fade
+    transition-speed: default
+    code-line-numbers: false
+    code-copy: false
+    highlight-style: github-dark
+    link-external-newwindow: true
+    embed-resources: true
+    footer: "CUHK · STAT3009 · Recommender Systems"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## Today's question {.ml-question-slide}
+
+<div class="ml-question">
+<span>WE CAN ALREADY PREDICT</span>
+<b>global mean · user mean · item mean</b>
+<p>How do we move from hand-designed averages to a general way of learning prediction rules from data?</p>
+</div>
+
+<div class="question-bridge">
+<div><span>BEFORE</span><b>Choose a formula</b><p>Then calculate its averages from the training triples.</p></div>
+<i>→</i>
+<div><span>TODAY</span><b>Choose a model family</b><p>Then learn its parameters from examples.</p></div>
+<i>→</i>
+<div><span>THE REAL CHALLENGE</span><b>Generalize</b><p>Work well on ratings the model has never seen.</p></div>
+</div>
+
+::: {.notes}
+[Teaching]
+- Begin from the previous baseline lecture. Machine learning is presented as a generalization of that workflow, not as an unrelated topic.
+:::
+
+## The learning loop {.detail-slide .learning-loop-slide}
+
+<div class="learning-loop" role="img" aria-label="Training examples are used to learn a fitted model, which predicts unseen examples and is evaluated without feeding the test labels back into training">
+<div class="loop-node fragment fade-up" data-fragment-index="1"><span>01 · TRAIN</span><b>Examples with answers</b><p>features $X_{train}$ + targets $y_{train}$</p></div>
+<i class="flow-arrow fragment" data-fragment-index="2">fit</i>
+<div class="loop-node model-node fragment fade-up" data-fragment-index="2"><span>02 · LEARN</span><b>Fitted model</b><p>$\widehat f$ stores patterns learned from training data</p></div>
+<i class="flow-arrow fragment" data-fragment-index="3">predict</i>
+<div class="loop-node fragment fade-up" data-fragment-index="3"><span>03 · APPLY</span><b>New examples</b><p>$X_{new} \rightarrow \widehat y$</p></div>
+<i class="flow-arrow fragment" data-fragment-index="4">compare</i>
+<div class="loop-node score-node fragment fade-up" data-fragment-index="4"><span>04 · EVALUATE</span><b>Generalization</b><p>compare $\widehat y$ with untouched answers</p></div>
+</div>
+
+<div class="test-lock fragment fade-in" data-fragment-index="5"><span>🔒</span><b><code>X_test</code> is available. <code>y_test</code> stays out of fitting and model selection.</b></div>
+
+::: {.notes}
+[Teaching]
+- Reveal one stage at a time.
+- The lock is the central rule for the entire lecture: test labels are for final evaluation only.
+:::
+
+## ML I · A language for prediction {.section-break .ml-i-section}
+
+<div class="section-number">01</div>
+<img class="section-crest" src="../Lec-overview/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Examples, models, losses, parameters—and the separation between fitting and evaluation.</p>
+
+## Rating prediction is supervised learning {.detail-slide .supervised-slide}
+
+<div class="supervised-map">
+<div>
+<span>RECOMMENDER SYSTEM</span>
+<div class="feature-token"><b>user</b><em>$u$</em></div>
+<div class="feature-token"><b>item</b><em>$i$</em></div>
+<i>→</i>
+<div class="target-token"><b>rating</b><em>$r_{ui}$</em></div>
+</div>
+<div>
+<span>HOUSING REGRESSION</span>
+<div class="feature-token"><b>income</b><em>$x_1$</em></div>
+<div class="feature-token"><b>location</b><em>$x_2$</em></div>
+<i>→</i>
+<div class="target-token"><b>value</b><em>$y$</em></div>
+</div>
+</div>
+
+<p class="ml-takeaway"><b>Supervised learning:</b> learn a mapping from inputs to a known numerical target, then apply it to new inputs.</p>
+
+::: {.notes}
+[Sources]
+- General terminology follows the scikit-learn supervised-learning user guide: https://scikit-learn.org/stable/supervised_learning.html.
+:::
+
+## One row becomes one learning example {.detail-slide .example-row-slide}
+
+<div class="example-row-layout">
+<div class="example-table-card">
+<span>RATING DATA</span>
+<table>
+<thead><tr><th>user</th><th>item</th><th>rating</th></tr></thead>
+<tbody>
+<tr><td>1960</td><td>670</td><td class="target-cell">4</td></tr>
+<tr><td>1346</td><td>152</td><td class="target-cell">4</td></tr>
+<tr><td>785</td><td>1741</td><td class="target-cell">4</td></tr>
+</tbody>
+</table>
+<p><b>$X$</b> contains the inputs; <b>$y$</b> contains the answer.</p>
+</div>
+
+<div class="row-decomposition fragment fade-left">
+<span>ONE EXAMPLE</span>
+<div><b>$x_1=(1960,670)$</b><p>the user–item pair</p></div>
+<i>paired with</i>
+<div class="answer-card"><b>$y_1=4$</b><p>the observed rating</p></div>
+</div>
+</div>
+
+<p class="ml-takeaway">The row number is not a feature. It only identifies an observation.</p>
+
+::: {.notes}
+[Sources]
+- The example row comes from the STAT3009 Netflix course subset shown in the baseline lecture.
+:::
+
+## Four questions decode every estimator {.detail-slide .components-slide}
+
+<div class="four-components">
+<div class="fragment fade-up" data-fragment-index="1"><span>1 · MODEL</span><b>$f_{\theta,h}(x)$</b><p>What family of prediction rules can this estimator represent?</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>2 · PARAMETERS</span><b>$\theta$</b><p>What quantities will <code>fit</code> learn from the training data?</p></div>
+<div class="fragment fade-up" data-fragment-index="3"><span>3 · HYPERPARAMETERS</span><b>$h$</b><p>What choices are fixed before <code>fit</code> and control the model or fitting rule?</p></div>
+<div class="fragment fade-up" data-fragment-index="4"><span>4 · LOSS / CRITERION</span><b>$L(y,\widehat y)$</b><p>What does the fitting procedure regard as a better solution?</p></div>
+</div>
+
+<div class="component-equation fragment fade-in" data-fragment-index="5">
+$$h\ \text{chosen before fit}\quad\Longrightarrow\quad
+\widehat\theta=\arg\min_{\theta}\frac{1}{n}\sum_{i=1}^{n}L\!\left(y_i,f_{\theta,h}(x_i)\right)
+\quad\Longrightarrow\quad \widehat f=f_{\widehat\theta,h}$$
+</div>
+
+::: {.notes}
+[Teaching]
+- Establish this as the reusable reading template for the course. Every time a new estimator appears, ask the same four questions before studying its code.
+- “Loss / criterion” is deliberately broad. Some estimators minimize an explicit loss; others use a direct fitting rule. In that case, record the rule rather than inventing a loss.
+- Data remain essential: $X$ supplies inputs and $y$ supplies training answers. The previous two slides established that shared data format; these four questions describe the estimator itself.
+:::
+
+## Parameters are learned; hyperparameters are chosen {.detail-slide .parameter-choice-slide}
+
+<div class="parameter-choice">
+<div class="hyper-choice fragment fade-up" data-fragment-index="1">
+<span>BEFORE <code>fit</code> · CHOSEN</span>
+<b>hyperparameter $h$</b>
+<code>fit_intercept=True</code>
+<p>Set by us—or later selected with validation—to control the model or fitting process.</p>
+</div>
+
+<div class="choice-fit fragment" data-fragment-index="2"><code>fit(X, y)</code><i>uses training data</i></div>
+
+<div class="learned-choice fragment fade-left" data-fragment-index="2">
+<span>DURING <code>fit</code> · LEARNED</span>
+<b>parameter $\widehat\theta$</b>
+<code>coef_ · intercept_</code>
+<p>Estimated from the observed examples and stored in the fitted object.</p>
+</div>
+</div>
+
+<div class="sklearn-wording fragment fade-up" data-fragment-index="3"><b>One word, two conventions</b><span>scikit-learn calls constructor arguments “parameters” in <code>get_params()</code>. In our ML template, we call model settings <em>hyperparameters</em> to distinguish them from quantities learned during <code>fit</code>.</span></div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4">Quick test: <b>did the data determine the value?</b> Yes → learned parameter. No, fixed before fitting → hyperparameter.</p>
+
+::: {.notes}
+[Sources]
+- Scikit-learn estimator instantiation, hyperparameters, fitting, and estimated attributes: https://scikit-learn.org/stable/developers/develop.html.
+
+[Teaching]
+- Do not define “hyper” as “more important.” It describes when and how the value is chosen.
+- `fit_intercept` is a useful first example because students can connect it directly to whether $\theta_0$ appears in the model family.
+:::
+
+## A model is a family—not one fitted line {.detail-slide .model-family-slide}
+
+<div class="model-family-layout">
+<div class="family-equation">
+<span>LINEAR FAMILY</span>
+<b>$f_{\theta}(x)=\theta_0+\theta_1x$</b>
+<p>The formula gives a family. Each value of $\theta=(\theta_0,\theta_1)$ gives a different member.</p>
+</div>
+
+<div class="line-family" role="img" aria-label="Three candidate linear models with different intercepts and slopes">
+<div class="axis-x"></div><div class="axis-y"></div>
+<div class="data-dot d1"></div><div class="data-dot d2"></div><div class="data-dot d3"></div><div class="data-dot d4"></div><div class="data-dot d5"></div>
+<div class="candidate-line line-a fragment" data-fragment-index="1"></div>
+<div class="candidate-line line-b fragment" data-fragment-index="2"></div>
+<div class="candidate-line line-c fragment" data-fragment-index="3"></div>
+<span class="line-label label-a fragment" data-fragment-index="1">candidate A</span>
+<span class="line-label label-b fragment" data-fragment-index="2">candidate B</span>
+<span class="line-label label-c fragment" data-fragment-index="3">candidate C</span>
+</div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4"><b>Training</b> decides which member of the family to use.</p>
+
+## Training minimizes average loss {.detail-slide .parameter-fit-slide}
+
+<div class="loss-explain-layout">
+<div class="loss-example">
+<span class="loss-kicker">1 · SCORE ONE PARAMETER SETTING</span>
+<p class="loss-candidate-line">Fix $\theta^{(B)}$. For every training row, predict $\widehat y_i=f_{\theta^{(B)}}(x_i)$ and calculate $\ell_i=(y_i-\widehat y_i)^2$.</p>
+<table class="loss-table">
+<thead><tr><th>row $i$</th><th>observed $y_i$</th><th>prediction $\widehat y_i$</th><th>loss $\ell_i$</th></tr></thead>
+<tbody>
+<tr class="fragment" data-fragment-index="1"><td>1</td><td>4.0</td><td>3.5</td><td>0.25</td></tr>
+<tr class="fragment" data-fragment-index="1"><td>2</td><td>2.0</td><td>2.5</td><td>0.25</td></tr>
+<tr class="fragment" data-fragment-index="1"><td>3</td><td>5.0</td><td>4.0</td><td>1.00</td></tr>
+</tbody>
+</table>
+<div class="loss-average fragment fade-in" data-fragment-index="2">
+<span>AVERAGE THE ROW LOSSES</span>
+$$J\!\left(\theta^{(B)}\right)=\frac{0.25+0.25+1.00}{3}=0.50$$
+</div>
+</div>
+
+<div class="loss-search">
+<span class="loss-kicker">2 · COMPARE PARAMETER SETTINGS</span>
+<div class="loss-candidate-score fragment fade-left" data-fragment-index="3"><b>$\theta^{(A)}$</b><span>$J(\theta^{(A)})=2.02$</span></div>
+<div class="loss-candidate-score active fragment fade-left" data-fragment-index="4"><b>$\theta^{(B)}$</b><span>$J(\theta^{(B)})=0.50$</span></div>
+<div class="loss-candidate-score winner fragment fade-left" data-fragment-index="5"><b>$\widehat\theta$</b><span>$J(\widehat\theta)=0.23$</span></div>
+
+<div class="argmin-box fragment fade-up" data-fragment-index="6">
+$$\widehat\theta=\arg\min_{\theta}J(\theta)$$
+<div class="argmin-reading">
+<div><b>minimum</b><span>the smallest loss value</span></div>
+<div><b>arg minimum</b><span>the parameter value that achieves it</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<p class="caution-line fragment fade-in" data-fragment-index="7">For squared loss, minimizing MSE also minimizes RMSE. A small training loss still does not guarantee good predictions on new rows.</p>
+
+::: {.notes}
+[Teaching]
+- Pause after the first row and calculate $(4.0-3.5)^2=0.25$ aloud.
+- Emphasize that $J(\theta)$ is one number attached to one parameter setting. Changing $\theta$ changes every prediction and therefore changes $J(\theta)$.
+- “Minimum” is the best loss value. “Arg minimum” is the parameter setting that produces that value, so training returns $\widehat\theta$.
+- The numbers are instructor-authored for explanation and are not outputs from the Netflix or California housing data.
+- [Notebook pause 1] Open `STAT3009_ML_I.ipynb`, Section 2. Run the candidate-loss table, then fit the small linear model. Return to the slides after the first checkpoint.
+:::
+
+## Prediction freezes the fitted rule {.detail-slide .prediction-slide}
+
+<div class="prediction-freeze">
+<div class="fitted-rule">
+<span>AFTER FITTING</span>
+<b>$\widehat f(x)=f_{\widehat\theta}(x)$</b>
+<p>$\widehat\theta$ is now fixed.</p>
+</div>
+<i>apply</i>
+<div class="new-input fragment fade-up" data-fragment-index="1"><span>NEW INPUT</span><b>$x_{new}$</b><p>features only</p></div>
+<i class="fragment" data-fragment-index="2">→</i>
+<div class="new-output fragment fade-up" data-fragment-index="2"><span>PREDICTION</span><b>$\widehat y_{new}$</b><p>$=\widehat f(x_{new})$</p></div>
+</div>
+
+<div class="fit-predict-contrast">
+<p><b><code>.fit(X_train, y_train)</code></b><span>changes the model by learning parameters</span></p>
+<p><b><code>.predict(X_new)</code></b><span>uses the fitted model without learning from new labels</span></p>
+</div>
+
+## Training and test answer different questions {.detail-slide .roles-slide}
+
+<div class="role-contrast">
+<div class="train-role">
+<span>TRAINING SET</span>
+<b>How should the model fit?</b>
+<ul>
+<li><code>X_train</code> and <code>y_train</code> are available</li>
+<li>estimates parameters</li>
+<li>may be reused during fitting</li>
+</ul>
+</div>
+<div class="test-role">
+<span>TEST INPUT AND LABEL</span>
+<b>What may the model see?</b>
+<ul>
+<li><code>X_test</code> is available for prediction</li>
+<li><code>y_test</code> does not estimate parameters</li>
+<li><code>y_test</code> is opened only for final evaluation</li>
+</ul>
+</div>
+</div>
+
+<p class="ml-takeaway"><b>Generalization</b> is performance on new examples drawn from the task we care about.</p>
+
+::: {.notes}
+[Sources]
+- The train/test distinction follows scikit-learn’s model-selection guidance: https://scikit-learn.org/stable/model_selection.html.
+:::
+
+## Keep the test labels closed {.detail-slide .closed-test-slide}
+
+<div class="closed-test">
+<div class="development-zone">
+<span>AVAILABLE FROM THE START</span>
+<b>Inputs for fitting and prediction</b>
+<div class="available-inputs">
+<p><code>X_train</code><em>training inputs</em></p>
+<p><code>y_train</code><em>training answers</em></p>
+<p><code>X_test</code><em>test user–item pairs</em></p>
+</div>
+</div>
+<div class="vault fragment fade-left">
+<span>HIDDEN ANSWERS</span>
+<b><code>y_test</code></b>
+<p>opened only after all modeling choices are fixed</p>
+</div>
+</div>
+
+<div class="validation-hook fragment fade-up">
+<span>MODEL SELECTION QUESTION</span>
+<b>How can we compare model A and model B while <code>y_test</code> remains hidden?</b>
+<em>ML II introduces holdout validation and cross-validation.</em>
+</div>
+
+::: {.notes}
+[Teaching]
+- The course competition provides `X_test`, so students may inspect the test user–item pairs and construct a prediction vector in that row order.
+- Only `y_test` stays closed. If its values or the resulting test score change a modeling decision, the final test has become part of model selection.
+- The notebook also contains a published, labeled classroom split. It names those labels `y_test_demo`; they exist only so the instructor can demonstrate final evaluation after the models are fixed.
+- Leave the question unanswered here. ML II introduces validation data as the answer.
+:::
+
+## A complete regression example {.section-break .regression-section}
+
+<div class="section-number">02</div>
+<img class="section-crest" src="../Lec-overview/figs/cu_logo.webp" alt="CUHK emblem">
+<p>California housing: define $X$ and $y$, fit linear regression, predict, and calculate RMSE.</p>
+
+## California housing is a regression task {.detail-slide .housing-slide}
+
+<div class="housing-overview">
+<div class="housing-stat"><span>ROWS</span><b>20,640</b><p>California block groups</p></div>
+<div class="housing-stat"><span>FEATURES</span><b>8</b><p>demographic and geographic measurements</p></div>
+<div class="housing-stat target-stat"><span>TARGET</span><b>MedHouseVal</b><p>median house value in units of $100,000</p></div>
+</div>
+
+<div class="feature-ribbon">
+<span>MedInc</span><span>HouseAge</span><span>AveRooms</span><span>AveBedrms</span><span>Population</span><span>AveOccup</span><span>Latitude</span><span>Longitude</span>
+</div>
+
+<p class="source-line">Source: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html">scikit-learn California housing dataset documentation</a>.</p>
+
+::: {.notes}
+[Sources]
+- Dataset size, variables, and target units: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html.
+:::
+
+## $X$ is a matrix; $y$ is a vector {.detail-slide .xy-slide}
+
+<div class="xy-layout">
+<div class="matrix-card">
+<span>FEATURE MATRIX</span>
+<b>$X_{train}\in\mathbb{R}^{13828\times 8}$</b>
+<div class="matrix-grid" aria-label="Illustrative feature matrix with rows representing examples and columns representing housing features">
+<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+</div>
+<p>one row = one block group<br>one column = one feature</p>
+</div>
+<div class="pair-brace">paired row by row</div>
+<div class="vector-card">
+<span>TARGET VECTOR</span>
+<b>$y_{train}\in\mathbb{R}^{13828}$</b>
+<div class="vector-grid"><i>4.526</i><i>3.585</i><i>3.521</i><i>3.413</i></div>
+<p>one numerical answer<br>for every row of $X$</p>
+</div>
+</div>
+
+<div class="shape-check"><code>X_train.shape</code><b>(13828, 8)</b><code>y_train.shape</code><b>(13828,)</b></div>
+
+::: {.notes}
+[Sources]
+- The training shape is the output stored in `STAT3009_nb/STAT3009_ML.ipynb`.
+- The full dataset has 20,640 examples; the course files contain a pre-made train/test split.
+:::
+
+## Linear regression combines the features {.detail-slide .linear-model-slide}
+
+<div class="linear-equation">
+$$\widehat y=\theta_0+\theta_1x_1+\theta_2x_2+\cdots+\theta_8x_8$$
+</div>
+
+<div class="coefficient-reading">
+<div class="fragment fade-up" data-fragment-index="1"><span>$\theta_0$</span><b>intercept</b><p>the model's reference level</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>$\theta_j$</span><b>coefficient</b><p>how prediction changes with feature $j$, holding others fixed</p></div>
+<div class="fragment fade-up" data-fragment-index="3"><span>$\widehat y$</span><b>prediction</b><p>a weighted sum calculated for one row</p></div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4">The model family is linear. The coefficients are learned from the training data.</p>
+
+## Fitting makes the training residuals small {.detail-slide .residual-slide}
+
+<div class="residual-layout">
+<div class="residual-scene" role="img" aria-label="Data points, fitted line, and vertical residual distances">
+<div class="axis-x"></div><div class="axis-y"></div>
+<div class="fit-line"></div>
+<div class="res-point rp1"><i></i></div><div class="res-point rp2"><i></i></div><div class="res-point rp3"><i></i></div><div class="res-point rp4"><i></i></div><div class="res-point rp5"><i></i></div>
+<span class="scene-x">feature combination</span><span class="scene-y">house value</span>
+</div>
+<div class="residual-explain">
+<span>ONE RESIDUAL</span>
+<b>$e_i=y_i-\widehat y_i$</b>
+<p>Vertical distance between the observed target and the fitted prediction.</p>
+<div class="fragment fade-up">
+<span>LEAST SQUARES FIT</span>
+$$\widehat\theta=\arg\min_{\theta}\sum_{i=1}^{n}e_i^2$$
+</div>
+</div>
+</div>
+
+<p class="ml-takeaway">Squaring makes large errors count more and prevents positive and negative errors from cancelling.</p>
+
+## Read `LinearRegression` with the four questions {.detail-slide .reading-template-slide}
+
+<div class="four-components estimator-reading-grid">
+<div class="fragment fade-up" data-fragment-index="1"><span>MODEL</span><b>$\widehat y=\theta_0+\sum_{j=1}^{8}\theta_jx_j$</b><p>A linear family: one intercept plus one coefficient for each feature.</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>LEARNED PARAMETERS</span><b>$\widehat\theta_0,\ldots,\widehat\theta_8$</b><p>Stored after <code>fit</code> as <code>intercept_</code> and <code>coef_</code>.</p></div>
+<div class="fragment fade-up" data-fragment-index="3"><span>HYPERPARAMETER</span><b><code>fit_intercept=True</code></b><p>Chosen before fitting; controls whether the model includes an intercept.</p></div>
+<div class="fragment fade-up" data-fragment-index="4"><span>LOSS / CRITERION</span><b>$\sum_i(y_i-\widehat y_i)^2$</b><p>Ordinary least squares chooses coefficients with the smallest residual sum of squares.</p></div>
+</div>
+
+<div class="template-answer fragment fade-up" data-fragment-index="5"><span>THE TEMPLATE ANSWER</span><b>choose the hyperparameter → fit the learned parameters → obtain one fitted linear rule</b></div>
+
+::: {.notes}
+[Sources]
+- LinearRegression model, constructor arguments, fitted attributes, and residual-sum-of-squares objective: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html.
+
+[Teaching]
+- Pause on each card and ask students to supply the answer before revealing it.
+- This is the first complete application of the reusable template. Refer back to it rather than re-defining the four terms later.
+:::
+
+## Fit and predict in scikit-learn {.detail-slide .code-slide .sklearn-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="58%"}
+```python
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import root_mean_squared_error
+
+model = LinearRegression()
+
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+rmse = root_mean_squared_error(y_test, y_pred)
+```
+:::
+
+::: {.column width="38%"}
+<div class="code-reading">
+<p><span>1</span><b>Construct</b><em>Choose the model family.</em></p>
+<p><span>2</span><b>Fit</b><em>Learn coefficients from training examples.</em></p>
+<p><span>3</span><b>Predict</b><em>Produce one value for every test row.</em></p>
+<p><span>4</span><b>Evaluate</b><em>Summarize the prediction errors.</em></p>
+</div>
+:::
+::::
+
+<p class="ml-takeaway"><code>fit</code> sees targets. <code>predict</code> sees features only.</p>
+
+::: {.notes}
+[Sources]
+- Current estimator API: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html.
+- Current RMSE metric API: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.root_mean_squared_error.html.
+:::
+
+## Many errors become one RMSE {.detail-slide .rmse-process-slide}
+
+<div class="rmse-process">
+<div class="rmse-vector">
+<span>TRUE</span><b>$y$</b><em>2.4</em><em>1.8</em><em>3.2</em><em>2.6</em>
+</div>
+<div class="rmse-op fragment" data-fragment-index="1">−</div>
+<div class="rmse-vector fragment" data-fragment-index="1">
+<span>PREDICTED</span><b>$\widehat y$</b><em>2.1</em><em>2.0</em><em>2.7</em><em>2.8</em>
+</div>
+<div class="rmse-op fragment" data-fragment-index="2">→</div>
+<div class="rmse-vector error-vector fragment" data-fragment-index="2">
+<span>ERROR</span><b>$e$</b><em>0.3</em><em>−0.2</em><em>0.5</em><em>−0.2</em>
+</div>
+</div>
+
+<div class="rmse-steps">
+<div class="fragment fade-up" data-fragment-index="3"><span>01</span><b>square</b><p>0.09, 0.04, 0.25, 0.04</p></div>
+<div class="fragment fade-up" data-fragment-index="4"><span>02</span><b>average</b><p>$(0.42)/4=0.105$</p></div>
+<div class="fragment fade-up answer" data-fragment-index="5"><span>03</span><b>square root</b><p>$\mathrm{RMSE}=0.324$</p></div>
+</div>
+
+::: {.notes}
+[Teaching]
+- [Notebook pause 2] Open Section 3 of `STAT3009_ML_I.ipynb`. Inspect the California housing shapes, fit `LinearRegression`, and calculate RMSE. Continue through the short estimator-state checkpoint before returning to the slides.
+:::
+
+## The scikit-learn estimator interface {.section-break .estimator-section}
+
+<div class="section-number">03</div>
+<img class="section-crest" src="../Lec-overview/figs/cu_logo.webp" alt="CUHK emblem">
+<p>A shared contract turns different learning rules into reusable prediction objects.</p>
+
+## One contract for every prediction model {.detail-slide .estimator-contract-slide}
+
+<div class="estimator-contract" role="img" aria-label="An estimator is constructed, fitted on training inputs and targets, then used to predict new inputs">
+<div class="contract-stage"><span>CONSTRUCT</span><b><code>model = Estimator(...)</code></b><p>Choose the model and its settings.</p></div>
+<i class="fragment" data-fragment-index="1"><code>model.fit(X, y)</code></i>
+<div class="contract-stage fitted-stage fragment fade-up" data-fragment-index="1"><span>LEARN</span><b>fitted estimator</b><p>Store patterns learned from the training data.</p></div>
+<i class="fragment" data-fragment-index="2"><code>model.predict(X_new)</code></i>
+<div class="contract-stage prediction-stage fragment fade-up" data-fragment-index="2"><span>APPLY</span><b>prediction vector</b><p>Return one prediction for each new row.</p></div>
+</div>
+
+<div class="contract-equivalence fragment fade-up" data-fragment-index="3">
+<code>LinearRegression()</code><code>KNeighborsRegressor()</code><code>YourRegressor()</code><b>can share the same interface</b>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4">The contract specifies <b>how we use a model</b>. Each estimator supplies its own learning and prediction rules.</p>
+
+::: {.notes}
+[Sources]
+- Estimator, predictor, and regressor interfaces: https://scikit-learn.org/stable/developers/develop.html.
+:::
+
+## The estimator as an octopus {.detail-slide .estimator-octopus-slide}
+
+<div class="octopus-stage" role="img" aria-label="An octopus metaphor for a scikit-learn estimator: the head stores object state and the tentacles are methods that interact with data and tools">
+<img class="octopus-figure" src="figs/octopus-estimator-red.svg" alt="Red octopus with eight spread tentacles">
+
+<div class="octopus-head-label">
+<span>ONE PYTHON OBJECT</span>
+<b>estimator</b>
+<p><code>model</code></p>
+</div>
+
+<div class="octopus-state parameter-state fragment fade-up" data-fragment-index="1">
+<span>CONFIGURATION</span>
+<b>attributes before fit</b>
+<code>fit_intercept</code>
+<code>positive</code>
+</div>
+
+<div class="octopus-state fitted-state fragment fade-up" data-fragment-index="2">
+<span>LEARNED STATE</span>
+<b>attributes after fit</b>
+<code>coef_</code>
+<code>intercept_</code>
+</div>
+
+<i class="tentacle-anchor anchor-fit fragment" data-fragment-index="2">1</i>
+<i class="tentacle-anchor anchor-predict fragment" data-fragment-index="3">2</i>
+<i class="tentacle-anchor anchor-score fragment" data-fragment-index="4">3</i>
+<i class="tentacle-anchor anchor-get fragment" data-fragment-index="5">4</i>
+<i class="tentacle-anchor anchor-set fragment" data-fragment-index="5">5</i>
+
+<div class="tentacle-label tentacle-fit fragment fade-up" data-fragment-index="2"><b>1</b><code>fit(X, y)</code><span>writes learned state</span></div>
+<div class="tentacle-label tentacle-predict fragment fade-up" data-fragment-index="3"><b>2</b><code>predict(X_new)</code><span>reads learned state</span></div>
+<div class="tentacle-label tentacle-score fragment fade-up" data-fragment-index="4"><b>3</b><code>score(X, y)</code><span>evaluates</span></div>
+<div class="tentacle-label tentacle-get fragment fade-up" data-fragment-index="5"><b>4</b><code>get_params()</code><span>reads configuration</span></div>
+<div class="tentacle-label tentacle-set fragment fade-up" data-fragment-index="5"><b>5</b><code>set_params(...)</code><span>changes configuration</span></div>
+</div>
+
+<div class="octopus-rule fragment fade-up" data-fragment-index="6"><b>One object stores the state. Its methods provide controlled ways to use or update that state.</b><span>Different estimator classes may add more “tentacles,” while the common sklearn methods keep familiar names.</span></div>
+
+<p class="source-line">Octopus illustration: <a href="https://commons.wikimedia.org/wiki/File:Red_octopus.svg">Jason J. Patterson / Open Clip Art Library</a>, CC0.</p>
+
+::: {.notes}
+[Sources]
+- Estimator, predictor, model, and parameter conventions: https://scikit-learn.org/stable/developers/develop.html.
+- Octopus illustration: https://commons.wikimedia.org/wiki/File:Red_octopus.svg, CC0.
+
+[Teaching]
+- Point to the head first: the estimator is one Python object containing attributes.
+- Reveal fit and the learned-state box together. fit changes the state stored in the object.
+- Reveal predict next. predict reads the fitted state but does not learn new coefficients.
+- The octopus may have more methods than the five shown. The metaphor explains a shared object interface, not a literal requirement of eight methods.
+:::
+
+## One format, many regression algorithms {.detail-slide .estimator-template-slide}
+
+<div class="sklearn-template" role="img" aria-label="The scikit-learn estimator convention defines shared method signatures while each estimator class supplies its own learning algorithm">
+<div class="template-shell">
+<span>SCIKIT-LEARN REGRESSOR ESTIMATOR</span>
+<div class="template-signature fragment fade-up" data-fragment-index="1"><code>Estimator(hyperparameters)</code><b>configuration</b></div>
+<div class="template-signature fragment fade-up" data-fragment-index="2"><code>fit(X, y) returns self</code><b>learn from data</b></div>
+<div class="template-signature fragment fade-up" data-fragment-index="3"><code>predict(X_new) returns y_pred</code><b>apply learned state</b></div>
+<div class="template-signature fragment fade-up" data-fragment-index="4"><code>learned_attribute_</code><b>fitted state</b></div>
+</div>
+
+<div class="template-fill-label fragment" data-fragment-index="5"><span>each class fills in<br>its own algorithm</span></div>
+
+<div class="algorithm-implementations fragment fade-left" data-fragment-index="5">
+<div><span>LINEAR REGRESSION</span><b><code>LinearRegression</code></b><p>learn coefficients</p><em><code>coef_</code></em></div>
+<div><span>NEAREST NEIGHBORS</span><b><code>KNeighborsRegressor</code></b><p>store training cases</p><em>algorithm-specific state</em></div>
+<div class="custom-algorithm"><span>CUSTOM REGRESSOR</span><b><code>YourRegressor</code></b><p>supply your own rule</p><em><code>learned_state_</code></em></div>
+</div>
+</div>
+
+<div class="protocol-clarification fragment fade-up" data-fragment-index="6"><b>The “template” is an API contract.</b><span>It standardizes names, inputs, outputs, and object state. It does not prescribe the learning algorithm.</span></div>
+
+::: {.notes}
+[Sources]
+- Estimator vocabulary, initialization, fit, and fitted-attribute conventions: https://scikit-learn.org/stable/developers/develop.html.
+
+[Teaching]
+- Use “contract” or “protocol” for the conceptual idea. BaseEstimator is a convenient base class that supplies parameter handling, but the shared API is broader than one algorithm.
+- Keep the KNN internals conceptual here: different algorithms store different learned state, but students should interact with them through the same public estimator interface.
+:::
+
+## Class, estimator, and fitted estimator {.detail-slide .class-estimator-slide}
+
+<div class="class-estimator-map" role="img" aria-label="A Python class defines the structure, construction creates an unfitted estimator instance, and fit updates that same instance with learned attributes">
+<div class="class-blueprint">
+<span>PYTHON CLASS</span>
+<b><code>LinearRegression</code></b>
+<pre>class LinearRegression(...):
+    def __init__(...)
+    def fit(self, X, y)
+    def predict(self, X)</pre>
+<p>Defines which parameters, methods, and fitted attributes an object may have.</p>
+</div>
+
+<div class="class-map-step fragment" data-fragment-index="1"><code>call the class</code><b>creates</b></div>
+
+<div class="estimator-instance fragment fade-up" data-fragment-index="1">
+<span>ESTIMATOR INSTANCE</span>
+<b><code>model = LinearRegression(<br>fit_intercept=True)</code></b>
+<div class="instance-state"><i>available now</i><code>fit_intercept</code></div>
+<div class="instance-state missing-state"><i>not learned yet</i><code>coef_</code></div>
+<p>A configured Python object, ready to receive data.</p>
+</div>
+
+<div class="class-map-step fit-map-step fragment" data-fragment-index="2"><code>model.fit(X, y)</code><b>updates</b></div>
+
+<div class="estimator-instance fitted-instance fragment fade-left" data-fragment-index="2">
+<span>FITTED ESTIMATOR</span>
+<b><code>model</code></b>
+<div class="instance-state"><i>configuration</i><code>fit_intercept</code></div>
+<div class="instance-state learned-state fragment" data-fragment-index="3"><i>learned from data</i><code>coef_</code></div>
+<div class="instance-state learned-state fragment" data-fragment-index="3"><i>learned from data</i><code>intercept_</code></div>
+<p>The same object now contains fitted state.</p>
+</div>
+</div>
+
+<div class="identity-rule fragment fade-up" data-fragment-index="4"><code>model.fit(X, y) is model</code><b><code>True</code></b><span><code>fit</code> conventionally returns <code>self</code>.</span></div>
+
+::: {.notes}
+[Sources]
+- Estimators are objects that implement fit; fit returns self: https://scikit-learn.org/stable/developers/develop.html.
+- Fitted public attributes use a trailing underscore: https://scikit-learn.org/stable/developers/develop.html#estimated-attributes.
+:::
+
+## LinearRegression as a running example {.detail-slide .linear-estimator-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="56%"}
+~~~python
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+X_train = np.array([
+    [1., 0.],
+    [0., 1.],
+    [1., 1.],
+    [2., 1.],
+])
+y_train = np.array([3., 2., 4., 6.])
+
+model = LinearRegression(fit_intercept=True)
+~~~
+:::
+
+::: {.column width="40%"}
+<div class="linear-example-reading">
+<p><span><code>X_train</code></span><b>four samples, two features</b><em>Each row describes one training case.</em></p>
+<p><span><code>y_train</code></span><b>four known targets</b><em>Position <code>j</code> matches row <code>j</code> of <code>X_train</code>.</em></p>
+<p><span><code>model</code></span><b>an unfitted estimator</b><em>It knows its settings but has not learned a line.</em></p>
+</div>
+:::
+::::
+
+<p class="ml-takeaway"><code>LinearRegression(...)</code> creates a Python object. Training happens only when we call <code>fit</code>.</p>
+
+::: {.notes}
+[Teaching]
+- Keep this small example on screen while explaining the next four slides.
+- The targets follow y = 1 + 2 x_1 + x_2 exactly, so the learned values remain easy to verify.
+:::
+
+## Hyperparameters configure fitting {.detail-slide .linear-init-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="52%"}
+~~~python
+model = LinearRegression(
+    fit_intercept=True,
+    positive=False,
+)
+
+model.get_params()["fit_intercept"]
+# True
+
+model.set_params(positive=True)
+# LinearRegression(positive=True)
+~~~
+:::
+
+::: {.column width="44%"}
+<div class="estimator-syntax-list">
+<p class="fragment fade-up" data-fragment-index="1"><span><code>__init__(...)</code></span><b>records hyperparameters</b><em>These settings describe how a future fit should behave.</em></p>
+<p class="fragment fade-up" data-fragment-index="2"><span><code>get_params()</code></span><b>returns constructor settings</b><em>Scikit-learn calls them estimator “parameters” in its API.</em></p>
+<p class="fragment fade-up" data-fragment-index="3"><span><code>set_params(...)</code></span><b>changes hyperparameters</b><em>Fit the estimator again after changing a setting.</em></p>
+</div>
+:::
+::::
+
+<div class="constructor-rule fragment fade-up" data-fragment-index="4"><b>Training data do not belong in <code>__init__</code>.</b><span><code>X</code> and <code>y</code> enter through <code>fit(X, y)</code>.</span></div>
+
+::: {.notes}
+[Sources]
+- Estimator initialization and hyperparameter conventions: https://scikit-learn.org/stable/developers/develop.html#instantiation.
+- LinearRegression parameters: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html.
+:::
+
+## fit learns from paired rows of X and y {.detail-slide .linear-fit-slide}
+
+<div class="linear-fit-process" role="img" aria-label="Four feature rows and four target values enter model.fit, which updates and returns the same estimator object">
+<div class="fit-input-block">
+<span>INPUT</span><b><code>X_train</code></b><pre>[[1., 0.],
+ [0., 1.],
+ [1., 1.],
+ [2., 1.]]</pre><em>shape <code>(4, 2)</code></em>
+</div>
+<div class="fit-input-block target-block">
+<span>MATCHED TARGETS</span><b><code>y_train</code></b><pre>[3., 2., 4., 6.]</pre><em>shape <code>(4,)</code></em>
+</div>
+<i class="fragment" data-fragment-index="1"><code>model.fit(X_train, y_train)</code></i>
+<div class="fit-result-block fragment fade-left" data-fragment-index="1">
+<span>UPDATED OBJECT</span><b><code>model</code></b><p>learned coefficients now live inside the estimator</p><code>returned is model  # True</code>
+</div>
+</div>
+
+<div class="fit-row-rule fragment fade-up" data-fragment-index="2"><b><code>X_train[j]</code> and <code>y_train[j]</code> form one supervised example.</b><span><code>fit</code> returns <code>self</code>, which makes <code>LinearRegression().fit(X, y)</code> valid syntax.</span></div>
+
+::: {.notes}
+[Sources]
+- LinearRegression fit signature and return value: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression.fit.
+:::
+
+## Fitted attributes expose the learned equation {.detail-slide .linear-attributes-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="49%"}
+~~~python
+model = LinearRegression().fit(X_train, y_train)
+
+model.coef_
+# array([2., 1.])
+
+model.intercept_
+# 1.0
+
+model.n_features_in_
+# 2
+~~~
+:::
+
+::: {.column width="47%"}
+<div class="learned-equation fragment fade-up" data-fragment-index="1">
+<span>LEARNED PREDICTION RULE</span>
+<p>$\widehat y = 1.0 + 2.0x_1 + 1.0x_2$</p>
+</div>
+
+<div class="attribute-legend fragment fade-up" data-fragment-index="2">
+<p><code>coef_</code><span>one coefficient per feature</span></p>
+<p><code>intercept_</code><span>the fitted intercept</span></p>
+<p><code>n_features_in_</code><span>number of features seen by <code>fit</code></span></p>
+</div>
+:::
+::::
+
+<p class="ml-takeaway fragment" data-fragment-index="3">The trailing underscore marks an attribute created from data. Accessing <code>coef_</code> before <code>fit</code> fails because it does not exist yet.</p>
+
+::: {.notes}
+[Sources]
+- LinearRegression fitted attributes: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html.
+- Estimated-attribute naming convention: https://scikit-learn.org/stable/developers/develop.html#estimated-attributes.
+:::
+
+## predict applies the fitted equation row by row {.detail-slide .linear-predict-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="44%"}
+~~~python
+X_new = np.array([
+    [0., 2.],
+    [3., 0.],
+])
+
+y_pred = model.predict(X_new)
+# array([3., 7.])
+~~~
+
+<div class="predict-shape"><code>X_new.shape</code><b>(2, 2)</b><code>y_pred.shape</code><b>(2,)</b></div>
+:::
+
+::: {.column width="52%"}
+<div class="prediction-rows">
+<div class="prediction-row fragment fade-up" data-fragment-index="1"><span>ROW 0</span><code>[0., 2.]</code><i>$1 + 2(0) + 1(2)$</i><b>3.0</b></div>
+<div class="prediction-row fragment fade-up" data-fragment-index="2"><span>ROW 1</span><code>[3., 0.]</code><i>$1 + 2(3) + 1(0)$</i><b>7.0</b></div>
+</div>
+
+<div class="feature-order-warning fragment fade-up" data-fragment-index="3"><b>Feature order must match training.</b><span>Column 0 still means $x_1$ and column 1 still means $x_2$.</span></div>
+:::
+::::
+
+<p class="ml-takeaway fragment" data-fragment-index="4"><code>predict</code> returns one value for each input row and preserves the row order.</p>
+
+## Configuration and learned state {.detail-slide .estimator-vocabulary-slide}
+
+<div class="estimator-vocabulary">
+<div class="vocabulary-band parameter-band fragment fade-up" data-fragment-index="1">
+<span>HYPERPARAMETER</span><b><code>fit_intercept=True</code></b><p>A constructor setting chosen before training. It controls how <code>fit</code> behaves.</p>
+</div>
+<div class="vocabulary-band attribute-band fragment fade-up" data-fragment-index="2">
+<span>LEARNED MODEL PARAMETER</span><b>$\widehat\theta$</b><p>The mathematical quantity estimated from <code>X_train</code> and <code>y_train</code>.</p>
+</div>
+<div class="vocabulary-band method-band fragment fade-up" data-fragment-index="3">
+<span>FITTED ATTRIBUTE</span><b><code>coef_</code>, <code>intercept_</code></b><p>The Python attributes that store the learned parameter after <code>fit</code>.</p>
+</div>
+</div>
+
+<div class="parameter-map fragment fade-up" data-fragment-index="4">
+<code>fit_intercept</code><i>controls fitting</i><b>$\widehat\theta$</b><i>stored inside the object</i><code>coef_ + intercept_</code>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="5"><b>Hyperparameters control learning.</b> Learned parameters are stored as fitted attributes.</p>
+
+::: {.notes}
+[Sources]
+- Constructor settings, hyperparameters, fitting, and fitted-attribute conventions: https://scikit-learn.org/stable/developers/develop.html.
+
+[Teaching]
+- The word “parameter” is overloaded. In our ML template, $\theta$ is learned and $h$ is a hyperparameter. In the sklearn API, <code>get_params()</code> returns constructor settings.
+- A fitted attribute such as `coef_` is the Python storage location for the learned mathematical parameter.
+:::
+
+## Anatomy of a regressor estimator {.detail-slide .estimator-anatomy-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="59%"}
+~~~python
+from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.utils.validation import check_is_fitted
+
+class RegressorTemplate(RegressorMixin, BaseEstimator):
+    def __init__(self, setting=1):
+        self.setting = setting
+
+    def fit(self, X, y):
+        self.learned_value_ = ...
+        return self
+
+    def predict(self, X):
+        check_is_fitted(self, "learned_value_")
+        return ...
+~~~
+:::
+
+::: {.column width="37%"}
+<div class="anatomy-reading">
+<p class="fragment fade-up" data-fragment-index="1"><span><code>__init__</code></span><b>stores settings</b><em>No training data and no fitted values.</em></p>
+<p class="fragment fade-up" data-fragment-index="2"><span><code>fit</code></span><b>learns state</b><em>Learned public attributes end in <code>_</code>.</em></p>
+<p class="fragment fade-up" data-fragment-index="3"><span><code>predict</code></span><b>uses fitted state</b><em>It never receives the unknown targets.</em></p>
+</div>
+:::
+::::
+
+<p class="ml-takeaway"><code>fit</code> returns <code>self</code>, so <code>Estimator().fit(X, y)</code> is the fitted object.</p>
+
+::: {.notes}
+[Sources]
+- Constructor, fitting, and estimated-attribute conventions: https://scikit-learn.org/stable/developers/develop.html.
+- Fitted-state check: https://scikit-learn.org/stable/modules/generated/sklearn.utils.validation.check_is_fitted.html.
+
+[Teaching]
+- The mixin comes first and BaseEstimator comes last in the inheritance list, following the official MRO guidance.
+:::
+
+## Recommender baselines: same template, new models {.section-break .rs-baseline-section}
+
+<div class="section-number">04</div>
+<img class="section-crest" src="../Lec-overview/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Keep the four questions and estimator lifecycle fixed; change only the prediction rule and learned state.</p>
+
+## Rating triples match the estimator input contract {.detail-slide .estimator-data-slide}
+
+<div class="estimator-data-map">
+<div class="estimator-triples">
+<span>TRAINING TRIPLES</span>
+<p><b>user</b><b>item</b><b>rating</b></p>
+<p><i>1960</i><i>670</i><i>4</i></p>
+<p><i>1346</i><i>152</i><i>4</i></p>
+<p><i>785</i><i>1741</i><i>4</i></p>
+</div>
+<i class="fragment" data-fragment-index="1">split columns</i>
+<div class="estimator-array x-array fragment fade-up" data-fragment-index="1"><span><code>X_train</code></span><b>user–item pairs</b><pre>[[1960,  670],
+ [1346,  152],
+ [ 785, 1741]]</pre><em>shape: <code>(n_samples, 2)</code></em></div>
+<div class="estimator-array y-array fragment fade-up" data-fragment-index="1"><span><code>y_train</code></span><b>ratings</b><pre>[4, 4, 4]</pre><em>shape: <code>(n_samples,)</code></em></div>
+</div>
+
+<div class="predict-order fragment fade-up" data-fragment-index="2"><code>X_new[j] = (u, i)</code><i>produces</i><code>y_pred[j] = r_hat[u, i]</code><b>same row, same position</b></div>
+
+<p class="ml-takeaway fragment" data-fragment-index="3"><code>fit(X, y)</code> receives pairs and known ratings. <code>predict(X_new)</code> receives pairs only.</p>
+
+## `GlobalMeanRS`: specify before coding {.detail-slide .reading-template-slide}
+
+<div class="baseline-question-grid">
+<div class="fragment fade-up" data-fragment-index="1"><span>1 · MODEL</span><b>$f_c(u,i)=c$</b><p>The family contains every constant prediction rule.</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>2 · HYPERPARAMETERS</span><b>none</b><p>No setting is chosen before fitting.</p></div>
+<div class="fragment fade-up" data-fragment-index="3"><span>3 · LOSS / CRITERION</span><b>$J(c)=\sum_{(u,i,r)\in\mathcal R_{tr}}(r-c)^2$</b><p>Compare candidate constants by their total squared error.</p></div>
+</div>
+
+<div class="baseline-optimization fragment fade-up" data-fragment-index="4">
+<span>FIT · OPTIMIZE</span>
+$$\widehat\mu
+=\arg\min_{c\in\mathbb R}\sum_{(u,i,r)\in\mathcal R_{tr}}(r-c)^2
+=\frac{1}{|\mathcal R_{tr}|}\sum_{(u,i,r)\in\mathcal R_{tr}}r$$
+</div>
+
+<div class="baseline-learned fragment fade-up" data-fragment-index="5"><span>4 · LEARNED PARAMETER AFTER <code>fit</code></span><b>$\widehat\mu$</b><p>stored as <code>global_mean_</code> · <code>predict</code> returns it once per new row</p></div>
+
+::: {.notes}
+[Teaching]
+- Reveal the learned parameter only after the optimization step.
+- The mean is not an arbitrary summary: it is the minimizer of squared loss among constant predictions.
+:::
+
+## Translate the specification into estimator methods {.detail-slide .spec-method-slide}
+
+<div class="spec-method-map">
+<p class="fragment fade-up" data-fragment-index="1"><span>HYPERPARAMETERS</span><i>→</i><code>__init__(...)</code><em>These basic baselines have none, so an explicit constructor is unnecessary.</em></p>
+<p class="fragment fade-up" data-fragment-index="2"><span>LEARNED PARAMETERS</span><i>→</i><code>fit(X, y)</code><em>Calculate them from training ratings and store them in attributes ending in <code>_</code>.</em></p>
+<p class="fragment fade-up" data-fragment-index="3"><span>MODEL RULE</span><i>→</i><code>predict(X_new)</code><em>Read the fitted attributes and return one prediction for each input row.</em></p>
+<p class="fragment fade-up" data-fragment-index="4"><span>LOSS / CRITERION</span><i>→</i><b>explains the fitting rule</b><em>It tells us why the learned mean is the chosen parameter value.</em></p>
+</div>
+
+<div class="method-guard fragment fade-up" data-fragment-index="5"><code>check_is_fitted(...)</code><b>guards the boundary</b><span><code>predict</code> should fail clearly when the learned parameters do not exist yet.</span></div>
+
+<p class="ml-takeaway fragment" data-fragment-index="6">First specify the mathematics. Then each method has one clear job.</p>
+
+## Now implement `GlobalMeanRS` {.detail-slide .global-estimator-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="61%"}
+~~~python
+import numpy as np
+from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.utils.validation import check_is_fitted
+
+class GlobalMeanRS(RegressorMixin, BaseEstimator):
+    def fit(self, X, y):
+        self.global_mean_ = np.asarray(y).mean()
+        return self
+
+    def predict(self, X):
+        check_is_fitted(self, "global_mean_")
+        return np.full(len(X), self.global_mean_)
+~~~
+:::
+
+::: {.column width="35%"}
+<div class="global-estimator-reading">
+<p class="fragment fade-up" data-fragment-index="1"><span>FIT</span><b>one learned value</b><em><code>global_mean_</code> comes from <code>y</code>.</em></p>
+<p class="fragment fade-up" data-fragment-index="2"><span>PREDICT</span><b>one value per row</b><em><code>X</code> determines only how many predictions to return.</em></p>
+<p class="fragment fade-up" data-fragment-index="3"><span>CHECK</span><b>fit must happen first</b><em>Otherwise scikit-learn raises <code>NotFittedError</code>.</em></p>
+</div>
+:::
+::::
+
+::: {.notes}
+[Sources]
+- Class structure follows the custom-estimator conventions in https://scikit-learn.org/stable/developers/develop.html.
+- Fitted-state validation: https://scikit-learn.org/stable/modules/generated/sklearn.utils.validation.check_is_fitted.html.
+:::
+
+## One object moves through the full lifecycle {.detail-slide .estimator-use-slide}
+
+<div class="estimator-use-code">
+<div class="use-line fragment fade-up" data-fragment-index="1"><span>01</span><code>model = GlobalMeanRS()</code><b>configured, not fitted</b></div>
+<div class="use-line fragment fade-up" data-fragment-index="2"><span>02</span><code>model.fit(X_train, y_train)</code><b>learns <code>global_mean_</code></b></div>
+<div class="use-line fragment fade-up" data-fragment-index="3"><span>03</span><code>model.global_mean_</code><b>inspect fitted state</b></div>
+<div class="use-line fragment fade-up" data-fragment-index="4"><span>04</span><code>y_pred = model.predict(X_test)</code><b>one prediction per test pair</b></div>
+</div>
+
+<div class="estimator-use-state fragment fade-up" data-fragment-index="5"><span>SAME OBJECT</span><b>Configuration remains. Fitted attributes appear after <code>fit</code>.</b></div>
+
+## `UserMeanRS`: specify before coding {.detail-slide .reading-template-slide}
+
+<div class="baseline-question-grid">
+<div class="fragment fade-up" data-fragment-index="1"><span>1 · MODEL</span><b>$f_{\mathbf a}(u,i)=a_u$</b><p>One candidate constant per user; use the global rule for an unseen user.</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>2 · HYPERPARAMETERS</span><b>none</b><p>The grouping and fallback rule are fixed in this definition.</p></div>
+<div class="fragment fade-up" data-fragment-index="3"><span>3 · LOSS / CRITERION</span><b>$J_u(c)=\sum_{i\in\mathcal I_u^{tr}}(r_{ui}-c)^2$</b><p>For each observed user, compare candidate constants by squared error.</p></div>
+</div>
+
+<div class="baseline-optimization fragment fade-up" data-fragment-index="4">
+<span>FIT · OPTIMIZE FOR EACH OBSERVED USER $u$</span>
+$$\widehat a_u
+=\arg\min_{c\in\mathbb R}\sum_{i\in\mathcal I_u^{tr}}(r_{ui}-c)^2
+=\frac{1}{|\mathcal I_u^{tr}|}\sum_{i\in\mathcal I_u^{tr}}r_{ui}$$
+</div>
+
+<div class="baseline-learned fragment fade-up" data-fragment-index="5"><span>4 · LEARNED PARAMETERS AFTER <code>fit</code></span><b>$\widehat\mu,\{\widehat a_u\}$</b><p>stored as <code>global_mean_</code> and <code>user_means_</code> · retrieve by user ID</p></div>
+
+::: {.notes}
+[Teaching]
+- Reveal the learned parameters only after showing the per-user optimization.
+- The user-mean model has many learned parameters even though it has no hyperparameters.
+- The item ID remains in the input pair, but this prediction rule does not use it.
+:::
+
+## User mean learns a lookup vector {.detail-slide .user-mean-fit-slide}
+
+<div class="user-mean-learning">
+<div class="user-rating-groups">
+<span>GROUP TRAINING RATINGS BY USER</span>
+<div class="user-group fragment fade-up" data-fragment-index="1"><b>$u_0$</b><i>4</i><i>2</i><i>3</i><strong>mean = 3.0</strong></div>
+<div class="user-group fragment fade-up" data-fragment-index="2"><b>$u_1$</b><i>5</i><i>4</i><i>3</i><strong>mean = 4.0</strong></div>
+<div class="user-group sparse-group fragment fade-up" data-fragment-index="3"><b>$u_2$</b><i>2</i><strong>mean = 2.0</strong></div>
+</div>
+<i class="fragment" data-fragment-index="4">store</i>
+<div class="user-mean-state fragment fade-left" data-fragment-index="4">
+<span>FITTED ATTRIBUTES</span>
+<pre>global_mean_ = 3.3
+
+user ID        0    1    2
+user_means_ = [3.0, 4.0, 2.0]</pre>
+<p>Only a user absent from training uses <code>global_mean_</code>.</p>
+</div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="5">Every observed user receives a mean. The global mean handles users absent from training.</p>
+
+::: {.notes}
+[Teaching]
+- The numbers are a small schematic example. The global mean is rounded for display.
+- This is the same user-mean rule used in the baseline lecture. The fallback handles only users absent from training.
+:::
+
+## Now implement `UserMeanRS` {.detail-slide .user-estimator-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="66%"}
+~~~python
+class UserMeanRS(RegressorMixin, BaseEstimator):
+    def fit(self, X, y):
+        X, y = np.asarray(X), np.asarray(y)
+        users = X[:, 0].astype(int)
+        self.global_mean_ = y.mean()
+        self.user_means_ = np.full(
+            users.max() + 1, self.global_mean_
+        )
+
+        for user in set(users):
+            ratings = y[users == user]
+            self.user_means_[user] = ratings.mean()
+        return self
+
+    def predict(self, X):
+        check_is_fitted(self, ["global_mean_", "user_means_"])
+        users = np.asarray(X)[:, 0].astype(int)
+        y_pred = np.full(len(users), self.global_mean_)
+        valid = (users >= 0) & (users < len(self.user_means_))
+        y_pred[valid] = self.user_means_[users[valid]]
+        return y_pred
+~~~
+:::
+
+::: {.column width="30%"}
+<div class="user-estimator-reading">
+<p><span><code>global_mean_</code></span><b>fallback learned by <code>fit</code></b></p>
+<p><span><code>user_means_</code></span><b>NumPy lookup vector learned by <code>fit</code></b></p>
+<p><span><code>users == user</code></span><b>select that user's ratings</b></p>
+<p><span><code>valid</code></span><b>safe array indices or fallback</b></p>
+</div>
+:::
+::::
+
+<p class="source-line">Teaching implementation: expects a two-column array with user ID in column 0.</p>
+
+## User mean predicts by lookup {.detail-slide .user-predict-example-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="47%"}
+~~~python
+model = UserMeanRS().fit(X_train, y_train)
+
+X_new = np.array([
+    [0, 17],   # user seen in training
+    [71, 17],  # user absent from training
+])
+
+model.predict(X_new)
+# array([3.36, 3.62])
+~~~
+:::
+
+::: {.column width="49%"}
+<div class="lookup-prediction">
+<div class="lookup-row known-lookup fragment fade-up" data-fragment-index="1">
+<span>ROW 0 · USER 0</span>
+<code>user_means_[0]</code>
+<i>training ratings replaced the initial value</i>
+<b>3.36</b>
+</div>
+<div class="lookup-row fallback-lookup fragment fade-up" data-fragment-index="2">
+<span>ROW 1 · USER 71</span>
+<code>user_means_[71]</code>
+<i>no training ratings, so the global mean remains</i>
+<b>3.62</b>
+</div>
+</div>
+:::
+::::
+
+<p class="ml-takeaway fragment" data-fragment-index="3">The item ID keeps the input contract consistent, but this model's prediction depends only on the user ID.</p>
+
+<p class="source-line">Values rounded from the STAT3009 Netflix training split.</p>
+
+::: {.notes}
+[Teaching]
+- User 0 appears in training, so the estimator finds a stored user mean.
+- User 71 appears in the accessible test pairs but not in the training triples, so the estimator returns `global_mean_`.
+- Both rows contain item 17. This makes it visible that the user-mean method ignores the item column even though every estimator receives the same two-column input format.
+:::
+
+## `ItemMeanRS`: transfer the same template {.detail-slide .reading-template-slide}
+
+<div class="baseline-question-grid">
+<div class="fragment fade-up" data-fragment-index="1"><span>1 · MODEL</span><b>$f_{\mathbf b}(u,i)=b_i$</b><p>One candidate constant per item; use the global rule for an unseen item.</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>2 · HYPERPARAMETERS</span><b>none</b><p>The grouping and fallback rule are fixed in this definition.</p></div>
+<div class="fragment fade-up" data-fragment-index="3"><span>3 · LOSS / CRITERION</span><b>$J_i(c)=\sum_{u\in\mathcal U_i^{tr}}(r_{ui}-c)^2$</b><p>For each observed item, compare candidate constants by squared error.</p></div>
+</div>
+
+<div class="baseline-optimization fragment fade-up" data-fragment-index="4">
+<span>FIT · OPTIMIZE FOR EACH OBSERVED ITEM $i$</span>
+$$\widehat b_i
+=\arg\min_{c\in\mathbb R}\sum_{u\in\mathcal U_i^{tr}}(r_{ui}-c)^2
+=\frac{1}{|\mathcal U_i^{tr}|}\sum_{u\in\mathcal U_i^{tr}}r_{ui}$$
+</div>
+
+<div class="baseline-learned fragment fade-up" data-fragment-index="5"><span>4 · LEARNED PARAMETERS AFTER <code>fit</code></span><b>$\widehat\mu,\{\widehat b_i\}$</b><p>stored as <code>global_mean_</code> and <code>item_means_</code> · retrieve by item ID</p></div>
+
+::: {.notes}
+[Teaching]
+- Reveal the learned parameters only after showing the per-item optimization.
+- Ask what changed from UserMeanRS: the template is identical; only the grouping index changes.
+- [Notebook pause 3] Open Sections 6–9 of `STAT3009_ML_I.ipynb`. Demonstrate the fitted-state error, run `GlobalMeanRS` and `UserMeanRS`, then use `ItemMeanRS` as the student transfer exercise.
+:::
+
+## What the base classes provide {.detail-slide .base-classes-slide}
+
+<div class="base-class-layers">
+<div class="base-layer fragment fade-up" data-fragment-index="1"><span>YOUR CLASS</span><b><code>fit</code> and <code>predict</code></b><p>The recommender-specific learning rule lives here.</p></div>
+<div class="base-layer fragment fade-up" data-fragment-index="2"><span><code>RegressorMixin</code></span><b>regressor identity and default <code>score</code></b><p>The default regression score is $R^2$.</p></div>
+<div class="base-layer fragment fade-up" data-fragment-index="3"><span><code>BaseEstimator</code></span><b><code>get_params</code>, <code>set_params</code>, representation</b><p>These support cloning and model-selection tools.</p></div>
+</div>
+
+<div class="mro-rule fragment fade-up" data-fragment-index="4"><code>class MyRS(RegressorMixin, BaseEstimator):</code><b>mixin on the left, BaseEstimator on the right</b></div>
+
+::: {.notes}
+[Sources]
+- BaseEstimator capabilities: https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html.
+- RegressorMixin and inheritance order: https://scikit-learn.org/stable/developers/develop.html#base-baseestimator-and-mixins.
+:::
+
+## Evaluation metrics stay outside the estimator {.detail-slide .metric-interface-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="57%"}
+~~~python
+from sklearn.metrics import root_mean_squared_error
+
+model = UserMeanRS()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+rmse = root_mean_squared_error(y_test, y_pred)
+~~~
+:::
+
+::: {.column width="39%"}
+<div class="metric-separation">
+<div><span>ESTIMATOR</span><b>learns and predicts</b><p><code>fit</code> and <code>predict</code> define the shared model interface.</p></div>
+<div class="fragment fade-up" data-fragment-index="1"><span>METRIC</span><b>judges predictions</b><p>The course reports RMSE so we call the metric explicitly.</p></div>
+</div>
+:::
+::::
+
+<div class="score-warning fragment fade-up" data-fragment-index="2"><b>Do not read <code>model.score(...)</code> as RMSE.</b><span><code>RegressorMixin.score</code> returns $R^2$ by default, where larger is better.</span></div>
+
+::: {.notes}
+[Sources]
+- RegressorMixin default score: https://scikit-learn.org/stable/modules/generated/sklearn.base.RegressorMixin.html.
+- RMSE metric: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.root_mean_squared_error.html.
+:::
+
+## One workflow can use every estimator {.detail-slide .shared-interface-slide .code-slide}
+
+:::: {.columns .vcenter}
+::: {.column width="58%"}
+~~~python
+models = [
+    GlobalMeanRS(),
+    UserMeanRS(),
+]
+
+for model in models:
+    fitted_model = model.fit(X_train, y_train)
+    y_pred = fitted_model.predict(X_new)
+
+    print(type(model).__name__, y_pred.shape)
+~~~
+:::
+
+::: {.column width="38%"}
+<div class="interface-output">
+<span>OUTPUT</span>
+<pre>GlobalMeanRS  (m,)
+UserMeanRS    (m,)</pre>
+</div>
+
+<div class="interface-payoff">
+<p class="fragment fade-up" data-fragment-index="1"><b>Same inputs</b><span><code>X_train</code>, <code>y_train</code>, <code>X_new</code></span></p>
+<p class="fragment fade-up" data-fragment-index="2"><b>Same methods</b><span><code>fit</code> and <code>predict</code></span></p>
+<p class="fragment fade-up" data-fragment-index="3"><b>Same output contract</b><span>one prediction per new row</span></p>
+</div>
+:::
+::::
+
+<p class="ml-takeaway fragment" data-fragment-index="4">Model-specific logic stays inside each class. Workflow code depends only on the shared estimator interface.</p>
+
+::: {.notes}
+[Teaching]
+- This is the practical payoff of the estimator contract. The loop does not need an `if` statement for each model type.
+- `m` denotes the number of rows in `X_new`. The two models produce different values but obey the same output shape.
+:::
+
+## One interface—and one way to read every estimator {.detail-slide .estimator-bridge-slide}
+
+<div class="estimator-bridge">
+<div class="estimator-families">
+<span>ASK FOUR QUESTIONS</span>
+<code>model</code>
+<code>learned parameters</code>
+<code>hyperparameters</code>
+<code>loss / criterion</code>
+</div>
+<i class="fragment" data-fragment-index="1">then use</i>
+<div class="estimator-interface fragment fade-up" data-fragment-index="1"><b><code>fit(X, y)</code></b><b><code>predict(X_new)</code></b></div>
+<i class="fragment" data-fragment-index="2">next lecture</i>
+<div class="estimator-next fragment fade-left" data-fragment-index="2"><span>ML II</span><b>Which fitted estimator will generalize?</b><p>Holdout validation and cross-validation compare candidates without using the final test labels.</p></div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="3"><b>For every new estimator:</b> answer the four questions to understand it, then use the familiar <code>fit</code> / <code>predict</code> interface.</p>
+
+::: {.notes}
+[Teaching]
+- End by asking students to recite the four questions without looking. The separate ML II deck begins from the question in the rightmost block.
+- Ask students to complete the coding exit ticket before they leave. It checks whether they can reconstruct the estimator contract without copying the earlier classes.
+:::

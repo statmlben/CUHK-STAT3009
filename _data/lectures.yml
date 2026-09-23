@@ -21,9 +21,12 @@
   slides: ../quarto/Lec-baseline/S.html
   pdf: ../quarto/Lec-baseline/S.pdf
   pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_baseline_methods.ipynb
+  warmup:
+    label: Start here · Warm-up 01
+    title: Pandas from a URL
+    meta: In-class review
+    href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_01_Pandas_URL.ipynb
   readings:
-    - >
-      <a href="https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_01_Pandas_URL.ipynb">Warmup 01: Pandas from a URL (Colab)</a>
     - >
       <a href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/06_calculate_statistics.html">pandas: Summary statistics and groupby</a>
     - >
@@ -33,3 +36,30 @@
       (Sections 1–3: background, evaluation, and data splits)
     - >
       Optional: <a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html">Recommender Systems Datasets (UCSD)</a>
+
+- date: "2026-09-24"
+  title: >
+    <strong>Machine Learning I: Models and Estimators</strong>
+  slides: ../quarto/Lec-ML-quarto/S.html
+  pdf: ../quarto/Lec-ML-quarto/S.pdf
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_ML_I.ipynb
+  warmup:
+    label: Start here · Warm-up 02
+    title: Core pandas + NumPy review
+    meta: 15–18 min
+    href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_02_LabelEncoder.ipynb
+  readings:
+    - >
+      <a href="https://scikit-learn.org/stable/getting_started.html">scikit-learn: Getting started (fit, predict, and evaluate)</a>
+    - >
+      <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">scikit-learn: LinearRegression</a>
+    - >
+      <a href="https://scikit-learn.org/stable/glossary.html#term-parameter">scikit-learn glossary: Parameters and hyperparameters</a>
+    - >
+      <a href="https://scikit-learn.org/stable/modules/model_evaluation.html#mean-squared-error">scikit-learn: Mean squared error</a>
+    - >
+      Optional: <a href="https://scikit-learn.org/stable/developers/develop.html">Developing scikit-learn estimators</a>
+  logistics: >
+    <span class="event"><strong>HW1 released</strong><br>
+    <a href="https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/HW/STAT3009_HW1.ipynb" target="_blank">Open HW1 in Colab</a><br>
+    <span class="deadline"><strong>Due:</strong> Thu 10/08 before lecture</span></span>

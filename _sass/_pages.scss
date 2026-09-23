@@ -24,6 +24,61 @@ span.deadline {
     color: $red;
 }
 
+a.schedule-warmup {
+    display: block;
+    margin: .7rem 0 .8rem;
+    padding: .65rem .75rem;
+    border: 1px solid rgba($purple, .30);
+    border-left: 4px solid $purple;
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba($purple, .10), rgba($yellow, .08));
+    box-shadow: 0 4px 12px rgba($dark-gray, .08);
+    color: $dark-gray;
+    text-decoration: none;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+a.schedule-warmup:hover,
+a.schedule-warmup:focus {
+    border-color: rgba($purple, .62);
+    box-shadow: 0 6px 16px rgba($purple, .14);
+    color: $dark-gray;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.schedule-warmup__label {
+    display: inline-block;
+    margin-bottom: .28rem;
+    padding: .08rem .42rem;
+    border-radius: 999px;
+    background: $purple;
+    color: $white;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    line-height: 1.45;
+    text-transform: uppercase;
+}
+
+.schedule-warmup__title,
+.schedule-warmup__meta {
+    display: block;
+}
+
+.schedule-warmup__title {
+    color: darken($purple, 12%);
+    font-size: .92rem;
+    line-height: 1.25;
+}
+
+.schedule-warmup__meta {
+    margin-top: .2rem;
+    color: $mid-gray;
+    font-size: .74rem;
+    line-height: 1.25;
+}
+
 reading.important {
 	color: $dark-green;
 }

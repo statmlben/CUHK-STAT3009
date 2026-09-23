@@ -1,0 +1,294 @@
+---
+title: "Machine Learning II: Generalization and Model Selection"
+subtitle: "Validation for rating prediction"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview-quarto/stat3009.scss, ../Lec-ML-quarto/ml.scss]
+    logo: ../Lec-overview-quarto/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls: true
+    controls-layout: edges
+    controls-tutorial: false
+    progress: true
+    slide-number: c/t
+    hash: true
+    history: true
+    transition: fade
+    background-transition: fade
+    transition-speed: default
+    code-line-numbers: false
+    code-copy: false
+    highlight-style: github-dark
+    link-external-newwindow: true
+    embed-resources: true
+    footer: "CUHK · STAT3009 · Machine Learning II"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## Generalization {.section-break .generalization-section}
+
+<div class="section-number">01</div>
+<img class="section-crest" src="../Lec-overview-quarto/figs/cu_logo.webp" alt="CUHK emblem">
+<p>A model can fit its training data beautifully and still fail on new examples.</p>
+
+## Three familiar models make different assumptions {.detail-slide .model-spectrum-slide}
+
+<div class="model-spectrum">
+<div class="spectrum-axis"><span>fewer learned values</span><i></i><span>more stored detail</span></div>
+<div class="spectrum-card simple-model fragment fade-up" data-fragment-index="1">
+<span>SIMPLE</span><b>Global mean</b><p>Use one learned number for every user–item pair.</p><div class="spectrum-formula">$$\widehat r_{ui}=\widehat\mu$$</div>
+</div>
+<div class="spectrum-card useful-model fragment fade-up" data-fragment-index="2">
+<span>MORE STRUCTURE</span><b>User–item average</b><p>Use summaries learned for the known user and item.</p><em>personalization without storing every answer</em>
+</div>
+<div class="spectrum-card memory-model fragment fade-up" data-fragment-index="3">
+<span>MAXIMUM DETAIL</span><b>Memorization + fallback</b><p>Store every observed rating; use the global mean for an unseen pair.</p><em>perfect recall of the training rows</em>
+</div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4">A model that remembers more can reduce <b>training error</b>. That alone does not tell us which model predicts unseen pairs best.</p>
+
+::: {.notes}
+[Teaching]
+- These are deliberately familiar recommender examples. No new prediction algorithm is needed to motivate validation.
+- Memorization is a thought experiment: for a pair already in the training triples, return its stored rating exactly.
+:::
+
+## Memorization wins on the training ratings {.detail-slide .memorization-slide}
+
+<div class="memorization-layout">
+<div class="memory-triples">
+<span>TRAINING TRIPLES</span>
+<div class="memory-row memory-head"><b>user</b><b>item</b><b>rating</b></div>
+<div class="memory-row"><i>$u_1$</i><i>$i_2$</i><i>4</i></div>
+<div class="memory-row"><i>$u_2$</i><i>$i_1$</i><i>5</i></div>
+<div class="memory-row"><i>$u_1$</i><i>$i_4$</i><i>2</i></div>
+</div>
+<i class="memory-arrow fragment" data-fragment-index="1">store exact answers →</i>
+<div class="memory-lookups fragment fade-left" data-fragment-index="1">
+<span>LOOKUP ON SEEN PAIRS</span>
+<div><b>$(u_1,i_2)$</b><i>→</i><em>$\widehat r=4$</em></div>
+<div><b>$(u_2,i_1)$</b><i>→</i><em>$\widehat r=5$</em></div>
+<div><b>$(u_1,i_4)$</b><i>→</i><em>$\widehat r=2$</em></div>
+<strong class="fragment" data-fragment-index="2">training RMSE = 0</strong>
+</div>
+</div>
+
+<div class="unseen-pair fragment fade-up" data-fragment-index="3">
+<span>NOW PREDICT A NEW PAIR</span><b>$(u_4,i_7)$</b><i>→</i><strong>$\widehat\mu$</strong><p>No stored answer: fall back to the global mean.</p>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4"><b>Perfect reconstruction is not generalization:</b> the training rows cannot reveal how the lookup rule behaves on a new pair.</p>
+
+## Model selection needs fresh known ratings {.detail-slide .fresh-ratings-slide}
+
+<div class="fresh-ratings-flow">
+<div class="fresh-fit">
+<span>FIT</span><b>training triples</b><p>learn the global mean, user/item summaries, or stored lookup table</p>
+</div>
+<i class="fragment" data-fragment-index="1">produce candidate predictors →</i>
+<div class="candidate-stack fragment fade-up" data-fragment-index="1">
+<div>global mean</div><div>user–item average</div><div>memorization + fallback</div>
+</div>
+<i class="fragment" data-fragment-index="2">predict →</i>
+<div class="fresh-probe fragment fade-left" data-fragment-index="2">
+<span>FRESH PAIRS</span><b>ratings known to us</b><p>but never shown while fitting the candidates</p>
+</div>
+</div>
+
+<div class="score-contrast fragment fade-up" data-fragment-index="3">
+<div><span>TRAINING RMSE</span><b>Can it reconstruct ratings it learned from?</b></div>
+<div><span>VALIDATION RMSE</span><b>Can it predict held-out ratings?</b></div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="4">We call those fresh, scored rows the <b>validation set</b>. They let us compare candidates before the final test.</p>
+
+## Train and validation reveal model fit {.detail-slide .fit-patterns-slide}
+
+<div class="fit-patterns" role="table" aria-label="Qualitative training and validation error patterns for three recommender models">
+<div class="fit-pattern pattern-head" role="row"><span>candidate</span><span>training RMSE</span><span>validation RMSE</span><span>diagnosis</span></div>
+<div class="fit-pattern fragment fade-up" data-fragment-index="1" role="row"><b>global mean</b><span><i class="error-bar high"></i>high</span><span><i class="error-bar high"></i>high</span><strong>underfitting</strong></div>
+<div class="fit-pattern useful-pattern fragment fade-up" data-fragment-index="2" role="row"><b>user–item average</b><span><i class="error-bar medium"></i>lower</span><span><i class="error-bar low"></i>lowest</span><strong>useful fit</strong></div>
+<div class="fit-pattern fragment fade-up" data-fragment-index="3" role="row"><b>memorization + fallback</b><span><i class="error-bar zero"></i>zero</span><span><i class="error-bar high"></i>high</span><strong>overfitting</strong></div>
+</div>
+
+<div class="fit-definitions fragment fade-up" data-fragment-index="4">
+<p><b>Underfitting</b><span>The model misses useful patterns in both training and validation data.</span></p>
+<p><b>Overfitting</b><span>The model learns training details that do not transfer to held-out ratings.</span></p>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="5">Validation turns “fits the data” into the question we actually care about: <b>does the learned pattern transfer?</b></p>
+
+::: {.notes}
+[Teaching]
+- The RMSE labels are qualitative; they show the diagnostic pattern rather than claiming a benchmark value.
+- The middle row represents a reasonable baseline candidate, not a universal winner on every dataset.
+:::
+
+## Model selection without touching test {.section-break .selection-section}
+
+<div class="section-number">02</div>
+<img class="section-crest" src="../Lec-overview-quarto/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Validation estimates generalization while the final test set remains untouched.</p>
+
+## Netflix Prize made the data roles visible {.detail-slide .netflix-split-slide}
+
+<div class="netflix-image-layout">
+<div class="netflix-split-figure">
+<img src="../Lec-baseline/figs/netflix-dataset.png" alt="Netflix Prize split: training and probe ratings are known, while quiz and test ratings are hidden; the probe set validates the model, the quiz set supplies public leaderboard feedback, and the test set determines the secret final score">
+</div>
+<div class="netflix-image-reading">
+<div class="fragment fade-up" data-fragment-index="1"><span>KNOWN RATINGS</span><b>Training fits the model. Probe validates choices.</b><p>The probe ratings score candidates without fitting their parameters.</p></div>
+<div class="fragment fade-up" data-fragment-index="2"><span>HIDDEN RATINGS</span><b>Quiz gives public feedback. Test determines the final score.</b><p>Once feedback influences a choice, it becomes part of model development.</p></div>
+</div>
+</div>
+
+<p class="source-line">Source: <a href="https://pantelis.github.io/cs301/docs/common/lectures/recommenders/netflix/">Netflix Prize dataset diagram used in Lec-baseline</a>.</p>
+
+::: {.notes}
+[Teaching]
+- Read the upper half first: the training and probe ratings are known.
+- Then reveal the lower half: quiz and test ratings are hidden from competitors.
+- The next slide isolates the training–probe relationship and names it holdout validation.
+
+[Sources]
+- Split sizes and roles are reproduced from slides/Lec-baseline/figs/netflix-dataset.png, whose cited source is https://pantelis.github.io/cs301/docs/common/lectures/recommenders/netflix/.
+:::
+
+## Holdout validation uses one probe set {.detail-slide .holdout-slide}
+
+<div class="netflix-holdout">
+<div class="holdout-part train-part"><span>NETFLIX TRAINING SET</span><b>fit each candidate model</b><p>candidate parameters learn from these ratings</p></div>
+<i class="fragment" data-fragment-index="1">predict held-out ratings</i>
+<div class="holdout-part valid-part fragment fade-left" data-fragment-index="1"><span>NETFLIX PROBE SET</span><b>compare candidate RMSE</b><p>probe ratings score models but never fit them</p></div>
+</div>
+
+<div class="candidate-race">
+<div class="fragment fade-up" data-fragment-index="2"><span>GLOBAL MEAN</span><b>higher probe RMSE</b></div>
+<div class="fragment fade-up winner" data-fragment-index="3"><span>USER–ITEM AVERAGE</span><b>lowest probe RMSE</b></div>
+<div class="fragment fade-up" data-fragment-index="4"><span>MEMORIZATION</span><b>global-mean fallback</b></div>
+</div>
+
+<p class="ml-takeaway fragment" data-fragment-index="5">This is <b>holdout validation</b>. On a new dataset, a sub-train split plays the training-set role and the validation split plays the probe-set role.</p>
+
+## After selection, refit on all development data {.detail-slide .refit-slide}
+
+<div class="refit-animation">
+<div class="refit-top">
+<div><span>FIT SET</span><b>fit candidates</b></div>
+<div><span>HOLDOUT / PROBE</span><b>select user–item average</b></div>
+</div>
+<i class="fragment" data-fragment-index="1">selection finished</i>
+<div class="refit-full fragment fade-up" data-fragment-index="1"><span>ALL DEVELOPMENT DATA</span><b>refit the selected baseline once</b><p>the holdout rows may now help estimate the final fitted model</p></div>
+<i class="fragment" data-fragment-index="2">evaluate once</i>
+<div class="refit-test fragment fade-up" data-fragment-index="2"><span>TEST</span><b>final RMSE</b><p>no more model changes afterward</p></div>
+</div>
+
+<p class="ml-takeaway">More fitting data helps <b>after</b> the model choice has been made.</p>
+
+::: {.notes}
+[Teaching]
+- Refit only after model selection is complete; otherwise the holdout no longer provides an honest comparison.
+:::
+
+## One probe set can give a noisy ranking {.detail-slide .split-instability-slide}
+
+<div class="split-comparison">
+<div>
+<span>PROBE A</span>
+<div class="split-strip"><i></i><i></i><i></i><i class="valid"></i></div>
+<b>best: candidate B</b>
+<p>one held-out sample happens to favor this candidate</p>
+</div>
+<div>
+<span>PROBE B</span>
+<div class="split-strip"><i class="valid"></i><i></i><i></i><i></i></div>
+<b>best: candidate C</b>
+<p>a different held-out sample can change the ranking</p>
+</div>
+</div>
+
+<div class="instability-cause">
+<p><b>One probe sample</b><span>the score depends on which ratings were held out</span></p>
+<p><b>One model ranking</b><span>a close comparison may reverse on another sample</span></p>
+<p class="fragment"><b>Natural extension</b><span>let every block take a turn as the probe set</span></p>
+</div>
+
+## K-fold CV rotates the probe role {.detail-slide .kfold-slide}
+
+<div class="kfold-animation" role="img" aria-label="Five cross-validation rounds, each with one probe fold and four fitting folds">
+<div class="fold-row fragment fade-up" data-fragment-index="1"><span>ROUND 1</span><i class="valid">PROBE</i><i>FIT</i><i>FIT</i><i>FIT</i><i>FIT</i><b>RMSE<sub>1</sub></b></div>
+<div class="fold-row fragment fade-up" data-fragment-index="2"><span>ROUND 2</span><i>FIT</i><i class="valid">PROBE</i><i>FIT</i><i>FIT</i><i>FIT</i><b>RMSE<sub>2</sub></b></div>
+<div class="fold-row fragment fade-up" data-fragment-index="3"><span>ROUND 3</span><i>FIT</i><i>FIT</i><i class="valid">PROBE</i><i>FIT</i><i>FIT</i><b>RMSE<sub>3</sub></b></div>
+<div class="fold-row fragment fade-up" data-fragment-index="4"><span>ROUND 4</span><i>FIT</i><i>FIT</i><i>FIT</i><i class="valid">PROBE</i><i>FIT</i><b>RMSE<sub>4</sub></b></div>
+<div class="fold-row fragment fade-up" data-fragment-index="5"><span>ROUND 5</span><i>FIT</i><i>FIT</i><i>FIT</i><i>FIT</i><i class="valid">PROBE</i><b>RMSE<sub>5</sub></b></div>
+</div>
+
+<div class="kfold-mean fragment fade-in" data-fragment-index="6">
+$$\mathrm{CV\ RMSE}=\frac{1}{5}\sum_{j=1}^{5}\mathrm{RMSE}_j$$
+<p>Every block plays the probe role once and the fitting role four times. The secret test set stays outside CV.</p>
+</div>
+
+::: {.notes}
+[Sources]
+- Cross-validation process: https://scikit-learn.org/stable/modules/cross_validation.html.
+
+[Teaching]
+- Present K-fold CV as repeated holdout validation. The only new idea is rotating which block plays the probe role.
+:::
+
+## For rating data, split pairs before fitting {.detail-slide .rating-cv-slide}
+
+<div class="rating-cv">
+<div class="rating-triples">
+<span>OBSERVED TRIPLES</span>
+<p><b>user</b><b>item</b><b>rating</b></p>
+<p><i>u1</i><i>i2</i><i>4</i></p>
+<p><i>u2</i><i>i1</i><i>5</i></p>
+<p><i>u1</i><i>i4</i><i>2</i></p>
+<p><i>u3</i><i>i2</i><i>3</i></p>
+</div>
+<i class="fragment" data-fragment-index="1">fold</i>
+<div class="rating-fold-train fragment fade-up" data-fragment-index="1"><span>FOLD TRAIN</span><b>learn all summaries</b><p>global mean, user means, item means, embeddings: whatever the candidate requires</p></div>
+<i class="fragment" data-fragment-index="2">predict</i>
+<div class="rating-fold-valid fragment fade-up" data-fragment-index="2"><span>FOLD VALIDATION</span><b>pairs $(u,i)$ → ratings $\widehat r_{ui}$</b><p>compare with held-out ratings only after prediction</p></div>
+</div>
+
+<div class="rating-rule fragment fade-in" data-fragment-index="3"><b>Compute learned quantities after the fold split.</b><span>Computing them earlier leaks validation information into training.</span></div>
+
+## The complete workflow {.detail-slide .final-workflow-slide}
+
+<div class="final-workflow" role="img" aria-label="Complete machine learning workflow from defining a task through cross-validation, refitting, test prediction, and reporting">
+<div class="final-step fragment fade-up" data-fragment-index="1"><span>01</span><b>Define</b><p>features, target, loss</p></div>
+<i class="fragment" data-fragment-index="2">→</i>
+<div class="final-step fragment fade-up" data-fragment-index="2"><span>02</span><b>Develop</b><p>fit candidate estimators</p></div>
+<i class="fragment" data-fragment-index="3">→</i>
+<div class="final-step fragment fade-up" data-fragment-index="3"><span>03</span><b>Validate</b><p>holdout or cross-validation</p></div>
+<i class="fragment" data-fragment-index="4">→</i>
+<div class="final-step fragment fade-up" data-fragment-index="4"><span>04</span><b>Refit</b><p>best choice on all development data</p></div>
+<i class="fragment" data-fragment-index="5">→</i>
+<div class="final-step test-step fragment fade-up" data-fragment-index="5"><span>05</span><b>Test once</b><p>predict and report RMSE</p></div>
+</div>
+
+<div class="closing-principles">
+<p class="fragment" data-fragment-index="6"><span>FIT</span><b>learns from known answers</b></p>
+<p class="fragment" data-fragment-index="7"><span>VALIDATE</span><b>chooses without touching test</b></p>
+<p class="fragment" data-fragment-index="8"><span>TEST</span><b>checks the final frozen workflow</b></p>
+</div>
+
+<p class="closing-line fragment" data-fragment-index="9">Machine learning combines prediction algorithms with a disciplined way to check whether learning worked.</p>
+
+::: {.notes}
+[Teaching]
+- Close by asking students to narrate the five boxes without looking at the labels.
+- The recommender methods in the course will reuse this workflow.
+:::
