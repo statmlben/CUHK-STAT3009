@@ -1,0 +1,242 @@
+/*-- scss:rules --*/
+
+/* Lecture-specific layouts. Shared theme and ML styles supply typography,
+   CUHK identity, section breaks, and the takeaway treatment. */
+
+.reveal .slides section.detail-slide h2 { margin-bottom: 32px; }
+.reveal .slides section.detail-slide { padding-bottom: 65px; }
+
+.mf-bridge,
+.mf-matrix-layout,
+.mf-role-cards,
+.mf-hyper-grid,
+.mf-learn-grid,
+.mf-controls,
+.mf-objective-parts,
+.mf-split,
+.mf-cold-grid {
+  display: grid;
+  gap: 32px;
+}
+
+.mf-bridge { grid-template-columns: 1fr 64px 1fr; align-items: center; margin-top: 48px; }
+.mf-bridge > div,
+.mf-example,
+.mf-matrix-side > div,
+.mf-role-cards > div,
+.mf-hyper-grid > div,
+.mf-learn-grid > div,
+.mf-controls > div,
+.mf-split > div,
+.mf-cold-grid > div {
+  padding: 24px 27px;
+  border-top: 4px solid #a65b9f;
+  background: rgba(255,255,255,.035);
+}
+.mf-bridge > div:last-child,
+.mf-matrix-side > div:last-child,
+.mf-hyper-grid > div:last-child,
+.mf-learn-grid > div:last-child,
+.mf-controls > div:last-child,
+.mf-split-highlight,
+.mf-cold-grid > div:last-child { border-color: var(--cuhk-gold); }
+
+.mf-bridge > div > span,
+.mf-example > span,
+.mf-matrix-side > div > span,
+.mf-role-cards > div > span,
+.mf-hyper-grid > div > span,
+.mf-learn-grid > div > span,
+.mf-controls > div > span,
+.mf-objective-parts > div > span,
+.mf-cv-flow > div > span,
+.mf-estimator-flow > div > span,
+.mf-split > div > span,
+.mf-ridge-map > div > span,
+.mf-als-steps > div > span,
+.mf-monitor > div > span,
+.mf-cold-grid > div > span,
+.mf-final-flow > div > span,
+.mf-final-question > span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: var(--r-code-font, Menlo, monospace);
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: .06em;
+}
+
+.mf-bridge b { display: block; margin-top: 19px; font-size: 35px; line-height: 1.1; }
+.mf-bridge p { margin: 19px 0 0 !important; color: #bbb9c0; font-size: 22px !important; }
+.mf-bridge > i,
+.mf-cv-flow > i,
+.mf-estimator-flow > i,
+.mf-final-flow > i {
+  color: var(--cuhk-gold);
+  font-size: 52px;
+  font-style: normal;
+  text-align: center;
+}
+.mf-example { margin-top: 37px; padding: 19px 26px; border-color: var(--cuhk-gold); }
+.mf-example b { display: block; margin-top: 10px; font-size: 25px; }
+.mf-opening .ml-takeaway { margin-top: 28px !important; }
+
+.mf-matrix-layout { grid-template-columns: 1.5fr .8fr; gap: 70px; align-items: center; margin-top: 32px; }
+.mf-rating-grid { display: grid; grid-template-columns: 1.3fr repeat(3,1fr); gap: 8px; }
+.mf-cell { display: flex; align-items: center; justify-content: center; height: 92px; border: 1px solid rgba(255,255,255,.12); font-size: 32px; font-weight: 650; }
+.mf-cell.mf-head { color: #c2bfc9; background: rgba(255,255,255,.06); font-size: 21px; }
+.mf-cell.observed { color: #fff; background: rgba(166,91,159,.26); }
+.mf-cell.missing { color: var(--cuhk-gold); background: rgba(221,163,0,.07); }
+.mf-matrix-side { display: grid; gap: 28px; }
+.mf-matrix-side b { display: block; margin-top: 11px; font-size: 30px; }
+.mf-matrix-side p { margin: 10px 0 0 !important; color: #bbb9c0; font-size: 20px !important; }
+
+.mf-lede { margin: 2px 0 32px !important; color: #ceccd1; font-size: 26px !important; }
+
+.mf-section h2 { max-width: 1220px; font-size: 94px; }
+.mf-section p { font-size: 27px; }
+.mf-big-formula { margin: 72px 0 65px; padding: 22px; border-left: 5px solid var(--cuhk-gold); background: rgba(221,163,0,.07); }
+.mf-big-formula .math.display { margin: 5px 0 !important; font-size: 60px; }
+.mf-role-cards { grid-template-columns: repeat(3,1fr); }
+.mf-role-cards b { display: block; margin-top: 17px; font-size: 32px; }
+.mf-role-cards p { margin: 10px 0 0 !important; color: #bbb9c0; font-size: 20px !important; }
+
+.mf-hyper-grid, .mf-learn-grid, .mf-controls, .mf-cold-grid { grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 64px; }
+.mf-hyper-grid > div, .mf-learn-grid > div { min-height: 285px; }
+.mf-hyper-grid b, .mf-learn-grid b { display: block; margin-top: 29px; font-size: 39px; }
+.mf-hyper-grid p, .mf-learn-grid p, .mf-controls p, .mf-cold-grid p { margin: 21px 0 0 !important; color: #bbb9c0; font-size: 22px !important; }
+.mf-before-fit, .mf-after-fit { margin-top: 45px; padding: 23px 26px; border-left: 4px solid var(--cuhk-gold); background: rgba(221,163,0,.06); font-size: 28px; }
+.mf-after-fit .math.display { margin: 0 !important; font-size: 38px; }
+
+.mf-objective { margin: 66px 0 48px; padding: 30px 22px; background: rgba(166,91,159,.08); border-top: 4px solid #a65b9f; }
+.mf-objective .math.display { margin: 5px 0 !important; font-size: 39px; }
+.mf-objective-parts { grid-template-columns: 1fr 1fr; gap: 46px; }
+.mf-objective-parts > div { padding: 15px 20px; border-left: 3px solid var(--cuhk-gold); }
+.mf-objective-parts p { margin: 12px 0 0 !important; color: #bbb9c0; font-size: 22px !important; }
+.mf-objective-slide .ml-takeaway { margin-top: 35px !important; }
+
+.mf-controls { margin-top: 70px; }
+.mf-controls > div { min-height: 320px; }
+.mf-controls b, .mf-cold-grid b { display: block; margin-top: 19px; font-size: 31px; }
+.mf-controls p { line-height: 1.38 !important; }
+
+.mf-cv-flow, .mf-estimator-flow, .mf-final-flow { display: grid; align-items: center; gap: 13px; }
+.mf-cv-flow { grid-template-columns: 1fr 42px 1fr 42px 1fr; margin-top: 76px; }
+.mf-cv-flow > div, .mf-estimator-flow > div, .mf-final-flow > div { min-height: 275px; padding: 21px 23px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-cv-flow > div:last-child, .mf-estimator-flow > div:last-child, .mf-final-flow > div:last-child { border-color: var(--cuhk-gold); }
+.mf-cv-flow b, .mf-estimator-flow b, .mf-final-flow b { display: block; margin-top: 24px; font-size: 27px; line-height: 1.14; }
+.mf-cv-flow p, .mf-estimator-flow p { margin: 16px 0 0 !important; color: #bbb9c0; font-size: 19px !important; }
+.mf-cv-bottom { margin-top: 44px; padding: 20px 24px; border-left: 4px solid var(--cuhk-gold); color: #c8c5cc; font-size: 23px; }
+
+.mf-estimator-flow { grid-template-columns: 1fr 40px 1fr 40px 1fr; margin-top: 72px; }
+.mf-estimator-flow > div { min-height: 245px; }
+.mf-estimator-flow b { white-space: nowrap; font-size: 24px; }
+.mf-estimator-flow code { color: #fff; }
+.mf-input-shape { margin-top: 44px; padding: 20px 25px; background: rgba(221,163,0,.07); font-size: 24px; }
+
+.mf-split { grid-template-columns: 1fr 1fr; gap: 53px; margin-top: 67px; }
+.mf-split > div { min-height: 270px; }
+.mf-split b { display: block; margin-top: 24px; font-size: 31px; }
+.mf-split p { margin: 20px 0 0 !important; color: #bbb9c0; font-size: 22px !important; }
+.mf-alternation { margin-top: 44px; padding: 25px 22px; border-left: 4px solid var(--cuhk-gold); font-size: 31px; text-align: center; }
+.mf-alternation i { margin: 0 13px; color: var(--cuhk-gold); font-style: normal; }
+
+.mf-ridge-formula { margin: 51px 0 38px; padding: 28px 12px; background: rgba(166,91,159,.08); border-top: 4px solid #a65b9f; }
+.mf-ridge-formula .math.display { margin: 0 !important; font-size: 37px; }
+.mf-ridge-map { display: grid; grid-template-columns: 1.1fr 1.1fr .7fr; gap: 25px; }
+.mf-ridge-map > div { padding: 17px 20px; border-left: 3px solid var(--cuhk-gold); background: rgba(255,255,255,.025); }
+.mf-ridge-map b { display: block; margin-top: 15px; font-size: 23px; white-space: nowrap; }
+.mf-ridge-slide .ml-takeaway { margin-top: 39px !important; }
+
+.mf-als-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 25px; margin-top: 70px; }
+.mf-als-steps > div { min-height: 355px; padding: 19px 23px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-als-steps > div:nth-child(2), .mf-als-steps > div:nth-child(4) { border-color: var(--cuhk-gold); }
+.mf-als-steps b { display: block; margin-top: 27px; font-size: 29px; line-height: 1.13; }
+.mf-als-steps p { margin: 23px 0 0 !important; color: #bbb9c0; font-size: 21px !important; }
+
+.reveal .slides section.mf-code-slide pre.sourceCode { width: 100%; margin: 46px 0 32px; font-size: 27px; line-height: 1.35; }
+.reveal .slides section.mf-code-slide pre.sourceCode code { padding: 21px 27px; }
+.mf-code-slide .ml-takeaway { margin-top: 35px !important; }
+
+.mf-monitor { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; gap: 29px; margin-top: 75px; }
+.mf-monitor > div { min-height: 210px; padding: 28px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-monitor > div:last-child { border-color: var(--cuhk-gold); }
+.mf-monitor b { display: block; margin-top: 24px; font-size: 31px; }
+.mf-monitor > i { color: var(--cuhk-gold); font-size: 52px; font-style: normal; text-align: center; }
+.mf-monitor-caption { margin-top: 37px; color: #c9c6cd; font-size: 25px; }
+.mf-debug { margin-top: 44px; padding: 24px 27px; border-left: 4px solid var(--cuhk-gold); background: rgba(221,163,0,.06); font-size: 23px; }
+
+.mf-cold-grid { margin-top: 75px; }
+.mf-cold-grid > div { min-height: 315px; }
+.mf-cold-grid p { line-height: 1.38 !important; }
+
+.mf-final-flow { grid-template-columns: 1fr 34px 1fr 34px 1fr 34px 1fr; margin-top: 68px; }
+.mf-final-flow > div { min-height: 195px; }
+.mf-final-flow > i { font-size: 40px; }
+.mf-final-flow b { font-size: 25px; }
+.mf-final-question { margin-top: 67px; padding: 26px 30px; border-left: 5px solid var(--cuhk-gold); background: rgba(221,163,0,.07); }
+.mf-final-question p { margin: 17px 0 0 !important; font-size: 27px !important; line-height: 1.35 !important; }
+
+/* Keep the shared ML inline-math scale; changing font size participates in
+   line layout, whereas transform-based enlargement does not. */
+.reveal .slides section span.math.inline > .MathJax {
+  font-size: 1em !important;
+  transform: none !important;
+}
+.reveal .slides section h2 span.math.inline > .MathJax {
+  font-size: 1em !important;
+}
+
+/* P4–6: keep the same two named teaching axes and numeric profiles across
+   intuition, one dot product, and the full matrix product. */
+.mf-intro-line { margin: 2px 0 23px !important; color: #ceccd1; font-size: 25px !important; }
+.mf-axis-key { display: flex; gap: 24px; margin-bottom: 30px; }
+.mf-axis-key > span { display: inline-flex; align-items: center; gap: 10px; padding: 9px 15px; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; font-size: 19px; font-weight: 650; }
+.mf-axis-key i { width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
+.mf-axis-action { color: #db93d6; }
+.mf-axis-romance { color: var(--cuhk-gold); }
+.mf-profile-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 37px; }
+.mf-profile-panel { padding: 18px 23px 22px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-film-panel { border-color: var(--cuhk-gold); }
+.mf-profile-heading { min-height: 83px; }
+.mf-profile-heading > span, .mf-dot-setup > div > span, .mf-comparison-card > span, .mf-total > span, .mf-numeric-block > span { display: block; color: var(--cuhk-gold); font-family: var(--r-code-font, Menlo, monospace); font-size: 15px; font-weight: 750; letter-spacing: .055em; }
+.mf-profile-heading b { display: block; margin-top: 8px; font-size: 21px; }
+.mf-profile-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: center; padding: 13px 0; border-top: 1px solid rgba(255,255,255,.13); }
+.mf-profile-row strong { font-size: 24px; line-height: 1.15; }
+.mf-profile-row strong small { display: block; margin-top: 4px; color: #aaa8ae; font-size: 16px; font-weight: 500; }
+.mf-profile-values { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mf-profile-values span { display: block; padding: 10px 7px; border: 1px solid currentColor; border-radius: 4px; font-family: var(--r-code-font, Menlo, monospace); font-size: 26px; font-weight: 750; text-align: center; }
+.mf-profile-values .mf-strong { background: rgba(166,91,159,.15); }
+.mf-profile-values .mf-axis-romance.mf-strong { background: rgba(221,163,0,.14); }
+.mf-profile-values .mf-weak { background: rgba(255,255,255,.02); opacity: .75; }
+.mf-intuition-slide .ml-takeaway { margin-top: 22px !important; }
+
+.mf-dot-setup { display: grid; grid-template-columns: .85fr 1.15fr; gap: 35px; margin: 39px 0 27px; }
+.mf-dot-setup > div { padding: 16px 22px; border-left: 4px solid #a65b9f; background: rgba(255,255,255,.028); }
+.mf-dot-setup > div:last-child { border-color: var(--cuhk-gold); }
+.mf-dot-setup b { display: block; margin-top: 10px; font-size: 26px; }
+.mf-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.mf-comparison-card { padding: 19px 25px 22px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-comparison-second { border-color: var(--cuhk-gold); }
+.mf-contribution { display: grid; grid-template-columns: 1fr 1.2fr .7fr; gap: 10px; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.13); }
+.mf-contribution label { font-size: 19px; font-weight: 650; }
+.mf-contribution b, .mf-contribution strong { font-family: var(--r-code-font, Menlo, monospace); font-size: 23px; white-space: nowrap; }
+.mf-contribution strong { color: #fff; text-align: right; }
+.mf-total { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 19px; }
+.mf-total b { display: block; font-size: 32px; white-space: nowrap; }
+.mf-dot-slide .ml-takeaway { margin-top: 26px !important; }
+
+.mf-product-equation { margin: 37px 0 40px; padding: 12px 18px; border-left: 4px solid var(--cuhk-gold); background: rgba(221,163,0,.06); }
+.mf-product-equation .math.display { margin: 0 !important; font-size: 36px; }
+.mf-numeric-product { display: grid; grid-template-columns: 1fr 38px 1fr 38px 1fr; align-items: center; gap: 14px; }
+.mf-numeric-product > i { color: var(--cuhk-gold); font-size: 46px; font-style: normal; text-align: center; }
+.mf-numeric-block { padding: 16px 17px 22px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-result-block { border-color: var(--cuhk-gold); }
+.mf-numeric-block > span { min-height: 26px; }
+.mf-numeric-block table { width: 100%; margin-top: 15px; border-collapse: collapse; text-align: center; }
+.mf-numeric-block th, .mf-numeric-block td { padding: 9px 8px; border: 1px solid rgba(255,255,255,.15); }
+.mf-numeric-block th { color: #c8c5cc; font-size: 15px; font-weight: 650; }
+.mf-numeric-block td { color: #fff; font-family: var(--r-code-font, Menlo, monospace); font-size: 25px; font-weight: 750; }
+.mf-result-block td { color: var(--cuhk-gold); }
+.mf-product-caption { margin-top: 25px; color: #ceccd1; font-size: 22px; }
+.mf-matrix-product-slide .ml-takeaway { margin-top: 22px !important; }

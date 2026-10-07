@@ -79,6 +79,11 @@
   font-size: 91px;
 }
 
+/* Keep the padded cover within one printed RevealJS page. */
+#title-slide {
+  box-sizing: border-box;
+}
+
 #title-slide .subtitle {
   color: #d7b95c;
 }
@@ -451,14 +456,50 @@
 
 .component-equation {
   margin-top: 31px;
-  padding: 12px 20px;
+  padding: 25px 30px;
   border-left: 3px solid var(--cuhk-gold);
   background: rgba(0, 0, 0, 0.12);
+}
+
+.component-flow {
+  display: grid;
+  grid-template-columns: 1fr 42px 1.35fr 42px 1.3fr;
+  gap: 14px;
+  align-items: center;
   text-align: center;
 }
 
-.component-equation .math.display {
-  font-size: 35px;
+.component-flow > div > span:first-child,
+.component-flow small {
+  display: block;
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.component-flow b {
+  display: block;
+  margin-top: 10px;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.component-flow .math.display {
+  margin: 8px 0 0;
+  font-size: 36px;
+}
+
+.component-flow small {
+  margin-top: 9px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.component-flow i {
+  color: var(--cuhk-gold);
+  font-size: 30px;
+  font-style: normal;
 }
 
 .parameter-choice {
@@ -656,6 +697,35 @@
   font-size: 32px;
 }
 
+.mean-fit-steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr);
+  gap: 15px;
+  align-items: center;
+}
+
+.mean-fit-steps > div {
+  min-width: 0;
+  text-align: center;
+}
+
+.mean-fit-steps small {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.mean-fit-steps i {
+  color: var(--cuhk-gold);
+  font-size: 30px;
+  font-style: normal;
+  text-align: center;
+}
+
 .baseline-learned {
   display: grid;
   grid-template-columns: 300px 250px 1fr;
@@ -835,6 +905,42 @@
   gap: 34px;
   margin-top: 61px;
 }
+
+.lr-objective {
+  margin-top: 72px;
+  padding: 32px 46px;
+  border-left: 4px solid var(--cuhk-gold);
+  background: rgba(221, 163, 0, 0.055);
+}
+
+.lr-objective > span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+}
+
+.lr-objective .math.display {
+  display: block;
+  margin: 10px 0 40px;
+  font-size: 1.25em;
+  text-align: left;
+}
+
+.lr-objective .math.display:last-child { margin-bottom: 0; }
+
+.lr-argmin-reading {
+  display: flex;
+  gap: 65px;
+  margin-top: 35px;
+  color: var(--muted);
+  font-size: 22px;
+}
+
+.lr-argmin-reading p { margin: 0 !important; }
+.lr-argmin-reading b { color: var(--paper); }
 
 .parameter-card {
   padding: 26px 29px;
@@ -1647,6 +1753,12 @@
   margin-top: 32px;
 }
 
+.rmse-context {
+  margin: 0 !important;
+  color: var(--muted);
+  font-size: 22px !important;
+}
+
 .rmse-vector {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2118,7 +2230,7 @@
 .estimator-instance.fitted-instance { border-color: var(--cuhk-gold); background: rgba(221, 163, 0, 0.045); }
 .class-blueprint > b,
 .estimator-instance > b { display: block; margin-top: 27px; font-size: 21px; line-height: 1.38; }
-.class-blueprint pre { margin: 22px 0 0; color: #ece9ee; background: transparent; font-size: 15px; line-height: 1.48; box-shadow: none; }
+.class-blueprint pre { margin: 22px 0 0; color: #ece9ee; background: transparent; font-size: 19px; line-height: 1.55; box-shadow: none; }
 .class-blueprint > p,
 .estimator-instance > p { margin-top: 19px !important; color: var(--muted); font-size: 14px !important; line-height: 1.38 !important; }
 
@@ -2173,6 +2285,11 @@
 .linear-predict-slide pre.sourceCode {
   font-size: 17px !important;
   line-height: 1.38 !important;
+}
+
+.linear-estimator-slide pre.sourceCode {
+  font-size: 21px !important;
+  line-height: 1.5 !important;
 }
 
 .linear-example-reading,
@@ -2494,7 +2611,7 @@
 .user-mean-state pre { margin: 36px 0 0; color: #e8e5ea; background: transparent; font-size: 20px; line-height: 1.55; box-shadow: none; }
 .user-mean-state p { margin-top: 26px !important; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px !important; }
 
-.user-estimator-slide pre.sourceCode { font-size: 16px !important; line-height: 1.32 !important; }
+.user-estimator-slide pre.sourceCode { font-size: 21px !important; line-height: 1.43 !important; }
 .user-estimator-slide div.sourceCode,
 .user-estimator-slide pre.sourceCode { overflow-x: hidden !important; }
 

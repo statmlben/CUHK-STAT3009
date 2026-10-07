@@ -1,0 +1,306 @@
+---
+title: "Matrix Factorization for Recommendation"
+subtitle: "Latent factors, regularization, and alternating least squares"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview/stat3009.scss, ../Lec-ML-quarto/ml.scss, mf.scss]
+    logo: ../Lec-overview/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls: true
+    controls-layout: edges
+    progress: true
+    slide-number: c/t
+    hash: true
+    history: true
+    transition: fade
+    code-line-numbers: false
+    code-copy: false
+    highlight-style: github-dark
+    embed-resources: true
+    footer: "CUHK · STAT3009 · Matrix Factorization"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## From averages to interactions {.detail-slide .mf-opening}
+
+<div class="mf-bridge">
+<div><span>ALREADY KNOW</span><b>Global, user, item means</b><p>These are useful baselines, but they describe users and items separately.</p></div>
+<i>→</i>
+<div><span>TODAY'S QUESTION</span><b>Which user likes which item?</b><p>We need a prediction rule for the <em>interaction</em> between a user and an item.</p></div>
+</div>
+
+<div class="mf-example"><span>EXAMPLE</span><b>A film can be popular overall, yet a particular user may dislike its genre.</b></div>
+
+<p class="ml-takeaway">Our next model keeps a compact profile for <b>each user</b> and <b>each item</b>, then combines them.</p>
+
+::: {.notes}
+[Teaching]
+- Pick up from the ML II final workflow. We will reuse four questions, Ridge, the estimator interface, and cross-validation.
+- The additive three-mean model can capture general user and item tendencies, but not a specific user–item interaction.
+:::
+
+## What the ratings matrix leaves blank {.detail-slide}
+
+<div class="mf-matrix-layout">
+<div class="mf-rating-grid" role="img" aria-label="A small user-by-item rating matrix with observed ratings and missing entries">
+<div class="mf-cell mf-head"></div><div class="mf-cell mf-head">Film A</div><div class="mf-cell mf-head">Film B</div><div class="mf-cell mf-head">Film C</div>
+<div class="mf-cell mf-head">User 1</div><div class="mf-cell observed">5</div><div class="mf-cell missing">?</div><div class="mf-cell observed">1</div>
+<div class="mf-cell mf-head">User 2</div><div class="mf-cell missing">?</div><div class="mf-cell observed">4</div><div class="mf-cell observed">5</div>
+<div class="mf-cell mf-head">User 3</div><div class="mf-cell observed">2</div><div class="mf-cell missing">?</div><div class="mf-cell missing">?</div>
+</div>
+<div class="mf-matrix-side">
+<div><span>OBSERVED</span><b>$\Omega_{\mathrm{train}}$</b><p>User–item pairs whose ratings are available for fitting.</p></div>
+<div><span>TO PREDICT</span><b>$\widehat r_{ui}$</b><p>Missing pairs are questions. A blank is <strong>not</strong> a zero rating.</p></div>
+</div>
+</div>
+
+<p class="ml-takeaway">Fit only the observed ratings. Then use the learned pattern to predict a new pair.</p>
+
+## A shared space for users and films {.detail-slide .mf-intuition-slide}
+
+<p class="mf-intro-line">To picture <b>$K=2$</b>, imagine two possible tastes. Both user and film profiles use the <em>same axes</em>.</p>
+
+<div class="mf-axis-key"><span class="mf-axis-action"><i></i> factor 1 · action-like</span><span class="mf-axis-romance"><i></i> factor 2 · romance-like</span></div>
+
+<div class="mf-profile-columns">
+<div class="mf-profile-panel"><div class="mf-profile-heading"><span>USER PROFILES</span><b>$p_u$: how much each taste matters to this user</b></div>
+<div class="mf-profile-row"><strong>User A <small>action fan</small></strong><div class="mf-profile-values"><span class="mf-axis-action mf-strong">1.0</span><span class="mf-axis-romance mf-weak">0.2</span></div></div>
+<div class="mf-profile-row"><strong>User B <small>romance fan</small></strong><div class="mf-profile-values"><span class="mf-axis-action mf-weak">0.2</span><span class="mf-axis-romance mf-strong">1.0</span></div></div>
+</div>
+<div class="mf-profile-panel mf-film-panel"><div class="mf-profile-heading"><span>FILM PROFILES</span><b>$q_i$: how strongly this film has each trait</b></div>
+<div class="mf-profile-row"><strong>Film A <small>action-heavy</small></strong><div class="mf-profile-values"><span class="mf-axis-action mf-strong">4.0</span><span class="mf-axis-romance mf-weak">1.0</span></div></div>
+<div class="mf-profile-row"><strong>Film B <small>romance-heavy</small></strong><div class="mf-profile-values"><span class="mf-axis-action mf-weak">1.0</span><span class="mf-axis-romance mf-strong">4.0</span></div></div>
+</div>
+</div>
+
+<p class="ml-takeaway">“Action” and “romance” are <b>teaching labels</b>. In actual MF, the factor coordinates are learned from ratings; we do not tell the model what each factor means.</p>
+
+::: {.notes}
+[Teaching]
+- First ask students what they expect: User A should prefer Film A; User B should prefer Film B. Do not show the calculation yet.
+- The same two axes are essential: coordinate 1 of a user can only interact with coordinate 1 of a film.
+- These numeric vectors are a constructed example, not fitted estimates or actual genre data. Real latent dimensions may be difficult to name.
+:::
+
+## A dot product turns two profiles into a rating {.detail-slide .mf-dot-slide}
+
+<div class="mf-dot-setup"><div><span>KEEP USER A FIXED</span><b>$p_A=(1.0,\;0.2)$</b></div><div><span>ONE RULE FOR ANY FILM</span><b>$\widehat r_{ui}=p_u^\top q_i$</b></div></div>
+
+<div class="mf-comparison">
+<div class="mf-comparison-card"><span>FILM A · ACTION-HEAVY</span><div class="mf-contribution"><label class="mf-axis-action">action-like</label><b>1.0 × 4.0</b><strong>= 4.0</strong></div><div class="mf-contribution"><label class="mf-axis-romance">romance-like</label><b>0.2 × 1.0</b><strong>= 0.2</strong></div><div class="mf-total"><span>ADD THE MATCHES</span><b>$\widehat r_{A,A}=4.2$</b></div></div>
+<div class="mf-comparison-card mf-comparison-second"><span>FILM B · ROMANCE-HEAVY</span><div class="mf-contribution"><label class="mf-axis-action">action-like</label><b>1.0 × 1.0</b><strong>= 1.0</strong></div><div class="mf-contribution"><label class="mf-axis-romance">romance-like</label><b>0.2 × 4.0</b><strong>= 0.8</strong></div><div class="mf-total"><span>ADD THE MATCHES</span><b>$\widehat r_{A,B}=1.8$</b></div></div>
+</div>
+
+<p class="ml-takeaway">Same user, different film: <b>4.2 versus 1.8</b>. MF predicts a higher rating when the two profiles match on the same factors.</p>
+
+::: {.notes}
+[Teaching]
+- Read each colored row as one coordinate-wise multiplication. Add the two contributions to get the inner product.
+- Ask: what would happen for User B? The next slide shows both users at once.
+- The values are illustrative continuous predictions; clipping to a rating scale, if used, is a separate prediction policy.
+:::
+
+## One product predicts every user–film pair {.detail-slide .mf-matrix-product-slide}
+
+<div class="mf-product-equation">$$\widehat R=PQ^\top\qquad\Longleftrightarrow\qquad\widehat r_{ui}=p_u^\top q_i$$</div>
+
+<div class="mf-numeric-product">
+<div class="mf-numeric-block"><span>$P$ · USER ROWS</span><table><thead><tr><th></th><th>factor 1</th><th>factor 2</th></tr></thead><tbody><tr><th>User A</th><td>1.0</td><td>0.2</td></tr><tr><th>User B</th><td>0.2</td><td>1.0</td></tr></tbody></table></div>
+<i>×</i>
+<div class="mf-numeric-block"><span>$Q^\top$ · FILM COLUMNS</span><table><thead><tr><th></th><th>Film A</th><th>Film B</th></tr></thead><tbody><tr><th>factor 1</th><td>4.0</td><td>1.0</td></tr><tr><th>factor 2</th><td>1.0</td><td>4.0</td></tr></tbody></table></div>
+<i>=</i>
+<div class="mf-numeric-block mf-result-block"><span>$\widehat R$ · PREDICTED RATINGS</span><table><thead><tr><th></th><th>Film A</th><th>Film B</th></tr></thead><tbody><tr><th>User A</th><td>4.2</td><td>1.8</td></tr><tr><th>User B</th><td>1.8</td><td>4.2</td></tr></tbody></table></div>
+</div>
+
+<div class="mf-product-caption"><b>Each output cell is one dot product.</b> The User A row is what we calculated; User B reverses the preference.</div>
+<p class="ml-takeaway">For $n$ users and $m$ films, $P$ has size $n\times K$ and $Q$ has size $m\times K$. Learn them from <b>observed</b> ratings; use $PQ^\top$ to predict other pairs.</p>
+
+::: {.notes}
+[Teaching]
+- Trace the top-left 4.2 cell across the two matrices. Then invite students to calculate the bottom-right 4.2.
+- The film rows of Q become the film columns of Q-transpose; this is why the product's columns label films.
+- The historical PDF calls this a “SVD model.” We use matrix factorization because missing-entry fitting with regularization is not the ordinary full-matrix SVD. Missing ratings are not observed zeros.
+:::
+
+## Four questions before writing the estimator {.section-break .mf-section}
+
+<div class="section-number">01</div>
+<img class="section-crest" src="../Lec-overview/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Model → hyperparameters → fitting criterion → learned parameters</p>
+
+## 1 · What is the model? {.detail-slide .mf-model-slide}
+
+<div class="mf-big-formula">$$f_{P,Q}(u,i)=p_u^\top q_i$$</div>
+
+<div class="mf-role-cards">
+<div><span>INPUT</span><b>$(u,i)$</b><p>A user ID and an item ID.</p></div>
+<div><span>RULE</span><b>inner product</b><p>Compare the two factor vectors.</p></div>
+<div><span>OUTPUT</span><b>$\widehat r_{ui}$</b><p>A predicted numerical rating.</p></div>
+</div>
+
+<p class="ml-takeaway">Changing $P$ and $Q$ changes the prediction rule; choosing $K$ changes the size of the model family.</p>
+
+## 2 · Which choices are hyperparameters? {.detail-slide}
+
+<div class="mf-hyper-grid">
+<div><span>NUMBER OF FACTORS</span><b>$K\in\{1,2,\ldots\}$</b><p>Controls how much user–item structure the model can express.</p></div>
+<div><span>REGULARIZATION STRENGTH</span><b>$\lambda\geq 0$</b><p>Controls how strongly fitting discourages large factor values.</p></div>
+</div>
+
+<div class="mf-before-fit">Choose $(K,\lambda)$ <b>before</b> each fit; compare candidate choices with held-out ratings.</div>
+
+::: {.notes}
+[Teaching]
+- Later, an implementation may expose max_iter and random_state as additional algorithm settings. Keep the model-selection discussion focused on K and lambda.
+:::
+
+## 3 · What criterion do we minimize? {.detail-slide .mf-objective-slide}
+
+<div class="mf-objective">$$\min_{P,Q}\;\sum_{(u,i)\in\Omega_{\mathrm{train}}}\bigl(r_{ui}-p_u^\top q_i\bigr)^2+\lambda\left(\|P\|_F^2+\|Q\|_F^2\right)$$</div>
+
+<div class="mf-objective-parts"><div><span>FIT</span><p>Explain ratings the model was allowed to see.</p></div><div><span>CONTROL</span><p>Discourage extreme factor values that may fit noise.</p></div></div>
+
+<p class="ml-takeaway">Call this objective $J(P,Q)$. We use a <b>sum</b> of squared errors, so each ALS subproblem matches sklearn <code>Ridge(alpha=lambda, fit_intercept=False)</code>.</p>
+
+::: {.notes}
+[Teaching]
+- The original TeX uses mean squared error plus lambda times the penalty. Multiplying that whole objective by |Omega_train| gives the displayed sum convention with lambda rescaled. State the convention explicitly so the Ridge alpha correspondence is exact.
+- The fitting criterion is not the reporting metric. Validation/test RMSE uses observed held-out pairs.
+:::
+
+## 4 · What does fit learn? {.detail-slide}
+
+<div class="mf-learn-grid"><div><span>USER FACTORS</span><b>$\widehat P\in\mathbb R^{n\times K}$</b><p>One learned row $\widehat p_u$ per user.</p></div><div><span>ITEM FACTORS</span><b>$\widehat Q\in\mathbb R^{m\times K}$</b><p>One learned row $\widehat q_i$ per item.</p></div></div>
+
+<div class="mf-after-fit">$$\widehat r_{ui}=\widehat p_u^\top\widehat q_i\qquad\text{after fitting}$$</div>
+
+<p class="ml-takeaway"><b>Learned values:</b> $(n+m)K$ factor coordinates. <b>Chosen settings:</b> $K$ and $\lambda$.</p>
+
+## Two controls, two different effects {.detail-slide}
+
+<div class="mf-controls"><div><span>INCREASE $K$</span><b>More factor coordinates</b><p>The model can represent richer interaction patterns. Training error can only improve or stay the same at a fixed $\lambda=0$.</p></div><div><span>INCREASE $\lambda$</span><b>Stronger shrinkage</b><p>Large factor values cost more in the fitting criterion. This can improve held-out predictions when an unregularized fit follows noise.</p></div></div>
+
+<p class="ml-takeaway">Neither “larger” nor “smaller” is automatically best. Choose with <b>validation RMSE</b>, as in ML II.</p>
+
+## Select $K$ and $\lambda$ with CV {.detail-slide}
+
+<div class="mf-cv-flow"><div><span>01</span><b>Choose candidates</b><p>e.g. $K\in\{2,5,10\}$ and $\lambda\in\{0.1,1,10\}$</p></div><i>→</i><div><span>02</span><b>Fit on each training fold</b><p>Learn new $P,Q$ for every candidate and fold.</p></div><i>→</i><div><span>03</span><b>Score held-out pairs</b><p>Average validation RMSE across folds.</p></div></div>
+
+<div class="mf-cv-bottom"><b>Then refit</b> the chosen settings on all development ratings, and evaluate once on the untouched test set.</div>
+
+::: {.notes}
+[Teaching]
+- Splits are by observed rating rows (user–item pairs), not by cells filled with zero.
+- For this first MF implementation, prefer warm-start folds with known IDs. Cold-start behavior is addressed later.
+:::
+
+## The same sklearn estimator structure {.detail-slide}
+
+<div class="mf-estimator-flow"><div><span>SETTINGS</span><b><code>&#95;&#95;init&#95;&#95;(K, lambda_, ...)</code></b><p>Remember constructor choices.</p></div><i>→</i><div><span>LEARNING</span><b><code>fit(X, y)</code></b><p>Learn <code>P_</code> and <code>Q_</code> from rating rows.</p></div><i>→</i><div><span>PREDICTION</span><b><code>predict(X)</code></b><p>Return $\widehat p_u^\top\widehat q_i$ for each pair.</p></div></div>
+
+<div class="mf-input-shape"><code>X</code>: two columns <b>[user ID, item ID]</b> &nbsp; · &nbsp; <code>y</code>: one-dimensional <b>ratings</b></div>
+
+<p class="ml-takeaway">The class interface lets <code>GridSearchCV</code> repeat <code>fit</code> and <code>predict</code>. We still need an algorithm inside <code>fit</code>.</p>
+
+## How can we fit the factors? {.section-break .mf-section}
+
+<div class="section-number">02</div>
+<img class="section-crest" src="../Lec-overview/figs/cu_logo.webp" alt="CUHK emblem">
+<p>Alternating least squares reuses Ridge regression.</p>
+
+## A difficult joint problem, two familiar subproblems {.detail-slide}
+
+<div class="mf-split"><div><span>JOINTLY</span><b>Learn $P$ and $Q$ together</b><p>The prediction contains a product of unknowns, $p_u^\top q_i$.</p></div><div class="mf-split-highlight"><span>ONE BLOCK AT A TIME</span><b>Hold one factor table fixed</b><p>The other table enters the squared error linearly. Each update becomes a Ridge problem.</p></div></div>
+
+<div class="mf-alternation">$P$ fixed <i>→</i> update $Q$ <i>→</i> $Q$ fixed <i>→</i> update $P$ <i>→</i> repeat</div>
+
+<p class="ml-takeaway">This is <b>alternating least squares (ALS)</b>: alternate between two sets of least-squares updates.</p>
+
+## Fix the users; update one item {.detail-slide .mf-ridge-slide}
+
+<p class="mf-lede">For item $i$, let $U_i$ be the users who rated it. Their fixed $p_u$ vectors are the regression inputs.</p>
+
+<div class="mf-ridge-formula">$$\widehat q_i=\underset{q\in\mathbb R^K}{\arg\min}\;\sum_{u\in U_i}(r_{ui}-p_u^\top q)^2+\lambda\|q\|_2^2$$</div>
+
+<div class="mf-ridge-map"><div><span>RIDGE INPUTS</span><b>$X_i=[p_u^\top]_{u\in U_i}$</b></div><div><span>TARGETS</span><b>$y_i=[r_{ui}]_{u\in U_i}$</b></div><div><span>COEFFICIENTS</span><b>$q_i$</b></div></div>
+
+<p class="ml-takeaway">It is exactly Ridge regression with <code>alpha=lambda</code> and <code>fit_intercept=False</code> under our sum-loss convention.</p>
+
+## Fix the items; update one user {.detail-slide .mf-ridge-slide}
+
+<p class="mf-lede">Now let $I_u$ be the items rated by user $u$. Their fixed $q_i$ vectors become the regression inputs.</p>
+
+<div class="mf-ridge-formula">$$\widehat p_u=\underset{p\in\mathbb R^K}{\arg\min}\;\sum_{i\in I_u}(r_{ui}-q_i^\top p)^2+\lambda\|p\|_2^2$$</div>
+
+<div class="mf-ridge-map"><div><span>RIDGE INPUTS</span><b>$X_u=[q_i^\top]_{i\in I_u}$</b></div><div><span>TARGETS</span><b>$y_u=[r_{ui}]_{i\in I_u}$</b></div><div><span>COEFFICIENTS</span><b>$p_u$</b></div></div>
+
+<p class="ml-takeaway">Same operation, with the roles of users and items reversed.</p>
+
+## One complete ALS iteration {.detail-slide}
+
+<div class="mf-als-steps"><div><span>START</span><b>Initialize $P$</b><p>Use small random factor values.</p></div><div><span>ITEM UPDATE</span><b>Fit each $q_i$</b><p>Ridge on the users who rated item $i$.</p></div><div><span>USER UPDATE</span><b>Fit each $p_u$</b><p>Ridge on the items rated by user $u$.</p></div><div><span>REPEAT</span><b>Check objective</b><p>Stop when improvement is small or the iteration limit is reached.</p></div></div>
+
+<p class="ml-takeaway">Each item or user update is a small independent Ridge problem <b>within its block</b>.</p>
+
+## The Ridge call inside an item update {.detail-slide .mf-code-slide}
+
+```python
+from sklearn.linear_model import Ridge
+
+# P is fixed; rows for users who rated item i
+X_item = P[user_ids_for_item_i]
+y_item = ratings_for_item_i
+
+ridge = Ridge(alpha=lambda_, fit_intercept=False)
+ridge.fit(X_item, y_item)
+Q[i] = ridge.coef_
+```
+
+<p class="ml-takeaway">To update a user, swap $P$ and $Q$ and collect that user's rated items. The factors are coefficients learned by Ridge.</p>
+
+::: {.notes}
+[Teaching]
+- The code shows one subproblem, not the entire MF estimator. Use it to map the preceding math to sklearn.
+- For empty histories, Ridge cannot fit; the full implementation needs a fallback policy. This is addressed in the cold-start slide.
+:::
+
+## Monitor the objective, not just the loop counter {.detail-slide}
+
+<div class="mf-monitor"><div><span>AFTER ITEM UPDATES</span><b>$J(P,Q^{(t+1)})$</b></div><i>≥</i><div><span>AFTER USER UPDATES</span><b>$J(P^{(t+1)},Q^{(t+1)})$</b></div></div>
+
+<div class="mf-monitor-caption">With exact block minimization, the training objective should <b>not increase</b> after either block update.</div>
+
+<div class="mf-debug"><b>If it increases:</b> check the user/item indexing, the Ridge penalty scale, and whether the objective uses the same ratings as the updates.</div>
+
+::: {.notes}
+[Teaching]
+- More precisely, compare each value with the previous value in the alternating sequence; the displayed inequality covers only item-to-user update within an iteration.
+- A bounded, nonincreasing objective sequence has convergent objective values. This does not imply the factors reach a global optimum; the joint problem is nonconvex.
+:::
+
+## A new ID has no learned factor {.detail-slide}
+
+<div class="mf-cold-grid"><div><span>WARM START</span><b>Known user + known item</b><p>Use $\widehat p_u^\top\widehat q_i$.</p></div><div><span>COLD START</span><b>New user or new item</b><p>No fitted factor row exists. Use an explicit baseline fallback or collect more information.</p></div></div>
+
+<p class="ml-takeaway">When reporting RMSE, separate warm-start and cold-start cases if the split contains both. An MF dot product alone does not solve cold start.</p>
+
+## Put the whole workflow together {.detail-slide}
+
+<div class="mf-final-flow"><div><span>MODEL</span><b>$p_u^\top q_i$</b></div><i>→</i><div><span>FIT</span><b>ALS via Ridge</b></div><i>→</i><div><span>SELECT</span><b>CV over $K,\lambda$</b></div><i>→</i><div><span>PREDICT</span><b>test pairs once</b></div></div>
+
+<div class="mf-final-question"><span>CHECK YOUR UNDERSTANDING</span><p>In MF, which quantities are chosen before fitting, which are learned by <code>fit</code>, and which ratings may be used to choose the final model?</p></div>
+
+::: {.notes}
+[Teaching]
+- Answers: K and lambda are selected settings; P and Q are fitted parameters. Validation ratings choose settings; test ratings are reserved for final evaluation.
+- Source adapted from slides/Lec-MF/note.tex. This edition uses the four-question teaching sequence from ML I, the CV/Ridge material from ML II, and a sum-loss convention that makes sklearn Ridge alpha equal to lambda.
+:::

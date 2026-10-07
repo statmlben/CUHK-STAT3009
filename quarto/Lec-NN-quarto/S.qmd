@@ -1,0 +1,205 @@
+---
+title: "Neural Networks"
+subtitle: "From nonlinear prediction rules to training and early stopping"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview/stat3009.scss, ../lecture-decks.scss]
+    logo: ../Lec-overview/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls-layout: edges
+    progress: true
+    slide-number: c/t
+    hash: true
+    transition: fade
+    auto-slide: 0
+    embed-resources: true
+    code-copy: false
+    highlight-style: github-dark
+    footer: "CUHK · STAT3009 · Neural Networks"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## The bridge from matrix factorization {.lesson-slide}
+
+<div class="lesson-formula">$$\widehat r_{ui}=p_u^\top q_i\qquad\longrightarrow\qquad\widehat r_{ui}=f_\theta(p_u,q_i)$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>MF</span><b>Fixed interaction rule</b><p>Learn the two vectors; combine them with an inner product.</p></div><div class="lesson-card"><span>NEURAL MODEL</span><b>Learn the interaction rule</b><p>A network can combine inputs through several linear and nonlinear steps.</p></div></div>
+
+<p class="lesson-takeaway">The rating data, validation discipline, and four-question template stay the same. <b>The model family changes.</b></p>
+
+::: {.notes}
+[Teaching] Review the MF deck's two-factor example first. “Nonlinear” means the combination rule is no longer restricted to a single dot product.
+:::
+
+## A neural network is a chain of transformations {.lesson-slide}
+
+<div class="lesson-flow"><div><b>input</b><br>$x$</div><i>→</i><div><b>hidden layer 1</b><br>features</div><i>→</i><div><b>hidden layer 2</b><br>combinations</div><i>→</i><div><b>output</b><br>$\widehat y$</div></div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>LINEAR STEP</span><b>$Wx+b$</b><p>Mix the inputs and shift the result.</p></div><div class="lesson-card"><span>NONLINEAR STEP</span><b>activation $A(\cdot)$</b><p>Allow the next layer to respond differently to different input regions.</p></div></div>
+
+<p class="lesson-takeaway">“Deep” means we compose several layers. Each layer creates inputs for the next.</p>
+
+## Start with one neuron {.lesson-slide}
+
+<div class="lesson-formula">$$z=w_1x_1+w_2x_2+b,\qquad h=A(z)$$</div>
+
+<div class="lesson-grid three"><div class="lesson-card"><span>INPUTS</span><b>$x_1,x_2$</b><p>Values supplied for one example.</p></div><div class="lesson-card"><span>LEARNED</span><b>$w_1,w_2,b$</b><p>Weights and bias adjusted during fitting.</p></div><div class="lesson-card"><span>OUTPUT</span><b>$h$</b><p>The transformed signal sent forward.</p></div></div>
+
+<p class="lesson-takeaway">A layer contains many neurons; the layer's outputs form a vector.</p>
+
+## Why use an activation? {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>WITHOUT NONLINEARITY</span><b>Two linear layers collapse to one</b><div class="lesson-formula compact">$$W_2(W_1x+b_1)+b_2=Wx+c$$</div></div><div class="lesson-card"><span>WITH NONLINEARITY</span><b>The composition can bend</b><div class="lesson-formula compact">$$h=A(W_1x+b_1),\quad\widehat y=W_2h+b_2$$</div></div></div>
+
+<p class="lesson-takeaway">An activation such as ReLU, $A(z)=\max(0,z)$, is what lets hidden layers express nonlinear patterns.</p>
+
+## The model in one line {.lesson-slide}
+
+<div class="lesson-formula">$$f_0(x)=x,\qquad f_\ell(x)=A_\ell\bigl(W_\ell f_{\ell-1}(x)+b_\ell\bigr),\quad \ell=1,\ldots,L$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>HIDDEN LAYERS</span><b>Usually nonlinear</b><p>They build an internal representation of the input.</p></div><div class="lesson-card"><span>OUTPUT LAYER</span><b>Chosen for the task</b><p>For numerical rating prediction, a linear output is a simple starting point.</p></div></div>
+
+<p class="lesson-takeaway">The network's output is $\widehat y=f_L(x)$; training decides the values inside its weight matrices and bias vectors.</p>
+
+## Four questions: model and choices {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>1 · MODEL</span><b>Which transformations?</b><p>Input → hidden layers with activations → output. The architecture defines a family $f_\theta$.</p></div><div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>Which design before fit?</b><p>Number and width of layers, activations, learning rate, batch size, and training limit.</p></div></div>
+
+<p class="lesson-takeaway">A wider or deeper model has more flexibility, but validation must decide whether that flexibility helps.</p>
+
+## Four questions: criterion and learned values {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>3 · FITTING CRITERION</span><b>Squared error for ratings</b><div class="lesson-formula compact">$$\min_\theta\;\frac1N\sum_{j=1}^N(y_j-f_\theta(x_j))^2$$</div></div><div class="lesson-card"><span>4 · LEARNED PARAMETERS</span><b>Weights and biases</b><p>$\theta=\{W_\ell,b_\ell\}_{\ell=1}^L$ changes during training. Architecture choices do not.</p></div></div>
+
+<p class="lesson-takeaway">Report held-out RMSE separately from the training loss. A low training loss alone does not show generalization.</p>
+
+## Training means improving the current weights {.lesson-slide}
+
+<div class="lesson-formula">$$\theta^{(t+1)}=\theta^{(t)}-\eta\nabla_\theta J\bigl(\theta^{(t)}\bigr)$$</div>
+
+<div class="lesson-grid three"><div class="lesson-card"><span>CURRENT</span><b>$\theta^{(t)}$</b><p>The network's weights right now.</p></div><div class="lesson-card"><span>DIRECTION</span><b>gradient</b><p>How the loss changes when each weight moves.</p></div><div class="lesson-card"><span>STEP SIZE</span><b>$\eta$</b><p>The learning rate controls how far we move.</p></div></div>
+
+<p class="lesson-takeaway">Gradient descent repeatedly moves <b>opposite</b> the gradient of the training objective.</p>
+
+## One small gradient step {.lesson-slide}
+
+<p class="lesson-lede">For $J(w)=(w-3)^2$, start at $w=0$ and choose $\eta=0.2$.</p>
+
+<div class="lesson-formula">$$J'(w)=2(w-3),\qquad w_{\mathrm{new}}=0-0.2(-6)=1.2$$</div>
+
+<table class="lesson-table"><thead><tr><th>point</th><th>weight</th><th>loss</th></tr></thead><tbody><tr><td>before</td><td>$0$</td><td>$9$</td></tr><tr><td>after one step</td><td>$1.2$</td><td>$3.24$</td></tr><tr><td>minimum</td><td>$3$</td><td>$0$</td></tr></tbody></table>
+
+<p class="lesson-takeaway">The same idea updates all network weights at once; the gradient is then a large vector.</p>
+
+## Mini-batches make each update affordable {.lesson-slide}
+
+<div class="lesson-grid three"><div class="lesson-card"><span>FULL BATCH</span><b>All examples</b><p>Accurate gradient of the full objective, expensive per step.</p></div><div class="lesson-card"><span>MINI-BATCH</span><b>A small sample</b><p>Cheaper approximate gradient; many updates per epoch.</p></div><div class="lesson-card"><span>EPOCH</span><b>One pass</b><p>Each training example has been used once on average.</p></div></div>
+
+<div class="lesson-formula">$$\theta\leftarrow\theta-\eta\frac1{|B|}\sum_{j\in B}\nabla_\theta L\bigl(y_j,f_\theta(x_j)\bigr)$$</div>
+
+<p class="lesson-takeaway">Batch size and learning rate are <b>training hyperparameters</b>, not values learned by the optimizer.</p>
+
+## Backpropagation supplies the gradient {.lesson-slide}
+
+<div class="lesson-flow"><div>forward pass<br><b>predictions</b></div><i>→</i><div>loss<br><b>prediction error</b></div><i>→</i><div>backward pass<br><b>chain rule</b></div><i>→</i><div>optimizer<br><b>update weights</b></div></div>
+
+<div class="lesson-formula compact">$$\frac{\partial J}{\partial W_1}=\frac{\partial J}{\partial f_L}\cdot\frac{\partial f_L}{\partial f_{L-1}}\cdots\frac{\partial f_1}{\partial W_1}$$</div>
+
+<p class="lesson-takeaway">The framework computes these derivatives automatically. We still need to specify the model, loss, optimizer, and data.</p>
+
+## The Keras workflow mirrors the mathematics {.lesson-slide}
+
+<div class="lesson-flow"><div><b>build</b><br>layers define $f_\theta$</div><i>→</i><div><b>compile</b><br>loss + optimizer</div><i>→</i><div><b>fit</b><br>update $\theta$</div><i>→</i><div><b>predict</b><br>new inputs</div></div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>COURSE INPUT</span><b>Numerical features</b><p>Use a tabular regression example to isolate network training.</p></div><div class="lesson-card"><span>LATER</span><b>User and item IDs</b><p>Embedding layers will connect networks back to recommendation.</p></div></div>
+
+## A small Keras regression model {.lesson-slide .lesson-code}
+
+```python
+import keras
+
+model = keras.Sequential([
+    keras.layers.Input(shape=(d,)),
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(16, activation="relu"),
+    keras.layers.Dense(1),
+])
+model.compile(optimizer="adam", loss="mse", metrics=["mae"])
+history = model.fit(X_train, y_train, epochs=50, batch_size=64,
+                    validation_data=(X_valid, y_valid))
+```
+
+<p class="lesson-takeaway">The last layer has one output because the target is one numerical value.</p>
+
+::: {.notes}
+[Source] Current Keras Sequential API: https://keras.io/api/models/sequential/ . The code is schematic; it assumes prepared numerical train/validation arrays and a defined feature count `d`.
+:::
+
+## Validation answers a different question {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>TRAINING LOSS</span><b>Are weight updates fitting seen examples?</b><p>The optimizer uses these answers to change $\theta$.</p></div><div class="lesson-card"><span>VALIDATION LOSS</span><b>Do those changes help unseen examples?</b><p>Never use these target values in gradient updates.</p></div></div>
+
+<p class="lesson-takeaway">A network can keep lowering training loss while validation loss starts rising. That pattern signals overfitting.</p>
+
+## Early stopping chooses when to stop {.lesson-slide}
+
+<table class="lesson-table"><thead><tr><th>epoch</th><th>training MSE</th><th>validation MSE</th></tr></thead><tbody><tr><td>3</td><td>0.40</td><td>0.48</td></tr><tr><td>6</td><td>0.24</td><td>0.31</td></tr><tr><td>9</td><td>0.15</td><td>0.29</td></tr><tr><td>12</td><td>0.10</td><td>0.37</td></tr></tbody></table>
+
+<div class="lesson-grid"><div class="lesson-card"><span>BEST VALIDATION</span><b>Epoch 9</b><p>The later weights fit the training data better but validate worse.</p></div><div class="lesson-card"><span>STOPPING RULE</span><b>Wait a little, then restore</b><p>Patience avoids reacting to a single noisy epoch.</p></div></div>
+
+::: {.notes}
+[Teaching] The numbers are illustrative, not a benchmark. Keep the untouched test set separate from the validation set.
+:::
+
+## Early stopping in Keras {.lesson-slide .lesson-code}
+
+```python
+early_stop = keras.callbacks.EarlyStopping(
+    monitor="val_loss",
+    patience=5,
+    restore_best_weights=True,
+)
+
+history = model.fit(
+    X_train, y_train,
+    validation_data=(X_valid, y_valid),
+    epochs=100, batch_size=64,
+    callbacks=[early_stop],
+)
+```
+
+<p class="lesson-takeaway">`epochs=100` is a ceiling; training may stop sooner and restore the weights from the best monitored epoch.</p>
+
+::: {.notes}
+[Source] Current Keras EarlyStopping API: https://keras.io/api/callbacks/early_stopping/ .
+:::
+
+## What to tune—and what to monitor {.lesson-slide}
+
+<div class="lesson-grid three"><div class="lesson-card"><span>ARCHITECTURE</span><b>Depth and width</b><p>How many transformations and hidden units?</p></div><div class="lesson-card"><span>OPTIMIZATION</span><b>Learning rate and batch size</b><p>How do training updates behave?</p></div><div class="lesson-card"><span>GENERALIZATION</span><b>Validation curve</b><p>When should we stop, and which design predicts best?</p></div></div>
+
+<p class="lesson-takeaway">Start with a small network and a held-out validation set; increase complexity only when the evidence supports it.</p>
+
+## Common failure patterns {.lesson-slide}
+
+<table class="lesson-table"><thead><tr><th>symptom</th><th>likely cause</th><th>next check</th></tr></thead><tbody><tr><td>loss oscillates</td><td>learning rate too large</td><td>reduce step size</td></tr><tr><td>loss hardly moves</td><td>learning rate too small or inputs poorly scaled</td><td>inspect features and gradients</td></tr><tr><td>train improves, validation worsens</td><td>overfitting</td><td>early stopping or simpler model</td></tr><tr><td>validation looks excellent</td><td>possible leakage</td><td>audit the split and preprocessing</td></tr></tbody></table>
+
+<p class="lesson-takeaway">Debug with both training and validation evidence—not a single final accuracy number.</p>
+
+## Carry the template forward {.lesson-slide}
+
+<div class="lesson-grid four"><div class="lesson-card"><span>MODEL</span><b>layers + activations</b></div><div class="lesson-card"><span>HYPERPARAMETERS</span><b>architecture + training choices</b></div><div class="lesson-card"><span>CRITERION</span><b>MSE on training data</b></div><div class="lesson-card"><span>LEARNED</span><b>weights + biases</b></div></div>
+
+<div class="lesson-formula">$$\text{MF vectors}\;\longrightarrow\;\text{embedding layers}\;\longrightarrow\;\text{neural interaction}$$</div>
+
+<p class="lesson-takeaway">Next: use embeddings to turn user and item IDs into network inputs.</p>
+

@@ -1,0 +1,637 @@
+/*-- scss:rules --*/
+
+/* Lecture-specific generalization figure and Ridge example. */
+.fit-noise-legend {
+  display: flex;
+  gap: 43px;
+  align-items: center;
+  margin: 1px 0 21px;
+  color: #d1ced4;
+  font-size: 17px;
+}
+
+.fit-noise-legend span { display: inline-flex; gap: 12px; align-items: center; }
+.fit-noise-legend i { display: inline-block; flex: none; }
+.fit-noise-legend .observed-mark { width: 13px; height: 13px; border: 2px solid #f4f1ed; border-radius: 50%; background: #f4f1ed; }
+.fit-noise-legend .trend-mark { width: 28px; border-top: 3px dashed #8b9aa5; }
+
+.reveal .slides section.fit-noise-slide img.fit-noise-figure {
+  display: block;
+  width: 100%;
+  max-width: none;
+  max-height: 470px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.fit-noise-slide .ml-takeaway { margin-top: 17px !important; }
+
+.ridge-intro {
+  margin: 0 0 28px !important;
+  color: #d3d0d6;
+  font-size: 21px !important;
+}
+
+.ridge-questions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 65px;
+  margin-top: 28px;
+}
+
+.ridge-questions > div,
+.ridge-learned {
+  padding-top: 14px;
+  border-top: 3px solid #8d5b87;
+}
+
+.ridge-questions > div:last-child,
+.ridge-learned { border-color: var(--cuhk-gold); }
+
+.ridge-questions > div > span,
+.ridge-objective > span,
+.ridge-learned > span,
+.ridge-alpha-spectrum > div > span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.ridge-learned b {
+  display: block;
+  margin-top: 12px;
+  font-size: 30px;
+}
+
+/* Size these equations in layout, so their position does not depend on transforms. */
+.ridge-main-formula {
+  display: flex;
+  align-items: center;
+  height: 76px;
+  margin-top: 16px;
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+.reveal .slides section.ridge-template-slide .ridge-main-formula span.math.inline {
+  margin: 0 !important;
+  color: var(--cuhk-gold);
+  font-size: 1em !important;
+  line-height: 1.1;
+  vertical-align: baseline;
+}
+
+.reveal .slides section.ridge-template-slide .ridge-learned b span.math.inline {
+  font-size: 1.55em;
+  line-height: 1.05;
+}
+
+.reveal .slides section.ridge-template-slide .ridge-objective p span.math.inline {
+  font-size: 1.4em;
+}
+
+.ridge-questions p,
+.ridge-learned p,
+.ridge-objective p {
+  margin: 10px 0 0 !important;
+  color: var(--muted);
+  font-size: 17px !important;
+}
+
+.ridge-objective {
+  margin-top: 30px;
+  padding: 19px 24px 20px;
+  border-left: 4px solid var(--cuhk-purple);
+  background: rgba(194, 148, 189, 0.07);
+}
+
+.ridge-objective .math.display {
+  margin: 18px 0 16px !important;
+  font-size: 34px;
+  text-align: left;
+}
+
+.ridge-learned {
+  display: grid;
+  grid-template-columns: 0.8fr 0.55fr 1.4fr;
+  gap: 22px;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.ridge-learned b,
+.ridge-learned p { margin-top: 0 !important; }
+
+.ridge-alpha-spectrum {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 45px;
+  margin-top: 72px;
+}
+
+.ridge-alpha-spectrum > div {
+  min-height: 245px;
+  padding-top: 17px;
+  border-top: 4px solid #8d5b87;
+}
+
+.ridge-alpha-spectrum > div:nth-child(2) { border-color: var(--cuhk-gold); }
+.ridge-alpha-spectrum > div:nth-child(3) { border-color: #b69ab2; }
+.ridge-alpha-spectrum > div > span { font-size: 21px; }
+.ridge-alpha-spectrum b { display: block; margin-top: 28px; font-size: 29px; }
+.ridge-alpha-spectrum p { margin-top: 18px !important; color: var(--muted); font-size: 18px !important; line-height: 1.4 !important; }
+
+.ridge-alpha-rule {
+  margin-top: 55px;
+  padding: 17px 0 17px 22px;
+  border-left: 3px solid var(--cuhk-gold);
+  color: #d2ced4;
+  font-size: 23px;
+}
+
+.ridge-alpha-rule b { color: var(--paper); }
+
+.rating-validation-section {
+  background:
+    linear-gradient(120deg, rgba(221, 163, 0, 0.15), transparent 44%),
+    linear-gradient(300deg, rgba(94, 183, 255, 0.11), transparent 42%),
+    #08131c !important;
+}
+
+/* Worked example: select three-mean weights without using test ratings. */
+.weight-example-intro,
+.weight-cv-intro {
+  margin: 0 0 25px !important;
+  color: #d3d0d6;
+  font-size: 23px !important;
+  line-height: 1.35 !important;
+}
+
+.weight-example-formula {
+  margin-top: 38px;
+  padding: 27px 22px;
+  border-left: 4px solid var(--cuhk-gold);
+  background: rgba(221, 163, 0, 0.06);
+}
+
+.reveal .slides section.weight-example-slide .weight-example-formula .math.display {
+  margin: 0 !important;
+  font-size: 45px !important;
+  text-align: center;
+}
+
+.weight-example-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-top: 52px;
+}
+
+.weight-example-roles > div {
+  min-height: 205px;
+  padding: 16px 21px 18px;
+  border-top: 4px solid #a65b9f;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.weight-example-roles > div:last-child { border-color: var(--cuhk-gold); }
+.weight-example-roles > div > span { display: block; color: var(--cuhk-gold); font-family: monospace; font-size: 17px; font-weight: 800; letter-spacing: 0.04em; }
+.weight-example-roles > div > b { display: block; margin-top: 18px; font-size: 31px; }
+.weight-example-roles > div > p { margin: 13px 0 0 !important; color: var(--muted); font-size: 20px !important; line-height: 1.35 !important; }
+.weight-example-slide .ml-takeaway { margin-top: 39px !important; }
+
+.weight-one-row-intro {
+  margin: 0 0 32px !important;
+  color: #d3d0d6;
+  font-size: 23px !important;
+}
+
+.weight-one-row-fit {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.weight-one-row-fit > span {
+  grid-column: 1 / -1;
+  color: var(--cuhk-gold);
+  font-family: monospace;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.weight-one-row-fit > div {
+  padding: 17px 0 13px;
+  border-top: 3px solid #a65b9f;
+}
+
+.weight-one-row-fit > div > b {
+  display: block;
+  color: var(--muted);
+  font-size: 21px;
+}
+
+.weight-one-row-fit > div > strong {
+  display: block;
+  margin-top: 16px;
+  color: var(--paper);
+  font-size: 31px;
+}
+
+.weight-one-row-predict {
+  margin-top: 34px;
+  padding: 21px 24px 23px;
+  border-left: 4px solid var(--cuhk-gold);
+  background: rgba(221, 163, 0, 0.06);
+}
+
+.weight-one-row-predict > span,
+.weight-one-row-score > span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: monospace;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.reveal .slides section.weight-one-row-slide .weight-one-row-predict .math.display {
+  margin: 25px 0 0 !important;
+  font-size: 35px !important;
+  text-align: left;
+}
+
+.weight-one-row-score {
+  display: flex;
+  align-items: baseline;
+  gap: 25px;
+  margin-top: 33px;
+  padding-top: 16px;
+  border-top: 2px solid #6c5e71;
+}
+
+.weight-one-row-score > b { color: var(--paper); font-size: 24px; }
+.weight-one-row-score > p { margin: 0 !important; color: var(--muted); font-size: 21px !important; }
+.weight-one-row-slide .ml-takeaway { margin-top: 32px !important; font-size: 21px !important; }
+
+.reveal .slides section.weight-cv-slide table.weight-cv-table {
+  width: 100%;
+  margin: 29px 0 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.weight-cv-table th,
+.weight-cv-table td {
+  padding: 25px 9px;
+  border-bottom: 1px solid rgba(233, 230, 235, 0.17);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.weight-cv-table thead th {
+  color: var(--cuhk-gold);
+  font-family: monospace;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.weight-cv-table tbody th,
+.weight-cv-table tbody td { font-size: 24px; }
+.weight-cv-table th:first-child { width: 20%; text-align: left; }
+.weight-cv-table th:nth-child(2) { width: 21%; }
+.weight-cv-table th:last-child { width: 13%; }
+.weight-cv-table tbody th { font-weight: 700; }
+.weight-cv-table tbody tr.weight-cv-winner { background: rgba(221, 163, 0, 0.09); }
+.weight-cv-table tbody tr.weight-cv-winner th,
+.weight-cv-table tbody tr.weight-cv-winner td:last-child { color: var(--cuhk-gold); }
+.weight-cv-slide .ml-takeaway { margin-top: 37px !important; }
+.weight-cv-slide .source-line { margin-top: 14px !important; font-size: 13px !important; }
+
+/* sklearn GridSearchCV example between the Ridge CV diagram and rating data. */
+.ridge-grid-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
+  gap: 43px;
+  align-items: stretch;
+  margin-top: 12px;
+}
+
+.ridge-grid-code div.sourceCode,
+.ridge-grid-result-code div.sourceCode { margin: 0; }
+
+.reveal .slides section.ridge-grid-setup-slide .ridge-grid-code pre.sourceCode {
+  min-height: 0;
+  margin: 0;
+  padding: 22px 26px;
+  font-size: 25px !important;
+  line-height: 1.31 !important;
+  overflow-x: hidden;
+}
+
+.reveal .slides section.ridge-grid-setup-slide .ridge-grid-code pre.sourceCode code {
+  font-size: 25px !important;
+  line-height: 1.31 !important;
+}
+
+.ridge-grid-reading {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 21px;
+}
+
+.ridge-grid-reading > div {
+  padding: 15px 17px 17px;
+  border-top: 3px solid #a65b9f;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.ridge-grid-reading > div:last-child { border-color: var(--cuhk-gold); }
+.ridge-grid-reading > div > span,
+.ridge-grid-results > div > span { display: block; color: var(--cuhk-gold); font-family: monospace; font-size: 16px; font-weight: 800; letter-spacing: 0.04em; }
+.ridge-grid-reading > div > b { display: block; margin-top: 11px; font-size: 25px; }
+.ridge-grid-reading > div > p { margin: 9px 0 0 !important; color: var(--muted); font-size: 18px !important; line-height: 1.32 !important; }
+.ridge-grid-reading code { font-size: 0.92em; }
+
+.ridge-grid-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 33px;
+  margin-top: 32px;
+}
+
+.ridge-grid-results > div {
+  min-height: 145px;
+  padding: 15px 20px 18px;
+  border-top: 3px solid #a65b9f;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.ridge-grid-results > div:last-child { border-color: var(--cuhk-gold); }
+.ridge-grid-results > div > b { display: block; margin-top: 18px; font-size: 28px; }
+.ridge-grid-results > div > p { margin: 11px 0 0 !important; color: var(--muted); font-size: 18px !important; line-height: 1.32 !important; }
+
+.ridge-grid-result-code { margin-top: 34px; }
+.reveal .slides section.ridge-grid-result-slide .ridge-grid-result-code pre.sourceCode {
+  min-height: 0;
+  margin: 0;
+  padding: 24px 29px;
+  font-size: 27px !important;
+  line-height: 1.35 !important;
+  overflow-x: hidden;
+}
+
+.reveal .slides section.ridge-grid-result-slide .ridge-grid-result-code pre.sourceCode code {
+  font-size: 27px !important;
+  line-height: 1.35 !important;
+}
+
+.ridge-grid-result-slide .ml-takeaway { margin-top: 29px !important; }
+
+/* Show GridSearchCV wrapping the replaceable estimator node. */
+.sklearn-ecosystem-slide .ecosystem-intro {
+  margin: 0 0 27px !important;
+  color: #d3d0d6;
+  font-size: 23px !important;
+}
+
+.ecosystem-diagram {
+  display: grid;
+  grid-template-columns: 215px 34px minmax(0, 1fr) 34px 245px;
+  gap: 13px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.eco-node {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 19px;
+  border: 2px solid #8d5b87;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.eco-node > span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.eco-node > b {
+  display: block;
+  margin-top: 22px;
+  color: var(--paper);
+  font-size: 27px;
+  line-height: 1.15;
+}
+
+.eco-node > p {
+  margin: 17px 0 0 !important;
+  color: var(--muted);
+  font-size: 18px !important;
+  line-height: 1.33 !important;
+}
+
+.eco-input,
+.eco-output { min-height: 235px; }
+.eco-input > b code { font-size: 0.92em; }
+.eco-output { border-color: var(--cuhk-gold); }
+.eco-output > b code { font-size: 21px; }
+.eco-output > p code { font-size: 0.94em; }
+
+.eco-link,
+.eco-search-flow > i {
+  color: var(--cuhk-gold);
+  font-size: 39px;
+  font-style: normal;
+  text-align: center;
+}
+
+.eco-search {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 394px;
+  padding: 19px 21px 20px;
+  border: 3px solid #8d5b87;
+  background: rgba(194, 148, 189, 0.045);
+}
+
+.eco-search-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.eco-search-heading > b code {
+  color: var(--paper);
+  font-size: 30px;
+}
+
+.eco-search-heading > span {
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.eco-search-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1.55fr) 24px minmax(0, 0.95fr);
+  gap: 8px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.eco-search-flow .eco-node {
+  min-height: 234px;
+  padding: 17px;
+}
+
+.eco-search-flow > i { font-size: 29px; }
+.eco-choice > b { font-size: 24px; }
+.eco-choice > b code { font-size: 0.93em; }
+.eco-choice > p,
+.eco-score > p { font-size: 17px !important; }
+.eco-estimator { border-color: var(--cuhk-gold); background: rgba(221, 163, 0, 0.075); }
+.eco-estimator > b { margin-top: 15px; font-size: 26px; }
+.eco-estimator > b code { font-size: 0.93em; }
+.eco-score > b { font-size: 34px; }
+
+.eco-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 21px;
+}
+
+.eco-methods code {
+  color: var(--paper);
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.eco-search-foot {
+  margin-top: 22px;
+  padding-top: 13px;
+  border-top: 1px solid #6c5e71;
+  color: #d3d0d6;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.sklearn-ecosystem-slide .ml-takeaway {
+  margin-top: 33px !important;
+  font-size: 21px !important;
+}
+
+/* Let the original Netflix split diagram lead this slide. */
+.netflix-split-slide .netflix-image-layout { margin-top: 23px; }
+.netflix-split-slide .netflix-image-reading { gap: 34px; }
+.netflix-split-slide .netflix-image-reading > div > span { font-size: 16px; }
+.netflix-split-slide .netflix-image-reading > div > b { margin-top: 11px; font-size: 26px; line-height: 1.24; }
+.netflix-split-slide .netflix-image-reading > div > p { margin-top: 11px !important; font-size: 19px !important; line-height: 1.35 !important; }
+.netflix-split-slide .source-line { margin-top: 16px !important; font-size: 12px !important; }
+
+/* Keep explanatory labels and scores legible from the back of the room. */
+.model-spectrum-slide .spectrum-axis > span,
+.model-spectrum-slide .spectrum-card > span,
+.memorization-slide .memory-triples > span,
+.memorization-slide .memory-lookups > span,
+.memorization-slide .unseen-pair > span,
+.fresh-ratings-slide .fresh-ratings-flow > div > span,
+.fresh-ratings-slide .score-contrast > div > span,
+.holdout-slide .netflix-holdout > div > span,
+.split-instability-slide .split-comparison > div > span,
+.refit-slide .refit-animation div > span,
+.rating-cv-slide .rating-cv > div > span,
+.final-workflow-slide .final-step > span,
+.final-workflow-slide .closing-principles > p > span { font-size: 16px; }
+
+.model-spectrum-slide .spectrum-card > p { font-size: 19px !important; }
+.model-spectrum-slide .spectrum-card > em { font-size: 16px; }
+.memorization-slide .memory-row.memory-head b { font-size: 16px; }
+.memorization-slide .memory-arrow,
+.fresh-ratings-slide .fresh-ratings-flow > i,
+.holdout-slide .netflix-holdout > i,
+.refit-slide .refit-animation > i,
+.rating-cv-slide .rating-cv > i { font-size: 16px; }
+
+.fresh-ratings-slide .fresh-fit > p,
+.fresh-ratings-slide .fresh-probe > p,
+.holdout-slide .netflix-holdout > div > p,
+.refit-slide .refit-animation p { font-size: 18px !important; }
+.fresh-ratings-slide .candidate-stack > div { font-size: 17px; }
+.split-instability-slide .split-comparison p,
+.split-instability-slide .instability-cause > p > span { font-size: 18px !important; }
+
+.fit-patterns-slide .fit-pattern.pattern-head > span { font-size: 17px; }
+.fit-patterns-slide .fit-pattern > span:not(.pattern-head span),
+.fit-patterns-slide .fit-pattern > strong { font-size: 18px; }
+.fit-patterns-slide .fit-definitions span { font-size: 18px; }
+
+.kfold-slide .fold-row > span,
+.kfold-slide .fold-row > i,
+.kfold-slide .fold-row > b { font-size: 18px; }
+.kfold-slide .kfold-mean .math.display { font-size: 31px; }
+.kfold-slide .kfold-mean p { font-size: 19px !important; }
+
+.rating-cv-slide .rating-triples p b,
+.rating-cv-slide .rating-triples p i { font-size: 17px; }
+.rating-cv-slide .rating-cv > div > p:not(.rating-triples p),
+.rating-cv-slide .rating-rule > span { font-size: 18px !important; }
+.final-workflow-slide .final-step > p { font-size: 17px !important; }
+.final-workflow-slide .closing-principles > p > b { font-size: 20px; }
+
+/* Ridge CV diagnosis: measured curves and three readable interpretations. */
+.ridge-curve-intro,
+.rs-fold-intro,
+.rs-split-prompt { margin: 0 0 15px !important; color: #ccc8d0; font-size: 24px !important; line-height: 1.32 !important; }
+.ridge-curve-figure { display: block; width: 100%; max-width: 1170px; max-height: 450px; margin: 8px auto 0 !important; border: 0 !important; box-shadow: none !important; }
+.ridge-curve-slide .ml-takeaway { margin-top: 12px !important; font-size: 23px !important; }
+.ridge-curve-slide .source-line { margin-top: 12px !important; font-size: 16px !important; }
+.ridge-curve-reading,
+.rs-split-questions,
+.rs-split-choice { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin-top: 35px; }
+.ridge-curve-reading > div,
+.rs-split-questions > div,
+.rs-split-choice > div { min-width: 0; padding: 24px 26px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.04); }
+.ridge-curve-reading > div:nth-child(2),
+.rs-split-questions > div:nth-child(2),
+.rs-split-choice > div:nth-child(2) { border-color: var(--cuhk-gold); }
+.ridge-curve-reading > div > span,
+.rs-split-questions > div > span,
+.rs-split-choice > div > span { display: block; color: var(--cuhk-gold); font-family: Menlo,monospace; font-size: 16px; font-weight: 800; letter-spacing: .035em; }
+.ridge-curve-reading > div > b,
+.rs-split-questions > div > b,
+.rs-split-choice > div > b { display: block; margin-top: 20px; color: #f3f2f5; font-size: 29px; line-height: 1.19; }
+.ridge-curve-reading > div > p,
+.rs-split-questions > div > p,
+.rs-split-choice > div > p { margin: 22px 0 0 !important; color: #c4c0ca; font-size: 21px !important; line-height: 1.32 !important; }
+.ridge-curve-reading-slide .ml-takeaway,
+.rs-split-questions-slide .ml-takeaway,
+.rs-split-choice-slide .ml-takeaway { margin-top: 30px !important; font-size: 22px !important; }
+.rs-split-questions > div > em { display: block; margin-top: 25px; color: #e6d9e7; font-size: 21px; font-style: normal; font-weight: 700; line-height: 1.25; }
+
+/* Make the observed warm/cold mix of one recommender CV fold legible. */
+.rs-fold-highlight { display: flex; align-items: center; gap: 30px; margin: 23px 0; padding: 13px 27px; border-left: 5px solid var(--cuhk-gold); background: rgba(221,163,0,.09); }
+.rs-fold-highlight > strong { color: var(--cuhk-gold); font-size: 54px; line-height: 1; }
+.rs-fold-highlight > span { color: #e6e2e9; font-size: 26px; }
+.reveal .slides section.rs-fold-composition-slide table.rs-fold-counts { width: 100%; margin: 20px 0; border-collapse: collapse; }
+.rs-fold-counts th,
+.rs-fold-counts td { padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,.17); text-align: left; }
+.rs-fold-counts th { color: var(--cuhk-gold); font-family: Menlo,monospace; font-size: 16px; text-transform: uppercase; }
+.rs-fold-counts td { color: #e2e0e5; font-size: 22px; }
+.rs-fold-counts td:nth-child(2) { color: #fff; font-weight: 800; }
+.rs-fold-composition-slide .ml-takeaway { margin-top: 22px !important; font-size: 22px !important; }
+.rs-split-choice > div > p { min-height: 75px; color: #f2e8cc; }

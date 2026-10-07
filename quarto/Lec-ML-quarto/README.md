@@ -3,16 +3,17 @@
 This directory contains a redesigned Quarto / RevealJS version of
 `slides/Lec-ML/`. The original Beamer source remains unchanged.
 
-The lecture develops supervised prediction through the California housing
-regression example, then introduces the scikit-learn estimator contract through
-a detailed `LinearRegression` walkthrough. A reusable four-question template—
-model, learned parameters, hyperparameters, and loss or fitting criterion—is
-applied to `LinearRegression` and the global-, user-, and item-mean baselines
-before their estimator implementations appear. The lecture also separates
-constructor settings, methods, and fitted attributes before implementing
-global-mean and user-mean
-recommenders with `BaseEstimator`, `RegressorMixin`, `fit`, `predict`, and
-explicit RMSE evaluation.
+The lecture moves from the input/target split and four-question template to ML
+principles illustrated with California housing: model family, least-squares
+fitting, and train/test roles. It then introduces the scikit-learn class and
+estimator contract before showing `LinearRegression` code and RMSE on the same
+housing dataset. Global-, user-, and item-mean recommenders follow. The notebook
+retains its tiny array exercise for hands-on practice. For each recommender
+baseline, the model and fitting criterion appear before the learned parameters
+and estimator code. The item-mean implementation is left for the notebook exercise.
+
+The deck has three planned notebook pauses. It omits repeated explanations of
+the estimator lifecycle so the live coding carries those details.
 
 Generalization, validation, the Netflix Prize split, and cross-validation now
 live in the separate deck at `slides/Lec-ML-II-quarto/`.

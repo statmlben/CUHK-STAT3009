@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" role="img" aria-label="Ridge five-fold training and validation RMSE for a 200-row housing demonstration across alpha values 0.1 to 100000. Validation RMSE is lowest at alpha 100 among these candidates; both errors rise when alpha is very large.">
+  <style>
+    text { font-family: Avenir, Arial, sans-serif; fill: #dedee5; }
+    .axis { fill: none; stroke: #aaa5b4; stroke-width: 2; }
+    .grid { fill: none; stroke: #4b5360; stroke-width: 1; stroke-dasharray: 4 7; }
+    .tick { font-size: 21px; fill: #b8b5bf; }
+    .label { font-size: 24px; fill: #f5f5f6; font-weight: 700; }
+    .note { font-size: 19px; fill: #c8c4cc; }
+    .train { fill: none; stroke: #b88ae0; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+    .valid { fill: none; stroke: #e4ae27; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <rect x="0" y="0" width="1200" height="460" fill="#101924"/>
+  <rect x="552" y="55" width="56" height="315" fill="#e4ae27" opacity="0.08"/>
+  <path class="grid" d="M150 344H1040 M150 292H1040 M150 189H1040 M150 86H1040"/>
+  <path class="axis" d="M150 55V370H1040"/>
+  <text class="tick" x="84" y="351">0.7</text><text class="tick" x="84" y="299">0.8</text>
+  <text class="tick" x="84" y="196">1.0</text><text class="tick" x="84" y="93">1.2</text>
+  <text class="tick" x="137" y="406">0.1</text><text class="tick" x="292" y="406">1</text>
+  <text class="tick" x="426" y="406">10</text><text class="tick" x="560" y="406">100</text>
+  <text class="tick" x="699" y="406">1k</text><text class="tick" x="839" y="406">10k</text>
+  <text class="tick" x="970" y="406">100k</text>
+  <text class="label" x="498" y="446">Ridge α (log scale)</text>
+  <text class="label" transform="translate(35 265) rotate(-90)">RMSE ↓</text>
+  <path class="train" d="M160 354 L300 354 L440 349 L580 318 L720 223 L860 105 L1000 75"/>
+  <path class="valid" d="M160 291 L300 291 L440 298 L580 303 L720 218 L860 102 L1000 73"/>
+  <g fill="#b88ae0"><circle cx="160" cy="354" r="6"/><circle cx="300" cy="354" r="6"/><circle cx="440" cy="349" r="6"/><circle cx="580" cy="318" r="6"/><circle cx="720" cy="223" r="6"/><circle cx="860" cy="105" r="6"/><circle cx="1000" cy="75" r="6"/></g>
+  <g fill="#e4ae27"><circle cx="160" cy="291" r="6"/><circle cx="300" cy="291" r="6"/><circle cx="440" cy="298" r="6"/><circle cx="580" cy="303" r="8"/><circle cx="720" cy="218" r="6"/><circle cx="860" cy="102" r="6"/><circle cx="1000" cy="73" r="6"/></g>
+  <path d="M580 298V244" stroke="#e4ae27" stroke-width="2" stroke-dasharray="4 5"/>
+  <rect x="474" y="198" width="215" height="44" rx="5" fill="#26303c" stroke="#e4ae27" stroke-width="1.5"/>
+  <text class="note" x="491" y="227">lowest CV: α = 100</text>
+  <path d="M170 26H226" stroke="#b88ae0" stroke-width="5"/><text class="note" x="239" y="33">fit-fold RMSE</text>
+  <path d="M456 26H512" stroke="#e4ae27" stroke-width="5"/><text class="note" x="525" y="33">validation-fold RMSE</text>
+</svg>

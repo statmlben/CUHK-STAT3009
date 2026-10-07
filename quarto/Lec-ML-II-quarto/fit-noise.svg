@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1490" height="455" viewBox="0 0 1490 455" role="img" aria-labelledby="title desc">
+  <title id="title">Underfitting, useful fit, and overfitting on the same noisy observations</title>
+  <desc id="desc">The same ten points appear in each plot. A flat purple line misses their overall downward trend; a smooth gold line follows it; a jagged pink line passes through each noisy point.</desc>
+  <style>
+    text { font-family: "Avenir Next", Avenir, "Source Sans Pro", sans-serif; }
+    .heading { fill: #f4f1ed; font-size: 32px; font-weight: 750; }
+    .subheading { fill: #aab2ba; font-size: 18px; }
+    .caption { fill: #d6d3d8; font-size: 22px; font-weight: 600; }
+    .grid { fill: none; stroke: #39434d; stroke-width: 1.5; }
+    .axes { fill: none; stroke: #89939c; stroke-width: 2.5; }
+    .trend { fill: none; stroke: #8b9aa5; stroke-width: 3; stroke-dasharray: 9 9; opacity: 0.85; }
+    .point { fill: #f4f1ed; stroke: #162029; stroke-width: 2.5; }
+    .under { fill: none; stroke: #b183ad; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    .useful { fill: none; stroke: #e5bc54; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    .over { fill: none; stroke: #e184ab; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <defs>
+    <g id="chart-base">
+      <path class="grid" d="M45 175H435 M45 245H435 M45 315H435"/>
+      <path class="axes" d="M45 115V385H435"/>
+      <path class="trend" d="M55 348 C130 328 206 284 275 238 C334 205 375 188 415 180"/>
+    </g>
+    <g id="observations">
+      <circle class="point" cx="55" cy="347" r="7"/>
+      <circle class="point" cx="95" cy="316" r="7"/>
+      <circle class="point" cx="135" cy="327" r="7"/>
+      <circle class="point" cx="175" cy="274" r="7"/>
+      <circle class="point" cx="215" cy="283" r="7"/>
+      <circle class="point" cx="255" cy="239" r="7"/>
+      <circle class="point" cx="295" cy="225" r="7"/>
+      <circle class="point" cx="335" cy="230" r="7"/>
+      <circle class="point" cx="375" cy="177" r="7"/>
+      <circle class="point" cx="415" cy="188" r="7"/>
+    </g>
+  </defs>
+
+  <g transform="translate(0 0)">
+    <path d="M0 3H470" stroke="#b183ad" stroke-width="5"/>
+    <text class="heading" x="25" y="43">Underfitting</text>
+    <text class="subheading" x="25" y="75">too simple</text>
+    <use href="#chart-base"/>
+    <path class="under" d="M55 265H425"/>
+    <use href="#observations"/>
+    <text class="caption" x="25" y="438">Misses the trend</text>
+  </g>
+
+  <g transform="translate(510 0)">
+    <path d="M0 3H470" stroke="#e5bc54" stroke-width="5"/>
+    <text class="heading" x="25" y="43">Useful fit</text>
+    <text class="subheading" x="25" y="75">captures the pattern</text>
+    <use href="#chart-base"/>
+    <path class="useful" d="M55 344 C133 322 211 278 279 235 C344 194 379 190 415 184"/>
+    <use href="#observations"/>
+    <text class="caption" x="25" y="438">Follows the trend</text>
+  </g>
+
+  <g transform="translate(1020 0)">
+    <path d="M0 3H470" stroke="#e184ab" stroke-width="5"/>
+    <text class="heading" x="25" y="43">Overfitting</text>
+    <text class="subheading" x="25" y="75">follows every bump</text>
+    <use href="#chart-base"/>
+    <path class="over" d="M55 347 L75 337 L95 316 L115 334 L135 327 L155 295 L175 274 L195 300 L215 283 L235 250 L255 239 L275 248 L295 225 L315 240 L335 230 L355 194 L375 177 L395 202 L415 188"/>
+    <use href="#observations"/>
+    <text class="caption" x="25" y="438">Fits the noise as well</text>
+  </g>
+</svg>

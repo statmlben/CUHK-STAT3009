@@ -1,0 +1,138 @@
+---
+title: "Recommendation with Side Information"
+subtitle: "From cold start to side-aware factors and two-tower networks"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview/stat3009.scss, ../lecture-decks.scss]
+    logo: ../Lec-overview/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls-layout: edges
+    progress: true
+    slide-number: c/t
+    hash: true
+    transition: fade
+    embed-resources: true
+    code-copy: false
+    highlight-style: github-dark
+    footer: "CUHK · STAT3009 · Side Information"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## The ID-only limit {.lesson-slide}
+
+<div class="lesson-formula">$$\widehat r_{ui}=p_u^\top q_i\quad\text{requires learned rows }p_u\text{ and }q_i$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>WARM START</span><b>Known user and item</b><p>Both embeddings were learned from training interactions.</p></div><div class="lesson-card"><span>COLD START</span><b>New user or item</b><p>No fitted row exists for that ID. The dot product alone has nothing to look up.</p></div></div>
+
+<p class="lesson-takeaway">We need information that can be available <b>before</b> a new entity has ratings.</p>
+
+## Side information describes the entity {.lesson-slide}
+
+<div class="lesson-grid three"><div class="lesson-card"><span>USER</span><b>profile features</b><p>For example, age group, stated interests, or a self-description.</p></div><div class="lesson-card"><span>ITEM</span><b>content features</b><p>For example, film genre, release year, or a text description.</p></div><div class="lesson-card"><span>CONTEXT</span><b>event features</b><p>For example, time or device, if known at prediction time.</p></div></div>
+
+<p class="lesson-takeaway">A useful cold-start feature must exist when the recommendation is made. A rating-derived statistic may not.</p>
+
+## The prediction row is now richer {.lesson-slide}
+
+<div class="lesson-flow"><div>user ID $u$<br>optional history</div><i>+</i><div>user features $x_u$</div><i>+</i><div>item ID $i$</div><i>+</i><div>item features $z_i$</div><i>→</i><div>rating $r_{ui}$</div></div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>TRAIN</span><b>inputs and known rating</b><p>Learn how IDs and features relate to ratings.</p></div><div class="lesson-card"><span>PREDICT</span><b>inputs, unknown rating</b><p>Apply the same feature transformations to a new pair.</p></div></div>
+
+## Three ways to use the extra information {.lesson-slide}
+
+<div class="lesson-grid three"><div class="lesson-card"><span>FEATURES ONLY</span><b>$f(x_u,z_i)$</b><p>Can handle new IDs, but may miss individual preferences.</p></div><div class="lesson-card"><span>ADD TO MF</span><b>$p_u^\top q_i+f(x_u,z_i)$</b><p>Keep personalized ID factors and add a feature contribution.</p></div><div class="lesson-card"><span>SIDE-AWARE FACTORS</span><b>$p(u,x_u)^\top q(i,z_i)$</b><p>Build each factor vector from ID and features together.</p></div></div>
+
+<p class="lesson-takeaway">The third approach makes the interaction depend on the features on <b>both</b> sides.</p>
+
+## Numeric and categorical features enter differently {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>NUMERIC</span><b>age, release year</b><p>Pass a numerical value through a suitable transformation. Learn any scaling from training data only.</p></div><div class="lesson-card"><span>CATEGORICAL</span><b>genre, occupation</b><p>Map each category to an integer lookup position, then learn an embedding for it.</p></div></div>
+
+<div class="lesson-formula compact">$$\text{genre = comedy}\;\longrightarrow\;j\;\longrightarrow\;e_j\in\mathbb R^K$$</div>
+
+<p class="lesson-takeaway">An ID is itself a categorical feature. The same embedding idea can represent other categories.</p>
+
+## A feature embedding is another learned table {.lesson-slide}
+
+<p class="lesson-lede">Suppose a film has one genre field with three possible values.</p>
+
+<table class="lesson-table"><thead><tr><th>category</th><th>encoded index</th><th>learned vector</th></tr></thead><tbody><tr><td>action</td><td>0</td><td>$e_0$</td></tr><tr><td>comedy</td><td>1</td><td>$e_1$</td></tr><tr><td>drama</td><td>2</td><td>$e_2$</td></tr></tbody></table>
+
+<p class="lesson-takeaway">The indices only select rows. The embedding coordinates are learned from the rating objective.</p>
+
+## A linear side-aware factor model {.lesson-slide}
+
+<div class="lesson-formula compact">$$p(u,x_u)=p_u+A x_u+e_{c(u)},\qquad q(i,z_i)=q_i+B z_i+e_{g(i)}$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>USER VECTOR</span><b>ID + numeric + category</b><p>$p_u$ is personalized; $A x_u$ and $e_{c(u)}$ bring in user features.</p></div><div class="lesson-card"><span>ITEM VECTOR</span><b>ID + numeric + category</b><p>$q_i$ is item-specific; $B z_i$ and $e_{g(i)}$ bring in item features.</p></div></div>
+
+<div class="lesson-formula compact">$$\widehat r_{ui}=p(u,x_u)^\top q(i,z_i)$$</div>
+
+::: {.notes}
+[Teaching] This is a compact teaching version of the linear side-aware architecture in the original deck. For a new ID, the ID-specific term needs an explicit zero/default policy; the feature terms can still be computed.
+:::
+
+## Four questions for the side-aware model {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>1 · MODEL</span><b>factor vectors from IDs + features</b><p>Predict with $p(u,x_u)^\top q(i,z_i)$.</p></div><div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$ and regularization</b><p>Choose factor width and shrinkage before fitting.</p></div><div class="lesson-card"><span>3 · CRITERION</span><b>rating error + penalty</b><p>Minimize errors on training pairs, with a complexity control.</p></div><div class="lesson-card"><span>4 · LEARNED</span><b>embeddings + maps</b><p>ID/category tables and feature maps $A,B$.</p></div></div>
+
+## The linear architecture as a network {.lesson-slide}
+
+<div class="lesson-flow tight"><div>user ID + category + numeric features</div><i>→</i><div>ID/category lookups + $A x_u$</div><i>→</i><div>user factor<br>$p(u,x_u)$</div></div>
+
+<div class="lesson-flow tight"><div>item ID + genre + numeric features</div><i>→</i><div>ID/category lookups + $B z_i$</div><i>→</i><div>item factor<br>$q(i,z_i)$</div></div>
+
+<div class="lesson-formula compact">$$\widehat r_{ui}=p(u,x_u)^\top q(i,z_i)$$</div>
+
+<p class="lesson-takeaway">Numeric transformations and categorical lookups build the two factor vectors; their inner product predicts the rating.</p>
+
+## From linear maps to two towers {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>USER TOWER</span><b>$h_u=F_u(u,x_u)$</b><p>Combine user ID, numeric features, and category embeddings through a network.</p></div><div class="lesson-card"><span>ITEM TOWER</span><b>$h_i=F_i(i,z_i)$</b><p>Do the same for item ID and content features.</p></div></div>
+
+<div class="lesson-formula">$$\widehat r_{ui}=\rho(h_u,h_i)$$</div>
+
+<p class="lesson-takeaway">Each tower can learn nonlinear <b>within-side</b> feature interactions before the two representations meet.</p>
+
+## Follow the two-tower computation {.lesson-slide}
+
+<img class="lesson-figure" src="figs/two-tower.png" alt="Original course two-tower diagram, with user features and item features processed in separate branches and then combined.">
+
+<p class="lesson-takeaway">The final interaction can be a dot product or a learned joint network. That choice changes the model family.</p>
+
+## What happens to a new user? {.lesson-slide}
+
+<div class="lesson-flow"><div>new user ID<br><b>no fitted ID row</b></div><i>+</i><div>available profile<br><b>$x_{\rm new}$</b></div><i>→</i><div>user tower<br><b>$h_{\rm new}$</b></div><i>→</i><div>item tower<br><b>$h_i$</b></div><i>→</i><div>prediction</div></div>
+
+<p class="lesson-takeaway">For cold start, the model must define how to handle the missing ID embedding. Side features can then supply a representation.</p>
+
+## Guard the validation boundary {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>SAFE FEATURE</span><b>known before rating</b><p>A film's genre or an already-available user profile can be used directly.</p></div><div class="lesson-card"><span>RATING-DERIVED FEATURE</span><b>mean, count, quantile</b><p>Compute from the fitting fold only. A held-out rating must never help create its own input feature.</p></div></div>
+
+<p class="lesson-takeaway">For each CV fold: split first → learn encodings and summaries on fitting rows → transform held-out rows → score.</p>
+
+::: {.notes}
+[Source] scikit-learn's data leakage guidance: https://scikit-learn.org/stable/common_pitfalls.html . The original course deck lists rating means/counts as side information; their timing and fold boundary require special care.
+:::
+
+## Beyond tabular features {.lesson-slide}
+
+<div class="lesson-grid three"><div class="lesson-card"><span>TEXT</span><b>queries and reviews</b><p>Convert content into numerical representations.</p></div><div class="lesson-card"><span>IMAGES</span><b>item photos</b><p>Use visual encoders to build item features.</p></div><div class="lesson-card"><span>BEHAVIOR</span><b>interaction sequence</b><p>Summarize recent actions to represent current interests.</p></div></div>
+
+<p class="lesson-takeaway">Whatever the modality, ask whether its information is available when the prediction is made.</p>
+
+## Close the loop {.lesson-slide}
+
+<div class="lesson-flow"><div>ID-only MF<br><b>personalization</b></div><i>→</i><div>side-aware factors<br><b>metadata</b></div><i>→</i><div>two towers<br><b>nonlinear representations</b></div></div>
+
+<p class="lesson-takeaway">Side information helps with cold start, but only a carefully specified fallback and a leakage-safe validation scheme make that benefit measurable.</p>

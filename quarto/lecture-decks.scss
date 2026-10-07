@@ -1,0 +1,40 @@
+/*-- scss:rules --*/
+/* Shared layouts for the later STAT3009 Quarto conversions. */
+.reveal .slides section.lesson-slide h2 { max-width: none; margin-bottom: 30px; font-size: 55px; }
+.lesson-lede { max-width: 1320px; margin: 0 0 30px !important; color: #d1cdd3; font-size: 27px !important; }
+.lesson-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 35px; margin-top: 32px; }
+.lesson-grid.three { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.lesson-grid.four { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
+.lesson-card { min-width: 0; padding: 23px 26px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); }
+.lesson-card:nth-child(even), .lesson-card.gold { border-color: var(--cuhk-gold); }
+.lesson-card > span, .lesson-kicker { display: block; color: var(--cuhk-gold); font-family: Menlo,monospace; font-size: 16px; font-weight: 750; letter-spacing: .06em; }
+.lesson-card b { display: block; margin-top: 16px; font-size: 30px; line-height: 1.15; }
+.lesson-card p { margin: 15px 0 0 !important; color: #c3c0c8; font-size: 21px !important; line-height: 1.35 !important; }
+.lesson-card ul { margin: 15px 0 0; padding-left: 25px; }
+.lesson-card li { color: #c3c0c8; font-size: 21px !important; }
+.lesson-formula { margin: 32px 0; padding: 25px 30px; border-left: 5px solid var(--cuhk-gold); background: rgba(221,163,0,.065); }
+.lesson-formula .math.display { margin: 0 !important; font-size: 38px; }
+.lesson-formula.compact .math.display { font-size: 29px; }
+.lesson-takeaway { margin: 26px 0 0 !important; padding: 14px 0 14px 21px; border-left: 4px solid var(--cuhk-gold); color: #d2ced4; font-size: 23px !important; line-height: 1.35 !important; }
+.lesson-takeaway b { color: #fff; }
+.lesson-flow { display: flex; align-items: center; gap: 18px; margin: 34px 0; }
+.lesson-flow.tight { margin: 16px 0; }
+.lesson-flow > div { flex: 1; min-width: 0; padding: 22px 20px; border-top: 4px solid #a65b9f; background: rgba(255,255,255,.035); font-size: 23px; text-align: center; }
+.lesson-flow > div:last-of-type { border-color: var(--cuhk-gold); }
+.lesson-flow > i { color: var(--cuhk-gold); font-size: 42px; font-style: normal; }
+.lesson-figure { display: block; width: auto; max-width: 100%; max-height: 480px; margin: 18px auto !important; border: 0 !important; box-shadow: none !important; object-fit: contain; }
+.lesson-figure.tall { max-height: 420px; }
+.lesson-figure.short { max-height: 370px; }
+.lesson-caption { margin: 13px 0 0 !important; color: #aaa8ae; font-size: 17px !important; text-align: center; }
+.lesson-code pre.sourceCode { width: 100%; margin: 30px 0; font-size: 25px; line-height: 1.35; }
+.lesson-code pre.sourceCode code { padding: 20px 26px; }
+.lesson-list { margin: 24px 0; padding-left: 38px; }
+.lesson-list li { margin: 9px 0; font-size: 27px !important; }
+.lesson-small { color: #aaa8ae; font-size: 18px !important; }
+.lesson-table { width: 100%; margin: 30px 0; border-collapse: collapse; }
+.lesson-table th, .lesson-table td { padding: 17px 20px; border-bottom: 1px solid rgba(255,255,255,.18); text-align: left; font-size: 23px; }
+.lesson-table th { color: var(--cuhk-gold); font-family: Menlo,monospace; font-size: 17px; text-transform: uppercase; }
+.lesson-table td:first-child { color: #fff; font-weight: 700; }
+.reveal .slides section.lesson-slide span.math.inline { margin: 0 .02em; font-size: 1.12em; vertical-align: -.06em; }
+.reveal .slides section.lesson-slide span.math.inline > .MathJax { font-size: 1.15em !important; transform: none !important; }
+.reveal .slides section.lesson-slide h2 span.math.inline > .MathJax { font-size: 1em !important; }

@@ -1,0 +1,170 @@
+---
+title: "SVD++ and History-Derived Factors"
+subtitle: "From matrix factorization to representations built from interaction history"
+author: "Ben Dai"
+institute: "CUHK · Department of Statistics and Data Science"
+lang: en
+format:
+  revealjs:
+    theme: [dark, ../Lec-overview/stat3009.scss, ../lecture-decks.scss]
+    logo: ../Lec-overview/figs/cu_logo.webp
+    width: 1600
+    height: 900
+    margin: 0
+    center: false
+    auto-stretch: false
+    navigation-mode: linear
+    controls-layout: edges
+    progress: true
+    slide-number: c/t
+    hash: true
+    transition: fade
+    embed-resources: true
+    footer: "CUHK · STAT3009 · SVD++"
+title-slide-attributes:
+  data-background-color: "#071018"
+---
+
+## Start with the MF prediction rule {.lesson-slide}
+
+<div class="lesson-formula">$$\widehat r_{ui}=p_u^\top q_i$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>USER</span><b>$p_u\in\mathbb R^K$</b><p>A free vector learned for user $u$.</p></div><div class="lesson-card"><span>ITEM</span><b>$q_i\in\mathbb R^K$</b><p>A free vector learned for item $i$.</p></div></div>
+
+<p class="lesson-takeaway">MF fits each user vector using that user's observed ratings. What if a user has very few?</p>
+
+## Histories are uneven {.lesson-slide}
+
+<img class="lesson-figure tall" src="figs/pop_counts.png" alt="LastFM interaction-count plot from the original course slides, showing uneven activity across entities.">
+
+<p class="lesson-caption">Example from the original LastFM slides: interaction counts are far from uniform.</p>
+
+<p class="lesson-takeaway">A short history gives little direct evidence for a free $p_u$; a long history offers much more.</p>
+
+::: {.notes}
+The source slides credit: Dai, B., Wang, J., Shen, X., & Qu, A. (2019), Smooth neighborhood recommender systems, JMLR 20. The plot is retained from those slides.
+:::
+
+## Define the observed history carefully {.lesson-slide}
+
+<div class="lesson-formula">$$I_u=\{j:(u,j)\in\Omega_{\mathrm{train}}\},\qquad \tau_u=|I_u|^{-1/2}$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>$I_u$</span><b>items in user $u$'s history</b><p>Only training interactions enter this set.</p></div><div class="lesson-card"><span>$\tau_u$</span><b>history-size normalization</b><p>Scales the sum so a long history does not automatically dominate.</p></div></div>
+
+<p class="lesson-takeaway">When we validate or test, we construct $I_u$ from the training fold—never from held-out ratings.</p>
+
+## Build a user vector from the items {.lesson-slide}
+
+<div class="lesson-formula">$$h_u=\tau_u\sum_{j\in I_u}w_j,\qquad w_j\in\mathbb R^K$$</div>
+
+<div class="lesson-flow"><div>rated/visited items<br>$I_u$</div><i>→</i><div>learned vectors<br>$w_j$</div><i>→</i><div>sum and scale<br>$h_u$</div></div>
+
+<p class="lesson-takeaway">The presence of an item contributes $w_j$. Its rating value is still used in the fitting loss.</p>
+
+## A small history example {.lesson-slide}
+
+<p class="lesson-lede">Suppose user $u$ has training interactions with items A, B, and C.</p>
+
+<div class="lesson-formula">$$h_u=\frac{w_{\mathrm A}+w_{\mathrm B}+w_{\mathrm C}}{\sqrt{3}}$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>SHARED SIGNAL</span><b>same item, same $w_j$</b><p>All users who interacted with B share B's learned contribution.</p></div><div class="lesson-card"><span>PERSONALIZED MIX</span><b>different item sets</b><p>Different histories add different combinations of vectors.</p></div></div>
+
+## History-derived MF: the prediction {.lesson-slide}
+
+<div class="lesson-formula">$$\widehat r_{ui}=q_i^\top h_u,\qquad h_u=|I_u|^{-1/2}\sum_{j\in I_u}w_j$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>REPLACE</span><b>free $p_u$ → history-derived $h_u$</b><p>The user representation is now built from learned item-history vectors.</p></div><div class="lesson-card"><span>KEEP</span><b>item factor $q_i$</b><p>The prediction is still a dot product.</p></div></div>
+
+<p class="lesson-takeaway">The original slides call this L-SVD / N-SVD; here we use “history-derived MF” to emphasize its mechanism.</p>
+
+## History-derived MF: four questions {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>1 · MODEL</span><b>$q_i^\top h_u$</b><p>$h_u$ is the normalized sum of $w_j$ over $I_u$.</p></div><div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$ and $\lambda$</b><p>Choose vector dimension and regularization strength.</p></div><div class="lesson-card"><span>3 · FITTING CRITERION</span><b>squared rating error + penalty</b><p>Use only observed training pairs.</p></div><div class="lesson-card"><span>4 · LEARNED PARAMETERS</span><b>$Q$ and $W$</b><p>Fit item factors $q_i$ and history contributions $w_j$.</p></div></div>
+
+## The fitting criterion {.lesson-slide}
+
+<div class="lesson-formula compact">$$\min_{Q,W}\ \sum_{(u,i)\in\Omega_{\mathrm{train}}}(r_{ui}-q_i^\top h_u)^2+\lambda\sum_j\bigl(\|q_j\|_2^2+\|w_j\|_2^2\bigr)$$</div>
+
+<div class="lesson-formula">$$h_u=|I_u|^{-1/2}\sum_{j\in I_u}w_j$$</div>
+
+<p class="lesson-takeaway">Changing $w_j$ affects every training user whose history contains item $j$.</p>
+
+## One block is familiar ridge regression {.lesson-slide}
+
+<p class="lesson-lede">Fix all history vectors $W$. Then every $h_u$ is a known input vector.</p>
+
+<div class="lesson-formula compact">$$\widehat q_i=\arg\min_q\ \sum_{u:(u,i)\in\Omega_{\mathrm{train}}}(r_{ui}-q^\top h_u)^2+\lambda\|q\|_2^2$$</div>
+
+<div class="lesson-flow"><div>known $h_u$</div><i>→</i><div>ridge fit for each item $i$</div><i>→</i><div>updated $q_i$</div></div>
+
+<p class="lesson-takeaway">This is the same fixed-one-side idea used in MF's alternating least squares.</p>
+
+## The history-vector block is coupled {.lesson-slide}
+
+<p class="lesson-lede">Now fix $Q$. A single $w_j$ appears in many users' sums.</p>
+
+<div class="lesson-formula">$$j\in I_u\quad\Longrightarrow\quad w_j\text{ contributes to }h_u\text{ and all predictions for }u$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>WHY HARDER?</span><b>shared contribution</b><p>Updating $w_j$ changes several users at once.</p></div><div class="lesson-card"><span>PRACTICAL ROUTES</span><b>coordinate or gradient updates</b><p>Hold other vectors fixed, or optimize all vectors with gradients.</p></div></div>
+
+## The limit: identical histories {.lesson-slide}
+
+<div class="lesson-formula">$$I_a=I_b\quad\Longrightarrow\quad h_a=h_b$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>USER A</span><b>A, B, C</b><p>Liked A strongly; disliked C.</p></div><div class="lesson-card"><span>USER B</span><b>A, B, C</b><p>Disliked A; liked C strongly.</p></div></div>
+
+<p class="lesson-takeaway">The two users receive the same history-derived vector even when their rating values differ.</p>
+
+## SVD++ adds a user-specific vector {.lesson-slide}
+
+<div class="lesson-formula">$$\widehat r_{ui}=q_i^\top\left(p_u+h_u\right),\qquad h_u=|I_u|^{-1/2}\sum_{j\in I_u}w_j$$</div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>$p_u$</span><b>individual evidence</b><p>Learned from user $u$'s rating values.</p></div><div class="lesson-card"><span>$h_u$</span><b>shared history evidence</b><p>Built from vectors of items in the training history.</p></div></div>
+
+<p class="lesson-takeaway">Users A and B can now differ through $p_a$ and $p_b$, even when $I_a=I_b$.</p>
+
+## SVD++: four questions {.lesson-slide}
+
+<div class="lesson-grid"><div class="lesson-card"><span>1 · MODEL</span><b>$q_i^\top(p_u+h_u)$</b><p>A free user factor plus a history-derived factor.</p></div><div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$ and $\lambda$</b><p>Choose factor dimension and penalty strength.</p></div><div class="lesson-card"><span>3 · FITTING CRITERION</span><b>regularized squared error</b><p>Compare predictions with training ratings.</p></div><div class="lesson-card"><span>4 · LEARNED PARAMETERS</span><b>$P$, $Q$, and $W$</b><p>User factors, item factors, and history contributions.</p></div></div>
+
+## SVD++ fitting criterion {.lesson-slide}
+
+<div class="lesson-formula compact">$$\min_{P,Q,W}\ \sum_{(u,i)\in\Omega_{\mathrm{train}}}\left[r_{ui}-q_i^\top(p_u+h_u)\right]^2+\lambda\left(\|P\|_F^2+\|Q\|_F^2+\|W\|_F^2\right)$$</div>
+
+<div class="lesson-formula">$$h_u=|I_u|^{-1/2}\sum_{j\in I_u}w_j$$</div>
+
+<p class="lesson-takeaway">This writes the objective as a sum; using mean error would rescale the numerical value of $\lambda$.</p>
+
+## How to fit it {.lesson-slide}
+
+<div class="lesson-flow"><div>fix $Q,W$<br>update $P$</div><i>→</i><div>fix $P,W$<br>update $Q$</div><i>→</i><div>fix $P,Q$<br>update $W$</div><i>↺</i></div>
+
+<div class="lesson-grid"><div class="lesson-card"><span>ALTERNATING VIEW</span><b>ridge-like blocks</b><p>The $P$ and $Q$ blocks are ridge problems when the other vectors are fixed.</p></div><div class="lesson-card"><span>GRADIENT VIEW</span><b>one differentiable loss</b><p>SGD or Adam can update $P$, $Q$, and $W$ together.</p></div></div>
+
+<p class="lesson-takeaway">The learning algorithm is separate from the model formula: the same rule can be fitted in different ways.</p>
+
+## Choose settings without leaking history {.lesson-slide}
+
+<div class="lesson-flow"><div>training pairs<br>fit $P,Q,W$</div><i>→</i><div>validation pairs<br>select $K,\lambda$</div><i>→</i><div>test pairs<br>report once</div></div>
+
+<p class="lesson-lede">For each split, construct $I_u$ from its training interactions. A validation/test pair must not reveal itself through the history feature used to predict it.</p>
+
+<p class="lesson-takeaway">A completely new user still has neither a fitted $p_u$ nor a nonempty history; SVD++ alone does not solve that cold start.</p>
+
+## Nearby extensions from the original deck {.lesson-slide}
+
+<div class="lesson-grid three"><div class="lesson-card"><span>NMF</span><b>constrain factors</b><p>Keep the MF dot product but require $P,Q\geq0$.</p></div><div class="lesson-card"><span>GROUP MF</span><b>add group vectors</b><p>Use known user/item groups to share structure.</p></div><div class="lesson-card"><span>SMOOTH MF</span><b>borrow from neighbors</b><p>Weight nearby user/item observations during fitting.</p></div></div>
+
+<p class="lesson-takeaway">Each variant changes a different module: feasible parameters, prediction rule, or fitting criterion.</p>
+
+## Reuse the four questions {.lesson-slide}
+
+<table class="lesson-table"><thead><tr><th></th><th>MF</th><th>History-derived MF</th><th>SVD++</th></tr></thead><tbody>
+<tr><td>Model</td><td>$q_i^\top p_u$</td><td>$q_i^\top h_u$</td><td>$q_i^\top(p_u+h_u)$</td></tr>
+<tr><td>Learned</td><td>$P,Q$</td><td>$Q,W$</td><td>$P,Q,W$</td></tr>
+<tr><td>Hyperparameters</td><td>$K,\lambda$</td><td>$K,\lambda$</td><td>$K,\lambda$</td></tr>
+<tr><td>Criterion</td><td colspan="3">regularized error on observed training ratings</td></tr>
+</tbody></table>
+
+<p class="lesson-takeaway">Adding the history path changes how users are represented; evaluation still follows the same train/validation/test discipline.</p>
+
