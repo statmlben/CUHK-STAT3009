@@ -13,8 +13,9 @@ The last section transfers the same data roles to rating prediction through
 the Netflix Prize and fold-safe recommender baselines. It contrasts pair-level,
 whole-user, and whole-item validation questions, then uses actual fold counts
 to show that an overall pair-level RMSE is dominated by warm pairs. One held-out 0/1 rating
-shows how a candidate weight triple becomes a prediction and squared error;
-the five-fold CV table then compares four weight candidates. A
+shows how learned means and candidate weights have different roles; the same
+`GridSearchCV` structure used for Ridge then compares four weight candidates
+and refits the winner. A
 sklearn-ecosystem recap connects ID encoding, the estimator interface, and
 `GridSearchCV`. The deck closes with the complete validation workflow and
 connects it to the next topic, matrix factorization.

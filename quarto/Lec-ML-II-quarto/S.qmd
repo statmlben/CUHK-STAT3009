@@ -482,12 +482,12 @@ test_rmse = root_mean_squared_error(y_test_housing, test_pred)
 
 <p class="rs-fold-intro">In fold 1 of the course's 0/1 rating data, “known” means the ID appears in the other four fitting folds.</p>
 
-<div class="rs-fold-highlight"><strong>97.1%</strong><span>of validation ratings have both a known user and a known item</span></div>
+<div class="rs-fold-highlight"><strong>97.5%</strong><span>of validation ratings have both a known user and a known item</span></div>
 
 <table class="rs-fold-counts"><thead><tr><th>validation pair</th><th>count</th><th>specific means available</th></tr></thead><tbody>
-<tr><td>known user + known item</td><td>9,934</td><td>user and item</td></tr>
-<tr><td>new user + known item</td><td>47</td><td>item only</td></tr>
-<tr><td>known user + new item</td><td>251</td><td>user only</td></tr>
+<tr><td>known user + known item</td><td>9,980</td><td>user and item</td></tr>
+<tr><td>new user + known item</td><td>35</td><td>item only</td></tr>
+<tr><td>known user + new item</td><td>217</td><td>user only</td></tr>
 <tr><td>new user + new item</td><td>1</td><td>none; use global mean</td></tr>
 </tbody></table>
 
@@ -495,8 +495,8 @@ test_rmse = root_mean_squared_error(y_test_housing, test_pred)
 
 ::: {.notes}
 [Teaching]
-- Counts come from `dataset/b-rs/train.csv` using the notebook's `random.Random(42)` shuffle and every-fifth-row assignment. Fold 1 has 10,233 validation ratings.
-- A pair-level CV scheme happened to create 299 cold validation rows, but their 2.9% share is too small for overall RMSE to describe cold-start quality.
+- Counts come from `dataset/b-rs/train.csv` using the first of the five default regression folds created by `GridSearchCV(cv=5)`. Fold 1 has 10,233 validation ratings.
+- This pair-level fold has 253 cold validation rows, only 2.5% of the fold. Overall RMSE therefore says little about cold-start quality.
 - “Available means” means user/item means learned from fitting rows. The global mean always exists.
 :::
 
@@ -535,64 +535,77 @@ $$
 <div><span>CHOSEN BY CROSS-VALIDATION</span><b>Three weights</b><p>Try several user / item / global weight triples. Every candidate uses the same five folds.</p></div>
 </div>
 
-<p class="ml-takeaway">Only the <b>weights</b> change across candidates. Validation ratings never enter the fitted means.</p>
+<p class="ml-takeaway"><code>GridSearchCV</code> changes the <b>weights</b>; each fresh <code>fit</code> learns means only from its fitting fold.</p>
 
 ::: {.notes}
 [Teaching]
 - Equal weights from the previous lecture are one candidate, not a required choice.
 - The mean values are learned separately from each fold's fitting rows. The three weights are hyperparameters selected using validation RMSE.
 - If a validation pair has an unseen user or item, replace only the unavailable mean with the global mean from that fold's fitting rows.
+- The notebook supplies `ThreeMeanRS` with the same sklearn `fit` / `predict` structure students used in ML I. Its constructor exposes `weights` to `GridSearchCV`.
 :::
 
-## One held-out rating, one weight candidate {.detail-slide .weight-one-row-slide}
+## GridSearchCV selects the RS weights {.detail-slide .code-slide .ridge-grid-setup-slide}
 
-<p class="weight-one-row-intro">Course <b>0/1 rating</b> split · fold 1 · validation pair $(u,i)=(987,770)$ · observed rating $r_{ui}=1$</p>
+:::: {.ridge-grid-layout}
+::: {.ridge-grid-code}
+```python
+from sklearn.model_selection import GridSearchCV
 
-<div class="weight-one-row-fit">
-<span>LEARN FROM THE OTHER FOUR FOLDS</span>
-<div><b>user mean</b><strong>$\bar r_u=0.5152$</strong></div>
-<div><b>item mean</b><strong>$\bar r_i=0.5476$</strong></div>
-<div><b>global mean</b><strong>$\mu=0.5739$</strong></div>
-</div>
+weight_grid = [(1/3, 1/3, 1/3), (0.5, 0.3, 0.2),
+               (0.3, 0.5, 0.2), (0.2, 0.2, 0.6)]
 
-<div class="weight-one-row-predict">
-<span>TRY WEIGHTS $(w_u,w_i,w_0)=(0.5,0.3,0.2)$</span>
-$$\widehat r_{ui}=0.5(0.5152)+0.3(0.5476)+0.2(0.5739)\approx 0.5366$$
-</div>
+search = GridSearchCV(
+    estimator=ThreeMeanRS(),
+    param_grid={"weights": weight_grid},
+    scoring="neg_root_mean_squared_error",
+    cv=5,
+    refit=True,
+)
+search.fit(X_train_rs, y_train_rs)
+```
+:::
 
-<div class="weight-one-row-score"><span>VALIDATE</span><b>Compare with $r_{ui}=1$</b><p>Squared error for this row: $(1-0.5366)^2\approx0.2147$</p></div>
-
-<p class="ml-takeaway">Compute RMSE across <b>all validation rows</b> in this fold, then repeat with the other four folds.</p>
+::: {.ridge-grid-reading}
+<div><span>ESTIMATOR</span><b><code>ThreeMeanRS()</code></b><p>Each <code>fit</code> learns means from four folds; <code>predict</code> scores the fifth.</p></div>
+<div><span>CANDIDATES</span><b>four weight triples</b><p><code>weights</code> is a constructor setting, just like Ridge's <code>alpha</code>.</p></div>
+<div><span>FINAL FIT</span><b><code>best_estimator_</code></b><p>The winner is refitted on all training ratings.</p></div>
+:::
+::::
 
 ::: {.notes}
 [Teaching]
-- Values come from the first validation row of fold 1 in `dataset/b-rs/train.csv`, using the same Python Random(42) shuffle and every-fifth-index fold assignment as the next slide and ML II notebook.
-- User and item means and the global mean were computed from the other four folds only. The validation rating 1 enters the squared error after prediction, not the mean calculation.
-- Rounded components are shown for readability; the score table uses full precision. The 0/1 rating scale differs from the earlier Netflix 1–5 star example.
+- `ThreeMeanRS` is supplied in the notebook. It follows the `fit` / `predict` estimator structure from ML I and exposes `weights` in its constructor.
+- The search runs four candidates on five pair-level folds. For every fit, the means come only from the fitting rows, so validation labels cannot leak into them.
+- The `cv=5` setting matches the Ridge example. Every candidate sees the same five pair-level folds; no manual fold indices are needed.
+- With `refit=True`, the selected weights and means fitted on all training ratings are in `search.best_estimator_`.
+
+[Source]
+- GridSearchCV and refit behavior: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html.
 :::
 
 ## Five-fold CV compares four weight candidates {.detail-slide .weight-cv-slide}
 
-<p class="weight-cv-intro">For the course's <b>0/1 rating split</b>, repeat that calculation for every held-out pair and candidate. Average each candidate's five fold RMSEs. <b>Lower is better.</b></p>
+<p class="weight-cv-intro">For the course's <b>0/1 rating split</b>, <code>GridSearchCV</code> reports each candidate's five validation RMSEs and their mean. <b>Lower is better.</b></p>
 
 <table class="weight-cv-table">
 <thead><tr><th>Candidate</th><th>User / item / global</th><th>Fold 1</th><th>Fold 2</th><th>Fold 3</th><th>Fold 4</th><th>Fold 5</th><th>CV mean</th></tr></thead>
 <tbody>
-<tr><th scope="row">Equal</th><td>1/3, 1/3, 1/3</td><td>0.4672</td><td>0.4656</td><td>0.4655</td><td>0.4683</td><td>0.4688</td><td>0.4671</td></tr>
-<tr class="weight-cv-winner"><th scope="row">User-heavy</th><td>0.5, 0.3, 0.2</td><td>0.4632</td><td>0.4620</td><td>0.4618</td><td>0.4648</td><td>0.4647</td><td><b>0.4633</b></td></tr>
-<tr><th scope="row">Item-heavy</th><td>0.3, 0.5, 0.2</td><td>0.4662</td><td>0.4635</td><td>0.4639</td><td>0.4668</td><td>0.4679</td><td>0.4657</td></tr>
-<tr><th scope="row">Global-heavy</th><td>0.2, 0.2, 0.6</td><td>0.4760</td><td>0.4749</td><td>0.4745</td><td>0.4770</td><td>0.4775</td><td>0.4760</td></tr>
+<tr><th scope="row">Equal</th><td>1/3, 1/3, 1/3</td><td>0.4658</td><td>0.4674</td><td>0.4681</td><td>0.4676</td><td>0.4663</td><td>0.4670</td></tr>
+<tr class="weight-cv-winner"><th scope="row">User-heavy</th><td>0.5, 0.3, 0.2</td><td>0.4618</td><td>0.4637</td><td>0.4647</td><td>0.4645</td><td>0.4623</td><td><b>0.4634</b></td></tr>
+<tr><th scope="row">Item-heavy</th><td>0.3, 0.5, 0.2</td><td>0.4644</td><td>0.4667</td><td>0.4665</td><td>0.4655</td><td>0.4646</td><td>0.4656</td></tr>
+<tr><th scope="row">Global-heavy</th><td>0.2, 0.2, 0.6</td><td>0.4751</td><td>0.4757</td><td>0.4768</td><td>0.4765</td><td>0.4758</td><td>0.4760</td></tr>
 </tbody>
 </table>
 
-<p class="ml-takeaway"><b>Choose (0.5, 0.3, 0.2) among these four.</b> Recompute the means from all training ratings, combine them with these weights, then test once.</p>
+<p class="ml-takeaway"><b>Choose (0.5, 0.3, 0.2) among these four.</b> <code>best_estimator_</code> already has the means refitted on all training ratings.</p>
 
-<p class="source-line">Course <code>dataset/b-rs/train.csv</code> · shuffled pair-level 5-fold CV · seed 42 · RMSE rounded to four decimals</p>
+<p class="source-line">Course <code>dataset/b-rs/train.csv</code> · pair-level 5-fold CV via <code>GridSearchCV(cv=5)</code> · RMSE rounded to four decimals</p>
 
 ::: {.notes}
 [Teaching]
 - Each row is one hyperparameter candidate, not a different fitting dataset. Keep the five folds fixed when comparing rows.
-- The numbers use the 51,161 ratings in `dataset/b-rs/train.csv`. Shuffle row indices with Python's `random.Random(42)` and assign every fifth shuffled index to the same fold. For each fold, recompute the three means from the other four folds and use the fold's global mean for unavailable user/item means. Average the five fold RMSEs without rounding intermediate values.
+- The numbers use the 51,161 ratings in `dataset/b-rs/train.csv` and `GridSearchCV(cv=5, scoring='neg_root_mean_squared_error')`. For each fold, `ThreeMeanRS.fit` computes means from the other four folds and uses that fold's global mean for unavailable user/item means. The table negates sklearn's scores and rounds only for display.
 - The selected weights match the illustrative 0.5 / 0.3 / 0.2 weighting in the previous lecture's notebook. This table supplies the validation step that example deferred.
 - “Best” means best of the four listed candidates on these folds; the test ratings are not used for selecting weights.
 :::
@@ -625,7 +638,7 @@ $$\widehat r_{ui}=0.5(0.5152)+0.3(0.5476)+0.2(0.5739)\approx 0.5366$$
 [Teaching]
 - This is a synthesis of components already seen: ID encoding from the warm-up and ML I, sklearn-style estimators from ML I, and GridSearchCV from this lecture.
 - The highlighted estimator is the interchangeable node. GridSearchCV fits fresh copies on each fitting fold, scores held-out rows, selects constructor settings, and refits the winner. It does not automatically repeat the separate ID encoding step.
-- `alpha` belongs to Ridge; `weights` would belong to a weighted three-mean class. `YourRS` is schematic: it could expose `weights` in its constructor, compute user/item/global means in `fit`, and combine them in `predict`. The notebook compares the weights manually so students can see the CV logic first.
+- `alpha` belongs to Ridge; `weights` belongs to the supplied `ThreeMeanRS` class. `YourRS` is the generic version of that example: constructor settings, fold-specific `fit`, and `predict` let the same search machinery work with a new estimator.
 - For preprocessing that learns values from training data, the same fold boundary applies: fit it on each fitting fold only. A pipeline would automate that later; it is not needed for today's ID lookup example.
 
 [Sources]

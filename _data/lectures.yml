@@ -63,3 +63,47 @@
     <span class="event"><strong>HW1 released</strong><br>
     <a href="https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/HW/STAT3009_HW1.ipynb" target="_blank">Open HW1 in Colab</a><br>
     <span class="deadline"><strong>Due:</strong> Thu 10/08 before lecture</span></span>
+
+- date: "2026-10-08"
+  title: >
+    <strong>Machine Learning II: Generalization and Model Selection</strong>
+  slides: ../quarto/Lec-ML-II-quarto/S.html
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_ML_II.ipynb
+  warmup:
+    label: Start here · Warm-up 03
+    title: Models, estimators, and predictions
+    meta: 15–18 min
+    href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_03_ML_I_Recap.ipynb
+  readings:
+    - >
+      <a href="https://scikit-learn.org/stable/modules/cross_validation.html">scikit-learn: Cross-validation and data splitting</a>
+      (introduction, K-fold, and group-wise splits)
+    - >
+      <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">scikit-learn: Ridge regression</a>
+      (objective and <code>alpha</code>)
+    - >
+      <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">scikit-learn: GridSearchCV</a>
+      (parameter grid, scoring, and refit)
+    - >
+      Optional: <a href="https://www2.seas.gwu.edu/~simhaweb/champalg/cf/papers/KorenBellKor2009.pdf">The BellKor Solution to the Netflix Grand Prize</a>
+      (Sections II–III: rating splits, RMSE, and baseline validation)
+  logistics: >
+    <span class="event"><strong>HW1 due</strong> before this lecture</span>
+
+- date: "2026-10-15"
+  title: >
+    <strong>Matrix Factorization for Recommendation</strong>
+  slides: ../quarto/Lec-MF-quarto/S.html
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_MF.ipynb
+  readings:
+    - >
+      <a href="https://developers.google.com/machine-learning/recommendation/collaborative/basics">Google: Collaborative filtering and learned user/item profiles</a>
+    - >
+      <a href="https://gwern.net/doc/ai/tabular/2009-koren.pdf">Koren, Bell &amp; Volinsky: Matrix Factorization Techniques for Recommender Systems</a>
+      (pp. 43–46: latent factors, bias terms, and ALS)
+    - >
+      Optional: <a href="https://sifter.org/simon/journal/20061211.html">Simon Funk: Netflix Update — Try This at Home</a>
+      (an intuitive account of learned factors)
+    - >
+      Optional, more technical: <a href="https://jmlr.org/papers/v16/hastie15a.html">Hastie et al.: Matrix Completion and Low-Rank SVD via Fast Alternating Least Squares</a>
+      (Section 5: ALS and ridge subproblems)
