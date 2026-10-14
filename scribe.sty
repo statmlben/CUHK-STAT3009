@@ -1,0 +1,78 @@
+% scribe.sty -- lecture scribe macros for CUHK STAT3009
+% Reconstructed support file for the lecture template (see math/lecture1.tex).
+\ProvidesPackage{scribe}[2026/10/14 STAT3009 scribe macros]
+
+\RequirePackage{fullpage}
+\RequirePackage{amsmath,amssymb,amsfonts,amsthm}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+
+% -------------------------------------------------- header information
+\newcommand{\Scribe}[1]{\def\@scribe{#1}}
+\newcommand{\Lecturer}[1]{\def\@lecturer{#1}}
+\newcommand{\LectureNumber}[1]{\def\@lecturenumber{#1}}
+\newcommand{\LectureDate}[1]{\def\@lecturedate{#1}}
+\newcommand{\LectureTitle}[1]{\def\@lecturetitle{#1}}
+
+\newcommand{\MakeScribeTop}{%
+\begin{center}
+\framebox{%
+\begin{minipage}{0.95\textwidth}
+  \vspace{2mm}
+  {\textbf{CUHK STAT3009 $\cdot$ Recommender Systems} \hfill \@lecturedate \par}
+  \vspace{2.5mm}
+  {\centering \Large\bfseries Lecture \@lecturenumber: \@lecturetitle \par}
+  \vspace{1.5mm}
+  {\textit{Lecturer: \@lecturer} \hfill \textit{Scribe: \@scribe} \par}
+  \vspace{1mm}
+\end{minipage}}%
+\end{center}
+\bigskip
+}
+
+% -------------------------------------------------- theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+
+% -------------------------------------------------- math macros
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+
+% -------------------------------------------------- figures
+% \myfig{scale}{file}{caption}{label}
+\newcommand{\myfig}[4]{%
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=#1]{#2}
+  \caption{#3}
+  \label{#4}
+\end{figure}}
+
+% -------------------------------------------------- code listings
+\lstdefinestyle{mystyle}{%
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue!60!black}\bfseries,
+  commentstyle=\color{green!40!black}\itshape,
+  stringstyle=\color{orange!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  showstringspaces=false
+}
+
+\endinput

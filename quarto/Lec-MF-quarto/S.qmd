@@ -84,6 +84,26 @@ title-slide-attributes:
 - The upper-left 2×2 block is the same four observed ratings from the previous slide. We have added User 2 and Item 2; the question marks are unobserved pairs, not zero ratings.
 :::
 
+## MF mattered in the Netflix Prize {.detail-slide .mf-importance-slide}
+
+<p class="mf-importance-lede">Netflix challenged teams to predict held-out movie ratings from <b>100 million+</b> observed ratings.</p>
+
+<div class="mf-importance-compare">
+<div class="mf-importance-option mf-importance-winner"><span>2009 GRAND PRIZE WINNER</span><b>BellKor’s<br>Pragmatic Chaos</b><p>The winning prediction was a blend of many models.</p></div>
+<div class="mf-importance-option mf-importance-mf"><span>MF’S ROLE</span><b>Multiple factorization models</b><p>The blend included several MF variants, alongside neighborhood models and other predictors.</p></div>
+</div>
+
+<p class="mf-importance-source">Source: <a href="https://www.asc.ohio-state.edu/statistics/dmsl/GrandPrize2009_BPC_BellKor.pdf">Koren, <em>The BellKor Solution to the Netflix Grand Prize</em> (2009)</a>, §§ I, IV.</p>
+
+<p class="ml-takeaway">The bias + dot-product model we will study is the <b>starting point</b> for this influential family. How can it learn to match users with films?</p>
+
+::: {.notes}
+[Teaching]
+- Be precise: MF alone was not the single winning model. BellKor’s Pragmatic Chaos won with a blend; Koren’s report explicitly lists several matrix-factorization variants, plus neighborhood and Restricted Boltzmann Machine predictors.
+- The lecture's bias + dot-product model is a simpler member of that family. The winning factor models added effects such as implicit feedback and time dynamics.
+- Koren, Bell, and Volinsky's 2009 IEEE Computer article also states that the majority of their winning predictor sets were factorization models: https://doi.org/10.1109/MC.2009.263
+:::
+
 ## A shared space for users and films {.detail-slide .mf-intuition-slide}
 
 <p class="mf-intro-line">To picture <b>$K=2$</b>, imagine two possible tastes. Both user and film profiles use the <em>same axes</em>.</p>
@@ -149,7 +169,7 @@ title-slide-attributes:
 
 ## Baseline + dot product predicts a rating {.detail-slide .mf-dot-slide}
 
-<p class="mf-dot-intro">For this calculation, reuse P4's <b>hand-picked, not fitted</b> profiles: $p_0=(1.0,0.2)$, $q_0=(1.5,-1.5)$, and $q_1=(-1.5,1.5)$.</p>
+<p class="mf-dot-intro">For this calculation, reuse the <b>hand-picked, not fitted</b> profiles from “A shared space”: $p_0=(1.0,0.2)$, $q_0=(1.5,-1.5)$, and $q_1=(-1.5,1.5)$.</p>
 
 <div class="mf-dot-setup"><div><span>BASELINE IN THIS TOY EXAMPLE</span><b>$\mu=3,\;a_u=b_i=0$</b></div><div><span>FULL PREDICTION RULE</span><b>$\widehat r_{ui}=\mu+a_u+b_i+p_u^\top q_i$</b></div></div>
 
@@ -162,7 +182,7 @@ title-slide-attributes:
 
 ::: {.notes}
 [Teaching]
-- The vectors listed above are the same invented numbers from P4. They are neither extra observed columns nor estimates fitted from the four-rating table; P5 explained what a real fit would learn.
+- The vectors listed above are the same invented numbers from “A shared space.” They are neither extra observed columns nor estimates fitted from the four-rating table; “Where do the profiles come from?” explained what a real fit would learn.
 - Read each colored row as one coordinate-wise multiplication. Add the two contributions to get the interaction, then add the baseline 3.
 - Ask: what would happen for User 1? The next slide shows both users at once.
 - The values are illustrative continuous predictions; clipping to a rating scale, if used, is a separate prediction policy.
@@ -181,7 +201,7 @@ title-slide-attributes:
 
 ::: {.notes}
 [Teaching]
-- Ask students to calculate User 1 × Item 0 first, using the same rule and item profile as P6. Reveal the two predictions after they answer.
+- Ask students to calculate User 1 × Item 0 first, using the same rule and item profile as the previous slide. Reveal the two predictions after they answer.
 - All profile numbers remain illustrative, not fitted estimates. This slide completes the motivation: the additive baseline cannot reverse a user's relative preference between these two films, while the interaction can.
 :::
 
@@ -274,7 +294,7 @@ $$f_{\theta}(u,i)=\mu+a_u+b_i+p_u^\top q_i$$
 
 ## How does $(u,i)$ become a prediction? {.detail-slide .mf-predict-flow-slide}
 
-<p class="mf-flow-intro">Use P4's <b>hand-picked values</b> to see how stored parameters produce one prediction.</p>
+<p class="mf-flow-intro">Use the <b>hand-picked values</b> from “A shared space” to see how stored parameters produce one prediction.</p>
 
 <div class="mf-flow-input"><span>INPUT</span><b>$(u,i)=(0,0)$</b><em>No rating is supplied</em></div>
 
@@ -298,7 +318,7 @@ $$f_{\theta}(u,i)=\mu+a_u+b_i+p_u^\top q_i$$
 ::: {.notes}
 [Teaching]
 - Click 1: reveal the baseline terms and factor vectors. Ask which values depend on the user ID and which depend on the item ID.
-- Click 2: calculate the two components. The profile numbers are the hand-picked illustration from P4, not estimates fitted from the four-rating table.
+- Click 2: calculate the two components. The profile numbers are the hand-picked illustration from “A shared space,” not estimates fitted from the four-rating table.
 - Before click 3, ask for the final prediction. Reveal 4.2 only after students add 3 and 1.2.
 - This slide shows the prediction path after fit. During fit, observed ratings are used to learn the parameters; during predict, the rating is unknown.
 :::

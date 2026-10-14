@@ -94,7 +94,13 @@
   title: >
     <strong>Matrix Factorization for Recommendation</strong>
   slides: ../quarto/Lec-MF-quarto/S.html
+  notes: ../math/ALS.pdf
   pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_MF.ipynb
+  warmup:
+    label: Start here · Warm-up 04
+    title: Build, fit, predict, select
+    meta: 18–20 min
+    href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_04_ML_I_II_Recap.ipynb
   readings:
     - >
       <a href="https://developers.google.com/machine-learning/recommendation/collaborative/basics">Google: Collaborative filtering and learned user/item profiles</a>

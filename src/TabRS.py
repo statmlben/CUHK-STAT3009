@@ -7,7 +7,9 @@ def rmse(y_true, y_pred):
     return np.sqrt(np.mean((y_true - y_pred)**2))
 
 class GlobalMeanRS(BaseEstimator):
-    def __init__(self):
+    def __init__(self, n_users, n_items):
+        self.n_users = n_users
+        self.n_items = n_items
         self.global_mean_ = 0
 
     def fit(self, X, y):
@@ -18,8 +20,9 @@ class GlobalMeanRS(BaseEstimator):
         return self.global_mean_*np.ones(len(X))
 
 class UserMeanRS(BaseEstimator):
-    def __init__(self, n_users, min_data=3):
+    def __init__(self, n_users, n_items, min_data=3):
         self.n_users = n_users
+        self.n_items = n_items
         self.global_mean_ = 0
         self.min_data = min_data
         self.user_means_ = np.zeros(n_users)
@@ -39,7 +42,8 @@ class UserMeanRS(BaseEstimator):
         return self.user_means_[user_indices]
 
 class ItemMeanRS(BaseEstimator):
-    def __init__(self, n_items, min_data=3):
+    def __init__(self, n_users, n_items, min_data=3):
+        self.n_users = n_users
         self.n_items = n_items
         self.global_mean_ = 0
         self.min_data = min_data

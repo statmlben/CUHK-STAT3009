@@ -98,6 +98,17 @@
 .mf-matrix-side b { display: block; margin-top: 11px; font-size: 30px; }
 .mf-matrix-side p { margin: 10px 0 0 !important; color: #bbb9c0; font-size: 20px !important; }
 
+.mf-importance-lede { margin: 0 0 39px !important; color: #ceccd1; font-size: 28px !important; line-height: 1.35 !important; }
+.mf-importance-compare { display: grid; grid-template-columns: .9fr 1.1fr; gap: 36px; }
+.mf-importance-option { min-height: 296px; padding: 30px 34px; border-top: 5px solid #a65b9f; background: rgba(255,255,255,.035); }
+.mf-importance-mf { border-color: var(--cuhk-gold); background: rgba(221,163,0,.07); }
+.mf-importance-option > span { display: block; color: var(--cuhk-gold); font-family: var(--r-code-font, Menlo, monospace); font-size: 18px; font-weight: 750; letter-spacing: .055em; }
+.mf-importance-option > b { display: block; margin: 23px 0 19px; font-size: 38px; font-weight: 650; line-height: 1.14; }
+.mf-importance-option > p { margin: 0 !important; color: #ceccd1; font-size: 24px !important; line-height: 1.34 !important; }
+.mf-importance-source { margin: 25px 0 0 !important; color: #aaa8ae; font-size: 18px !important; }
+.mf-importance-source a { color: #cfb976; text-decoration: underline; text-underline-offset: 4px; }
+.mf-importance-slide .ml-takeaway { margin-top: 42px !important; font-size: 25px !important; }
+
 .mf-lede { margin: 2px 0 32px !important; color: #ceccd1; font-size: 26px !important; }
 
 .mf-section h2 { max-width: 1220px; font-size: 94px; }
@@ -240,7 +251,7 @@
   font-size: 1em !important;
 }
 
-/* P4–7: keep the same two named teaching axes and numeric profiles across
+/* Keep the same two named teaching axes and numeric profiles across
    intuition, the observed-versus-learned bridge, and pairwise predictions. */
 .mf-intro-line { margin: 2px 0 23px !important; color: #ceccd1; font-size: 25px !important; }
 .mf-axis-key { display: flex; gap: 24px; margin-bottom: 30px; }
