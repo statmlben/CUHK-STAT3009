@@ -58,6 +58,7 @@ description: Fall 2026. Additional lectures will be announced.
                 {% endif %}
             </a>
         {% endif %}
+        {% if lecture.slides or lecture.pdf or lecture.slides2 or lecture.annotated or lecture.video or lecture.notes or lecture.pynb %}
         [
             {% if lecture.slides %}
               <a href="{{ lecture.slides }}" target="_blank">slides</a>
@@ -83,6 +84,7 @@ description: Fall 2026. Additional lectures will be announced.
               | <a href="{{ lecture.pynb }}" target="_blank">pynb</a>
             {% endif %}
         ]
+        {% endif %}
     </td>
     <td>
         {% if lecture.readings %}

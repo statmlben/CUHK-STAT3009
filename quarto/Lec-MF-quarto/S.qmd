@@ -407,6 +407,22 @@ $$f_{\theta}(u,i)=\mu+a_u+b_i+p_u^\top q_i$$
 
 <p class="ml-takeaway">This is <b>alternating least squares (ALS)</b>. The global mean $\mu$ stays fixed at the fitting-data mean while the two blocks alternate.</p>
 
+## ALS follows the loss contours one block at a time {.detail-slide .mf-als-path-slide}
+
+<p class="mf-als-path-lede">A schematic 2D view of the training objective $J$: each contour joins points with the same loss.</p>
+
+<img class="mf-als-contour-plot" src="als-contours.svg" alt="Schematic loss contours with a zigzag ALS path. Purple vertical arrows update the item block while the user block is fixed; gold horizontal arrows update the user block while the item block is fixed. The path moves toward lower loss.">
+
+<div class="mf-als-path-key"><span><i class="mf-als-item-key"></i>Fix $(a,P)$; update $(b,Q)$</span><span><i class="mf-als-user-key"></i>Fix $(b,Q)$; update $(a,P)$</span></div>
+
+<p class="ml-takeaway">Repeat the vertical and horizontal moves. Each axis represents a <b>whole parameter block</b>, not one scalar.</p>
+
+::: {.notes}
+[Teaching]
+- The contours are only a two-dimensional analogy. The real MF objective has many parameters and is not jointly convex.
+- A vertical move holds the user block fixed and optimizes the item block. A horizontal move does the reverse. The objective should not increase after either block update.
+:::
+
 ## Fix the users; update one item {.detail-slide .mf-ridge-slide}
 
 <p class="mf-lede">For item $i$, let $U_i$ be the users who rated it. Hold their $a_u,p_u$ values fixed and fit $b_i,q_i$ together.</p>

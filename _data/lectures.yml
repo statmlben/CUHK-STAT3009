@@ -113,3 +113,12 @@
     - >
       Optional, more technical: <a href="https://jmlr.org/papers/v16/hastie15a.html">Hastie et al.: Matrix Completion and Low-Rank SVD via Fast Alternating Least Squares</a>
       (Section 5: ALS and ridge subproblems)
+
+- date: "2026-10-22"
+  title: >
+    <strong>Matrix Factorization Variants</strong>
+
+- date: "2026-10-29"
+  quiz: >
+    <strong>Mid-term Jupyter Notebook Exercise</strong><br>
+    Baseline models and matrix factorization models

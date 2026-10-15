@@ -205,6 +205,15 @@
 .mf-alternation { margin-top: 44px; padding: 25px 22px; border-left: 4px solid var(--cuhk-gold); font-size: 31px; text-align: center; }
 .mf-alternation i { margin: 0 13px; color: var(--cuhk-gold); font-style: normal; }
 
+.mf-als-path-lede { margin: 0 0 12px !important; color: #ceccd1; font-size: 25px !important; }
+.reveal .slides section .mf-als-contour-plot { display: block; width: 100%; max-width: 1120px; height: auto; max-height: 440px; margin: 0 auto 13px; border: 0; background: none; box-shadow: none; }
+.mf-als-path-key { display: flex; justify-content: center; gap: 75px; color: #e0e1e4; font-size: 24px; }
+.mf-als-path-key span { display: inline-flex; align-items: center; gap: 14px; }
+.mf-als-path-key i { display: inline-block; width: 46px; height: 7px; border-radius: 5px; }
+.mf-als-item-key { background: #df95d7; }
+.mf-als-user-key { background: #e3b337; }
+.mf-als-path-slide .ml-takeaway { margin-top: 29px !important; }
+
 .mf-ridge-formula { margin: 51px 0 38px; padding: 28px 12px; background: rgba(166,91,159,.08); border-top: 4px solid #a65b9f; }
 .mf-ridge-formula .math.display { margin: 0 !important; font-size: 34px; }
 .mf-ridge-map { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 25px; }
