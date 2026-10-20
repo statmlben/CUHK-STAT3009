@@ -1,3 +1,5 @@
+# Archived schedule from a previous semester, including its examination arrangements.
+# For current assessment details, see _pages/grading.md.
 - date: Th 09/04
   lecturer: 
   title: >

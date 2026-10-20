@@ -6,6 +6,11 @@ html, body {
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 img {
   max-width: none;
 }

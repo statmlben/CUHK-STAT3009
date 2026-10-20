@@ -9,6 +9,10 @@ This is a repository on code and notebook illustration for CUHK-STAT3009.
 - 💻 **GitHub**: [https://github.com/statmlben/CUHK-STAT3009](https://github.com/statmlben/CUHK-STAT3009)
 - ⏲️ **Course Page**: [https://www.bendai.org/CUHK-STAT3009/](https://www.bendai.org/CUHK-STAT3009/)
 
+## Assessment
+
+Homework contributes **15%**, the **midterm Jupyter Notebook examination 40%**, and the final in-class coding quiz **45%**. The midterm covers the workflow from raw data to rating prediction using supplied model implementations and a submission helper. Students may bring **two A4 sheets of notes**. During the examination, internet access is restricted to the cloud submission service used by `submit()`; online notebooks and documentation will be unavailable. See the [grading page](https://www.bendai.org/CUHK-STAT3009/grading/) for assessment details.
+
 ## Notebook
 
 - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/19N428-FQd8PfG4JYsa9LbDOeZRfVTDlR?usp=sharing) | Software preparation 

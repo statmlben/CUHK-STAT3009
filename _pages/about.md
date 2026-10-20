@@ -27,6 +27,10 @@ In the AI era, mathematical and coding foundations help us understand what a mod
 
 ***
 
+📝 **Midterm examination (40%)**: In-class **Jupyter Notebook exercise** on **Thu 10/29**, covering the workflow from raw data to rating prediction. See [Grading]({{ '/grading/' | relative_url }}) for assessment details.
+
+***
+
 - 📅 **Semester:** Fall 2026
 - ⏲️ **Lectures:** Th 12:30PM - 3:15PM
 - 🎒 **Location:** Mong Man Wai Bldg 710

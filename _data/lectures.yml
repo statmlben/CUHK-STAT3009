@@ -4,7 +4,7 @@
   title: >
     <strong>Course Overview &amp; Software Setup</strong>
   slides: ../quarto/Lec-overview/S.html
-  pdf: ../quarto/Lec-overview/S.pdf
+  # The older PDF has outdated assessment rules; use the updated HTML slides.
   pynb: https://colab.research.google.com/drive/19N428-FQd8PfG4JYsa9LbDOeZRfVTDlR?usp=sharing
   readings:
     - <a href="https://cs231n.github.io/python-numpy-tutorial/">Python NumPy Tutorial - CS231n Stanford</a>

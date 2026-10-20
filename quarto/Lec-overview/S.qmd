@@ -84,12 +84,12 @@ title-slide-attributes:
 - Section framing adapted from the teaching modes and assessment design in the user-provided `slides/Lec-overview/S.tex`.
 :::
 
-## You will learn, build, and compete {.rhythm-slide}
+## You will learn, build, and evaluate {.rhythm-slide}
 
 <div class="rhythm">
   <div><span>01</span><h3>LEARN</h3><p>Concepts in slides and notes</p></div>
   <div><span>02</span><h3>BUILD</h3><p>Live Python in Colab and Jupyter</p></div>
-  <div><span>03</span><h3>COMPETE</h3><p>In-class practice and Kaggle</p></div>
+  <div><span>03</span><h3>EVALUATE</h3><p>Notebook exercises and model comparison</p></div>
 </div>
 
 <p class="link-line"><a href="https://www.bendai.org/CUHK-STAT3009/">Course homepage ↗</a><span>·</span><a href="https://github.com/statmlben/CUHK-STAT3009">GitHub repository ↗</a></p>
@@ -130,13 +130,15 @@ Python-library tutorials are provided when we need them.
 
 <div class="assessment">
   <div class="minor"><b>15%</b><span>Homework</span></div>
-  <div class="minor"><b>40%</b><span>Open-book<br>in-class Kaggle</span><span class="assessment-timing">Approximately mid-semester</span></div>
+  <div class="minor"><b>40%</b><span>Midterm Jupyter<br>Notebook examination</span><span class="assessment-timing">Approximately mid-semester<br>Two A4 sheets of notes</span></div>
   <div class="major"><b>45%</b><span>Final in-class<br>coding quiz</span><span class="assessment-timing">Last class of the semester</span></div>
 </div>
 
+<p class="link-line"><a href="https://www.bendai.org/CUHK-STAT3009/grading/">Midterm format and examination rules</a></p>
+
 ::: {.notes}
 [Sources]
-- Instructor-updated assessment weights and timing: homework 15%; open-book in-class Kaggle 40%, approximately mid-semester; final in-class coding quiz 45%, in the last class of the semester.
+- Instructor-provided assessment details: homework 15%, midterm Jupyter Notebook examination 40% approximately mid-semester, and final in-class coding quiz 45% in the last class of the semester. The midterm supplies model implementations and the submission helper. Students may bring two A4 sheets of notes. Internet access is restricted to the cloud submission service used by submit(). The grading page gives the full mark distribution and examination rules.
 :::
 
 ## Use AI as a tutor—not a substitute for understanding {.ai-use-slide}

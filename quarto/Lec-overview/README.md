@@ -10,7 +10,9 @@ Software preparation links directly to the verified course Jupyter notebook in C
 
 The recommendation section uses two concise pages for the online/offline system and the course's modeling scope. Netflix examples distinguish observed pairs from cold-start users and movies, separate training/validation/test roles, and rank candidates that the example user has not rated. Numbers and candidate eligibility were checked against the local Netflix CSV files. Chinese speaker notes support the new conceptual explanations.
 
-Assessment weights are homework 15%, open-book in-class Kaggle 40% approximately mid-semester, and the final coding quiz 45% in the last class. The repository's grading page uses the same weights and timing.
+Assessment weights are homework 15%, the midterm Jupyter Notebook examination 40% approximately mid-semester, and the final coding quiz 45% in the last class. The midterm supplies model implementations and the submission helper. Students may bring two A4 sheets of notes; examination internet access is restricted to the cloud submission service used by `submit()`. See the [grading page](https://www.bendai.org/CUHK-STAT3009/grading/) for assessment details and examination rules.
+
+Use the updated **HTML slides** for current assessment information. The existing `S.pdf` predates the midterm format change and is no longer linked from the course schedule.
 
 Brand-colour reference: CUHK visual-identity materials list purple as RGB 117/15/109 and gold as RGB 221/163/0: https://www.50.cuhk.edu.hk/en/logo
 

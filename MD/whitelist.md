@@ -1,64 +1,24 @@
-# STAT3009 Lab Quiz - Whitelist
+# STAT3009 Midterm Examination: Network Access
 
-During the lab quiz, you are allowed to access the following official documentation websites:
+During the midterm Jupyter Notebook examination, **internet access is restricted to the whitelisted cloud submission service used by the supplied `submit()` helper**.
 
-## Search Engine
+## Allowed access
 
-- **Yahoo search**  
-  https://search.yahoo.com
+- Use the supplied `submit()` helper to submit test predictions to the cloud submission service.
 
-## Python and Core Libraries
+## Unavailable during the examination
 
-- **Python Official Documentation**  
-  https://docs.python.org
-- **NumPy Documentation**  
-  https://numpy.org/doc
-- **Pandas Documentation**  
-  https://pandas.pydata.org/docs
-- **SciPy Documentation**  
-  https://scipy.org/doc
-- **Scikit-learn Documentation**  
-  https://scikit-learn.org/stable/documentation.html
-- **Matplotlib Documentation**  
-  https://matplotlib.org/stable
-- **Seaborn Documentation**  
-  https://seaborn.pydata.org
-- **Tensorflow Documentation**  
-  https://www.tensorflow.org/
-- **Keras Documentation**  
-  https://keras.io/
+Other websites will be unavailable, including:
 
-## University Resources
+- Online notebooks such as Google Colab.
+- Online documentation for Python, pandas, NumPy, scikit-learn and other libraries.
+- Search engines, GitHub, the course website and discussion websites.
+- ChatGPT and other online AI tools.
 
-- **CUHK Blackboard**  
-  https://blackboard.cuhk.edu.hk
+The previous lab quiz whitelist allowing documentation and other websites **does not apply to this midterm**.
 
-- **CUHK Main Site**  
-  https://cuhk.edu.hk
+## Preparation and permitted notes
 
-- **ITSC**  
-  https://itsc.cuhk.edu.hk
+The course notebooks are publicly available for preparation before the examination. You may bring **two A4 sheets of notes (cheat sheets)**. Mobile phones and other personal electronic devices are prohibited. Complete the examination independently.
 
-## Course Materials
-
-- **STAT3009 Course Website**  
-  https://www.bendai.org/CUHK-STAT3009/
-
-- **GitHub Repository**   
-  https://github.com
-
-- **Jupyter Documentation**  
-  https://jupyter.org
-
-- **Stack Overflow** and its *sub-forums*  
-  https://stackoverflow.com
-
-- **Wikipedia**  
-  https://wikipedia.org
-
-- **Catbox**  
-  https://catbox.moe/
-
----
-
-**Note:** Access to other websites (including ChatGPT and other AI tools) is **NOT allowed** during the quiz.
+See the [grading page](https://www.bendai.org/CUHK-STAT3009/grading/) for the examination rules.

@@ -23,8 +23,11 @@ description: Fall 2026. Additional lectures will be announced.
 {% endif %}
 {% assign prev_date = lecture_date %}
 
-<tr class="{{ event_type }}">
-    <th scope="row">{{ lecture.date | date: "%a %m/%d" }}</th>
+<tr class="{{ event_type }}{% if lecture.quiz %} schedule-quiz{% endif %}">
+    <th scope="row">
+        <span class="schedule-date-day">{{ lecture.date | date: "%a" }}</span>
+        <span class="schedule-date-value">{{ lecture.date | date: "%m/%d" }}</span>
+    </th>
     {% if lecture.recitation and lecture.recitation != empty %}
     {% assign recitation_count = recitation_count | plus: 1 %}
     {%endif%}
@@ -35,58 +38,49 @@ description: Fall 2026. Additional lectures will be announced.
         {% assign skip_classes = skip_classes | plus: 1 %}
         <td colspan="4" align="center">{{ lecture.quiz }}<p align="right">{{ lecture.logistics }}</p></td>
     {% else %}
-    <td>
+    <td class="schedule-lecture">
         {% if lecture.title %}
-            Lecture #{{ forloop.index | minus: current_module | minus: skip_classes | minus: recitation_count}}
-            {% if lecture.lecturer %}({{ lecture.lecturer }}){% endif %}:
-        {% endif %}
-        {% if lecture.title %}
-            <br />{{ lecture.title }}<br />
+            <span class="schedule-lecture-number">Lecture #{{ forloop.index | minus: current_module | minus: skip_classes | minus: recitation_count }}{% if lecture.lecturer %} · {{ lecture.lecturer }}{% endif %}</span>
+            <div class="schedule-lecture-title">{{ lecture.title }}</div>
         {% endif %}
         {% if lecture.recitation %}
-            Recitation #{{ recitation_count }}:
+            <span class="schedule-lecture-number">Recitation #{{ recitation_count }}</span>
+            <div class="schedule-lecture-title">{{ lecture.recitation }}</div>
         {% endif %}
-        {% if lecture.recitation %}
-            <br />{{ lecture.recitation }}<br />
+        {% if lecture.pynb %}
+            <a class="schedule-notebook" href="{{ lecture.pynb }}" target="_blank">Open notebook</a>
         {% endif %}
-        {% if lecture.warmup %}
-            <a class="schedule-warmup" href="{{ lecture.warmup.href }}" target="_blank">
-                <span class="schedule-warmup__label">{{ lecture.warmup.label | default: "Warm-up" }}</span>
-                <strong class="schedule-warmup__title">{{ lecture.warmup.title }}</strong>
-                {% if lecture.warmup.meta %}
-                    <small class="schedule-warmup__meta">{{ lecture.warmup.meta }}</small>
-                {% endif %}
-            </a>
-        {% endif %}
-        {% if lecture.slides or lecture.pdf or lecture.slides2 or lecture.annotated or lecture.video or lecture.notes or lecture.pynb %}
-        [
+        {% if lecture.slides or lecture.pdf or lecture.slides2 or lecture.annotated or lecture.video or lecture.notes %}
+        <div class="schedule-materials">
             {% if lecture.slides %}
-              <a href="{{ lecture.slides }}" target="_blank">slides</a>
+              <a href="{{ lecture.slides }}" target="_blank">Slides</a>
             {% endif %}
             {% if lecture.pdf %}
-              | <a href="{{ lecture.pdf }}" target="_blank">PDF</a>
+              <a href="{{ lecture.pdf }}" target="_blank">PDF</a>
             {% endif %}
             {% if lecture.slides2 %}
-              | <a href="{{ lecture.slides2 }}" target="_blank">slides 2</a>
+              <a href="{{ lecture.slides2 }}" target="_blank">Slides 2</a>
             {% endif %}
             {% if lecture.annotated %}
-              (<a href="{{ lecture.annotated }}" target="_blank">annotated</a>)
+              <a href="{{ lecture.annotated }}" target="_blank">Annotated</a>
             {% endif %}
             {% if lecture.video %}
-            | <a href="{{ lecture.video }}" target="_blank">video</a>
-            {% else %}
-            <!-- | video -->
+              <a href="{{ lecture.video }}" target="_blank">Video</a>
             {% endif %}
             {% if lecture.notes %}
-              <a href="{{ lecture.notes }}" target="_blank">notes</a>
+              <a href="{{ lecture.notes }}" target="_blank">Notes</a>
             {% endif %}
-            {% if lecture.pynb %}
-              | <a href="{{ lecture.pynb }}" target="_blank">pynb</a>
-            {% endif %}
-        ]
+        </div>
         {% endif %}
     </td>
-    <td>
+    <td class="schedule-readings">
+        {% if lecture.warmup %}
+            <a class="schedule-warmup" href="{{ lecture.warmup.href }}" target="_blank">
+                <span class="schedule-warmup__label">Warm-up</span>
+                <span class="schedule-warmup__title">{{ lecture.warmup.title }}</span>
+                {% if lecture.warmup.meta %}<span class="schedule-warmup__meta">{{ lecture.warmup.meta }}</span>{% endif %}
+            </a>
+        {% endif %}
         {% if lecture.readings %}
         <ul>
         {% for reading in lecture.readings %}
@@ -95,7 +89,7 @@ description: Fall 2026. Additional lectures will be announced.
         </ul>
         {% endif %}
     </td>
-    <td>
+    <td class="schedule-logistics">
         <p>{{ lecture.logistics }}</p>
     </td>
     {% endif %}
