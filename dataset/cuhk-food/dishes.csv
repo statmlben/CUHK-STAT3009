@@ -1,0 +1,184 @@
+dish_id,dish,canteen_id,canteen,price,category,spicy,fried,healthy
+0,三餸飯,0,New Asia College Student Canteen,35.0,Rice,0,0,0
+1,兩餸飯,0,New Asia College Student Canteen,30.0,Rice,0,0,0
+2,招牌黑椒汁豬扒/雞扒飯,0,New Asia College Student Canteen,54.0,Rice,0,0,0
+3,招牌黑椒汁野菜飯,0,New Asia College Student Canteen,40.0,Vegetarian,0,0,1
+4,燒汁海鮮炒飯,0,New Asia College Student Canteen,48.0,Rice,0,0,0
+5,自選米線,0,New Asia College Student Canteen,28.0,Noodles,0,0,0
+6,越式扎肉米線,0,New Asia College Student Canteen,42.0,Noodles,0,0,0
+7,招牌豬軟骨米線,0,New Asia College Student Canteen,45.0,Noodles,0,0,0
+8,慢煮雞胸肉讚岐烏冬配麻藥蛋(凍食),0,New Asia College Student Canteen,58.0,Noodles,0,0,0
+9,慢煮雞胸肉飯(凍食),0,New Asia College Student Canteen,48.0,Rice,0,0,0
+10,柚子醬油讚岐烏冬配流心蛋(凍食),0,New Asia College Student Canteen,28.0,Noodles,0,0,0
+11,花椒川味炸雞飯,0,New Asia College Student Canteen,48.0,Rice,1,1,0
+12,蜂蜜牛油炸雞飯,0,New Asia College Student Canteen,52.0,Rice,0,1,0
+13,柚子蜂蜜炸雞飯,0,New Asia College Student Canteen,50.0,Rice,0,1,0
+14,招牌醬炸雞飯,0,New Asia College Student Canteen,60.0,Rice,0,1,0
+15,韓國甜辣炸雞飯,0,New Asia College Student Canteen,52.0,Rice,1,1,0
+16,Omakase關東煮烏冬,0,New Asia College Student Canteen,56.0,Noodles,0,0,0
+17,招牌漢堡,0,New Asia College Student Canteen,38.0,Burgers & Sandwiches,0,0,0
+18,他他炸魚柳漢堡,0,New Asia College Student Canteen,38.0,Burgers & Sandwiches,0,1,0
+19,炸雞漢堡,0,New Asia College Student Canteen,42.0,Burgers & Sandwiches,0,1,0
+20,黑武士漢堡(黑松露),0,New Asia College Student Canteen,48.0,Burgers & Sandwiches,0,0,0
+21,邪惡芝士漢堡,0,New Asia College Student Canteen,46.0,Burgers & Sandwiches,0,0,0
+22,招牌雙層漢堡,0,New Asia College Student Canteen,58.0,Burgers & Sandwiches,0,0,0
+23,招牌熱狗,0,New Asia College Student Canteen,26.0,Burgers & Sandwiches,0,0,0
+24,夏威夷熱狗,0,New Asia College Student Canteen,36.0,Burgers & Sandwiches,0,0,0
+25,芝士肉醬熱狗,0,New Asia College Student Canteen,39.0,Burgers & Sandwiches,0,0,0
+26,BBQ滋味煙肉漢堡,0,New Asia College Student Canteen,44.0,Burgers & Sandwiches,0,0,0
+27,Bc'Griddles 熱香餅漢堡,0,New Asia College Student Canteen,36.0,Burgers & Sandwiches,0,0,0
+28,黑松露大啡菇漢堡,0,New Asia College Student Canteen,45.0,Burgers & Sandwiches,0,0,0
+29,大薯條,0,New Asia College Student Canteen,18.0,Snacks,0,0,0
+30,花椒川味薯條,0,New Asia College Student Canteen,24.0,Snacks,1,0,0
+31,招牌薯條,0,New Asia College Student Canteen,28.0,Snacks,0,0,0
+32,芝士肉醬薯條,0,New Asia College Student Canteen,32.0,Snacks,0,0,0
+33,邪惡芝士薯條,0,New Asia College Student Canteen,30.0,Snacks,0,0,0
+34,一餸飯,1,United College Student Canteen,26.0,Rice,0,0,0
+35,兩餸飯,1,United College Student Canteen,29.0,Rice,0,0,0
+36,三餸飯,1,United College Student Canteen,33.0,Rice,0,0,0
+37,單拼米線,1,United College Student Canteen,32.0,Noodles,0,0,0
+38,雙拼米線,1,United College Student Canteen,36.0,Noodles,0,0,0
+39,三拼米線,1,United College Student Canteen,40.0,Noodles,0,0,0
+40,雞扒田園沙律,1,United College Student Canteen,36.0,Salad,0,0,1
+41,煙三文魚田園沙律,1,United College Student Canteen,40.0,Salad,0,0,1
+42,黑胡椒煙燻火腿田園沙律,1,United College Student Canteen,36.0,Salad,0,0,1
+43,日式咖哩素魚塊飯,1,United College Student Canteen,36.0,Rice,0,0,1
+44,香酥雞辣汁磨菇飯,1,United College Student Canteen,40.0,Rice,1,0,0
+45,雞扒辣汁磨菇飯,1,United College Student Canteen,37.0,Rice,1,0,0
+46,煙三文魚辣汁磨菇飯,1,United College Student Canteen,43.0,Rice,1,0,0
+47,特製辣汁蘑菇飯,1,United College Student Canteen,30.0,Rice,1,0,0
+48,雞扒配餐肉飯,1,United College Student Canteen,32.0,Rice,0,0,0
+49,豬扒配腸仔飯,1,United College Student Canteen,36.0,Rice,0,0,0
+50,日式咖喱吉列雞扒拼春卷扒飯,1,United College Student Canteen,39.0,Rice,0,1,0
+51,日式咖喱流心芝士雞肉漢堡拼春卷飯,1,United College Student Canteen,39.0,Rice,0,0,0
+52,日式咖喱吉列豬扒拼春卷扒飯,1,United College Student Canteen,39.0,Rice,0,1,0
+53,日式咖喱唐揚雞拼春卷飯,1,United College Student Canteen,39.0,Rice,0,0,0
+54,蔥油豬扒煎蛋飯,1,United College Student Canteen,43.0,Rice,0,0,0
+55,蔥油雞扒腸仔飯,1,United College Student Canteen,43.0,Rice,0,0,0
+56,鮮茄滑蛋飯,3,CUHK Central Canteen,36.0,Rice,0,0,0
+57,日式三絲炒烏冬,3,CUHK Central Canteen,40.7,Noodles,0,0,0
+58,大干鷄丁飯,3,CUHK Central Canteen,45.7,Rice,0,0,0
+59,蜜汁叉燒飯,3,CUHK Central Canteen,25.9,Rice,0,0,0
+60,譽香雞飯,3,CUHK Central Canteen,25.9,Rice,0,0,0
+61,豉油皇飯,3,CUHK Central Canteen,25.9,Rice,0,0,0
+62,叉燒紅腸飯,3,CUHK Central Canteen,30.6,Rice,0,0,0
+63,叉燒切雞飯,3,CUHK Central Canteen,30.6,Rice,0,0,0
+64,叉燒油雞飯,3,CUHK Central Canteen,30.6,Rice,0,0,0
+65,切雞紅腸飯,3,CUHK Central Canteen,30.6,Rice,0,0,0
+66,油雞紅腸飯,3,CUHK Central Canteen,30.6,Rice,0,0,0
+67,油雞切雞飯,3,CUHK Central Canteen,30.6,Rice,0,0,0
+68,香濃咖喱牛腩飯,3,CUHK Central Canteen,46.9,Rice,0,0,0
+69,香濃咖喱雞飯,3,CUHK Central Canteen,39.7,Rice,0,0,0
+70,兩餸飯,3,CUHK Central Canteen,28.0,Rice,0,0,0
+71,三餸飯,3,CUHK Central Canteen,35.2,Rice,0,0,0
+72,焗薯拼吉列豬扒餐,4,CUHK Noodle House,58.0,Rice,0,1,0
+73,焗薯拼油雞脾餐,4,CUHK Noodle House,58.0,Rice,0,0,0
+74,白汁碎蛋焗薯餐,4,CUHK Noodle House,48.0,Rice,0,0,0
+75,兩餸雲南米線,4,CUHK Noodle House,42.5,Noodles,0,0,0
+76,三餸雲南米線,4,CUHK Noodle House,47.1,Noodles,0,0,0
+77,吉野牛肉大碗飯,4,CUHK Noodle House,48.7,Rice,0,0,0
+78,豬軟骨鹵水肉燥飯,4,CUHK Noodle House,48.7,Rice,0,0,0
+79,韓式泡菜炸雞扒飯,4,CUHK Noodle House,48.0,Rice,1,1,0
+80,紅燒魚塊豆腐煲餐,4,CUHK Noodle House,51.8,Rice,0,0,0
+81,黑椒豬手煲餐,4,CUHK Noodle House,51.8,Rice,0,0,0
+82,香辣雞球煲配飯餐,4,CUHK Noodle House,51.8,Rice,1,0,0
+83,金蒜香芋肉排煲餐,4,CUHK Noodle House,51.8,Rice,0,0,0
+84,宮保雞丁,4,CUHK Noodle House,51.8,Others,0,0,0
+85,芝士豬柳漢堡+沙律+薯條,5,Pommerenke Student Centre Coffee Shop,32.7,Burgers & Sandwiches,0,0,1
+86,古到魚柳長包+沙律+薯條,5,Pommerenke Student Centre Coffee Shop,35.5,Burgers & Sandwiches,0,0,1
+87,烤雞肉三文治,5,Pommerenke Student Centre Coffee Shop,25.1,Burgers & Sandwiches,0,0,0
+88,鮮菜三文治,5,Pommerenke Student Centre Coffee Shop,14.4,Burgers & Sandwiches,0,0,0
+89,珍寶腸大熱約+沙律+薯條,5,Pommerenke Student Centre Coffee Shop,35.5,Salad,0,0,1
+90,沙爹牛肉香腸長包+沙律+薯條,5,Pommerenke Student Centre Coffee Shop,38.0,Burgers & Sandwiches,0,0,1
+91,時菜什錦湯米線,5,Pommerenke Student Centre Coffee Shop,38.8,Noodles,0,0,1
+92,素菜扁意粉,5,Pommerenke Student Centre Coffee Shop,25.0,Vegetarian,0,0,1
+93,越南烤肉包+沙律+薯條,5,Pommerenke Student Centre Coffee Shop,37.7,Burgers & Sandwiches,0,0,1
+94,豬扒珍寶腸扁意粉,5,Pommerenke Student Centre Coffee Shop,35.5,Noodles,0,0,0
+95,越式火車頭什錦湯河粉,5,Pommerenke Student Centre Coffee Shop,36.6,Noodles,0,0,1
+96,仿鮑片豆腐卜雜菜湯河粉,5,Pommerenke Student Centre Coffee Shop,26.6,Vegetarian,0,0,1
+97,越南胡椒扎肉包+沙律+薯條,5,Pommerenke Student Centre Coffee Shop,38.8,Burgers & Sandwiches,0,0,1
+98,薄牛扒煎蛋扁意粉,5,Pommerenke Student Centre Coffee Shop,34.7,Noodles,0,0,0
+99,魚三寶湯米線,5,Pommerenke Student Centre Coffee Shop,29.4,Noodles,0,0,1
+100,時菜墨魚丸墨魚卷湯米線,5,Pommerenke Student Centre Coffee Shop,30.8,Noodles,0,0,1
+101,麻辣四川牛柳粒,5,Pommerenke Student Centre Coffee Shop,46.5,Others,1,0,0
+102,豬扒扁意粉,5,Pommerenke Student Centre Coffee Shop,37.7,Noodles,0,0,0
+103,麻辣牛肉米線,5,Pommerenke Student Centre Coffee Shop,29.4,Noodles,1,0,0
+104,雞扒古列魚柳煎蛋扁意粉,5,Pommerenke Student Centre Coffee Shop,36.2,Noodles,0,0,0
+105,焗鮮茄肉醬意粉,5,Pommerenke Student Centre Coffee Shop,30.4,Noodles,0,0,0
+106,日式茄子肉絲扁意粉,5,Pommerenke Student Centre Coffee Shop,31.0,Noodles,0,0,0
+107,炸雞髀扁意粉,5,Pommerenke Student Centre Coffee Shop,31.6,Noodles,0,1,0
+108,炸雞翼扁意粉,5,Pommerenke Student Centre Coffee Shop,31.6,Noodles,0,1,0
+109,雞扒香腸扁意粉,5,Pommerenke Student Centre Coffee Shop,27.7,Noodles,0,0,0
+110,日式炸雞肉定食,6,CUHK Paper & Coffee,46.0,Rice,0,1,0
+111,吉列豬扒定食,6,CUHK Paper & Coffee,49.0,Rice,0,1,0
+112,炸蝦野菜天婦羅定食,6,CUHK Paper & Coffee,60.0,Rice,0,1,1
+113,汁煮日本油甘魚定食,6,CUHK Paper & Coffee,79.0,Rice,0,0,0
+114,手打牛肉漢堡扒溫泉蛋定食,6,CUHK Paper & Coffee,85.0,Rice,0,0,0
+115,芝麻醬牛肉稲庭烏冬,6,CUHK Paper & Coffee,59.0,Noodles,0,0,0
+116,關東煮牛肉湯烏冬,6,CUHK Paper & Coffee,59.0,Noodles,0,0,1
+117,味噌野菜湯烏冬,6,CUHK Paper & Coffee,43.0,Vegetarian,0,0,1
+118,味噌豚肉湯烏冬,6,CUHK Paper & Coffee,49.0,Noodles,0,0,1
+119,手工肉醬芝士撈丁,6,CUHK Paper & Coffee,48.0,Noodles,0,0,0
+120,滑蛋雞肉丼,6,CUHK Paper & Coffee,43.0,Rice,0,0,0
+121,滑蛋醬油菇丼,6,CUHK Paper & Coffee,43.0,Rice,0,0,0
+122,薑蔥燒豬五花丼,6,CUHK Paper & Coffee,44.0,Rice,0,0,0
+123,壽喜燒牛肉丼,6,CUHK Paper & Coffee,59.0,Rice,0,0,0
+124,蒲燒鰻魚丼,6,CUHK Paper & Coffee,69.0,Rice,0,0,0
+125,蒜香牛油燒牛小扒丼,6,CUHK Paper & Coffee,89.0,Rice,0,0,0
+126,蘭苑三文治,7,Orchid Lodge Restaurant,38.0,Burgers & Sandwiches,0,0,0
+127,博士三文治,7,Orchid Lodge Restaurant,37.0,Burgers & Sandwiches,0,0,0
+128,黑松露炒蛋配牛油厚多士,7,Orchid Lodge Restaurant,40.0,Cafe & Dessert,0,0,0
+129,超級五層厚西多士,7,Orchid Lodge Restaurant,39.0,Cafe & Dessert,0,0,0
+130,雪糕香蕉船,7,Orchid Lodge Restaurant,44.0,Cafe & Dessert,0,0,0
+131,蘭苑自家製各式蛋糕,7,Orchid Lodge Restaurant,39.0,Cafe & Dessert,0,0,0
+132,自家製鮮牛肉漢堡包,7,Orchid Lodge Restaurant,40.0,Burgers & Sandwiches,0,0,0
+133,日式炸魚柳漢堡包薯條,7,Orchid Lodge Restaurant,40.0,Burgers & Sandwiches,0,1,0
+134,有機大蘑菇芝士漢堡包,7,Orchid Lodge Restaurant,42.0,Burgers & Sandwiches,0,0,0
+135,蜂蜜香草雞髀拌芝士薯蓉,7,Orchid Lodge Restaurant,39.0,Others,0,0,0
+136,香港小食:咖哩魚蛋炸燒賣花生醬夾餅,7,Orchid Lodge Restaurant,39.0,Snacks,0,1,0
+137,迷你芝士肉醬燴意粉或薯蓉,7,Orchid Lodge Restaurant,36.0,Noodles,0,0,0
+138,精選雜菜雞蛋湯烏冬,7,Orchid Lodge Restaurant,36.0,Noodles,0,0,1
+139,廚師精選雜菜湯烏冬或意粉,7,Orchid Lodge Restaurant,39.0,Vegetarian,0,0,1
+140,香滑炒蛋豬仔包配鮮奶麥皮,7,Orchid Lodge Restaurant,32.0,Burgers & Sandwiches,0,0,0
+141,香茅豬扒或香煎雞蛋火腿豬骨濃湯通粉,7,Orchid Lodge Restaurant,35.0,Noodles,0,0,1
+142,香煎漢堡扒火腿拼香滑炒蛋配牛油鬆餅,7,Orchid Lodge Restaurant,33.0,Burgers & Sandwiches,0,0,0
+143,煙三文魚炒蛋配牛油鬆餅,7,Orchid Lodge Restaurant,38.0,Cafe & Dessert,0,0,0
+144,煙肉熱香餅香滑炒蛋配薯餅,7,Orchid Lodge Restaurant,36.0,Others,0,0,0
+145,香煎雞扒拼香滑炒蛋配鬆餅,7,Orchid Lodge Restaurant,34.0,Cafe & Dessert,0,0,0
+146,香脆吉列魚柳配炒蛋鬆餅,7,Orchid Lodge Restaurant,34.0,Cafe & Dessert,0,1,0
+147,意式蕃茄茸燴雜菜,2,Chung Chi College Student Canteen,39.0,Vegetarian,0,0,1
+148,咖喱素肉千層拉餅,2,Chung Chi College Student Canteen,39.0,Others,0,0,1
+149,燒烤汁燒春雞半隻,2,Chung Chi College Student Canteen,39.0,Others,0,0,0
+150,芝士鲜茄焗吉列豬扒飯,2,Chung Chi College Student Canteen,40.0,Rice,0,1,0
+151,煎蛋滷牛肉配白飯時蔬,2,Chung Chi College Student Canteen,42.0,Rice,0,0,0
+152,蒜蓉洋葱鴛鴦烩扒飯,2,Chung Chi College Student Canteen,49.0,Rice,0,0,0
+153,元貝蟲草花蒸排骨飯,2,Chung Chi College Student Canteen,39.0,Rice,0,0,1
+154,XO醬雜錦海鮮炒飯,2,Chung Chi College Student Canteen,40.0,Rice,0,0,0
+155,鹹酸菜豬肚燉雞湯配絲苗白飯及油菜,2,Chung Chi College Student Canteen,52.0,Rice,0,0,1
+156,一餸兩餸雲南米線,2,Chung Chi College Student Canteen,34.0,Noodles,0,0,0
+157,兩餸雲南米線,2,Chung Chi College Student Canteen,40.0,Noodles,0,0,0
+158,三餸雲南米線,2,Chung Chi College Student Canteen,46.0,Noodles,0,0,0
+159,照燒汁牛肉牛角飽伴薯條,2,Chung Chi College Student Canteen,39.0,Burgers & Sandwiches,0,0,0
+160,芝士火腿牛角飽伴薯條,2,Chung Chi College Student Canteen,39.0,Burgers & Sandwiches,0,0,0
+161,炸魚柳牛角飽伴黑松露沙律醬,2,Chung Chi College Student Canteen,38.0,Burgers & Sandwiches,0,1,1
+162,午餐肉煎蛋飯,2,Chung Chi College Student Canteen,28.0,Rice,0,0,0
+163,火腿片煎蛋飯,2,Chung Chi College Student Canteen,28.0,Rice,0,0,0
+164,粟米肉片飯,2,Chung Chi College Student Canteen,28.0,Rice,0,0,0
+165,兩餸飯,2,Chung Chi College Student Canteen,31.0,Rice,0,0,0
+166,三餸飯,2,Chung Chi College Student Canteen,35.0,Rice,0,0,0
+167,四餸飯,2,Chung Chi College Student Canteen,39.0,Rice,0,0,0
+168,泡菜豚肉溫泉蛋石鍋丼定食,2,Chung Chi College Student Canteen,56.0,Rice,1,0,0
+169,照燒雞扒丼定食,2,Chung Chi College Student Canteen,50.0,Rice,0,0,0
+170,生薑汁燒牛肉丼定食,2,Chung Chi College Student Canteen,52.0,Rice,0,0,0
+171,玉子燒鰻魚丼定食,2,Chung Chi College Student Canteen,53.0,Rice,0,0,0
+172,照燒汁牛漢堡丼定食,2,Chung Chi College Student Canteen,56.0,Rice,0,0,0
+173,咖喱唐揚雞丼定食,2,Chung Chi College Student Canteen,52.0,Rice,0,0,0
+174,咖喱吉列豬扒丼定食,2,Chung Chi College Student Canteen,54.0,Rice,0,1,0
+175,壽喜燒牛肉鍋定食,2,Chung Chi College Student Canteen,59.0,Rice,0,0,0
+176,泡菜豚肉鍋定食,2,Chung Chi College Student Canteen,55.0,Rice,1,0,0
+177,雜菌野菜鍋定食,2,Chung Chi College Student Canteen,50.0,Vegetarian,0,0,1
+178,日式叉燒湯拉麵/烏冬,2,Chung Chi College Student Canteen,53.0,Noodles,0,0,1
+179,日式豚軟骨湯拉麵/烏冬,2,Chung Chi College Student Canteen,52.0,Noodles,0,0,1
+180,照燒雞唐揚雞湯拉麵/烏冬,2,Chung Chi College Student Canteen,50.0,Noodles,0,0,1
+181,芝士吉列豬扒湯拉麵/烏冬,2,Chung Chi College Student Canteen,55.0,Noodles,0,1,1
+182,中華胡麻醬涼烏龍麵,2,Chung Chi College Student Canteen,52.0,Noodles,0,0,0

@@ -1,0 +1,9 @@
+canteen_id,canteen,short_name,image,openrice_id,openrice_taste,openrice_reviews
+0,New Asia College Student Canteen,New Asia,images/new-asia-canteen.jpg,,,
+1,United College Student Canteen,United,images/united-canteen.jpg,,,
+2,Chung Chi College Student Canteen,Chung Chi,images/chung-chi-canteen.jpg,23555,3.37,30
+3,CUHK Central Canteen,CUHK Central Canteen,images/cuhk-central-canteen.jpg,,,
+4,CUHK Noodle House,CUHK Noodle House,images/cuhk-noodle-house.jpg,,,
+5,Pommerenke Student Centre Coffee Shop,Pommerenke,images/pommerenke-coffee.jpg,,,
+6,CUHK Paper & Coffee,CUHK Paper & Coffee,images/paper-coffee.jpg,589722,4.32,31
+7,Orchid Lodge Restaurant,Orchid Lodge Restaurant,images/orchid-lodge.jpg,31254,3.91,23
