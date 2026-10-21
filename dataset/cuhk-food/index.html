@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CUHK Canteen Explorer · STAT3009</title>
+<style>
+:root{
+  --purple:#6f2c91; --purple-dark:#4b1f63; --gold:#d6a300; --ink:#241b2b;
+  --muted:#74697d; --paper:#fbf9fc; --card:#ffffff; --line:#ece5f0;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}
+.hero{position:relative;overflow:hidden;padding:56px 24px 48px;background:radial-gradient(circle at 82% 24%,rgba(214,163,0,.28),transparent 28%),radial-gradient(circle at 16% 92%,rgba(111,44,145,.48),transparent 40%),linear-gradient(135deg,#1b1026,#341447 55%,#5f227d);color:#fff}
+.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-size:.75rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#f3cf63}
+h1{font-size:clamp(2.4rem,6vw,5.2rem);line-height:.98;letter-spacing:-.04em;margin:.45rem 0 .7rem;max-width:760px}
+.hero p{max-width:660px;font-size:1.05rem;line-height:1.55;color:#e9dff0;margin:0}
+.badge{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.4rem;padding:.45rem .75rem;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.08);font-size:.78rem;color:#f4ecf8;backdrop-filter:blur(8px)}
+.badge i{width:.55rem;height:.55rem;border-radius:50%;background:#f3cf63;display:block}
+main{max-width:1180px;margin:0 auto;padding:38px 24px 64px}
+section{margin-bottom:38px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+h2{font-size:1.35rem;letter-spacing:-.02em;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:.3rem 0 0}
+.persona-list{display:flex;flex-wrap:wrap;gap:.55rem}
+.persona{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);padding:.7rem .95rem;border-radius:999px;font:inherit;font-weight:650;font-size:.9rem;cursor:pointer;transition:transform .15s ease,border-color .15s ease,background .15s ease,color .15s ease}
+.persona:hover{transform:translateY(-1px);border-color:#c9b3d5}
+.persona[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 8px 20px rgba(111,44,145,.22)}
+.controls{display:grid;grid-template-columns:1.1fr 1.6fr 1.3fr;gap:.8rem;padding:1rem;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 10px 30px rgba(36,27,43,.04)}
+label{display:block;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+select,input[type="search"]{width:100%;padding:.65rem .75rem;border:1px solid var(--line);border-radius:9px;background:#fdfcfd;color:var(--ink);font:inherit;font-size:.9rem;outline:none}
+select:focus,input[type="search"]:focus{border-color:#bfa1cf;box-shadow:0 0 0 3px rgba(111,44,145,.1)}
+.range-row{display:flex;align-items:center;gap:.7rem}
+input[type="range"]{width:100%;accent-color:var(--purple)}
+output{min-width:3.6rem;text-align:right;font-weight:800;color:var(--purple);font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 8px 22px rgba(36,27,43,.05);display:flex;flex-direction:column;transition:transform .16s ease,box-shadow .16s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(36,27,43,.11)}
+.card-media{position:relative;aspect-ratio:16/10;background:#e9dfef;overflow:hidden}
+.card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.card:hover .card-media img{transform:scale(1.035)}
+.score{position:absolute;right:.6rem;top:.6rem;background:rgba(27,16,38,.86);color:#fff;border-radius:999px;padding:.3rem .55rem;font-size:.78rem;font-weight:800;backdrop-filter:blur(6px)}
+.score b{color:#f3cf63}
+.card-body{padding:.9rem .95rem 1rem;display:flex;flex-direction:column;flex:1}
+.category{font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+h3{font-size:1.02rem;line-height:1.25;margin:.32rem 0 .38rem;letter-spacing:-.01em}
+.place{font-size:.8rem;color:var(--muted);margin:0 0 .75rem}
+.card-meta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:.65rem;font-size:.8rem;color:var(--muted)}
+.price{font-weight:800;color:var(--ink)}
+.pred{font-size:.72rem;font-weight:700;color:var(--purple)}
+.empty{grid-column:1/-1;padding:2rem;text-align:center;color:var(--muted);border:1px dashed #d9cbe2;border-radius:14px;background:#fff}
+.popular .card-media{aspect-ratio:16/8}
+.footnote{max-width:820px;color:var(--muted);font-size:.78rem;line-height:1.5;margin-top:1.5rem}
+footer{border-top:1px solid var(--line);padding:24px;text-align:center;color:var(--muted);font-size:.78rem;line-height:1.5}
+footer b{color:var(--ink)}
+@media (max-width:820px){.controls{grid-template-columns:1fr}.hero{padding-top:40px}main{padding-top:28px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">STAT3009 · Recommender Systems</div>
+    <h1>CUHK Canteen Explorer</h1>
+    <p>A matrix-factorization demo on real campus menus. Pick a student profile, filter by canteen or budget, and see what the model would put on the table.</p>
+    <div class="badge"><i></i> Synthetic ratings · real menu data · classroom demo</div>
+  </div>
+</header>
+<main>
+  <section>
+    <div class="section-head"><div><h2>Choose a student profile</h2><p class="sub" id="persona-blurb"></p></div></div>
+    <div class="persona-list" id="persona-list"></div>
+  </section>
+  <section class="controls" aria-label="Filters">
+    <div><label for="canteen-filter">Canteen</label><select id="canteen-filter"></select></div>
+    <div><label for="price-filter">Maximum price</label><div class="range-row"><input type="range" id="price-filter" min="10" max="90" step="1" value="90"><output id="price-output">$90</output></div></div>
+    <div><label for="search-filter">Search</label><input type="search" id="search-filter" placeholder="dish or canteen…"></div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2 id="rec-title">Recommended for you</h2><p class="sub" id="rec-sub"></p></div><span class="sub" id="result-count"></span></div>
+    <div class="grid" id="cards"></div>
+  </section>
+  <section class="popular">
+    <div class="section-head"><div><h2>Campus favourites</h2><p class="sub">Highest observed mean rating (minimum 40 ratings), independent of the selected profile.</p></div></div>
+    <div class="grid" id="popular-cards"></div>
+  </section>
+  <p class="footnote">Menu names, prices, canteen photos, and three OpenRice aggregate taste scores come from public CUHK canteen sources. Students and ratings are simulated for teaching; predicted scores are not evidence about real student preferences.</p>
+</main>
+<footer><b>CUHK Canteen Explorer</b> · data preparation for a STAT3009 classroom demo. Images and menu data: public CUHK Canteen project. Ratings: synthetic.</footer>
+<script>
+const DATA = {
+  "disclaimer": "Menu, prices, and canteen photos are real public CUHK canteen data. Students and ratings are simulated for classroom use.",
+  "model": "K=2 MF, six synthetic food-preference archetypes",
+  "canteens": [
+    {
+      "canteen": "New Asia College Student Canteen",
+      "short_name": "New Asia",
+      "image": "images/new-asia-canteen.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "United College Student Canteen",
+      "short_name": "United",
+      "image": "images/united-canteen.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "Chung Chi College Student Canteen",
+      "short_name": "Chung Chi",
+      "image": "images/chung-chi-canteen.jpg",
+      "openrice_taste": 3.37
+    },
+    {
+      "canteen": "CUHK Central Canteen",
+      "short_name": "CUHK Central Canteen",
+      "image": "images/cuhk-central-canteen.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "CUHK Noodle House",
+      "short_name": "CUHK Noodle House",
+      "image": "images/cuhk-noodle-house.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "Pommerenke Student Centre Coffee Shop",
+      "short_name": "Pommerenke",
+      "image": "images/pommerenke-coffee.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "CUHK Paper & Coffee",
+      "short_name": "CUHK Paper & Coffee",
+      "image": "images/paper-coffee.jpg",
+      "openrice_taste": 4.32
+    },
+    {
+      "canteen": "Orchid Lodge Restaurant",
+      "short_name": "Orchid Lodge Restaurant",
+      "image": "images/orchid-lodge.jpg",
+      "openrice_taste": 3.91
+    }
+  ],
+  "personas": [
+    {
+      "id": "user-164",
+      "user_id": 164,
+      "label": "Noodle explorer",
+      "food_preference": "Noodles",
+      "blurb": "Warm bowls, rice noodles, and udon.",
+      "recommendations": [
+        {
+          "dish": "芝士吉列豬扒湯拉麵/烏冬",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 55.0,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "豬扒珍寶腸扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "雙拼米線",
+          "canteen": "United College Student Canteen",
+          "short_canteen": "United",
+          "price": 36.0,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/united-canteen.jpg"
+        },
+        {
+          "dish": "麻辣牛肉米線",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 29.4,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "自選米線",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 28.0,
+          "category": "Noodles",
+          "score": 4.99,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "雞扒古列魚柳煎蛋扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 36.2,
+          "category": "Noodles",
+          "score": 4.99,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "三餸雲南米線",
+          "canteen": "CUHK Noodle House",
+          "short_canteen": "CUHK Noodle House",
+          "price": 47.1,
+          "category": "Noodles",
+          "score": 4.96,
+          "image": "images/cuhk-noodle-house.jpg"
+        },
+        {
+          "dish": "精選雜菜雞蛋湯烏冬",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 36.0,
+          "category": "Noodles",
+          "score": 4.95,
+          "image": "images/orchid-lodge.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-138",
+      "user_id": 138,
+      "label": "Rice bowl regular",
+      "food_preference": "Rice",
+      "blurb": "Rice plates, curry, and hearty mains.",
+      "recommendations": [
+        {
+          "dish": "兩餸飯",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 31.0,
+          "category": "Rice",
+          "score": 4.87,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "照燒汁牛漢堡丼定食",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 56.0,
+          "category": "Rice",
+          "score": 4.83,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "壽喜燒牛肉丼",
+          "canteen": "CUHK Paper & Coffee",
+          "short_canteen": "CUHK Paper & Coffee",
+          "price": 59.0,
+          "category": "Rice",
+          "score": 4.83,
+          "image": "images/paper-coffee.jpg"
+        },
+        {
+          "dish": "泡菜豚肉溫泉蛋石鍋丼定食",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 56.0,
+          "category": "Rice",
+          "score": 4.83,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "三餸飯",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 35.0,
+          "category": "Rice",
+          "score": 4.8,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "招牌黑椒汁豬扒/雞扒飯",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 54.0,
+          "category": "Rice",
+          "score": 4.8,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "豬扒配腸仔飯",
+          "canteen": "United College Student Canteen",
+          "short_canteen": "United",
+          "price": 36.0,
+          "category": "Rice",
+          "score": 4.79,
+          "image": "images/united-canteen.jpg"
+        },
+        {
+          "dish": "炸蝦野菜天婦羅定食",
+          "canteen": "CUHK Paper & Coffee",
+          "short_canteen": "CUHK Paper & Coffee",
+          "price": 60.0,
+          "category": "Rice",
+          "score": 4.79,
+          "image": "images/paper-coffee.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-185",
+      "user_id": 185,
+      "label": "Burger & sandwich fan",
+      "food_preference": "Burgers & Sandwiches",
+      "blurb": "Comfort food and toasted sandwiches.",
+      "recommendations": [
+        {
+          "dish": "Bc'Griddles 熱香餅漢堡",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 36.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.9,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "照燒汁牛肉牛角飽伴薯條",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.89,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "古到魚柳長包+沙律+薯條",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Burgers & Sandwiches",
+          "score": 4.84,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "芝士火腿牛角飽伴薯條",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.83,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "炸魚柳牛角飽伴黑松露沙律醬",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 38.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.8,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "自家製鮮牛肉漢堡包",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 40.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.8,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "夏威夷熱狗",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 36.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.79,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "芝士肉醬熱狗",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 39.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.79,
+          "image": "images/new-asia-canteen.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-256",
+      "user_id": 256,
+      "label": "Cafe & dessert",
+      "food_preference": "Cafe & Dessert",
+      "blurb": "Coffee, toast, and something sweet.",
+      "recommendations": [
+        {
+          "dish": "香煎雞扒拼香滑炒蛋配鬆餅",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 34.0,
+          "category": "Cafe & Dessert",
+          "score": 4.8,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "蘭苑自家製各式蛋糕",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 39.0,
+          "category": "Cafe & Dessert",
+          "score": 4.78,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "雪糕香蕉船",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 44.0,
+          "category": "Cafe & Dessert",
+          "score": 4.72,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "超級五層厚西多士",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 39.0,
+          "category": "Cafe & Dessert",
+          "score": 4.69,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "黑松露炒蛋配牛油厚多士",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 40.0,
+          "category": "Cafe & Dessert",
+          "score": 4.63,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "意式蕃茄茸燴雜菜",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Vegetarian",
+          "score": 4.53,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "越南胡椒扎肉包+沙律+薯條",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 38.8,
+          "category": "Burgers & Sandwiches",
+          "score": 4.51,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "煙三文魚炒蛋配牛油鬆餅",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 38.0,
+          "category": "Cafe & Dessert",
+          "score": 4.49,
+          "image": "images/orchid-lodge.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-253",
+      "user_id": 253,
+      "label": "Vegetarian & lighter",
+      "food_preference": "Vegetarian & lighter",
+      "blurb": "Vegetable-led dishes and lighter plates.",
+      "recommendations": [
+        {
+          "dish": "意式蕃茄茸燴雜菜",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Vegetarian",
+          "score": 4.91,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "黑胡椒煙燻火腿田園沙律",
+          "canteen": "United College Student Canteen",
+          "short_canteen": "United",
+          "price": 36.0,
+          "category": "Salad",
+          "score": 4.88,
+          "image": "images/united-canteen.jpg"
+        },
+        {
+          "dish": "煙肉熱香餅香滑炒蛋配薯餅",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 36.0,
+          "category": "Others",
+          "score": 4.85,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "廚師精選雜菜湯烏冬或意粉",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 39.0,
+          "category": "Vegetarian",
+          "score": 4.84,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "素菜扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 25.0,
+          "category": "Vegetarian",
+          "score": 4.8,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "雜菌野菜鍋定食",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 50.0,
+          "category": "Vegetarian",
+          "score": 4.76,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "仿鮑片豆腐卜雜菜湯河粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 26.6,
+          "category": "Vegetarian",
+          "score": 4.7,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "珍寶腸大熱約+沙律+薯條",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Salad",
+          "score": 4.7,
+          "image": "images/pommerenke-coffee.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-102",
+      "user_id": 102,
+      "label": "Snack run",
+      "food_preference": "Snacks",
+      "blurb": "Fries, small bites, and budget picks.",
+      "recommendations": [
+        {
+          "dish": "邪惡芝士薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 30.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "大薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 18.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "花椒川味薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 24.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "芝士肉醬薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 32.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "豬扒珍寶腸扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Noodles",
+          "score": 4.83,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "招牌薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 28.0,
+          "category": "Snacks",
+          "score": 4.83,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "精選雜菜雞蛋湯烏冬",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 36.0,
+          "category": "Noodles",
+          "score": 4.78,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "雞扒古列魚柳煎蛋扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 36.2,
+          "category": "Noodles",
+          "score": 4.76,
+          "image": "images/pommerenke-coffee.jpg"
+        }
+      ]
+    }
+  ],
+  "popular": [
+    {
+      "dish": "香煎雞扒拼香滑炒蛋配鬆餅",
+      "canteen": "Orchid Lodge Restaurant",
+      "short_canteen": "Orchid Lodge Restaurant",
+      "price": 34.0,
+      "category": "Cafe & Dessert",
+      "score": 4.35,
+      "image": "images/orchid-lodge.jpg"
+    },
+    {
+      "dish": "意式蕃茄茸燴雜菜",
+      "canteen": "Chung Chi College Student Canteen",
+      "short_canteen": "Chung Chi",
+      "price": 39.0,
+      "category": "Vegetarian",
+      "score": 4.35,
+      "image": "images/chung-chi-canteen.jpg"
+    },
+    {
+      "dish": "芝士吉列豬扒湯拉麵/烏冬",
+      "canteen": "Chung Chi College Student Canteen",
+      "short_canteen": "Chung Chi",
+      "price": 55.0,
+      "category": "Noodles",
+      "score": 4.29,
+      "image": "images/chung-chi-canteen.jpg"
+    },
+    {
+      "dish": "雞扒田園沙律",
+      "canteen": "United College Student Canteen",
+      "short_canteen": "United",
+      "price": 36.0,
+      "category": "Salad",
+      "score": 4.29,
+      "image": "images/united-canteen.jpg"
+    },
+    {
+      "dish": "香港小食:咖哩魚蛋炸燒賣花生醬夾餅",
+      "canteen": "Orchid Lodge Restaurant",
+      "short_canteen": "Orchid Lodge Restaurant",
+      "price": 39.0,
+      "category": "Snacks",
+      "score": 4.28,
+      "image": "images/orchid-lodge.jpg"
+    },
+    {
+      "dish": "雞扒香腸扁意粉",
+      "canteen": "Pommerenke Student Centre Coffee Shop",
+      "short_canteen": "Pommerenke",
+      "price": 27.7,
+      "category": "Noodles",
+      "score": 4.28,
+      "image": "images/pommerenke-coffee.jpg"
+    },
+    {
+      "dish": "蘭苑自家製各式蛋糕",
+      "canteen": "Orchid Lodge Restaurant",
+      "short_canteen": "Orchid Lodge Restaurant",
+      "price": 39.0,
+      "category": "Cafe & Dessert",
+      "score": 4.23,
+      "image": "images/orchid-lodge.jpg"
+    },
+    {
+      "dish": "大薯條",
+      "canteen": "New Asia College Student Canteen",
+      "short_canteen": "New Asia",
+      "price": 18.0,
+      "category": "Snacks",
+      "score": 4.23,
+      "image": "images/new-asia-canteen.jpg"
+    }
+  ]
+};
+const state = {persona: 0, canteen: 'all', maxPrice: 90, query: ''};
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const personaList = document.getElementById('persona-list');
+const canteenFilter = document.getElementById('canteen-filter');
+const priceFilter = document.getElementById('price-filter');
+const priceOutput = document.getElementById('price-output');
+const searchFilter = document.getElementById('search-filter');
+const cards = document.getElementById('cards');
+const popularCards = document.getElementById('popular-cards');
+const recTitle = document.getElementById('rec-title');
+const recSub = document.getElementById('rec-sub');
+const personaBlurb = document.getElementById('persona-blurb');
+const resultCount = document.getElementById('result-count');
+
+const allCanteens = [...new Set(DATA.canteens.map(c => c.canteen))].sort();
+canteenFilter.innerHTML = '<option value="all">All canteens</option>' + allCanteens.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+
+function renderPersonas(){
+  personaList.innerHTML = DATA.personas.map((p, i) => `<button class="persona" type="button" data-index="${i}" aria-pressed="${i===state.persona}">${esc(p.label)}</button>`).join('');
+  personaList.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+    state.persona = Number(btn.dataset.index);
+    renderPersonas(); render();
+  }));
+}
+function card(item, mode){
+  const badge = mode === 'popular' ? `${item.score.toFixed(2)} ★` : `Pred. <b>${item.score.toFixed(2)}</b>`;
+  return `<article class="card"><div class="card-media"><img src="${esc(item.image)}" alt="${esc(item.canteen)}" loading="lazy"><span class="score">${badge}</span></div><div class="card-body"><span class="category">${esc(item.category)}</span><h3>${esc(item.dish)}</h3><p class="place">${esc(item.short_canteen)}</p><div class="card-meta"><span class="price">$${item.price.toFixed(1)}</span><span class="pred">${mode === 'popular' ? 'observed mean' : 'predicted rating'}</span></div></div></article>`;
+}
+function render(){
+  const persona = DATA.personas[state.persona];
+  personaBlurb.textContent = persona.blurb;
+  recTitle.textContent = `Recommended for ${persona.label}`;
+  recSub.textContent = `Synthetic profile · ${persona.food_preference} · top 8 model-ranked dishes`;
+  const q = state.query.trim().toLowerCase();
+  const filtered = persona.recommendations.filter(item =>
+    (state.canteen === 'all' || item.canteen === state.canteen) &&
+    item.price <= state.maxPrice &&
+    (!q || (item.dish + ' ' + item.canteen + ' ' + item.category).toLowerCase().includes(q))
+  );
+  resultCount.textContent = `${filtered.length} match${filtered.length === 1 ? '' : 'es'}`;
+  cards.innerHTML = filtered.length ? filtered.map(item => card(item, 'pred')).join('') : '<div class="empty">No dishes match these filters. Try raising the budget or choosing another canteen.</div>';
+}
+personaList.addEventListener('click', () => {});
+canteenFilter.addEventListener('change', e => {state.canteen = e.target.value; render();});
+priceFilter.addEventListener('input', e => {state.maxPrice = Number(e.target.value); priceOutput.textContent = '$' + state.maxPrice; render();});
+searchFilter.addEventListener('input', e => {state.query = e.target.value; render();});
+popularCards.innerHTML = DATA.popular.map(item => card(item, 'popular')).join('');
+renderPersonas(); render();
+</script>
+</body>
+</html>

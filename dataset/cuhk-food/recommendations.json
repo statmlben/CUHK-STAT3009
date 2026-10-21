@@ -1,0 +1,616 @@
+{
+  "disclaimer": "Menu, prices, and canteen photos are real public CUHK canteen data. Students and ratings are simulated for classroom use.",
+  "model": "K=2 MF, six synthetic food-preference archetypes",
+  "canteens": [
+    {
+      "canteen": "New Asia College Student Canteen",
+      "short_name": "New Asia",
+      "image": "images/new-asia-canteen.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "United College Student Canteen",
+      "short_name": "United",
+      "image": "images/united-canteen.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "Chung Chi College Student Canteen",
+      "short_name": "Chung Chi",
+      "image": "images/chung-chi-canteen.jpg",
+      "openrice_taste": 3.37
+    },
+    {
+      "canteen": "CUHK Central Canteen",
+      "short_name": "CUHK Central Canteen",
+      "image": "images/cuhk-central-canteen.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "CUHK Noodle House",
+      "short_name": "CUHK Noodle House",
+      "image": "images/cuhk-noodle-house.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "Pommerenke Student Centre Coffee Shop",
+      "short_name": "Pommerenke",
+      "image": "images/pommerenke-coffee.jpg",
+      "openrice_taste": null
+    },
+    {
+      "canteen": "CUHK Paper & Coffee",
+      "short_name": "CUHK Paper & Coffee",
+      "image": "images/paper-coffee.jpg",
+      "openrice_taste": 4.32
+    },
+    {
+      "canteen": "Orchid Lodge Restaurant",
+      "short_name": "Orchid Lodge Restaurant",
+      "image": "images/orchid-lodge.jpg",
+      "openrice_taste": 3.91
+    }
+  ],
+  "personas": [
+    {
+      "id": "user-164",
+      "user_id": 164,
+      "label": "Noodle explorer",
+      "food_preference": "Noodles",
+      "blurb": "Warm bowls, rice noodles, and udon.",
+      "recommendations": [
+        {
+          "dish": "芝士吉列豬扒湯拉麵/烏冬",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 55.0,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "豬扒珍寶腸扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "雙拼米線",
+          "canteen": "United College Student Canteen",
+          "short_canteen": "United",
+          "price": 36.0,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/united-canteen.jpg"
+        },
+        {
+          "dish": "麻辣牛肉米線",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 29.4,
+          "category": "Noodles",
+          "score": 5.0,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "自選米線",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 28.0,
+          "category": "Noodles",
+          "score": 4.99,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "雞扒古列魚柳煎蛋扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 36.2,
+          "category": "Noodles",
+          "score": 4.99,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "三餸雲南米線",
+          "canteen": "CUHK Noodle House",
+          "short_canteen": "CUHK Noodle House",
+          "price": 47.1,
+          "category": "Noodles",
+          "score": 4.96,
+          "image": "images/cuhk-noodle-house.jpg"
+        },
+        {
+          "dish": "精選雜菜雞蛋湯烏冬",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 36.0,
+          "category": "Noodles",
+          "score": 4.95,
+          "image": "images/orchid-lodge.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-138",
+      "user_id": 138,
+      "label": "Rice bowl regular",
+      "food_preference": "Rice",
+      "blurb": "Rice plates, curry, and hearty mains.",
+      "recommendations": [
+        {
+          "dish": "兩餸飯",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 31.0,
+          "category": "Rice",
+          "score": 4.87,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "照燒汁牛漢堡丼定食",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 56.0,
+          "category": "Rice",
+          "score": 4.83,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "壽喜燒牛肉丼",
+          "canteen": "CUHK Paper & Coffee",
+          "short_canteen": "CUHK Paper & Coffee",
+          "price": 59.0,
+          "category": "Rice",
+          "score": 4.83,
+          "image": "images/paper-coffee.jpg"
+        },
+        {
+          "dish": "泡菜豚肉溫泉蛋石鍋丼定食",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 56.0,
+          "category": "Rice",
+          "score": 4.83,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "三餸飯",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 35.0,
+          "category": "Rice",
+          "score": 4.8,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "招牌黑椒汁豬扒/雞扒飯",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 54.0,
+          "category": "Rice",
+          "score": 4.8,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "豬扒配腸仔飯",
+          "canteen": "United College Student Canteen",
+          "short_canteen": "United",
+          "price": 36.0,
+          "category": "Rice",
+          "score": 4.79,
+          "image": "images/united-canteen.jpg"
+        },
+        {
+          "dish": "炸蝦野菜天婦羅定食",
+          "canteen": "CUHK Paper & Coffee",
+          "short_canteen": "CUHK Paper & Coffee",
+          "price": 60.0,
+          "category": "Rice",
+          "score": 4.79,
+          "image": "images/paper-coffee.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-185",
+      "user_id": 185,
+      "label": "Burger & sandwich fan",
+      "food_preference": "Burgers & Sandwiches",
+      "blurb": "Comfort food and toasted sandwiches.",
+      "recommendations": [
+        {
+          "dish": "Bc'Griddles 熱香餅漢堡",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 36.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.9,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "照燒汁牛肉牛角飽伴薯條",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.89,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "古到魚柳長包+沙律+薯條",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Burgers & Sandwiches",
+          "score": 4.84,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "芝士火腿牛角飽伴薯條",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.83,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "炸魚柳牛角飽伴黑松露沙律醬",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 38.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.8,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "自家製鮮牛肉漢堡包",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 40.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.8,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "夏威夷熱狗",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 36.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.79,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "芝士肉醬熱狗",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 39.0,
+          "category": "Burgers & Sandwiches",
+          "score": 4.79,
+          "image": "images/new-asia-canteen.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-256",
+      "user_id": 256,
+      "label": "Cafe & dessert",
+      "food_preference": "Cafe & Dessert",
+      "blurb": "Coffee, toast, and something sweet.",
+      "recommendations": [
+        {
+          "dish": "香煎雞扒拼香滑炒蛋配鬆餅",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 34.0,
+          "category": "Cafe & Dessert",
+          "score": 4.8,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "蘭苑自家製各式蛋糕",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 39.0,
+          "category": "Cafe & Dessert",
+          "score": 4.78,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "雪糕香蕉船",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 44.0,
+          "category": "Cafe & Dessert",
+          "score": 4.72,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "超級五層厚西多士",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 39.0,
+          "category": "Cafe & Dessert",
+          "score": 4.69,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "黑松露炒蛋配牛油厚多士",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 40.0,
+          "category": "Cafe & Dessert",
+          "score": 4.63,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "意式蕃茄茸燴雜菜",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Vegetarian",
+          "score": 4.53,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "越南胡椒扎肉包+沙律+薯條",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 38.8,
+          "category": "Burgers & Sandwiches",
+          "score": 4.51,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "煙三文魚炒蛋配牛油鬆餅",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 38.0,
+          "category": "Cafe & Dessert",
+          "score": 4.49,
+          "image": "images/orchid-lodge.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-253",
+      "user_id": 253,
+      "label": "Vegetarian & lighter",
+      "food_preference": "Vegetarian & lighter",
+      "blurb": "Vegetable-led dishes and lighter plates.",
+      "recommendations": [
+        {
+          "dish": "意式蕃茄茸燴雜菜",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 39.0,
+          "category": "Vegetarian",
+          "score": 4.91,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "黑胡椒煙燻火腿田園沙律",
+          "canteen": "United College Student Canteen",
+          "short_canteen": "United",
+          "price": 36.0,
+          "category": "Salad",
+          "score": 4.88,
+          "image": "images/united-canteen.jpg"
+        },
+        {
+          "dish": "煙肉熱香餅香滑炒蛋配薯餅",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 36.0,
+          "category": "Others",
+          "score": 4.85,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "廚師精選雜菜湯烏冬或意粉",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 39.0,
+          "category": "Vegetarian",
+          "score": 4.84,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "素菜扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 25.0,
+          "category": "Vegetarian",
+          "score": 4.8,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "雜菌野菜鍋定食",
+          "canteen": "Chung Chi College Student Canteen",
+          "short_canteen": "Chung Chi",
+          "price": 50.0,
+          "category": "Vegetarian",
+          "score": 4.76,
+          "image": "images/chung-chi-canteen.jpg"
+        },
+        {
+          "dish": "仿鮑片豆腐卜雜菜湯河粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 26.6,
+          "category": "Vegetarian",
+          "score": 4.7,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "珍寶腸大熱約+沙律+薯條",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Salad",
+          "score": 4.7,
+          "image": "images/pommerenke-coffee.jpg"
+        }
+      ]
+    },
+    {
+      "id": "user-102",
+      "user_id": 102,
+      "label": "Snack run",
+      "food_preference": "Snacks",
+      "blurb": "Fries, small bites, and budget picks.",
+      "recommendations": [
+        {
+          "dish": "邪惡芝士薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 30.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "大薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 18.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "花椒川味薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 24.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "芝士肉醬薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 32.0,
+          "category": "Snacks",
+          "score": 5.0,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "豬扒珍寶腸扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 35.5,
+          "category": "Noodles",
+          "score": 4.83,
+          "image": "images/pommerenke-coffee.jpg"
+        },
+        {
+          "dish": "招牌薯條",
+          "canteen": "New Asia College Student Canteen",
+          "short_canteen": "New Asia",
+          "price": 28.0,
+          "category": "Snacks",
+          "score": 4.83,
+          "image": "images/new-asia-canteen.jpg"
+        },
+        {
+          "dish": "精選雜菜雞蛋湯烏冬",
+          "canteen": "Orchid Lodge Restaurant",
+          "short_canteen": "Orchid Lodge Restaurant",
+          "price": 36.0,
+          "category": "Noodles",
+          "score": 4.78,
+          "image": "images/orchid-lodge.jpg"
+        },
+        {
+          "dish": "雞扒古列魚柳煎蛋扁意粉",
+          "canteen": "Pommerenke Student Centre Coffee Shop",
+          "short_canteen": "Pommerenke",
+          "price": 36.2,
+          "category": "Noodles",
+          "score": 4.76,
+          "image": "images/pommerenke-coffee.jpg"
+        }
+      ]
+    }
+  ],
+  "popular": [
+    {
+      "dish": "香煎雞扒拼香滑炒蛋配鬆餅",
+      "canteen": "Orchid Lodge Restaurant",
+      "short_canteen": "Orchid Lodge Restaurant",
+      "price": 34.0,
+      "category": "Cafe & Dessert",
+      "score": 4.35,
+      "image": "images/orchid-lodge.jpg"
+    },
+    {
+      "dish": "意式蕃茄茸燴雜菜",
+      "canteen": "Chung Chi College Student Canteen",
+      "short_canteen": "Chung Chi",
+      "price": 39.0,
+      "category": "Vegetarian",
+      "score": 4.35,
+      "image": "images/chung-chi-canteen.jpg"
+    },
+    {
+      "dish": "芝士吉列豬扒湯拉麵/烏冬",
+      "canteen": "Chung Chi College Student Canteen",
+      "short_canteen": "Chung Chi",
+      "price": 55.0,
+      "category": "Noodles",
+      "score": 4.29,
+      "image": "images/chung-chi-canteen.jpg"
+    },
+    {
+      "dish": "雞扒田園沙律",
+      "canteen": "United College Student Canteen",
+      "short_canteen": "United",
+      "price": 36.0,
+      "category": "Salad",
+      "score": 4.29,
+      "image": "images/united-canteen.jpg"
+    },
+    {
+      "dish": "香港小食:咖哩魚蛋炸燒賣花生醬夾餅",
+      "canteen": "Orchid Lodge Restaurant",
+      "short_canteen": "Orchid Lodge Restaurant",
+      "price": 39.0,
+      "category": "Snacks",
+      "score": 4.28,
+      "image": "images/orchid-lodge.jpg"
+    },
+    {
+      "dish": "雞扒香腸扁意粉",
+      "canteen": "Pommerenke Student Centre Coffee Shop",
+      "short_canteen": "Pommerenke",
+      "price": 27.7,
+      "category": "Noodles",
+      "score": 4.28,
+      "image": "images/pommerenke-coffee.jpg"
+    },
+    {
+      "dish": "蘭苑自家製各式蛋糕",
+      "canteen": "Orchid Lodge Restaurant",
+      "short_canteen": "Orchid Lodge Restaurant",
+      "price": 39.0,
+      "category": "Cafe & Dessert",
+      "score": 4.23,
+      "image": "images/orchid-lodge.jpg"
+    },
+    {
+      "dish": "大薯條",
+      "canteen": "New Asia College Student Canteen",
+      "short_canteen": "New Asia",
+      "price": 18.0,
+      "category": "Snacks",
+      "score": 4.23,
+      "image": "images/new-asia-canteen.jpg"
+    }
+  ]
+}

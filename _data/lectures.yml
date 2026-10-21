@@ -117,6 +117,11 @@
 - date: "2026-10-22"
   title: >
     <strong>Matrix Factorization Variants</strong>
+  warmup:
+    label: Start here · Warm-up 05
+    title: MF workflow — fit, predict, select
+    meta: 18–20 min
+    href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_05_MF_Recap.ipynb
 
 - date: "2026-10-29"
   quiz: >
