@@ -1,321 +1,321 @@
-user_id,home_canteen,spice_pref,healthy_pref,price_sensitivity,generosity,activity
-0,New Asia College Student Canteen,-1.35,-1.084,0.851,-0.105,23
-1,CUHK Paper & Coffee,-0.874,-1.243,0.116,-0.002,41
-2,New Asia College Student Canteen,-0.047,-0.248,1.106,0.144,31
-3,CUHK Central Canteen,0.859,-0.858,1.096,-0.025,28
-4,United College Student Canteen,-0.501,-1.464,0.699,-0.002,24
-5,Orchid Lodge Restaurant,-0.458,-1.271,0.192,0.348,28
-6,Pommerenke Student Centre Coffee Shop,0.848,-0.75,0.845,-0.221,44
-7,CUHK Central Canteen,0.693,0.227,1.004,-0.441,26
-8,United College Student Canteen,-0.404,1.334,0.507,-0.214,50
-9,CUHK Noodle House,-0.081,-0.021,0.11,-0.135,45
-10,New Asia College Student Canteen,0.484,-0.479,0.569,-0.373,26
-11,New Asia College Student Canteen,0.186,0.626,0.649,-0.17,28
-12,New Asia College Student Canteen,-1.02,-0.562,0.112,0.139,48
-13,CUHK Central Canteen,0.144,0.706,0.909,0.028,42
-14,Pommerenke Student Centre Coffee Shop,0.338,0.428,0.827,-0.097,25
-15,United College Student Canteen,-0.855,-0.442,1.138,0.291,49
-16,CUHK Central Canteen,1.311,-0.478,0.285,0.073,46
-17,United College Student Canteen,0.065,-0.407,0.851,-0.132,30
-18,CUHK Noodle House,-0.867,-0.598,0.604,-0.049,22
-19,Orchid Lodge Restaurant,0.869,-1.244,0.772,-0.153,53
-20,United College Student Canteen,-0.033,1.034,0.222,0.228,46
-21,CUHK Central Canteen,0.15,0.155,0.672,0.122,28
-22,New Asia College Student Canteen,-0.936,-0.084,0.997,-0.153,22
-23,New Asia College Student Canteen,0.652,0.132,0.113,-0.479,52
-24,New Asia College Student Canteen,0.195,-0.04,1.144,0.402,39
-25,CUHK Noodle House,-1.69,-0.373,0.33,0.024,22
-26,New Asia College Student Canteen,-0.584,-0.169,0.592,0.113,35
-27,New Asia College Student Canteen,-0.231,0.872,0.844,0.042,42
-28,CUHK Central Canteen,-0.632,-1.018,0.697,-0.154,49
-29,CUHK Paper & Coffee,-0.863,-0.049,0.439,0.29,45
-30,United College Student Canteen,-0.083,-0.573,0.518,-0.092,29
-31,New Asia College Student Canteen,0.311,-0.465,0.482,0.193,48
-32,Orchid Lodge Restaurant,-1.336,0.599,0.496,-0.106,44
-33,New Asia College Student Canteen,-0.495,0.743,0.129,-0.043,36
-34,CUHK Central Canteen,-0.597,-0.322,0.94,-0.178,36
-35,CUHK Paper & Coffee,-0.466,0.733,0.21,-0.167,42
-36,CUHK Paper & Coffee,0.414,0.224,0.3,0.327,48
-37,Orchid Lodge Restaurant,-0.315,-0.351,0.672,-0.0,37
-38,CUHK Paper & Coffee,0.789,1.335,0.731,0.026,21
-39,Chung Chi College Student Canteen,0.309,0.131,0.268,0.191,55
-40,Pommerenke Student Centre Coffee Shop,-0.199,-0.21,0.803,-0.172,31
-41,CUHK Paper & Coffee,0.532,-0.299,0.279,0.125,23
-42,New Asia College Student Canteen,0.013,0.761,0.407,0.219,20
-43,CUHK Central Canteen,0.065,-0.61,0.769,0.33,46
-44,Orchid Lodge Restaurant,-0.639,0.937,0.608,-0.115,50
-45,CUHK Paper & Coffee,0.114,-0.321,0.811,-0.675,43
-46,United College Student Canteen,1.125,0.634,0.159,-0.489,55
-47,CUHK Paper & Coffee,0.52,-0.85,0.208,0.275,52
-48,CUHK Paper & Coffee,0.498,-0.628,0.202,0.56,23
-49,CUHK Central Canteen,-0.783,0.758,1.035,0.418,37
-50,CUHK Paper & Coffee,1.574,-0.897,0.547,0.162,42
-51,CUHK Central Canteen,-0.763,0.898,0.449,0.246,45
-52,Chung Chi College Student Canteen,-0.03,-0.39,0.809,0.023,43
-53,New Asia College Student Canteen,-1.223,0.759,0.123,-0.08,35
-54,Pommerenke Student Centre Coffee Shop,2.018,0.453,0.781,-0.138,37
-55,CUHK Central Canteen,0.581,-0.665,0.665,-0.019,24
-56,CUHK Central Canteen,0.089,1.501,0.195,0.223,49
-57,CUHK Central Canteen,-0.922,-0.692,1.143,0.087,28
-58,CUHK Noodle House,0.555,-1.215,0.929,0.03,37
-59,CUHK Central Canteen,-0.668,-0.861,0.165,0.21,37
-60,CUHK Central Canteen,-1.739,0.931,0.101,0.289,27
-61,Pommerenke Student Centre Coffee Shop,0.513,-0.207,0.792,0.546,24
-62,Pommerenke Student Centre Coffee Shop,0.394,0.038,1.071,0.156,45
-63,CUHK Noodle House,-0.447,0.182,0.352,0.269,33
-64,CUHK Noodle House,-0.194,-0.021,0.338,-0.213,44
-65,CUHK Central Canteen,0.399,0.555,1.145,0.264,52
-66,Chung Chi College Student Canteen,0.16,-0.628,0.852,0.085,21
-67,New Asia College Student Canteen,0.889,-0.305,0.774,-0.017,52
-68,CUHK Noodle House,0.039,-0.078,0.429,0.011,39
-69,Orchid Lodge Restaurant,1.028,1.668,0.634,0.255,26
-70,Chung Chi College Student Canteen,-0.227,-0.012,1.008,0.313,23
-71,Orchid Lodge Restaurant,0.494,-0.116,0.604,-0.031,53
-72,Chung Chi College Student Canteen,-1.416,-0.246,0.134,-0.148,24
-73,CUHK Central Canteen,0.582,-0.605,0.287,-0.044,53
-74,New Asia College Student Canteen,-0.987,-0.21,0.628,0.325,53
-75,Pommerenke Student Centre Coffee Shop,-1.32,0.688,0.866,-0.137,23
-76,CUHK Central Canteen,-0.265,0.854,0.329,-0.376,23
-77,Pommerenke Student Centre Coffee Shop,-0.694,-0.41,0.3,0.035,47
-78,Orchid Lodge Restaurant,-1.032,0.601,1.108,0.175,47
-79,Orchid Lodge Restaurant,0.42,0.648,0.432,0.063,36
-80,Orchid Lodge Restaurant,-1.158,0.887,0.282,-0.373,39
-81,Pommerenke Student Centre Coffee Shop,-0.307,-0.16,0.373,-0.6,23
-82,United College Student Canteen,-0.372,-0.749,0.349,0.056,40
-83,CUHK Paper & Coffee,-0.387,0.074,0.712,-0.348,32
-84,CUHK Central Canteen,0.071,-0.278,0.773,0.266,34
-85,Pommerenke Student Centre Coffee Shop,-0.298,0.005,0.412,-0.092,48
-86,Chung Chi College Student Canteen,1.68,-0.308,0.911,0.33,21
-87,CUHK Noodle House,-0.971,-0.495,0.878,0.152,48
-88,United College Student Canteen,0.36,-0.253,0.107,0.101,54
-89,CUHK Central Canteen,0.006,-0.429,0.262,-0.114,46
-90,Orchid Lodge Restaurant,-0.278,0.435,1.093,-0.106,54
-91,Pommerenke Student Centre Coffee Shop,-0.008,-0.272,1.005,-0.108,50
-92,Orchid Lodge Restaurant,0.381,1.589,0.803,0.1,40
-93,CUHK Paper & Coffee,-0.853,-0.013,0.666,-0.412,22
-94,New Asia College Student Canteen,-0.858,-0.726,0.441,0.061,41
-95,New Asia College Student Canteen,-0.183,1.041,0.633,-0.2,50
-96,Chung Chi College Student Canteen,-1.565,1.209,0.534,-0.083,28
-97,Orchid Lodge Restaurant,-1.467,-0.716,0.249,-0.114,23
-98,CUHK Noodle House,-0.817,-0.863,0.888,-0.224,52
-99,CUHK Paper & Coffee,1.983,0.605,0.91,-0.338,46
-100,Pommerenke Student Centre Coffee Shop,-0.946,0.367,0.829,0.248,41
-101,Orchid Lodge Restaurant,0.883,0.323,0.567,0.416,31
-102,CUHK Noodle House,-0.797,1.21,0.361,0.236,27
-103,Pommerenke Student Centre Coffee Shop,0.001,-0.031,1.057,0.036,27
-104,CUHK Central Canteen,-0.946,-0.104,0.841,-0.133,25
-105,Chung Chi College Student Canteen,-0.389,-1.124,1.067,-0.309,31
-106,United College Student Canteen,2.003,-0.14,0.805,-0.443,24
-107,New Asia College Student Canteen,0.393,0.521,0.846,-0.247,25
-108,CUHK Paper & Coffee,0.229,0.36,0.893,-0.22,39
-109,United College Student Canteen,0.181,0.231,1.011,-0.191,34
-110,CUHK Paper & Coffee,-0.039,-0.113,0.8,0.034,54
-111,Orchid Lodge Restaurant,0.635,0.312,1.113,0.289,26
-112,CUHK Paper & Coffee,-0.415,-0.302,0.956,-0.085,44
-113,CUHK Paper & Coffee,-0.895,-0.071,0.454,-0.048,39
-114,CUHK Noodle House,-0.398,0.635,0.722,0.088,53
-115,Pommerenke Student Centre Coffee Shop,-0.751,-0.424,0.622,0.073,23
-116,CUHK Central Canteen,-1.592,-1.241,0.114,0.001,31
-117,New Asia College Student Canteen,0.836,1.636,0.439,-0.408,54
-118,United College Student Canteen,0.077,0.122,0.666,-0.032,34
-119,CUHK Noodle House,-0.069,0.682,0.923,0.033,23
-120,CUHK Noodle House,-1.29,0.052,0.905,0.289,33
-121,CUHK Central Canteen,0.572,0.408,0.504,0.123,41
-122,CUHK Central Canteen,-0.228,-0.426,0.202,-0.092,53
-123,CUHK Central Canteen,1.242,0.48,0.277,0.246,28
-124,Chung Chi College Student Canteen,0.9,0.883,0.109,-0.233,28
-125,United College Student Canteen,-1.48,0.539,0.738,-0.105,40
-126,New Asia College Student Canteen,-0.786,-0.307,0.697,-0.244,20
-127,CUHK Paper & Coffee,1.219,0.809,0.926,-0.1,42
-128,Chung Chi College Student Canteen,0.391,0.544,0.304,-0.22,53
-129,New Asia College Student Canteen,-1.279,-0.006,0.539,0.297,50
-130,New Asia College Student Canteen,1.037,-0.107,0.827,0.4,41
-131,New Asia College Student Canteen,1.252,1.521,0.27,0.104,20
-132,CUHK Paper & Coffee,1.694,-0.364,0.907,-0.073,47
-133,CUHK Central Canteen,-0.752,0.593,1.038,0.099,54
-134,CUHK Central Canteen,-0.399,-0.76,0.518,0.222,33
-135,New Asia College Student Canteen,0.445,0.243,0.405,0.293,54
-136,CUHK Central Canteen,0.044,-0.655,0.501,-0.115,45
-137,Chung Chi College Student Canteen,-0.46,0.866,0.682,0.14,22
-138,Chung Chi College Student Canteen,0.444,0.341,0.131,-0.01,46
-139,CUHK Central Canteen,-0.366,-0.545,0.713,-0.209,42
-140,CUHK Paper & Coffee,-0.274,-0.003,0.903,-0.157,31
-141,Chung Chi College Student Canteen,-1.297,-0.185,1.059,0.091,51
-142,Orchid Lodge Restaurant,-1.616,0.739,0.259,-0.018,37
-143,New Asia College Student Canteen,-0.613,-0.589,0.111,-0.705,53
-144,CUHK Paper & Coffee,-1.172,-0.245,0.47,0.294,53
-145,New Asia College Student Canteen,-1.104,0.785,0.687,-0.058,27
-146,Chung Chi College Student Canteen,-0.368,0.111,0.857,-0.169,55
-147,CUHK Paper & Coffee,-1.97,1.069,0.591,0.064,51
-148,Pommerenke Student Centre Coffee Shop,0.028,0.09,0.847,0.568,53
-149,Orchid Lodge Restaurant,-1.243,0.267,0.505,-0.005,30
-150,CUHK Paper & Coffee,-0.381,-0.012,0.829,0.165,26
-151,New Asia College Student Canteen,0.726,-1.092,1.103,0.058,23
-152,Pommerenke Student Centre Coffee Shop,0.915,-0.356,0.339,0.099,31
-153,New Asia College Student Canteen,0.442,0.768,1.147,0.152,40
-154,Orchid Lodge Restaurant,-0.609,-0.36,0.226,0.312,40
-155,Orchid Lodge Restaurant,-1.058,-0.549,0.608,-0.402,32
-156,CUHK Central Canteen,0.937,0.232,0.172,0.192,34
-157,CUHK Central Canteen,-0.664,0.464,1.039,-0.115,30
-158,Orchid Lodge Restaurant,-1.667,-0.848,0.541,0.043,40
-159,CUHK Noodle House,-0.012,-0.581,0.295,0.321,53
-160,New Asia College Student Canteen,0.043,0.504,0.632,-0.164,30
-161,New Asia College Student Canteen,0.938,-0.323,0.904,-0.522,51
-162,Chung Chi College Student Canteen,0.342,1.586,1.102,0.023,50
-163,CUHK Noodle House,-1.043,0.455,0.746,-0.088,31
-164,New Asia College Student Canteen,-0.976,0.469,0.124,0.572,34
-165,United College Student Canteen,-1.059,0.391,0.787,0.291,23
-166,New Asia College Student Canteen,-0.267,0.026,0.89,0.011,46
-167,CUHK Central Canteen,-0.647,0.476,0.831,0.145,39
-168,New Asia College Student Canteen,-1.611,0.221,0.625,-0.129,20
-169,CUHK Central Canteen,-0.509,0.957,0.76,0.244,33
-170,CUHK Noodle House,1.526,0.362,0.721,0.216,27
-171,New Asia College Student Canteen,0.369,-0.87,0.962,-0.12,23
-172,New Asia College Student Canteen,-1.262,0.836,0.888,0.151,29
-173,Chung Chi College Student Canteen,0.258,-0.639,0.634,-0.059,55
-174,CUHK Central Canteen,-0.961,-0.595,0.164,-0.152,45
-175,Orchid Lodge Restaurant,-0.492,1.353,0.759,0.081,31
-176,CUHK Central Canteen,-2.096,0.346,0.107,0.255,30
-177,Pommerenke Student Centre Coffee Shop,0.133,-0.05,1.011,0.221,54
-178,CUHK Paper & Coffee,-1.174,-0.284,0.747,0.497,53
-179,Pommerenke Student Centre Coffee Shop,1.112,-0.21,0.407,-0.155,44
-180,CUHK Paper & Coffee,-2.086,-0.617,0.451,-0.097,36
-181,Orchid Lodge Restaurant,0.172,0.934,0.168,-0.136,38
-182,United College Student Canteen,0.472,-0.421,0.247,0.178,53
-183,New Asia College Student Canteen,-0.625,-0.192,0.28,0.464,36
-184,Pommerenke Student Centre Coffee Shop,-1.592,-0.268,0.536,-0.138,39
-185,Chung Chi College Student Canteen,-0.516,-0.112,0.476,0.217,46
-186,New Asia College Student Canteen,-1.562,0.254,0.533,-0.216,34
-187,United College Student Canteen,0.047,-0.001,0.218,-0.03,23
-188,New Asia College Student Canteen,0.105,-0.636,0.834,0.005,46
-189,CUHK Central Canteen,-0.42,-0.198,0.797,0.072,54
-190,United College Student Canteen,1.194,-0.233,0.452,-0.364,51
-191,United College Student Canteen,-0.572,-0.844,0.717,0.243,29
-192,Chung Chi College Student Canteen,0.039,0.868,0.784,0.103,44
-193,CUHK Paper & Coffee,-0.109,-0.414,0.401,-0.121,24
-194,United College Student Canteen,0.252,-0.613,0.193,-0.03,48
-195,Pommerenke Student Centre Coffee Shop,-1.244,-0.046,0.717,0.199,50
-196,CUHK Noodle House,0.004,0.602,0.372,-0.486,34
-197,United College Student Canteen,-0.855,-0.515,0.105,-0.096,55
-198,CUHK Noodle House,-0.177,0.271,0.544,0.105,51
-199,United College Student Canteen,-0.728,-0.04,0.619,0.283,36
-200,Chung Chi College Student Canteen,-0.096,0.927,0.454,-0.467,38
-201,CUHK Paper & Coffee,1.12,-0.249,0.352,-0.551,36
-202,Pommerenke Student Centre Coffee Shop,-0.586,-0.2,0.97,0.061,32
-203,CUHK Noodle House,0.179,1.136,0.648,-0.154,24
-204,Chung Chi College Student Canteen,0.512,-1.169,0.747,-0.172,49
-205,Pommerenke Student Centre Coffee Shop,-0.636,-0.073,0.67,-0.029,43
-206,Orchid Lodge Restaurant,-0.059,-0.246,0.124,0.253,35
-207,New Asia College Student Canteen,0.345,-1.274,0.289,0.217,29
-208,Pommerenke Student Centre Coffee Shop,-1.645,-1.061,0.87,-0.029,48
-209,Orchid Lodge Restaurant,0.458,0.286,0.788,-0.301,22
-210,New Asia College Student Canteen,-0.241,0.857,1.005,0.064,27
-211,Pommerenke Student Centre Coffee Shop,-0.733,0.09,0.911,0.023,34
-212,CUHK Noodle House,1.16,0.372,0.955,-0.152,29
-213,CUHK Noodle House,-0.613,-0.518,0.774,0.242,24
-214,CUHK Central Canteen,0.511,0.824,0.633,0.099,25
-215,Orchid Lodge Restaurant,1.072,0.669,0.346,0.129,27
-216,Pommerenke Student Centre Coffee Shop,0.079,-0.341,0.728,0.169,35
-217,Pommerenke Student Centre Coffee Shop,-0.708,-0.371,0.18,0.35,47
-218,United College Student Canteen,1.412,-0.439,0.697,-0.064,33
-219,Orchid Lodge Restaurant,0.648,0.1,0.888,-0.479,46
-220,Chung Chi College Student Canteen,1.197,0.226,0.771,0.047,32
-221,Pommerenke Student Centre Coffee Shop,1.232,0.086,0.431,-0.108,26
-222,New Asia College Student Canteen,-1.024,0.808,0.974,-0.359,46
-223,Chung Chi College Student Canteen,-0.684,0.9,0.143,0.102,30
-224,Orchid Lodge Restaurant,0.997,0.459,0.545,-0.084,20
-225,CUHK Noodle House,-1.385,-0.622,0.787,-0.029,20
-226,CUHK Paper & Coffee,1.516,0.533,0.427,0.281,42
-227,CUHK Paper & Coffee,-0.165,0.643,0.184,-0.522,27
-228,Orchid Lodge Restaurant,0.77,1.195,1.135,0.233,53
-229,Pommerenke Student Centre Coffee Shop,-0.853,-0.917,0.68,0.061,39
-230,New Asia College Student Canteen,-1.649,1.247,1.111,-0.148,50
-231,New Asia College Student Canteen,0.886,-0.325,0.972,-0.184,23
-232,CUHK Noodle House,-0.71,-0.533,0.66,-0.166,50
-233,New Asia College Student Canteen,0.292,-0.213,0.843,0.13,48
-234,CUHK Noodle House,1.863,-0.346,0.486,-0.378,43
-235,United College Student Canteen,-0.905,-0.074,0.551,0.157,49
-236,Chung Chi College Student Canteen,-1.343,-0.302,0.469,-0.266,54
-237,Chung Chi College Student Canteen,0.383,0.565,0.431,0.132,42
-238,United College Student Canteen,0.371,-0.396,0.549,0.085,30
-239,CUHK Central Canteen,0.844,-0.688,1.066,-0.201,23
-240,New Asia College Student Canteen,-1.373,0.382,0.823,-0.307,20
-241,Orchid Lodge Restaurant,0.191,-0.296,0.889,0.338,29
-242,CUHK Central Canteen,0.295,-0.246,0.277,0.014,20
-243,United College Student Canteen,-0.036,-0.027,0.155,-0.125,44
-244,United College Student Canteen,0.033,-1.247,0.456,0.204,26
-245,United College Student Canteen,1.307,-0.875,0.62,-0.141,46
-246,United College Student Canteen,-1.136,0.534,0.183,0.103,45
-247,Orchid Lodge Restaurant,-0.236,-1.116,0.211,-0.061,48
-248,CUHK Central Canteen,0.147,-0.018,0.772,-0.096,34
-249,CUHK Central Canteen,-0.131,0.145,0.546,-0.149,49
-250,United College Student Canteen,0.979,-0.212,0.234,-0.181,49
-251,Pommerenke Student Centre Coffee Shop,0.8,0.293,0.557,-0.233,39
-252,Pommerenke Student Centre Coffee Shop,0.081,-0.52,0.988,0.06,35
-253,United College Student Canteen,0.17,0.336,0.238,0.119,51
-254,CUHK Paper & Coffee,1.146,0.475,0.806,0.297,21
-255,CUHK Central Canteen,0.993,-0.009,0.627,0.384,33
-256,New Asia College Student Canteen,1.001,0.321,0.54,0.125,38
-257,United College Student Canteen,-0.711,0.525,1.111,0.216,42
-258,Orchid Lodge Restaurant,0.156,0.81,0.187,0.239,50
-259,CUHK Noodle House,0.467,0.34,0.588,-0.017,40
-260,New Asia College Student Canteen,-1.973,-0.525,0.226,-0.027,35
-261,CUHK Paper & Coffee,0.481,0.25,0.205,-0.055,29
-262,CUHK Paper & Coffee,0.307,-0.888,0.162,0.551,47
-263,CUHK Noodle House,1.446,0.045,0.876,0.285,55
-264,CUHK Central Canteen,1.161,0.341,0.539,-0.021,47
-265,CUHK Noodle House,1.281,0.807,0.924,0.045,41
-266,Orchid Lodge Restaurant,-0.018,0.208,0.388,-0.172,44
-267,Orchid Lodge Restaurant,1.399,0.596,0.749,0.415,34
-268,New Asia College Student Canteen,0.66,-0.586,0.36,-0.023,45
-269,CUHK Noodle House,-0.067,0.827,0.926,-0.019,51
-270,New Asia College Student Canteen,1.25,-0.118,0.339,-0.269,22
-271,CUHK Central Canteen,-0.328,0.566,0.224,-0.238,44
-272,Pommerenke Student Centre Coffee Shop,0.088,0.264,1.149,-0.207,38
-273,Orchid Lodge Restaurant,0.189,0.965,0.128,-0.065,25
-274,United College Student Canteen,0.66,1.197,0.546,0.095,31
-275,United College Student Canteen,0.217,-0.29,0.188,0.06,36
-276,Orchid Lodge Restaurant,1.153,0.114,0.781,0.355,51
-277,CUHK Noodle House,-0.33,-0.718,0.478,-0.252,33
-278,New Asia College Student Canteen,0.557,0.462,1.059,0.312,26
-279,CUHK Paper & Coffee,0.083,0.222,0.763,0.015,50
-280,Orchid Lodge Restaurant,0.592,0.545,1.084,-0.484,44
-281,United College Student Canteen,0.592,0.002,1.106,0.364,45
-282,CUHK Noodle House,-0.476,-0.706,0.859,-0.15,45
-283,CUHK Noodle House,-1.559,1.112,0.283,-0.119,48
-284,Orchid Lodge Restaurant,-0.216,-0.235,1.039,0.147,42
-285,CUHK Paper & Coffee,0.859,-1.51,0.355,-0.408,33
-286,United College Student Canteen,0.667,0.492,0.884,0.097,32
-287,Pommerenke Student Centre Coffee Shop,0.737,0.132,1.095,0.391,29
-288,CUHK Noodle House,0.011,0.644,0.545,-0.023,27
-289,CUHK Noodle House,0.464,0.328,0.944,-0.506,26
-290,CUHK Central Canteen,-1.058,0.548,0.451,-0.118,48
-291,Orchid Lodge Restaurant,-1.429,0.209,0.933,-0.211,55
-292,CUHK Paper & Coffee,0.344,-0.157,0.161,-0.07,37
-293,New Asia College Student Canteen,-0.147,0.282,0.683,0.099,41
-294,CUHK Noodle House,-0.446,0.043,0.521,0.533,48
-295,New Asia College Student Canteen,-0.355,-0.467,0.241,-0.024,34
-296,Orchid Lodge Restaurant,-1.841,0.303,0.348,0.026,46
-297,United College Student Canteen,1.033,-0.517,0.503,0.298,39
-298,CUHK Central Canteen,0.505,-1.078,0.227,0.088,38
-299,CUHK Central Canteen,0.038,1.507,0.22,0.094,37
-300,Chung Chi College Student Canteen,0.665,0.118,1.018,0.018,53
-301,CUHK Noodle House,-0.006,0.003,0.175,-0.001,52
-302,CUHK Noodle House,0.247,0.393,0.273,0.369,31
-303,Pommerenke Student Centre Coffee Shop,-0.01,0.347,1.147,-0.46,33
-304,CUHK Noodle House,-0.974,0.084,0.914,0.214,55
-305,CUHK Paper & Coffee,-0.283,-0.655,0.917,-0.008,26
-306,CUHK Central Canteen,-0.972,-0.408,1.044,0.154,45
-307,CUHK Noodle House,-0.572,-0.107,0.836,0.268,39
-308,United College Student Canteen,-0.159,0.502,0.786,0.06,33
-309,New Asia College Student Canteen,-0.614,0.177,0.751,-0.247,42
-310,United College Student Canteen,1.349,-1.051,1.074,-0.371,50
-311,United College Student Canteen,0.362,0.949,0.532,0.049,27
-312,CUHK Central Canteen,-0.279,-0.394,0.769,0.462,37
-313,New Asia College Student Canteen,-0.139,1.5,0.481,0.277,26
-314,Pommerenke Student Centre Coffee Shop,-0.544,-1.737,0.601,0.257,45
-315,Orchid Lodge Restaurant,-0.705,0.027,0.459,0.576,54
-316,Pommerenke Student Centre Coffee Shop,-0.127,0.587,0.921,-0.069,24
-317,CUHK Noodle House,-0.542,0.7,0.285,-0.092,36
-318,CUHK Paper & Coffee,-0.886,0.814,0.23,-0.724,52
-319,Pommerenke Student Centre Coffee Shop,-0.502,0.602,0.917,-0.147,26
+user_id,group,home_canteen,spice_pref,healthy_pref,price_sensitivity,generosity,activity
+0,Noodles,CUHK Noodle House,0.451,-0.19,0.57,0.06,28
+1,Cafe & Dessert,Chung Chi College Student Canteen,-0.819,0.369,0.193,0.244,25
+2,Snacks,CUHK Noodle House,-0.318,-0.33,0.855,-0.116,50
+3,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,-0.141,0.816,0.324,-0.114,30
+4,Rice,CUHK Paper & Coffee,-0.409,-0.253,0.651,0.033,53
+5,Vegetarian & lighter,United College Student Canteen,0.075,0.771,0.29,-0.058,38
+6,Vegetarian & lighter,CUHK Central Canteen,-0.029,0.762,0.632,0.026,50
+7,Cafe & Dessert,United College Student Canteen,0.464,0.114,0.279,-0.052,51
+8,Noodles,CUHK Noodle House,-0.018,0.834,0.15,-0.075,29
+9,Snacks,Pommerenke Student Centre Coffee Shop,0.257,-0.577,1.06,-0.13,41
+10,Burgers & Sandwiches,CUHK Paper & Coffee,0.182,-0.269,0.654,0.061,27
+11,Rice,United College Student Canteen,0.137,0.036,0.678,0.132,37
+12,Noodles,CUHK Central Canteen,0.059,0.103,0.387,-0.074,49
+13,Snacks,CUHK Central Canteen,-0.276,-0.45,0.617,0.133,46
+14,Noodles,CUHK Central Canteen,1.06,-0.078,0.469,0.212,42
+15,Vegetarian & lighter,Chung Chi College Student Canteen,0.141,1.038,0.293,-0.23,49
+16,Vegetarian & lighter,CUHK Paper & Coffee,-0.494,1.208,0.694,-0.148,22
+17,Burgers & Sandwiches,New Asia College Student Canteen,0.002,-0.653,0.709,-0.029,50
+18,Rice,Chung Chi College Student Canteen,0.179,0.238,0.669,-0.095,51
+19,Rice,Chung Chi College Student Canteen,-0.013,0.495,0.546,0.094,40
+20,Snacks,Orchid Lodge Restaurant,0.147,-0.367,0.943,0.143,26
+21,Snacks,Orchid Lodge Restaurant,0.153,0.012,0.968,-0.011,26
+22,Vegetarian & lighter,CUHK Central Canteen,0.058,1.031,0.424,0.048,55
+23,Vegetarian & lighter,Chung Chi College Student Canteen,1.138,-0.124,0.404,0.041,34
+24,Cafe & Dessert,United College Student Canteen,-0.328,-0.076,0.293,0.162,51
+25,Cafe & Dessert,United College Student Canteen,-0.536,0.285,0.809,0.176,47
+26,Burgers & Sandwiches,Pommerenke Student Centre Coffee Shop,0.886,-0.19,0.805,-0.113,46
+27,Cafe & Dessert,Chung Chi College Student Canteen,-0.374,-0.301,0.193,0.206,51
+28,Cafe & Dessert,United College Student Canteen,0.076,0.197,0.682,0.05,47
+29,Cafe & Dessert,Chung Chi College Student Canteen,0.8,0.38,0.586,0.0,43
+30,Vegetarian & lighter,Orchid Lodge Restaurant,-0.18,1.408,0.741,0.127,47
+31,Cafe & Dessert,New Asia College Student Canteen,-0.457,0.921,0.599,-0.067,34
+32,Snacks,Chung Chi College Student Canteen,-0.059,0.293,1.143,-0.145,22
+33,Cafe & Dessert,CUHK Noodle House,0.008,-0.081,0.918,-0.036,54
+34,Vegetarian & lighter,Orchid Lodge Restaurant,0.058,1.592,0.1,-0.063,39
+35,Cafe & Dessert,Pommerenke Student Centre Coffee Shop,0.157,-0.378,0.437,-0.101,54
+36,Rice,Chung Chi College Student Canteen,-0.65,-0.55,0.747,-0.142,36
+37,Noodles,CUHK Paper & Coffee,0.883,0.178,0.404,-0.055,25
+38,Cafe & Dessert,CUHK Central Canteen,-0.207,0.863,0.881,0.201,29
+39,Snacks,Pommerenke Student Centre Coffee Shop,-0.448,-1.042,0.536,-0.332,45
+40,Noodles,Chung Chi College Student Canteen,0.792,-0.265,0.459,-0.032,49
+41,Snacks,CUHK Paper & Coffee,-0.614,-0.107,0.773,-0.12,46
+42,Cafe & Dessert,CUHK Paper & Coffee,-0.248,-0.468,0.912,0.082,51
+43,Vegetarian & lighter,United College Student Canteen,0.431,0.813,0.173,0.157,26
+44,Rice,CUHK Noodle House,0.553,0.648,0.781,0.038,30
+45,Cafe & Dessert,CUHK Noodle House,0.104,0.294,0.1,0.115,37
+46,Burgers & Sandwiches,Pommerenke Student Centre Coffee Shop,-0.128,-0.212,0.741,-0.162,41
+47,Vegetarian & lighter,CUHK Paper & Coffee,-0.426,1.001,0.388,0.075,29
+48,Noodles,Chung Chi College Student Canteen,0.889,0.203,0.721,-0.029,55
+49,Vegetarian & lighter,New Asia College Student Canteen,-0.318,1.486,0.15,-0.048,43
+50,Noodles,United College Student Canteen,0.341,0.167,0.934,-0.182,49
+51,Cafe & Dessert,Chung Chi College Student Canteen,-0.584,0.63,0.629,-0.044,26
+52,Cafe & Dessert,New Asia College Student Canteen,0.172,0.792,0.648,0.011,52
+53,Rice,Chung Chi College Student Canteen,0.243,-0.672,1.016,0.028,34
+54,Burgers & Sandwiches,Orchid Lodge Restaurant,0.051,-1.497,0.645,-0.075,33
+55,Vegetarian & lighter,Orchid Lodge Restaurant,0.103,0.852,0.352,0.158,25
+56,Rice,Chung Chi College Student Canteen,0.486,-0.46,0.933,-0.053,28
+57,Snacks,CUHK Central Canteen,-0.118,-0.041,1.182,-0.045,46
+58,Rice,CUHK Noodle House,0.053,-0.261,0.544,-0.095,51
+59,Noodles,Pommerenke Student Centre Coffee Shop,0.637,0.874,0.748,-0.052,42
+60,Snacks,Pommerenke Student Centre Coffee Shop,1.129,-0.909,0.808,-0.245,27
+61,Noodles,CUHK Central Canteen,0.663,0.514,0.924,0.199,40
+62,Snacks,CUHK Paper & Coffee,0.427,-0.638,1.1,0.022,22
+63,Noodles,New Asia College Student Canteen,1.268,-0.368,0.598,-0.023,41
+64,Snacks,CUHK Noodle House,0.083,0.733,0.772,0.046,54
+65,Cafe & Dessert,CUHK Central Canteen,0.14,-0.616,0.482,0.059,27
+66,Snacks,United College Student Canteen,0.189,-1.205,0.885,0.035,25
+67,Snacks,Pommerenke Student Centre Coffee Shop,-0.567,-0.987,0.457,-0.189,22
+68,Snacks,Chung Chi College Student Canteen,-0.313,-0.229,0.838,-0.152,47
+69,Burgers & Sandwiches,CUHK Central Canteen,0.209,-0.735,0.863,-0.016,29
+70,Snacks,Chung Chi College Student Canteen,-0.111,-0.668,0.284,0.011,42
+71,Burgers & Sandwiches,CUHK Central Canteen,-0.012,-0.55,0.214,-0.062,27
+72,Rice,CUHK Noodle House,0.778,-0.136,0.962,0.018,48
+73,Cafe & Dessert,New Asia College Student Canteen,-0.078,0.317,0.312,-0.005,53
+74,Rice,CUHK Paper & Coffee,0.601,-0.412,0.703,0.14,27
+75,Cafe & Dessert,CUHK Central Canteen,-0.671,0.27,0.533,0.161,52
+76,Rice,CUHK Central Canteen,-0.039,-1.063,0.629,0.079,38
+77,Rice,CUHK Central Canteen,-0.33,-0.277,0.674,-0.045,55
+78,Cafe & Dessert,Pommerenke Student Centre Coffee Shop,-0.312,0.435,0.196,-0.018,26
+79,Rice,United College Student Canteen,-0.374,0.343,0.416,0.105,30
+80,Snacks,CUHK Central Canteen,0.892,-0.276,1.2,0.013,30
+81,Burgers & Sandwiches,CUHK Paper & Coffee,-0.257,-0.301,0.526,-0.053,55
+82,Rice,CUHK Paper & Coffee,1.047,-0.429,0.907,0.112,42
+83,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.131,-1.052,1.139,0.078,48
+84,Cafe & Dessert,CUHK Paper & Coffee,-0.448,-0.176,1.004,-0.169,23
+85,Rice,Pommerenke Student Centre Coffee Shop,0.164,0.286,0.686,0.172,38
+86,Snacks,Pommerenke Student Centre Coffee Shop,0.309,-0.494,0.723,0.081,39
+87,Cafe & Dessert,Chung Chi College Student Canteen,0.038,0.003,0.249,0.045,55
+88,Vegetarian & lighter,New Asia College Student Canteen,-0.082,0.868,0.296,-0.036,48
+89,Snacks,CUHK Paper & Coffee,0.303,-0.84,0.815,-0.218,49
+90,Snacks,New Asia College Student Canteen,-0.145,-1.101,0.216,-0.001,23
+91,Vegetarian & lighter,Orchid Lodge Restaurant,-0.001,0.999,0.548,0.071,33
+92,Burgers & Sandwiches,CUHK Paper & Coffee,-0.109,-0.539,0.502,0.046,45
+93,Noodles,CUHK Central Canteen,0.575,-0.131,0.704,-0.135,33
+94,Noodles,CUHK Paper & Coffee,0.906,-0.494,0.729,-0.113,33
+95,Burgers & Sandwiches,United College Student Canteen,-0.821,-0.58,0.947,0.037,55
+96,Rice,CUHK Central Canteen,0.37,-0.533,0.625,0.106,35
+97,Noodles,CUHK Central Canteen,0.734,0.395,0.463,-0.045,33
+98,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,0.227,1.332,0.387,-0.04,38
+99,Cafe & Dessert,Pommerenke Student Centre Coffee Shop,-0.93,0.561,0.603,-0.127,44
+100,Rice,CUHK Paper & Coffee,-0.075,-0.447,0.33,0.142,44
+101,Cafe & Dessert,CUHK Central Canteen,-0.941,-0.123,0.2,0.068,45
+102,Snacks,Chung Chi College Student Canteen,0.282,-0.353,0.426,0.053,30
+103,Burgers & Sandwiches,CUHK Central Canteen,-0.61,-1.382,0.357,0.116,48
+104,Rice,CUHK Central Canteen,-0.755,-0.025,0.83,0.185,41
+105,Cafe & Dessert,CUHK Noodle House,-0.265,-0.177,0.756,-0.1,44
+106,Burgers & Sandwiches,CUHK Central Canteen,-0.641,0.203,0.843,0.041,54
+107,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.118,-0.733,0.284,-0.06,49
+108,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,0.447,0.883,0.291,0.051,40
+109,Snacks,Pommerenke Student Centre Coffee Shop,0.672,0.39,0.857,0.098,48
+110,Vegetarian & lighter,CUHK Noodle House,0.324,1.028,0.707,-0.006,30
+111,Burgers & Sandwiches,CUHK Noodle House,-0.097,-0.209,0.655,-0.087,22
+112,Cafe & Dessert,CUHK Paper & Coffee,-0.418,-1.071,0.763,0.194,31
+113,Noodles,Chung Chi College Student Canteen,0.398,-0.542,0.901,0.037,23
+114,Noodles,United College Student Canteen,0.351,-0.006,0.297,-0.067,37
+115,Cafe & Dessert,Pommerenke Student Centre Coffee Shop,-0.087,-0.332,0.237,-0.06,55
+116,Cafe & Dessert,CUHK Paper & Coffee,-0.546,0.037,0.356,-0.052,39
+117,Vegetarian & lighter,New Asia College Student Canteen,1.06,1.745,0.166,-0.278,51
+118,Vegetarian & lighter,Orchid Lodge Restaurant,-0.151,0.559,0.928,-0.078,52
+119,Cafe & Dessert,New Asia College Student Canteen,-0.778,0.322,0.778,-0.043,55
+120,Burgers & Sandwiches,CUHK Central Canteen,-0.399,0.003,0.931,0.014,51
+121,Snacks,CUHK Noodle House,0.198,-1.016,0.219,-0.0,47
+122,Snacks,Chung Chi College Student Canteen,1.351,-0.599,0.969,-0.13,28
+123,Vegetarian & lighter,United College Student Canteen,-0.461,0.846,0.799,0.235,43
+124,Burgers & Sandwiches,Pommerenke Student Centre Coffee Shop,-0.423,-0.613,0.554,-0.056,29
+125,Cafe & Dessert,New Asia College Student Canteen,0.354,0.099,1.066,-0.086,30
+126,Vegetarian & lighter,Chung Chi College Student Canteen,-0.279,0.412,0.363,-0.107,28
+127,Snacks,Orchid Lodge Restaurant,-0.089,-0.443,0.87,-0.374,46
+128,Noodles,Orchid Lodge Restaurant,0.823,0.194,0.617,-0.227,53
+129,Snacks,CUHK Paper & Coffee,0.42,-0.818,0.908,0.15,42
+130,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,-0.361,0.674,0.572,-0.053,48
+131,Snacks,CUHK Paper & Coffee,-0.164,-0.731,0.537,-0.126,49
+132,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.376,-0.919,0.651,0.132,26
+133,Cafe & Dessert,Orchid Lodge Restaurant,-0.442,0.438,0.384,0.149,38
+134,Burgers & Sandwiches,CUHK Paper & Coffee,0.325,-0.913,0.724,0.16,43
+135,Snacks,Chung Chi College Student Canteen,-0.077,-1.183,0.762,0.077,50
+136,Burgers & Sandwiches,United College Student Canteen,-0.176,-1.383,0.274,-0.076,22
+137,Rice,CUHK Noodle House,-0.231,-0.264,0.678,0.204,34
+138,Rice,Pommerenke Student Centre Coffee Shop,0.764,0.254,0.451,0.007,55
+139,Vegetarian & lighter,CUHK Noodle House,0.014,1.241,0.687,0.021,38
+140,Rice,Chung Chi College Student Canteen,0.461,0.294,0.704,0.142,41
+141,Rice,CUHK Central Canteen,0.241,-0.041,0.357,0.137,33
+142,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,0.441,0.846,0.651,0.085,48
+143,Vegetarian & lighter,Orchid Lodge Restaurant,0.691,0.15,0.334,0.094,42
+144,Burgers & Sandwiches,United College Student Canteen,0.134,-0.608,0.588,0.068,38
+145,Noodles,New Asia College Student Canteen,0.861,-0.118,0.814,-0.175,39
+146,Burgers & Sandwiches,New Asia College Student Canteen,-0.74,-0.476,0.602,0.077,28
+147,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,-0.204,0.855,0.67,-0.19,46
+148,Rice,CUHK Central Canteen,-0.238,-0.075,0.118,-0.009,53
+149,Cafe & Dessert,CUHK Paper & Coffee,-0.671,-0.222,0.345,-0.038,51
+150,Vegetarian & lighter,CUHK Paper & Coffee,-0.204,1.0,0.61,-0.103,44
+151,Noodles,CUHK Paper & Coffee,0.394,-0.095,0.46,0.001,41
+152,Snacks,CUHK Central Canteen,0.086,-0.587,0.721,0.019,52
+153,Noodles,Orchid Lodge Restaurant,0.77,0.73,0.171,0.001,33
+154,Snacks,Pommerenke Student Centre Coffee Shop,0.172,-0.971,0.503,-0.123,40
+155,Rice,CUHK Central Canteen,0.2,-0.153,1.2,0.161,44
+156,Cafe & Dessert,New Asia College Student Canteen,-0.148,0.099,0.714,0.209,29
+157,Burgers & Sandwiches,CUHK Noodle House,-0.131,-0.123,0.72,-0.087,24
+158,Rice,Pommerenke Student Centre Coffee Shop,-0.143,0.914,0.903,-0.077,41
+159,Rice,Pommerenke Student Centre Coffee Shop,-0.247,-0.768,1.022,0.0,35
+160,Rice,United College Student Canteen,-0.077,0.267,0.835,-0.179,29
+161,Noodles,Pommerenke Student Centre Coffee Shop,0.985,-0.32,0.389,0.19,35
+162,Rice,Chung Chi College Student Canteen,-0.691,0.452,0.998,0.235,25
+163,Vegetarian & lighter,New Asia College Student Canteen,0.131,1.013,0.111,0.108,37
+164,Noodles,CUHK Noodle House,1.025,0.285,0.725,0.096,33
+165,Rice,CUHK Noodle House,0.363,-0.15,0.738,0.047,51
+166,Vegetarian & lighter,Orchid Lodge Restaurant,-0.156,0.123,0.679,-0.072,54
+167,Noodles,Orchid Lodge Restaurant,1.787,0.253,0.161,0.019,32
+168,Snacks,CUHK Paper & Coffee,0.425,-0.786,0.984,-0.124,51
+169,Burgers & Sandwiches,United College Student Canteen,-0.646,-0.516,0.592,0.094,55
+170,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.843,-0.251,0.587,-0.026,41
+171,Vegetarian & lighter,Orchid Lodge Restaurant,0.636,0.866,0.163,0.005,41
+172,Noodles,CUHK Paper & Coffee,0.729,-1.104,0.263,-0.088,34
+173,Vegetarian & lighter,CUHK Noodle House,0.47,0.715,0.442,0.113,44
+174,Cafe & Dessert,CUHK Central Canteen,-0.252,0.337,0.698,-0.02,33
+175,Noodles,Pommerenke Student Centre Coffee Shop,0.508,-0.422,0.548,0.051,31
+176,Snacks,United College Student Canteen,0.325,-0.558,0.895,-0.095,27
+177,Noodles,CUHK Paper & Coffee,0.782,0.368,0.603,0.05,39
+178,Rice,Orchid Lodge Restaurant,0.109,0.053,0.524,-0.107,52
+179,Snacks,Orchid Lodge Restaurant,-0.34,-0.385,0.545,0.067,43
+180,Noodles,Chung Chi College Student Canteen,1.102,0.406,0.474,0.057,48
+181,Noodles,Pommerenke Student Centre Coffee Shop,1.012,0.179,0.713,0.104,48
+182,Noodles,Pommerenke Student Centre Coffee Shop,0.817,-0.692,0.1,0.008,25
+183,Cafe & Dessert,Pommerenke Student Centre Coffee Shop,-0.708,-0.208,0.181,0.167,42
+184,Burgers & Sandwiches,United College Student Canteen,0.288,-1.834,0.213,0.059,43
+185,Burgers & Sandwiches,New Asia College Student Canteen,0.396,-0.903,0.319,-0.093,55
+186,Vegetarian & lighter,CUHK Central Canteen,-0.44,0.838,0.186,0.041,38
+187,Cafe & Dessert,CUHK Noodle House,-0.0,0.574,0.805,0.035,27
+188,Rice,United College Student Canteen,0.833,0.235,0.865,-0.161,28
+189,Snacks,New Asia College Student Canteen,-0.029,-0.886,0.801,0.063,55
+190,Snacks,CUHK Central Canteen,-0.374,-1.031,0.523,0.117,31
+191,Vegetarian & lighter,CUHK Noodle House,-0.06,0.382,0.506,0.069,26
+192,Rice,CUHK Noodle House,0.353,-0.276,0.562,-0.071,25
+193,Burgers & Sandwiches,CUHK Central Canteen,-0.16,-0.791,0.233,-0.074,40
+194,Rice,United College Student Canteen,0.51,-0.682,0.335,-0.041,55
+195,Cafe & Dessert,CUHK Paper & Coffee,-0.521,0.053,0.57,-0.014,50
+196,Snacks,CUHK Paper & Coffee,-0.325,-0.661,0.512,0.061,41
+197,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.603,-0.772,0.971,-0.117,49
+198,Burgers & Sandwiches,CUHK Central Canteen,-0.328,-0.381,0.461,-0.156,53
+199,Noodles,CUHK Noodle House,1.304,0.015,0.125,-0.153,39
+200,Cafe & Dessert,New Asia College Student Canteen,-0.656,0.243,0.479,-0.033,43
+201,Noodles,Pommerenke Student Centre Coffee Shop,1.688,0.422,0.451,-0.034,28
+202,Vegetarian & lighter,Orchid Lodge Restaurant,0.871,0.091,0.691,0.099,52
+203,Burgers & Sandwiches,Orchid Lodge Restaurant,0.16,-0.886,0.585,-0.235,46
+204,Rice,CUHK Noodle House,-0.061,-0.201,1.029,0.136,42
+205,Rice,Pommerenke Student Centre Coffee Shop,0.05,-0.501,0.888,0.122,27
+206,Rice,Orchid Lodge Restaurant,-0.228,0.058,0.892,-0.14,26
+207,Burgers & Sandwiches,CUHK Paper & Coffee,0.402,0.371,0.314,0.029,25
+208,Vegetarian & lighter,CUHK Paper & Coffee,-0.587,1.01,0.87,0.029,34
+209,Vegetarian & lighter,CUHK Noodle House,-0.615,0.531,0.1,0.013,45
+210,Noodles,Orchid Lodge Restaurant,0.222,0.129,0.205,-0.074,26
+211,Rice,Chung Chi College Student Canteen,-0.419,0.825,0.845,0.011,48
+212,Burgers & Sandwiches,Chung Chi College Student Canteen,-0.571,-0.885,0.408,0.04,43
+213,Vegetarian & lighter,Chung Chi College Student Canteen,0.773,1.315,0.72,0.012,37
+214,Noodles,Pommerenke Student Centre Coffee Shop,0.843,0.422,0.539,-0.078,44
+215,Cafe & Dessert,New Asia College Student Canteen,-0.677,-0.45,0.671,0.023,29
+216,Snacks,New Asia College Student Canteen,0.49,-0.287,0.828,0.042,42
+217,Cafe & Dessert,Chung Chi College Student Canteen,-0.637,-0.821,0.349,0.105,50
+218,Snacks,CUHK Central Canteen,1.156,-1.328,1.042,-0.126,39
+219,Rice,Orchid Lodge Restaurant,-0.375,0.358,0.604,-0.02,52
+220,Burgers & Sandwiches,CUHK Central Canteen,0.06,-1.39,0.1,-0.231,24
+221,Burgers & Sandwiches,New Asia College Student Canteen,0.019,-0.042,0.474,-0.093,37
+222,Noodles,United College Student Canteen,0.512,0.23,0.496,0.013,29
+223,Cafe & Dessert,Pommerenke Student Centre Coffee Shop,-0.322,0.386,0.236,-0.084,53
+224,Snacks,CUHK Noodle House,0.569,-1.372,0.736,0.143,53
+225,Snacks,CUHK Central Canteen,0.173,-1.27,0.402,0.197,31
+226,Snacks,CUHK Noodle House,0.355,-0.688,0.446,-0.159,26
+227,Noodles,Chung Chi College Student Canteen,1.065,0.309,0.446,0.036,44
+228,Cafe & Dessert,CUHK Central Canteen,-0.173,-0.84,0.471,0.044,27
+229,Burgers & Sandwiches,United College Student Canteen,-0.65,-0.785,0.542,0.18,51
+230,Snacks,United College Student Canteen,-0.088,-0.952,0.784,-0.071,43
+231,Vegetarian & lighter,New Asia College Student Canteen,0.103,1.41,0.649,0.081,37
+232,Burgers & Sandwiches,CUHK Paper & Coffee,-0.599,-0.441,0.592,-0.097,42
+233,Rice,United College Student Canteen,-0.057,-0.391,0.855,0.173,26
+234,Burgers & Sandwiches,United College Student Canteen,-0.098,-1.072,0.773,-0.283,32
+235,Rice,CUHK Noodle House,-0.089,-0.613,0.752,0.057,52
+236,Noodles,New Asia College Student Canteen,-0.027,-0.057,0.472,0.143,48
+237,Noodles,New Asia College Student Canteen,1.741,0.028,0.533,0.087,24
+238,Vegetarian & lighter,CUHK Central Canteen,-0.009,0.535,0.1,0.028,33
+239,Vegetarian & lighter,CUHK Central Canteen,-0.451,0.481,0.379,0.182,53
+240,Noodles,United College Student Canteen,1.818,0.26,0.132,0.077,32
+241,Noodles,Pommerenke Student Centre Coffee Shop,1.553,-0.503,0.372,-0.029,31
+242,Cafe & Dessert,CUHK Paper & Coffee,-1.026,0.312,0.642,-0.128,30
+243,Noodles,Pommerenke Student Centre Coffee Shop,0.791,-0.133,0.269,-0.089,23
+244,Vegetarian & lighter,New Asia College Student Canteen,0.357,1.649,0.275,-0.265,45
+245,Burgers & Sandwiches,CUHK Paper & Coffee,0.118,-0.852,0.1,0.012,38
+246,Rice,CUHK Noodle House,0.692,0.515,0.384,-0.14,49
+247,Snacks,New Asia College Student Canteen,0.023,-0.367,0.631,-0.077,37
+248,Rice,United College Student Canteen,0.045,0.105,0.647,0.212,44
+249,Cafe & Dessert,United College Student Canteen,0.25,0.106,0.622,-0.056,39
+250,Cafe & Dessert,CUHK Paper & Coffee,-0.802,-0.739,0.496,0.035,43
+251,Vegetarian & lighter,CUHK Central Canteen,-0.376,0.764,1.098,0.028,24
+252,Snacks,Pommerenke Student Centre Coffee Shop,0.423,-0.429,0.34,-0.042,40
+253,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,0.419,0.701,0.343,-0.097,22
+254,Burgers & Sandwiches,Pommerenke Student Centre Coffee Shop,0.137,-0.837,0.679,0.234,32
+255,Noodles,New Asia College Student Canteen,0.54,-1.054,0.558,-0.01,51
+256,Cafe & Dessert,Orchid Lodge Restaurant,0.126,0.355,0.482,0.013,25
+257,Noodles,United College Student Canteen,0.215,0.058,0.7,-0.114,40
+258,Snacks,CUHK Noodle House,-0.069,-0.999,0.479,-0.022,38
+259,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.487,-0.611,0.396,-0.184,40
+260,Rice,Orchid Lodge Restaurant,0.011,0.146,0.551,-0.043,33
+261,Burgers & Sandwiches,Pommerenke Student Centre Coffee Shop,-0.37,-0.025,0.678,0.061,44
+262,Noodles,United College Student Canteen,0.289,0.473,0.1,0.044,33
+263,Noodles,CUHK Paper & Coffee,0.533,-0.439,0.603,0.075,51
+264,Cafe & Dessert,Chung Chi College Student Canteen,0.859,0.637,0.375,0.129,53
+265,Burgers & Sandwiches,Orchid Lodge Restaurant,-0.619,-0.628,0.479,0.053,40
+266,Cafe & Dessert,Chung Chi College Student Canteen,-0.473,-0.324,0.22,-0.198,44
+267,Snacks,Orchid Lodge Restaurant,-0.104,-0.416,0.711,0.038,37
+268,Cafe & Dessert,United College Student Canteen,-0.443,0.316,0.367,-0.045,32
+269,Rice,CUHK Central Canteen,0.716,0.347,0.436,0.127,39
+270,Burgers & Sandwiches,New Asia College Student Canteen,-0.56,-0.291,0.508,0.093,44
+271,Noodles,CUHK Paper & Coffee,1.056,-0.201,0.225,-0.02,51
+272,Vegetarian & lighter,New Asia College Student Canteen,-0.41,1.607,0.314,0.027,44
+273,Rice,Chung Chi College Student Canteen,-0.015,-0.087,0.884,-0.039,23
+274,Cafe & Dessert,United College Student Canteen,-1.019,0.578,0.573,0.013,27
+275,Cafe & Dessert,CUHK Central Canteen,-0.03,0.491,0.653,-0.167,22
+276,Cafe & Dessert,CUHK Central Canteen,-0.535,0.303,0.259,-0.21,26
+277,Noodles,Chung Chi College Student Canteen,0.945,-1.212,0.736,0.273,26
+278,Snacks,United College Student Canteen,-0.044,-0.456,1.2,0.093,49
+279,Vegetarian & lighter,New Asia College Student Canteen,-0.768,0.208,0.678,0.1,40
+280,Rice,CUHK Paper & Coffee,1.031,0.415,0.346,-0.011,44
+281,Burgers & Sandwiches,CUHK Paper & Coffee,-0.212,-0.524,0.376,-0.037,43
+282,Burgers & Sandwiches,CUHK Noodle House,-0.649,-0.051,0.614,0.107,49
+283,Rice,New Asia College Student Canteen,0.552,0.597,0.496,0.003,27
+284,Noodles,Orchid Lodge Restaurant,0.375,0.333,0.613,-0.038,29
+285,Rice,CUHK Central Canteen,0.342,-0.698,0.458,-0.015,45
+286,Noodles,New Asia College Student Canteen,1.067,-0.393,0.323,-0.108,26
+287,Snacks,Pommerenke Student Centre Coffee Shop,0.3,-0.961,0.438,0.093,43
+288,Vegetarian & lighter,Orchid Lodge Restaurant,-0.353,0.772,0.1,0.028,38
+289,Burgers & Sandwiches,CUHK Paper & Coffee,-0.811,-0.221,0.1,-0.131,54
+290,Rice,New Asia College Student Canteen,-0.216,0.368,0.605,0.029,42
+291,Snacks,CUHK Paper & Coffee,-0.06,-0.592,0.751,0.011,28
+292,Snacks,Chung Chi College Student Canteen,0.304,-1.027,0.708,0.024,30
+293,Cafe & Dessert,New Asia College Student Canteen,-0.451,-0.623,0.531,-0.219,48
+294,Burgers & Sandwiches,CUHK Noodle House,0.422,-0.927,0.586,0.149,54
+295,Burgers & Sandwiches,CUHK Central Canteen,-0.274,-0.458,0.8,0.167,50
+296,Snacks,Orchid Lodge Restaurant,0.044,-0.863,0.799,-0.0,22
+297,Burgers & Sandwiches,Orchid Lodge Restaurant,0.079,-1.514,0.167,-0.122,48
+298,Rice,CUHK Noodle House,-0.242,0.507,0.342,0.309,43
+299,Cafe & Dessert,CUHK Paper & Coffee,-0.664,-0.288,0.537,-0.067,36
+300,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,0.709,1.208,0.339,-0.011,36
+301,Vegetarian & lighter,United College Student Canteen,0.44,1.192,0.254,0.107,23
+302,Vegetarian & lighter,Orchid Lodge Restaurant,-0.693,1.464,0.695,-0.125,31
+303,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,-0.162,1.884,0.563,-0.133,52
+304,Vegetarian & lighter,Pommerenke Student Centre Coffee Shop,-0.469,1.217,0.362,-0.013,37
+305,Burgers & Sandwiches,CUHK Paper & Coffee,-1.078,-0.523,0.735,0.038,48
+306,Burgers & Sandwiches,CUHK Central Canteen,-0.575,-0.53,0.471,-0.054,31
+307,Rice,CUHK Central Canteen,-0.312,-0.672,0.766,-0.204,25
+308,Noodles,CUHK Paper & Coffee,0.738,-0.108,0.777,-0.151,22
+309,Noodles,CUHK Noodle House,0.513,-0.085,0.1,-0.154,36
+310,Noodles,New Asia College Student Canteen,-0.01,0.244,0.256,0.164,48
+311,Snacks,Orchid Lodge Restaurant,0.726,-1.56,1.042,-0.193,27
+312,Burgers & Sandwiches,United College Student Canteen,-1.121,0.783,0.612,0.134,43
+313,Vegetarian & lighter,CUHK Paper & Coffee,-0.385,0.647,0.478,-0.003,39
+314,Rice,CUHK Paper & Coffee,0.928,-0.089,0.319,0.159,38
+315,Noodles,Chung Chi College Student Canteen,0.922,0.177,0.47,0.081,52
+316,Noodles,CUHK Central Canteen,0.549,0.445,0.296,-0.002,42
+317,Snacks,New Asia College Student Canteen,-0.591,-0.69,1.2,0.08,52
+318,Rice,Pommerenke Student Centre Coffee Shop,0.018,-0.029,0.424,-0.083,51
+319,Noodles,Orchid Lodge Restaurant,0.99,0.566,0.536,0.012,33
