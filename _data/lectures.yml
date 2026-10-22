@@ -116,12 +116,22 @@
 
 - date: "2026-10-22"
   title: >
-    <strong>Matrix Factorization Variants</strong>
+    <strong>From EDA to Recommender: CUHK Canteen Explorer</strong>
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_Canteen_EDA_MF.ipynb
   warmup:
     label: Start here · Warm-up 05
     title: MF workflow — fit, predict, select
     meta: 18–20 min
     href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_05_MF_Recap.ipynb
+  readings:
+    - >
+      <a href="https://seaborn.pydata.org/tutorial/introduction.html">Seaborn: Overview of plotting functions</a>
+    - >
+      <a href="https://seaborn.pydata.org/tutorial/distributions.html">Seaborn: Visualizing distributions</a>
+    - >
+      <a href="https://seaborn.pydata.org/tutorial/relational.html">Seaborn: Visualizing statistical relationships</a>
+    - >
+      Optional: <a href="https://pandas.pydata.org/docs/user_guide/visualization.html">pandas: Visualization</a>
 
 - date: "2026-10-29"
   quiz: >
