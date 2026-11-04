@@ -10,7 +10,7 @@ permalink: /grading/
 
   - Homework 1 (5%): Implementing k-fold cross-validation
   - Homework 2 (5%): Practicing ALS-related algorithms
-  - Homework 3 (5%): Prototyping neural networks in recommender systems using TensorFlow
+  - Homework 3 (5%): Prototyping neural networks in recommender systems using PyTorch
 
 - **Midterm Jupyter Notebook Examination** (40%): In-class notebook exercise on **Thu 10/29**, covering the workflow from raw data to rating prediction. See midterm details below.
 
