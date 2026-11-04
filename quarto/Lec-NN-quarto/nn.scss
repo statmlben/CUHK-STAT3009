@@ -1,0 +1,314 @@
+/*-- scss:rules --*/
+
+/* Two-column layouts that pair an equation with a figure. */
+.nn-two-col {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 42px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.nn-two-col .lesson-formula {
+  margin: 0 0 22px;
+}
+
+.nn-two-col .lesson-formula:last-child {
+  margin-bottom: 0;
+}
+
+.nn-two-col .lesson-table {
+  margin: 0;
+}
+
+.nn-two-col .lesson-table th,
+.nn-two-col .lesson-table td {
+  padding: 12px 15px;
+  font-size: 21px;
+}
+
+.nn-two-col .lesson-figure {
+  width: 100%;
+  height: auto;
+  margin: 0 !important;
+  max-height: 390px;
+}
+
+.nn-two-col.wide-left {
+  grid-template-columns: 1.25fr .75fr;
+}
+
+.nn-two-col.wide-left .lesson-figure {
+  max-height: 445px;
+}
+
+.nn-stack > * + * {
+  margin-top: 22px;
+}
+
+.nn-tight-formula {
+  margin: 16px 0 !important;
+}
+
+.reveal code:not(pre code) {
+  color: var(--cuhk-gold);
+  background: rgba(221, 163, 0, 0.10);
+  padding: 0 .18em;
+  border-radius: 3px;
+}
+
+.reveal h2 code,
+.reveal h2 code:not(pre code) {
+  color: var(--cuhk-gold);
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* A denser code block for the in-class starter code. */
+.reveal .slides section.nn-dense pre.sourceCode {
+  font-size: 18px !important;
+  line-height: 1.30 !important;
+}
+
+.reveal .slides section.nn-dense pre.sourceCode code {
+  max-height: none !important;
+  overflow: visible;
+  padding: 13px 18px;
+}
+
+/* Smaller code blocks for long model / search snippets. */
+.reveal .slides section.nn-code-sm pre.sourceCode {
+  font-size: 15px !important;
+  line-height: 1.22 !important;
+}
+
+.reveal .slides section.nn-code-sm pre.sourceCode code {
+  max-height: none !important;
+  overflow: visible;
+  padding: 10px 16px;
+}
+
+/* LEGO-style layer bricks: a brick has a shape on each side. */
+.brick-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin: 26px 0 20px;
+}
+
+.brick-row.two {
+  max-width: 1050px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.brick-step {
+  flex: 1;
+  min-width: 0;
+}
+
+.brick {
+  position: relative;
+  height: 100%;
+  padding: 22px 12px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+  border-top: 4px solid #a65b9f;
+  text-align: center;
+}
+
+.brick::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  right: 12px;
+  height: 10px;
+  background: radial-gradient(circle at 10px 5px, #dda300 0 4.5px, transparent 5px) repeat-x;
+  background-size: 24px 10px;
+  opacity: 0.85;
+}
+
+.brick.linear { border-color: #a65b9f; }
+.brick.relu { border-color: var(--cuhk-gold); }
+.brick.input, .brick.output { border-color: #d1cdd3; background: rgba(255, 255, 255, 0.03); }
+.brick.mismatch { border-color: #e05252; }
+
+.brick b {
+  display: block;
+  margin-top: 6px;
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+.brick span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: Menlo, monospace;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+}
+
+.brick small {
+  display: block;
+  margin-top: 7px;
+  color: #c3c0c8;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.brick .shape {
+  margin-top: 10px;
+  color: var(--muted);
+  font-family: Menlo, monospace;
+  font-size: 14px;
+}
+
+.brick-arrow {
+  align-self: center;
+  color: var(--cuhk-gold);
+  font-size: 26px;
+  font-style: normal;
+}
+
+.brick-large {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  height: auto;
+  min-height: 240px;
+  padding: 32px 24px;
+}
+
+.brick-large b { font-size: 30px; }
+.brick-large .shape { font-size: 17px; }
+
+.shape-error {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-top: 28px;
+  color: #e05252;
+  font-family: Menlo, monospace;
+  font-size: 19px;
+  text-align: center;
+}
+
+
+/* Batch / epoch diagram: one epoch is a pass over the batch groups. */
+.batch-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin: 30px 0 16px;
+}
+
+.batch-group {
+  width: 220px;
+  padding: 16px 18px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  border-top: 4px solid #a65b9f;
+  text-align: center;
+}
+
+.batch-group span.row {
+  display: block;
+  height: 13px;
+  margin: 6px 0;
+  border-radius: 3px;
+  background: rgba(166, 91, 159, 0.28);
+  border: 1px solid #a65b9f;
+}
+
+.batch-group b {
+  display: block;
+  margin-top: 8px;
+  color: var(--cuhk-gold);
+  font-family: Menlo, monospace;
+  font-size: 16px;
+}
+
+.batch-group small {
+  display: block;
+  margin-top: 4px;
+  color: #c3c0c8;
+  font-size: 14px;
+}
+
+.batch-arrow {
+  color: var(--cuhk-gold);
+  font-size: 28px;
+  font-style: normal;
+}
+
+.batch-caption {
+  margin: 0;
+  color: #c3c0c8;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* K-fold cross-validation diagram. */
+.fold-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 980px;
+  margin: 24px auto 14px;
+}
+
+.fold-row {
+  display: grid;
+  grid-template-columns: 110px repeat(3, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.fold-name {
+  color: var(--cuhk-gold);
+  font-family: Menlo, monospace;
+  font-size: 16px;
+  text-align: right;
+}
+
+.fold-cell {
+  padding: 12px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #c3c0c8;
+  font-size: 17px;
+  text-align: center;
+}
+
+.fold-cell.valid {
+  background: rgba(221, 163, 0, 0.16);
+  border-color: var(--cuhk-gold);
+  color: var(--cuhk-gold);
+  font-weight: 700;
+}
+
+
+/* Small row-of-examples graphic for full vs batch gradients. */
+.dot-row {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(166, 91, 159, 0.25);
+  border: 1px solid #a65b9f;
+}
+
+.dot.active {
+  background: var(--cuhk-gold);
+  border-color: var(--cuhk-gold);
+}

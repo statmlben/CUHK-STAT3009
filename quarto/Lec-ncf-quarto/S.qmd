@@ -6,7 +6,7 @@ institute: "CUHK · Department of Statistics and Data Science"
 lang: en
 format:
   revealjs:
-    theme: [dark, ../Lec-overview/stat3009.scss, ../lecture-decks.scss]
+    theme: [dark, ../Lec-overview/stat3009.scss, ../lecture-decks.scss, ncf.scss]
     logo: ../Lec-overview/figs/cu_logo.webp
     width: 1600
     height: 900
@@ -45,7 +45,7 @@ title-slide-attributes:
 <p class="lesson-takeaway">“Embedding” and “latent factor” describe the same kind of learned dense vector here.</p>
 
 ::: {.notes}
-[Source] Keras Embedding API: https://keras.io/api/layers/core_layers/embedding/ . It accepts nonnegative integer indices and returns dense vectors.
+[Source] PyTorch Embedding API: https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html . It maps integer `torch.long` indices to dense vectors.
 :::
 
 ## Lookup equals a one-hot matrix product {.lesson-slide}
@@ -60,7 +60,7 @@ title-slide-attributes:
 
 <div class="lesson-grid"><div class="lesson-card"><span>HYPERPARAMETER</span><b>$K$ · embedding dimension</b><p>Choose how many coordinates each ID receives before fitting.</p></div><div class="lesson-card"><span>LEARNED PARAMETERS</span><b>$P$ and $Q$</b><p>Training updates the $nK+mK$ table entries.</p></div></div>
 
-<div class="lesson-formula compact">$$\texttt{Embedding(input\_dim=n\_users, output\_dim=K)}$$</div>
+<div class="lesson-formula compact">$$\texttt{nn.Embedding(num\_embeddings=n\_users, embedding\_dim=K)}$$</div>
 
 <p class="lesson-takeaway">The ID numbers are lookup positions, not ordered numerical measurements.</p>
 
@@ -102,26 +102,29 @@ title-slide-attributes:
 
 <p class="lesson-takeaway">This is the explicit-rating version used in STAT3009; the original NCF research also considers implicit feedback.</p>
 
-## A Keras implementation sketch {.lesson-slide .lesson-code}
+## A PyTorch implementation sketch {.lesson-slide .lesson-code .ncf-dense}
 
 ```python
-import keras
+class NCF(nn.Module):
+    def __init__(self, n_users, n_items, K=32):
+        super().__init__()
+        self.user_emb = nn.Embedding(n_users, K)
+        self.item_emb = nn.Embedding(n_items, K)
+        self.net = nn.Sequential(
+            nn.Linear(2 * K, 32), nn.ReLU(),
+            nn.Linear(32, 1),
+        )
 
-user_id = keras.Input(shape=(1,), dtype="int32")
-item_id = keras.Input(shape=(1,), dtype="int32")
-u = keras.layers.Flatten()(keras.layers.Embedding(n_users, K)(user_id))
-i = keras.layers.Flatten()(keras.layers.Embedding(n_items, K)(item_id))
-x = keras.layers.Concatenate()([u, i])
-x = keras.layers.Dense(32, activation="relu")(x)
-rating = keras.layers.Dense(1)(x)
-model = keras.Model([user_id, item_id], rating)
-model.compile(optimizer="adam", loss="mse")
+    def forward(self, user_id, item_id):
+        x = torch.cat([self.user_emb(user_id),
+                       self.item_emb(item_id)], dim=1)
+        return self.net(x)
 ```
 
-<p class="lesson-takeaway">The two embedding layers and Dense layers are all trained by the same loss.</p>
+<p class="lesson-takeaway">Both embedding tables and the MLP are trained by the same loss.</p>
 
 ::: {.notes}
-[Sources] Keras Embedding: https://keras.io/api/layers/core_layers/embedding/ ; Keras Model API: https://keras.io/api/models/model/ . This is a structural sketch, not a complete data-loading notebook.
+[Sources] PyTorch Embedding: https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html ; `torch.cat`: https://pytorch.org/docs/stable/generated/torch.cat.html . Embedding inputs must be integer `torch.long` tensors of shape `(batch,)`; the two `(batch, K)` outputs concatenate to `(batch, 2K)`. The sketch assumes `import torch` and `from torch import nn`.
 :::
 
 ## In-class design: keep the familiar bias terms {.lesson-slide}

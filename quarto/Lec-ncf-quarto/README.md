@@ -6,5 +6,8 @@ extension. A small optional slide retains the original's more general
 coordinate-wise interaction. The original NCF research used implicit feedback;
 the course deck explicitly labels its rating-regression adaptation.
 
-The source figures `MF2NN.png` and `NCF.png` are copied from the original deck
-into `figs/`. Render with `quarto render S.qmd`; `S.html` is self-contained.
+The implementation sketch uses PyTorch `nn.Embedding` tables and `torch.cat`,
+with a small `nn.Module` for the two-branch network. Local dense-code layout is
+in `ncf.scss`. The source figures `MF2NN.png` and `NCF.png` are copied from the
+original deck into `figs/`. Render with `quarto render S.qmd`; `S.html` is
+self-contained.

@@ -137,3 +137,25 @@
   quiz: >
     <strong>Mid-term Jupyter Notebook Exercise</strong><br>
     Baseline models and matrix factorization models
+
+- date: "2026-11-05"
+  title: >
+    <strong>Neural Networks</strong>
+  slides: ../quarto/Lec-NN-quarto/S.html
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_NN.ipynb
+  readings:
+    - >
+      <a href="https://pytorch.org/tutorials/beginner/basics/intro.html">PyTorch: Learn the Basics</a>
+      (tensors, autograd, and <code>nn.Module</code>)
+    - >
+      <a href="https://skorch.readthedocs.io/en/stable/regressor.html">skorch: NeuralNetRegressor</a>
+      (<code>fit</code>, <code>predict</code>, and <code>history</code>)
+    - >
+      <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">scikit-learn: GridSearchCV</a>
+      (parameter grid, scoring, and refit)
+    - >
+      <a href="https://pytorch.org/docs/stable/generated/torch.optim.SGD.html">PyTorch: SGD</a>
+      (learning rate and the update rule)
+    - >
+      Optional: <a href="https://www.deeplearningbook.org/contents/mlp.html">Deep Learning: Chapter 6</a>
+      (feedforward networks)

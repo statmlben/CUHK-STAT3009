@@ -1,0 +1,12 @@
+/*-- scss:rules --*/
+
+.reveal .slides section.ncf-dense pre.sourceCode {
+  font-size: 20px !important;
+  line-height: 1.30 !important;
+}
+
+.reveal .slides section.ncf-dense pre.sourceCode code {
+  max-height: none !important;
+  overflow: visible;
+  padding: 14px 18px;
+}

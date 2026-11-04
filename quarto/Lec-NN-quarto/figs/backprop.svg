@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="430" viewBox="0 0 1400 430" role="img" aria-label="Forward pass computes h1, h2, and yhat; backward pass sends gradients from the loss back through the layers and fills the parameter gradients.">
+  <defs>
+    <marker id="arrow-fwd" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a65b9f"/>
+    </marker>
+    <marker id="arrow-bwd" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dda300"/>
+    </marker>
+  </defs>
+
+  <text x="55" y="42" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" fill="#a65b9f">forward pass</text>
+  <text x="55" y="215" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" fill="#dda300">backward pass</text>
+
+  <!-- forward boxes -->
+  <rect x="50" y="50" width="180" height="92" rx="10" fill="#a65b9f" opacity="0.10" stroke="#a65b9f" stroke-width="2"/>
+  <text x="140" y="94" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#f2f0eb">x</text>
+  <text x="140" y="123" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#aaa8ae">input</text>
+
+  <rect x="330" y="50" width="180" height="92" rx="10" fill="#a65b9f" opacity="0.10" stroke="#a65b9f" stroke-width="2"/>
+  <text x="420" y="94" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#f2f0eb">h1</text>
+  <text x="420" y="123" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#aaa8ae">layer 1</text>
+
+  <rect x="610" y="50" width="180" height="92" rx="10" fill="#a65b9f" opacity="0.10" stroke="#a65b9f" stroke-width="2"/>
+  <text x="700" y="94" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#f2f0eb">h2</text>
+  <text x="700" y="123" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#aaa8ae">layer 2</text>
+
+  <rect x="890" y="50" width="180" height="92" rx="10" fill="#a65b9f" opacity="0.10" stroke="#a65b9f" stroke-width="2"/>
+  <text x="980" y="94" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#f2f0eb">ŷ</text>
+  <text x="980" y="123" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#aaa8ae">prediction</text>
+
+  <rect x="1170" y="50" width="180" height="92" rx="10" fill="#dda300" opacity="0.10" stroke="#dda300" stroke-width="2"/>
+  <text x="1260" y="94" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#f2f0eb">J(θ)</text>
+  <text x="1260" y="123" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#aaa8ae">loss</text>
+
+  <!-- forward arrows -->
+  <line x1="230" y1="96" x2="322" y2="96" stroke="#a65b9f" stroke-width="3" marker-end="url(#arrow-fwd)"/>
+  <line x1="510" y1="96" x2="602" y2="96" stroke="#a65b9f" stroke-width="3" marker-end="url(#arrow-fwd)"/>
+  <line x1="790" y1="96" x2="882" y2="96" stroke="#a65b9f" stroke-width="3" marker-end="url(#arrow-fwd)"/>
+  <line x1="1070" y1="96" x2="1162" y2="96" stroke="#a65b9f" stroke-width="3" marker-end="url(#arrow-fwd)"/>
+
+  <text x="276" y="80" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#c3c0c8">W1, b1</text>
+  <text x="556" y="80" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#c3c0c8">W2, b2</text>
+  <text x="836" y="80" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#c3c0c8">W3, b3</text>
+  <text x="1116" y="80" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#c3c0c8">L(y, ŷ)</text>
+
+  <!-- backward arrows -->
+  <line x1="1162" y1="255" x2="1078" y2="255" stroke="#dda300" stroke-width="3" marker-end="url(#arrow-bwd)"/>
+  <line x1="882" y1="255" x2="798" y2="255" stroke="#dda300" stroke-width="3" marker-end="url(#arrow-bwd)"/>
+  <line x1="602" y1="255" x2="518" y2="255" stroke="#dda300" stroke-width="3" marker-end="url(#arrow-bwd)"/>
+
+  <text x="1120" y="238" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#dda300">∂J/∂ŷ</text>
+  <text x="840" y="238" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#dda300">∂J/∂h2</text>
+  <text x="560" y="238" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#dda300">∂J/∂h1</text>
+
+  <!-- parameter gradient tags -->
+  <rect x="330" y="310" width="180" height="52" rx="8" fill="#dda300" opacity="0.10" stroke="#dda300" stroke-width="1.5"/>
+  <text x="420" y="343" text-anchor="middle" font-family="Menlo, monospace" font-size="19" fill="#dda300">∂J/∂W1</text>
+
+  <rect x="610" y="310" width="180" height="52" rx="8" fill="#dda300" opacity="0.10" stroke="#dda300" stroke-width="1.5"/>
+  <text x="700" y="343" text-anchor="middle" font-family="Menlo, monospace" font-size="19" fill="#dda300">∂J/∂W2</text>
+
+  <rect x="890" y="310" width="180" height="52" rx="8" fill="#dda300" opacity="0.10" stroke="#dda300" stroke-width="1.5"/>
+  <text x="980" y="343" text-anchor="middle" font-family="Menlo, monospace" font-size="19" fill="#dda300">∂J/∂W3</text>
+
+</svg>

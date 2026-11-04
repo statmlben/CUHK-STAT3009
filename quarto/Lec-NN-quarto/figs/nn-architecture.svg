@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="640" viewBox="0 0 1240 640" role="img" aria-label="A feedforward network with three inputs, two hidden layers, and one output.">
+<rect width="1240" height="640" fill="none"/>
+<line x1="110" y1="180" x2="430" y2="110" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="180" x2="430" y2="250" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="180" x2="430" y2="390" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="180" x2="430" y2="530" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="320" x2="430" y2="110" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="320" x2="430" y2="250" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="320" x2="430" y2="390" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="320" x2="430" y2="530" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="460" x2="430" y2="110" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="460" x2="430" y2="250" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="460" x2="430" y2="390" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="110" y1="460" x2="430" y2="530" stroke="#f2f0eb" stroke-opacity="0.13" stroke-width="1.4"/>
+<line x1="430" y1="110" x2="750" y2="180" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="110" x2="750" y2="320" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="110" x2="750" y2="460" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="250" x2="750" y2="180" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="250" x2="750" y2="320" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="250" x2="750" y2="460" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="390" x2="750" y2="180" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="390" x2="750" y2="320" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="390" x2="750" y2="460" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="530" x2="750" y2="180" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="530" x2="750" y2="320" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="430" y1="530" x2="750" y2="460" stroke="#f2f0eb" stroke-opacity="0.15" stroke-width="1.4"/>
+<line x1="750" y1="180" x2="1022" y2="320" stroke="#f2f0eb" stroke-opacity="0.22" stroke-width="1.8"/>
+<line x1="750" y1="320" x2="1022" y2="320" stroke="#f2f0eb" stroke-opacity="0.22" stroke-width="1.8"/>
+<line x1="750" y1="460" x2="1022" y2="320" stroke="#f2f0eb" stroke-opacity="0.22" stroke-width="1.8"/>
+<text x="110" y="55" text-anchor="middle" font-family="Menlo, monospace" font-size="19" font-weight="700" letter-spacing="2.2" fill="#aaa8ae">INPUT</text>
+<text x="430" y="55" text-anchor="middle" font-family="Menlo, monospace" font-size="19" font-weight="700" letter-spacing="2.2" fill="#aaa8ae">HIDDEN 1</text>
+<text x="750" y="55" text-anchor="middle" font-family="Menlo, monospace" font-size="19" font-weight="700" letter-spacing="2.2" fill="#aaa8ae">HIDDEN 2</text>
+<text x="1060" y="55" text-anchor="middle" font-family="Menlo, monospace" font-size="19" font-weight="700" letter-spacing="2.2" fill="#aaa8ae">OUTPUT</text>
+<text x="110" y="608" text-anchor="middle" font-family="Menlo, monospace" font-size="22" fill="#dda300">d0 = 3</text>
+<text x="430" y="608" text-anchor="middle" font-family="Menlo, monospace" font-size="22" fill="#dda300">d1 = 4</text>
+<text x="750" y="608" text-anchor="middle" font-family="Menlo, monospace" font-size="22" fill="#dda300">d2 = 3</text>
+<text x="1060" y="608" text-anchor="middle" font-family="Menlo, monospace" font-size="22" fill="#dda300">d3 = 1</text>
+<rect x="218" y="292" width="104" height="38" rx="7" fill="#101116" opacity="0.88"/>
+<text x="270" y="318" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#dda300">W1, b1</text>
+<rect x="538" y="292" width="104" height="38" rx="7" fill="#101116" opacity="0.88"/>
+<text x="590" y="318" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#dda300">W2, b2</text>
+<rect x="853" y="292" width="104" height="38" rx="7" fill="#101116" opacity="0.88"/>
+<text x="905" y="318" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#dda300">W3, b3</text>
+<circle cx="110" cy="180" r="26" fill="#f2f0eb" stroke="#aaa8ae" stroke-width="1.5"/>
+<text x="110" y="187" text-anchor="middle" font-family="Menlo, monospace" font-size="18" font-weight="700" fill="#101116">x1</text>
+<circle cx="110" cy="320" r="26" fill="#f2f0eb" stroke="#aaa8ae" stroke-width="1.5"/>
+<text x="110" y="327" text-anchor="middle" font-family="Menlo, monospace" font-size="18" font-weight="700" fill="#101116">x2</text>
+<circle cx="110" cy="460" r="26" fill="#f2f0eb" stroke="#aaa8ae" stroke-width="1.5"/>
+<text x="110" y="467" text-anchor="middle" font-family="Menlo, monospace" font-size="18" font-weight="700" fill="#101116">x3</text>
+<circle cx="430" cy="110" r="26" fill="#a65b9f" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="430" cy="250" r="26" fill="#a65b9f" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="430" cy="390" r="26" fill="#a65b9f" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="430" cy="530" r="26" fill="#a65b9f" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="750" cy="180" r="26" fill="#a65b9f" fill-opacity="0.78" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="750" cy="320" r="26" fill="#a65b9f" fill-opacity="0.78" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="750" cy="460" r="26" fill="#a65b9f" fill-opacity="0.78" stroke="#f2f0eb" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="1060" cy="320" r="38" fill="#dda300" stroke="#f2f0eb" stroke-opacity="0.4" stroke-width="1.6"/>
+<text x="1060" y="328" text-anchor="middle" font-family="Menlo, monospace" font-size="24" font-weight="700" fill="#101116">y&#770;</text>
+</svg>

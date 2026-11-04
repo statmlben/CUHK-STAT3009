@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-label="One gradient step on the quadratic loss J of w equals w minus 3 squared.">
+<line x1="135.7" y1="40" x2="135.7" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="247.1" y1="40" x2="247.1" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="358.6" y1="40" x2="358.6" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="470.0" y1="40" x2="470.0" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="581.4" y1="40" x2="581.4" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="692.9" y1="40" x2="692.9" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="804.3" y1="40" x2="804.3" y2="460" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="460.0" x2="860" y2="460.0" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="380.0" x2="860" y2="380.0" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="300.0" x2="860" y2="300.0" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="220.0" x2="860" y2="220.0" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="140.0" x2="860" y2="140.0" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="60.0" x2="860" y2="60.0" stroke="#f2f0eb" stroke-opacity="0.06" stroke-width="1"/>
+<line x1="80" y1="460.0" x2="860" y2="460.0" stroke="#aaa8ae" stroke-opacity="0.55" stroke-width="1.5"/>
+<line x1="135.7" y1="40" x2="135.7" y2="460" stroke="#aaa8ae" stroke-opacity="0.55" stroke-width="1.5"/>
+<text x="135.7" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">0</text>
+<text x="247.1" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">1</text>
+<text x="358.6" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">2</text>
+<text x="470.0" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">3</text>
+<text x="581.4" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">4</text>
+<text x="692.9" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">5</text>
+<text x="804.3" y="488.0" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">6</text>
+<text x="121.7" y="385.0" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">2</text>
+<text x="121.7" y="305.0" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">4</text>
+<text x="121.7" y="225.0" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">6</text>
+<text x="121.7" y="145.0" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">8</text>
+<text x="121.7" y="65.0" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#aaa8ae">10</text>
+<text x="860" y="508.0" text-anchor="end" font-family="Menlo, monospace" font-size="18" fill="#aaa8ae">w</text>
+<text x="145.7" y="48" font-family="Menlo, monospace" font-size="18" fill="#aaa8ae">J(w)</text>
+<path d="M 80.00,-30.00 L 83.25,-21.87 L 86.50,-13.80 L 89.75,-5.81 L 93.00,2.12 L 96.25,9.98 L 99.50,17.77 L 102.75,25.50 L 106.00,33.16 L 109.25,40.74 L 112.50,48.26 L 115.75,55.72 L 119.00,63.10 L 122.25,70.42 L 125.50,77.66 L 128.75,84.84 L 132.00,91.96 L 135.25,99.00 L 138.50,105.97 L 141.75,112.88 L 145.00,119.72 L 148.25,126.49 L 151.50,133.20 L 154.75,139.83 L 158.00,146.40 L 161.25,152.90 L 164.50,159.33 L 167.75,165.69 L 171.00,171.99 L 174.25,178.22 L 177.50,184.38 L 180.75,190.47 L 184.00,196.49 L 187.25,202.44 L 190.50,208.33 L 193.75,214.15 L 197.00,219.90 L 200.25,225.58 L 203.50,231.20 L 206.75,236.74 L 210.00,242.22 L 213.25,247.63 L 216.50,252.98 L 219.75,258.25 L 223.00,263.46 L 226.25,268.59 L 229.50,273.66 L 232.75,278.67 L 236.00,283.60 L 239.25,288.47 L 242.50,293.26 L 245.75,297.99 L 249.00,302.66 L 252.25,307.25 L 255.50,311.77 L 258.75,316.23 L 262.00,320.62 L 265.25,324.94 L 268.50,329.20 L 271.75,333.38 L 275.00,337.50 L 278.25,341.55 L 281.50,345.53 L 284.75,349.44 L 288.00,353.29 L 291.25,357.07 L 294.50,360.77 L 297.75,364.42 L 301.00,367.99 L 304.25,371.49 L 307.50,374.93 L 310.75,378.30 L 314.00,381.60 L 317.25,384.83 L 320.50,388.00 L 323.75,391.09 L 327.00,394.12 L 330.25,397.08 L 333.50,399.97 L 336.75,402.80 L 340.00,405.56 L 343.25,408.24 L 346.50,410.86 L 349.75,413.42 L 353.00,415.90 L 356.25,418.32 L 359.50,420.66 L 362.75,422.94 L 366.00,425.16 L 369.25,427.30 L 372.50,429.38 L 375.75,431.38 L 379.00,433.32 L 382.25,435.19 L 385.50,437.00 L 388.75,438.73 L 392.00,440.40 L 395.25,442.00 L 398.50,443.53 L 401.75,444.99 L 405.00,446.39 L 408.25,447.72 L 411.50,448.98 L 414.75,450.17 L 418.00,451.29 L 421.25,452.34 L 424.50,453.33 L 427.75,454.25 L 431.00,455.10 L 434.25,455.88 L 437.50,456.60 L 440.75,457.24 L 444.00,457.82 L 447.25,458.33 L 450.50,458.77 L 453.75,459.15 L 457.00,459.46 L 460.25,459.69 L 463.50,459.86 L 466.75,459.97 L 470.00,460.00 L 473.25,459.97 L 476.50,459.86 L 479.75,459.69 L 483.00,459.46 L 486.25,459.15 L 489.50,458.77 L 492.75,458.33 L 496.00,457.82 L 499.25,457.24 L 502.50,456.60 L 505.75,455.88 L 509.00,455.10 L 512.25,454.25 L 515.50,453.33 L 518.75,452.34 L 522.00,451.29 L 525.25,450.17 L 528.50,448.97 L 531.75,447.72 L 535.00,446.39 L 538.25,444.99 L 541.50,443.53 L 544.75,442.00 L 548.00,440.40 L 551.25,438.73 L 554.50,437.00 L 557.75,435.19 L 561.00,433.32 L 564.25,431.38 L 567.50,429.38 L 570.75,427.30 L 574.00,425.16 L 577.25,422.94 L 580.50,420.66 L 583.75,418.32 L 587.00,415.90 L 590.25,413.42 L 593.50,410.86 L 596.75,408.24 L 600.00,405.56 L 603.25,402.80 L 606.50,399.98 L 609.75,397.08 L 613.00,394.12 L 616.25,391.09 L 619.50,388.00 L 622.75,384.83 L 626.00,381.60 L 629.25,378.30 L 632.50,374.93 L 635.75,371.49 L 639.00,367.99 L 642.25,364.42 L 645.50,360.77 L 648.75,357.07 L 652.00,353.29 L 655.25,349.44 L 658.50,345.53 L 661.75,341.55 L 665.00,337.50 L 668.25,333.38 L 671.50,329.20 L 674.75,324.94 L 678.00,320.62 L 681.25,316.23 L 684.50,311.78 L 687.75,307.25 L 691.00,302.66 L 694.25,297.99 L 697.50,293.26 L 700.75,288.47 L 704.00,283.60 L 707.25,278.67 L 710.50,273.66 L 713.75,268.59 L 717.00,263.46 L 720.25,258.25 L 723.50,252.97 L 726.75,247.63 L 730.00,242.22 L 733.25,236.74 L 736.50,231.20 L 739.75,225.58 L 743.00,219.90 L 746.25,214.15 L 749.50,208.33 L 752.75,202.44 L 756.00,196.49 L 759.25,190.47 L 762.50,184.38 L 765.75,178.22 L 769.00,171.99 L 772.25,165.69 L 775.50,159.33 L 778.75,152.90 L 782.00,146.40 L 785.25,139.83 L 788.50,133.20 L 791.75,126.49 L 795.00,119.72 L 798.25,112.88 L 801.50,105.98 L 804.75,99.00 L 808.00,91.96 L 811.25,84.84 L 814.50,77.66 L 817.75,70.42 L 821.00,63.10 L 824.25,55.72 L 827.50,48.26 L 830.75,40.74 L 834.00,33.16 L 837.25,25.50 L 840.50,17.77 L 843.75,9.98 L 847.00,2.12 L 850.25,-5.81 L 853.50,-13.80 L 856.75,-21.87 L 860.00,-30.00" fill="none" stroke="#a65b9f" stroke-width="5" stroke-linecap="round"/>
+<line x1="135.7" y1="100.0" x2="297.3" y2="448.0" stroke="#dda300" stroke-width="3" stroke-dasharray="9 8" opacity="0.95"/>
+<line x1="135.7" y1="100.0" x2="269.4" y2="100.0" stroke="#dda300" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="5 6"/>
+<line x1="269.4" y1="100.0" x2="269.4" y2="330.4" stroke="#dda300" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="5 6"/>
+<line x1="269.4" y1="330.4" x2="269.4" y2="460.0" stroke="#dda300" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="5 6"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dda300"/></marker></defs>
+<line x1="135.7" y1="100.0" x2="260.5" y2="304.0" stroke="#dda300" stroke-width="3" marker-end="url(#arrow)"/>
+<circle cx="135.7" cy="100.0" r="8" fill="#dda300" stroke="#101116" stroke-width="2"/>
+<circle cx="269.4" cy="330.4" r="8" fill="#dda300" stroke="#101116" stroke-width="2"/>
+<circle cx="470.0" cy="460.0" r="9" fill="#dda300" stroke="#101116" stroke-width="2"/>
+<text x="488.0" y="444.0" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="21" fill="#f2f0eb">minimum: w = 3</text>
+<text x="197.0" y="152.0" font-family="Menlo, monospace" font-size="18" fill="#dda300">slope = -6</text>
+</svg>
