@@ -44,7 +44,9 @@ The deck uses vanilla SGD throughout. It does not use Adam, early stopping,
 
 - **Sections 1–2** load and encode the Netflix 1–5 star split.
 - **Sections 3–6** build `MFNet`, `BiasedNCF`, and `ANCF`, train them for a
-  fixed 50-epoch budget, and compare validation/test RMSE.
+  fixed 50-epoch budget, and compare validation/test RMSE. Section 3 first checks
+  the `nn.Embedding` API with a `(B,T)` toy example and verifies that lookup equals
+  advanced indexing on `weight`.
 - **Section 7** is the in-class practice, including a small `GridSearchCV`.
 
 The Neural Networks warm-up lives in `nb/STAT3009_NN.ipynb`. `MFNet`,
