@@ -1226,6 +1226,105 @@ The one-hot row explains the math; the embedding layer performs the lookup witho
 ID numbers are lookup positions, not ordered measurements; K is chosen, and the table entries are learned.
 </p>
 </section>
+<section id="reading-the-nn.embedding-docs" class="slide level2 lesson-slide">
+<h2>Reading the <code>nn.Embedding</code> docs</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href aria-hidden="true" tabindex="-1"></a>emb <span class="op">=</span> nn.Embedding(num_embeddings<span class="op">=</span><span class="dv">10</span>, embedding_dim<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb1-2"><a href aria-hidden="true" tabindex="-1"></a>ids <span class="op">=</span> torch.tensor([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">0</span>]])   <span class="co"># (B,T), integer dtype</span></span>
+<span id="cb1-3"><a href aria-hidden="true" tabindex="-1"></a>vectors <span class="op">=</span> emb(ids)                      <span class="co"># (B,T,4)</span></span>
+<span id="cb1-4"><a href aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(emb.weight.shape)                 <span class="co"># (10,4)</span></span></code></pre></div>
+<table class="lesson-table">
+<thead>
+<tr>
+<th>
+argument
+</th>
+<th>
+what it controls
+</th>
+<th>
+NCF
+</th>
+<th>
+NLP / LLM
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>num_embeddings</code>
+</td>
+<td>
+number of rows
+</td>
+<td>
+<code>n_users</code>, <code>n_items</code>
+</td>
+<td>
+<code>vocab_size</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>embedding_dim</code>
+</td>
+<td>
+vector width
+</td>
+<td>
+<code>K</code>
+</td>
+<td>
+<code>d_model</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>padding_idx</code>
+</td>
+<td>
+row fixed to zero
+</td>
+<td>
+not used
+</td>
+<td>
+padding token
+</td>
+</tr>
+<tr>
+<td>
+<code>sparse</code>
+</td>
+<td>
+sparse gradients
+</td>
+<td>
+not used
+</td>
+<td>
+huge vocabularies
+</td>
+</tr>
+</tbody>
+</table>
+<p class="lesson-takeaway">
+<code>weight</code> is a learned <code>(num_embeddings, embedding_dim)</code> matrix; <code>forward</code> only selects rows.
+</p>
+<aside class="notes">
+<p>[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer <code>LongTensor</code>; the output appends one <code>embedding_dim</code> axis. <code>padding_idx</code> is a fixed zero row used for padding tokens; <code>sparse=True</code> gives sparse gradients for very large vocabularies. The NCF code uses <code>n_users</code>/<code>n_items</code> and <code>K</code>, and calls <code>.long()</code> on the ID columns.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
 <section id="mf-is-a-tiny-two-branch-network" class="slide level2 lesson-slide">
 <h2>MF is a tiny two-branch network</h2>
 <p><img role="img" aria-label="MF as a two-branch network: user and item IDs are looked up in embedding tables, then combined by an inner product." class="lesson-figure" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzAwIiBoZWlnaHQ9IjM0MCIgdmlld0JveD0iMCAwIDEzMDAgMzQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Ik1GIGFzIGEgdHdvLWJyYW5jaCBuZXR3b3JrOiB1c2VyIGFuZCBpdGVtIElEcyBhcmUgbG9va2VkIHVwIGluIGVtYmVkZGluZyB0YWJsZXMsIHRoZW4gY29tYmluZWQgYnkgYW4gaW5uZXIgcHJvZHVjdC4iPgogIDxkZWZzPgogICAgPG1hcmtlciBpZD0ibWYtYXJyb3ciIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSIxMCIgcmVmWD0iOSIgcmVmWT0iNSIgb3JpZW50PSJhdXRvIiBtYXJrZXJVbml0cz0ic3Ryb2tlV2lkdGgiPgogICAgICA8cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIHoiIGZpbGw9IiNhNjViOWYiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0ibWYtYXJyb3ctZ29sZCIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI5IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iIG1hcmtlclVuaXRzPSJzdHJva2VXaWR0aCI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgeiIgZmlsbD0iI2RkYTMwMCIvPgogICAgPC9tYXJrZXI+CiAgPC9kZWZzPgoKICA8IS0tIHVzZXIgYnJhbmNoIC0tPgogIDxyZWN0IHg9IjYwIiB5PSI3MCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSI4MCIgcng9IjgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNCkiIHN0cm9rZT0iI2QxY2RkMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSIxNDUiIHk9IjEwNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiNmMmYwZWIiPnVzZXIgSUQ8L3RleHQ+CiAgPHRleHQgeD0iMTQ1IiB5PSIxMzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE3IiBmaWxsPSIjYzNjMGM4Ij4oQiwpPC90ZXh0PgoKICA8bGluZSB4MT0iMjMwIiB5MT0iMTEwIiB4Mj0iMzA1IiB5Mj0iMTEwIiBzdHJva2U9IiNhNjViOWYiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNtZi1hcnJvdykiLz4KCiAgPHJlY3QgeD0iMzE1IiB5PSI3MCIgd2lkdGg9IjIxMCIgaGVpZ2h0PSI4MCIgcng9IjgiIGZpbGw9InJnYmEoMTY2LDkxLDE1OSwwLjEyKSIgc3Ryb2tlPSIjYTY1YjlmIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSI0MjAiIHk9IjEwMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTkiIGZpbGw9IiNmMmYwZWIiPkVtYmVkZGluZzwvdGV4dD4KICA8dGV4dCB4PSI0MjAiIHk9IjEzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiNjM2MwYzgiPihCLEspPC90ZXh0PgoKICA8bGluZSB4MT0iNTI1IiB5MT0iMTEwIiB4Mj0iNjAwIiB5Mj0iMTEwIiBzdHJva2U9IiNhNjViOWYiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNtZi1hcnJvdykiLz4KCiAgPHJlY3QgeD0iNjEwIiB5PSI3MCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSI4MCIgcng9IjgiIGZpbGw9InJnYmEoMjIxLDE2MywwLDAuMDgpIiBzdHJva2U9IiNkZGEzMDAiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjY5NSIgeT0iMTA0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iTWVubG8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMCIgZmlsbD0iI2YyZjBlYiI+cF91PC90ZXh0PgogIDx0ZXh0IHg9IjY5NSIgeT0iMTMyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iTWVubG8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxNyIgZmlsbD0iI2MzYzBjOCI+KEIsSyk8L3RleHQ+CgogIDwhLS0gaXRlbSBicmFuY2ggLS0+CiAgPHJlY3QgeD0iNjAiIHk9IjIxMCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSI4MCIgcng9IjgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNCkiIHN0cm9rZT0iI2QxY2RkMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8dGV4dCB4PSIxNDUiIHk9IjI0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiNmMmYwZWIiPml0ZW0gSUQ8L3RleHQ+CiAgPHRleHQgeD0iMTQ1IiB5PSIyNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE3IiBmaWxsPSIjYzNjMGM4Ij4oQiwpPC90ZXh0PgoKICA8bGluZSB4MT0iMjMwIiB5MT0iMjUwIiB4Mj0iMzA1IiB5Mj0iMjUwIiBzdHJva2U9IiNhNjViOWYiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNtZi1hcnJvdykiLz4KCiAgPHJlY3QgeD0iMzE1IiB5PSIyMTAiIHdpZHRoPSIyMTAiIGhlaWdodD0iODAiIHJ4PSI4IiBmaWxsPSJyZ2JhKDE2Niw5MSwxNTksMC4xMikiIHN0cm9rZT0iI2E2NWI5ZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iNDIwIiB5PSIyNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE5IiBmaWxsPSIjZjJmMGViIj5FbWJlZGRpbmc8L3RleHQ+CiAgPHRleHQgeD0iNDIwIiB5PSIyNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE3IiBmaWxsPSIjYzNjMGM4Ij4oQixLKTwvdGV4dD4KCiAgPGxpbmUgeDE9IjUyNSIgeTE9IjI1MCIgeDI9IjYwMCIgeTI9IjI1MCIgc3Ryb2tlPSIjYTY1YjlmIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjbWYtYXJyb3cpIi8+CgogIDxyZWN0IHg9IjYxMCIgeT0iMjEwIiB3aWR0aD0iMTcwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0icmdiYSgyMjEsMTYzLDAsMC4wOCkiIHN0cm9rZT0iI2RkYTMwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iNjk1IiB5PSIyNDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjIwIiBmaWxsPSIjZjJmMGViIj5xX2k8L3RleHQ+CiAgPHRleHQgeD0iNjk1IiB5PSIyNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE3IiBmaWxsPSIjYzNjMGM4Ij4oQixLKTwvdGV4dD4KCiAgPCEtLSBtZXJnZSAtLT4KICA8cGF0aCBkPSJNIDc4MCAxMTAgQyA4MzAgMTEwLCA4MzAgMTgwLCA4ODAgMTgwIiBmaWxsPSJub25lIiBzdHJva2U9IiNhNjViOWYiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxwYXRoIGQ9Ik0gNzgwIDI1MCBDIDgzMCAyNTAsIDgzMCAxODAsIDg4MCAxODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E2NWI5ZiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPGxpbmUgeDE9Ijg3MiIgeTE9IjE4MCIgeDI9Ijg4OCIgeTI9IjE4MCIgc3Ryb2tlPSIjYTY1YjlmIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjbWYtYXJyb3cpIi8+CgogIDxyZWN0IHg9IjkwMCIgeT0iMTM4IiB3aWR0aD0iMjAwIiBoZWlnaHQ9Ijg0IiByeD0iOCIgZmlsbD0icmdiYSgyMjEsMTYzLDAsMC4wOCkiIHN0cm9rZT0iI2RkYTMwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMTAwMCIgeT0iMTc0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iTWVubG8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxOSIgZmlsbD0iI2YyZjBlYiI+ZG90IHByb2R1Y3Q8L3RleHQ+CiAgPHRleHQgeD0iMTAwMCIgeT0iMjAyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iTWVubG8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxNyIgZmlsbD0iI2MzYzBjOCI+KEIsMSk8L3RleHQ+CgogIDxsaW5lIHgxPSIxMTAwIiB5MT0iMTgwIiB4Mj0iMTE2MCIgeTI9IjE4MCIgc3Ryb2tlPSIjZGRhMzAwIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjbWYtYXJyb3ctZ29sZCkiLz4KCiAgPHJlY3QgeD0iMTE3MCIgeT0iMTM4IiB3aWR0aD0iOTAiIGhlaWdodD0iODQiIHJ4PSI4IiBmaWxsPSJyZ2JhKDIyMSwxNjMsMCwwLjEwKSIgc3Ryb2tlPSIjZGRhMzAwIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIxMjE1IiB5PSIxNzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE3IiBmaWxsPSIjZjJmMGViIj5zY29yZTwvdGV4dD4KICA8dGV4dCB4PSIxMjE1IiB5PSIyMDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE3IiBmaWxsPSIjYzNjMGM4Ij4oQiwxKTwvdGV4dD4KCjwvc3ZnPgo=" alt="MF as a two-branch network: user and item IDs are looked up in embedding tables, then combined by an inner product."></p>
@@ -1339,23 +1438,23 @@ This is the explicit-rating version used in STAT3009; the original NCF research 
 </section>
 <section id="a-pytorch-implementation-sketch" class="slide level2 lesson-slide lesson-code ncf-dense">
 <h2>A PyTorch implementation sketch</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NCF(nn.Module):</span>
-<span id="cb1-2"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_items, K<span class="op">=</span><span class="dv">16</span>):</span>
-<span id="cb1-3"><a href aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb1-4"><a href aria-hidden="true" tabindex="-1"></a>        torch.manual_seed(<span class="dv">0</span>)</span>
-<span id="cb1-5"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_emb <span class="op">=</span> nn.Embedding(n_users, K)</span>
-<span id="cb1-6"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_emb <span class="op">=</span> nn.Embedding(n_items, K)</span>
-<span id="cb1-7"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
-<span id="cb1-8"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">2</span> <span class="op">*</span> K, <span class="dv">32</span>), nn.ReLU(),</span>
-<span id="cb1-9"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
-<span id="cb1-10"><a href aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-11"><a href aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb1-13"><a href aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> x[:, <span class="dv">0</span>].<span class="bu">long</span>()</span>
-<span id="cb1-14"><a href aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> x[:, <span class="dv">1</span>].<span class="bu">long</span>()</span>
-<span id="cb1-15"><a href aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> torch.cat([<span class="va">self</span>.user_emb(u),</span>
-<span id="cb1-16"><a href aria-hidden="true" tabindex="-1"></a>                       <span class="va">self</span>.item_emb(i)], dim<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb1-17"><a href aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(z)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NCF(nn.Module):</span>
+<span id="cb2-2"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_items, K<span class="op">=</span><span class="dv">16</span>):</span>
+<span id="cb2-3"><a href aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb2-4"><a href aria-hidden="true" tabindex="-1"></a>        torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb2-5"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_emb <span class="op">=</span> nn.Embedding(n_users, K)</span>
+<span id="cb2-6"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_emb <span class="op">=</span> nn.Embedding(n_items, K)</span>
+<span id="cb2-7"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
+<span id="cb2-8"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">2</span> <span class="op">*</span> K, <span class="dv">32</span>), nn.ReLU(),</span>
+<span id="cb2-9"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
+<span id="cb2-10"><a href aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-11"><a href aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb2-13"><a href aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> x[:, <span class="dv">0</span>].<span class="bu">long</span>()</span>
+<span id="cb2-14"><a href aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> x[:, <span class="dv">1</span>].<span class="bu">long</span>()</span>
+<span id="cb2-15"><a href aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> torch.cat([<span class="va">self</span>.user_emb(u),</span>
+<span id="cb2-16"><a href aria-hidden="true" tabindex="-1"></a>                       <span class="va">self</span>.item_emb(i)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-17"><a href aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(z)</span></code></pre></div>
 <p class="lesson-takeaway">
 Both embedding tables and the MLP are trained by the same loss.
 </p>
@@ -1391,28 +1490,28 @@ Adding the familiar bias terms gives the network a sensible starting point and i
 </section>
 <section id="biased-ncf-in-pytorch" class="slide level2 lesson-slide lesson-code nn-code-sm">
 <h2>Biased NCF in PyTorch</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BiasedNCF(nn.Module):</span>
-<span id="cb2-2"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_items, K<span class="op">=</span><span class="dv">16</span>, mu<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb2-3"><a href aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb2-4"><a href aria-hidden="true" tabindex="-1"></a>        torch.manual_seed(<span class="dv">0</span>)</span>
-<span id="cb2-5"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_emb <span class="op">=</span> nn.Embedding(n_users, K)</span>
-<span id="cb2-6"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_emb <span class="op">=</span> nn.Embedding(n_items, K)</span>
-<span id="cb2-7"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_bias <span class="op">=</span> nn.Embedding(n_users, <span class="dv">1</span>)</span>
-<span id="cb2-8"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_bias <span class="op">=</span> nn.Embedding(n_items, <span class="dv">1</span>)</span>
-<span id="cb2-9"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mu <span class="op">=</span> nn.Parameter(torch.tensor([mu]))</span>
-<span id="cb2-10"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
-<span id="cb2-11"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">2</span> <span class="op">*</span> K, <span class="dv">32</span>), nn.ReLU(),</span>
-<span id="cb2-12"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">32</span>, <span class="dv">16</span>), nn.ReLU(),</span>
-<span id="cb2-13"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">16</span>, <span class="dv">1</span>),</span>
-<span id="cb2-14"><a href aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb2-15"><a href aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb2-17"><a href aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> x[:, <span class="dv">0</span>].<span class="bu">long</span>()</span>
-<span id="cb2-18"><a href aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> x[:, <span class="dv">1</span>].<span class="bu">long</span>()</span>
-<span id="cb2-19"><a href aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> torch.cat([<span class="va">self</span>.user_emb(u),</span>
-<span id="cb2-20"><a href aria-hidden="true" tabindex="-1"></a>                       <span class="va">self</span>.item_emb(i)], dim<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb2-21"><a href aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.mu <span class="op">+</span> <span class="va">self</span>.user_bias(u)</span>
-<span id="cb2-22"><a href aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="va">self</span>.item_bias(i) <span class="op">+</span> <span class="va">self</span>.net(z))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BiasedNCF(nn.Module):</span>
+<span id="cb3-2"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_items, K<span class="op">=</span><span class="dv">16</span>, mu<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb3-3"><a href aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb3-4"><a href aria-hidden="true" tabindex="-1"></a>        torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb3-5"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_emb <span class="op">=</span> nn.Embedding(n_users, K)</span>
+<span id="cb3-6"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_emb <span class="op">=</span> nn.Embedding(n_items, K)</span>
+<span id="cb3-7"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_bias <span class="op">=</span> nn.Embedding(n_users, <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_bias <span class="op">=</span> nn.Embedding(n_items, <span class="dv">1</span>)</span>
+<span id="cb3-9"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mu <span class="op">=</span> nn.Parameter(torch.tensor([mu]))</span>
+<span id="cb3-10"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
+<span id="cb3-11"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">2</span> <span class="op">*</span> K, <span class="dv">32</span>), nn.ReLU(),</span>
+<span id="cb3-12"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">32</span>, <span class="dv">16</span>), nn.ReLU(),</span>
+<span id="cb3-13"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">16</span>, <span class="dv">1</span>),</span>
+<span id="cb3-14"><a href aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-15"><a href aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb3-17"><a href aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> x[:, <span class="dv">0</span>].<span class="bu">long</span>()</span>
+<span id="cb3-18"><a href aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> x[:, <span class="dv">1</span>].<span class="bu">long</span>()</span>
+<span id="cb3-19"><a href aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> torch.cat([<span class="va">self</span>.user_emb(u),</span>
+<span id="cb3-20"><a href aria-hidden="true" tabindex="-1"></a>                       <span class="va">self</span>.item_emb(i)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-21"><a href aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.mu <span class="op">+</span> <span class="va">self</span>.user_bias(u)</span>
+<span id="cb3-22"><a href aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="va">self</span>.item_bias(i) <span class="op">+</span> <span class="va">self</span>.net(z))</span></code></pre></div>
 <p class="lesson-takeaway">
 The four embedding tables and the MLP are registered in one <code>Module</code>; one optimizer updates all of them.
 </p>
@@ -1442,48 +1541,48 @@ This additive extension is useful when a dot product captures part of the patter
 </section>
 <section id="additive-ncf-in-pytorch" class="slide level2 lesson-slide lesson-code nn-code-sm">
 <h2>Additive NCF in PyTorch</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ANCF(nn.Module):</span>
-<span id="cb3-2"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_items, K<span class="op">=</span><span class="dv">16</span>, R<span class="op">=</span><span class="dv">8</span>, mu<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb3-3"><a href aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb3-4"><a href aria-hidden="true" tabindex="-1"></a>        torch.manual_seed(<span class="dv">0</span>)</span>
-<span id="cb3-5"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_emb <span class="op">=</span> nn.Embedding(n_users, K)</span>
-<span id="cb3-6"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_emb <span class="op">=</span> nn.Embedding(n_items, K)</span>
-<span id="cb3-7"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_neural <span class="op">=</span> nn.Embedding(n_users, R)</span>
-<span id="cb3-8"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_neural <span class="op">=</span> nn.Embedding(n_items, R)</span>
-<span id="cb3-9"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_bias <span class="op">=</span> nn.Embedding(n_users, <span class="dv">1</span>)</span>
-<span id="cb3-10"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_bias <span class="op">=</span> nn.Embedding(n_items, <span class="dv">1</span>)</span>
-<span id="cb3-11"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mu <span class="op">=</span> nn.Parameter(torch.tensor([mu]))</span>
-<span id="cb3-12"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
-<span id="cb3-13"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">2</span> <span class="op">*</span> R, <span class="dv">32</span>), nn.ReLU(),</span>
-<span id="cb3-14"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
-<span id="cb3-15"><a href aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb3-16"><a href aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb3-18"><a href aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> x[:, <span class="dv">0</span>].<span class="bu">long</span>()</span>
-<span id="cb3-19"><a href aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> x[:, <span class="dv">1</span>].<span class="bu">long</span>()</span>
-<span id="cb3-20"><a href aria-hidden="true" tabindex="-1"></a>        mf <span class="op">=</span> (<span class="va">self</span>.user_emb(u) <span class="op">*</span> <span class="va">self</span>.item_emb(i)).<span class="bu">sum</span>(</span>
-<span id="cb3-21"><a href aria-hidden="true" tabindex="-1"></a>            dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-22"><a href aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> torch.cat([<span class="va">self</span>.user_neural(u),</span>
-<span id="cb3-23"><a href aria-hidden="true" tabindex="-1"></a>                       <span class="va">self</span>.item_neural(i)], dim<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-24"><a href aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.mu <span class="op">+</span> <span class="va">self</span>.user_bias(u)</span>
-<span id="cb3-25"><a href aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="va">self</span>.item_bias(i) <span class="op">+</span> mf <span class="op">+</span> <span class="va">self</span>.net(z))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ANCF(nn.Module):</span>
+<span id="cb4-2"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_users, n_items, K<span class="op">=</span><span class="dv">16</span>, R<span class="op">=</span><span class="dv">8</span>, mu<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb4-3"><a href aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb4-4"><a href aria-hidden="true" tabindex="-1"></a>        torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb4-5"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_emb <span class="op">=</span> nn.Embedding(n_users, K)</span>
+<span id="cb4-6"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_emb <span class="op">=</span> nn.Embedding(n_items, K)</span>
+<span id="cb4-7"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_neural <span class="op">=</span> nn.Embedding(n_users, R)</span>
+<span id="cb4-8"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_neural <span class="op">=</span> nn.Embedding(n_items, R)</span>
+<span id="cb4-9"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_bias <span class="op">=</span> nn.Embedding(n_users, <span class="dv">1</span>)</span>
+<span id="cb4-10"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.item_bias <span class="op">=</span> nn.Embedding(n_items, <span class="dv">1</span>)</span>
+<span id="cb4-11"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mu <span class="op">=</span> nn.Parameter(torch.tensor([mu]))</span>
+<span id="cb4-12"><a href aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
+<span id="cb4-13"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">2</span> <span class="op">*</span> R, <span class="dv">32</span>), nn.ReLU(),</span>
+<span id="cb4-14"><a href aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
+<span id="cb4-15"><a href aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-16"><a href aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb4-18"><a href aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> x[:, <span class="dv">0</span>].<span class="bu">long</span>()</span>
+<span id="cb4-19"><a href aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> x[:, <span class="dv">1</span>].<span class="bu">long</span>()</span>
+<span id="cb4-20"><a href aria-hidden="true" tabindex="-1"></a>        mf <span class="op">=</span> (<span class="va">self</span>.user_emb(u) <span class="op">*</span> <span class="va">self</span>.item_emb(i)).<span class="bu">sum</span>(</span>
+<span id="cb4-21"><a href aria-hidden="true" tabindex="-1"></a>            dim<span class="op">=</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-22"><a href aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> torch.cat([<span class="va">self</span>.user_neural(u),</span>
+<span id="cb4-23"><a href aria-hidden="true" tabindex="-1"></a>                       <span class="va">self</span>.item_neural(i)], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-24"><a href aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.mu <span class="op">+</span> <span class="va">self</span>.user_bias(u)</span>
+<span id="cb4-25"><a href aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="va">self</span>.item_bias(i) <span class="op">+</span> mf <span class="op">+</span> <span class="va">self</span>.net(z))</span></code></pre></div>
 </section>
 <section id="the-same-skorch-wrapper-trains-ncf" class="slide level2 lesson-slide lesson-code nn-code-sm">
 <h2>The same skorch wrapper trains NCF</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href aria-hidden="true" tabindex="-1"></a>ncf <span class="op">=</span> NeuralNetRegressor(</span>
-<span id="cb4-2"><a href aria-hidden="true" tabindex="-1"></a>    module<span class="op">=</span>BiasedNCF,</span>
-<span id="cb4-3"><a href aria-hidden="true" tabindex="-1"></a>    module__n_users<span class="op">=</span>n_users,</span>
-<span id="cb4-4"><a href aria-hidden="true" tabindex="-1"></a>    module__n_items<span class="op">=</span>n_items,</span>
-<span id="cb4-5"><a href aria-hidden="true" tabindex="-1"></a>    module__mu<span class="op">=</span>mu,</span>
-<span id="cb4-6"><a href aria-hidden="true" tabindex="-1"></a>    criterion<span class="op">=</span>nn.MSELoss,</span>
-<span id="cb4-7"><a href aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>torch.optim.SGD,</span>
-<span id="cb4-8"><a href aria-hidden="true" tabindex="-1"></a>    optimizer__lr<span class="op">=</span><span class="fl">0.05</span>,</span>
-<span id="cb4-9"><a href aria-hidden="true" tabindex="-1"></a>    max_epochs<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb4-10"><a href aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">256</span>,</span>
-<span id="cb4-11"><a href aria-hidden="true" tabindex="-1"></a>    iterator_train__shuffle<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb4-12"><a href aria-hidden="true" tabindex="-1"></a>    train_split<span class="op">=</span>ValidSplit(<span class="fl">0.1</span>, random_state<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb4-13"><a href aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-14"><a href aria-hidden="true" tabindex="-1"></a>ncf.fit(X_train, y_train)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href aria-hidden="true" tabindex="-1"></a>ncf <span class="op">=</span> NeuralNetRegressor(</span>
+<span id="cb5-2"><a href aria-hidden="true" tabindex="-1"></a>    module<span class="op">=</span>BiasedNCF,</span>
+<span id="cb5-3"><a href aria-hidden="true" tabindex="-1"></a>    module__n_users<span class="op">=</span>n_users,</span>
+<span id="cb5-4"><a href aria-hidden="true" tabindex="-1"></a>    module__n_items<span class="op">=</span>n_items,</span>
+<span id="cb5-5"><a href aria-hidden="true" tabindex="-1"></a>    module__mu<span class="op">=</span>mu,</span>
+<span id="cb5-6"><a href aria-hidden="true" tabindex="-1"></a>    criterion<span class="op">=</span>nn.MSELoss,</span>
+<span id="cb5-7"><a href aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>torch.optim.SGD,</span>
+<span id="cb5-8"><a href aria-hidden="true" tabindex="-1"></a>    optimizer__lr<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb5-9"><a href aria-hidden="true" tabindex="-1"></a>    max_epochs<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb5-10"><a href aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">256</span>,</span>
+<span id="cb5-11"><a href aria-hidden="true" tabindex="-1"></a>    iterator_train__shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-12"><a href aria-hidden="true" tabindex="-1"></a>    train_split<span class="op">=</span>ValidSplit(<span class="fl">0.1</span>, random_state<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb5-13"><a href aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href aria-hidden="true" tabindex="-1"></a>ncf.fit(X_train, y_train)</span></code></pre></div>
 <p class="lesson-takeaway">
 The <code>module__</code> prefix passes constructor arguments; the rest is the same skorch wrapper used in the previous deck.
 </p>

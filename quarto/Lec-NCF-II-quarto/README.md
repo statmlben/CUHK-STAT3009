@@ -10,7 +10,8 @@ The deck is NCF-only:
 
 1. **Where we are** — the training workflow is already in the NN deck.
 2. **Embedding lookups** — an ID selects a learned row; lookup equals a one-hot
-   matrix product.
+   matrix product. An API map slide explains the `nn.Embedding` arguments and
+   the `(B,) → (B,K)` / `(B,T) → (B,T,d)` shapes.
 3. **MF as a network** — two embedding branches and a dot product.
 4. **NCF** — concatenate the two embeddings and replace the dot product with a
    small MLP; the shape contract is `(B,) → (B,K) → (B,2K) → (B,H) → (B,1)`.

@@ -131,6 +131,28 @@ title-slide-attributes:
 
 <p class="lesson-takeaway">ID numbers are lookup positions, not ordered measurements; K is chosen, and the table entries are learned.</p>
 
+## Reading the `nn.Embedding` docs {.lesson-slide}
+
+```python
+emb = nn.Embedding(num_embeddings=10, embedding_dim=4)
+ids = torch.tensor([[1, 2], [3, 0]])   # (B,T), integer dtype
+vectors = emb(ids)                      # (B,T,4)
+print(emb.weight.shape)                 # (10,4)
+```
+
+<table class="lesson-table"><thead><tr><th>argument</th><th>what it controls</th><th>NCF</th><th>NLP / LLM</th></tr></thead><tbody>
+<tr><td><code>num_embeddings</code></td><td>number of rows</td><td><code>n_users</code>, <code>n_items</code></td><td><code>vocab_size</code></td></tr>
+<tr><td><code>embedding_dim</code></td><td>vector width</td><td><code>K</code></td><td><code>d_model</code></td></tr>
+<tr><td><code>padding_idx</code></td><td>row fixed to zero</td><td>not used</td><td>padding token</td></tr>
+<tr><td><code>sparse</code></td><td>sparse gradients</td><td>not used</td><td>huge vocabularies</td></tr>
+</tbody></table>
+
+<p class="lesson-takeaway"><code>weight</code> is a learned <code>(num_embeddings, embedding_dim)</code> matrix; <code>forward</code> only selects rows.</p>
+
+::: {.notes}
+[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer `LongTensor`; the output appends one `embedding_dim` axis. `padding_idx` is a fixed zero row used for padding tokens; `sparse=True` gives sparse gradients for very large vocabularies. The NCF code uses `n_users`/`n_items` and `K`, and calls `.long()` on the ID columns.
+:::
+
 ## MF is a tiny two-branch network {.lesson-slide}
 
 <img class="lesson-figure" src="figs/mf-two-branch.svg" alt="MF as a two-branch network: user and item IDs are looked up in embedding tables, then combined by an inner product.">
