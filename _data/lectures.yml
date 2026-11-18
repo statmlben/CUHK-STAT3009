@@ -167,7 +167,9 @@
 
 - date: "2026-11-12"
   title: >
-    <strong>No class — CUHK Graduation Congregation</strong>
+    <strong>No class</strong><br>
+    CUHK Graduation Congregation
+  no_class: true
 
 - date: "2026-11-19"
   title: >

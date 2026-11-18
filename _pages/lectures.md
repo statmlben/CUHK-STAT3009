@@ -23,7 +23,7 @@ description: Fall 2026. Additional lectures will be announced.
 {% endif %}
 {% assign prev_date = lecture_date %}
 
-<tr class="{{ event_type }}{% if lecture.quiz %} schedule-quiz{% endif %}">
+<tr class="{{ event_type }}{% if lecture.quiz %} schedule-quiz{% endif %}{% if lecture.no_class %} schedule-no-class{% endif %}">
     <th scope="row">
         <span class="schedule-date-day">{{ lecture.date | date: "%a" }}</span>
         <span class="schedule-date-value">{{ lecture.date | date: "%m/%d" }}</span>

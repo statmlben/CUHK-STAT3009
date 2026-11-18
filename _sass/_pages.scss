@@ -222,6 +222,18 @@ a.schedule-warmup:focus {
     color: darken($purple, 10%);
 }
 
+.schedule-table > tbody > tr.schedule-no-class > td {
+    padding-top: 1.35rem;
+    padding-bottom: 1.35rem;
+    background: rgba($orange, .07);
+    font-size: .95rem;
+    text-align: center;
+}
+
+.schedule-table > tbody > tr.schedule-no-class > td strong {
+    color: darken($orange, 12%);
+}
+
 @media screen and (max-width: 700px) {
     .schedule-table > thead {
         display: none;
