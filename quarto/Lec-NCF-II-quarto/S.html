@@ -1312,7 +1312,7 @@ huge vocabularies
 <code>weight</code> is a learned <code>(num_embeddings, embedding_dim)</code> matrix; <code>forward</code> only selects rows.
 </p>
 <aside class="notes">
-<p>[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer <code>LongTensor</code>; the output appends one <code>embedding_dim</code> axis. <code>padding_idx</code> is a fixed zero row used for padding tokens; <code>sparse=True</code> gives sparse gradients for very large vocabularies. The NCF code uses <code>n_users</code>/<code>n_items</code> and <code>K</code>, and calls <code>.long()</code> on the ID columns.</p>
+<p>[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer <code>LongTensor</code>; the output appends one <code>embedding_dim</code> axis. <code>padding_idx</code> is a fixed zero row used for padding tokens; <code>sparse=True</code> gives sparse gradients for very large vocabularies. <code>max_norm</code> renormalizes rows whose norm exceeds a threshold, and <code>scale_grad_by_freq</code> scales gradients by inverse frequency; neither is needed for NCF. The NCF code uses <code>n_users</code>/<code>n_items</code> and <code>K</code>, and calls <code>.long()</code> on the ID columns.</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;

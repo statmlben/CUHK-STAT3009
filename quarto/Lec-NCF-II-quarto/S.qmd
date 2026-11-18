@@ -150,7 +150,7 @@ print(emb.weight.shape)                 # (10,4)
 <p class="lesson-takeaway"><code>weight</code> is a learned <code>(num_embeddings, embedding_dim)</code> matrix; <code>forward</code> only selects rows.</p>
 
 ::: {.notes}
-[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer `LongTensor`; the output appends one `embedding_dim` axis. `padding_idx` is a fixed zero row used for padding tokens; `sparse=True` gives sparse gradients for very large vocabularies. The NCF code uses `n_users`/`n_items` and `K`, and calls `.long()` on the ID columns.
+[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer `LongTensor`; the output appends one `embedding_dim` axis. `padding_idx` is a fixed zero row used for padding tokens; `sparse=True` gives sparse gradients for very large vocabularies. `max_norm` renormalizes rows whose norm exceeds a threshold, and `scale_grad_by_freq` scales gradients by inverse frequency; neither is needed for NCF. The NCF code uses `n_users`/`n_items` and `K`, and calls `.long()` on the ID columns.
 :::
 
 ## MF is a tiny two-branch network {.lesson-slide}
