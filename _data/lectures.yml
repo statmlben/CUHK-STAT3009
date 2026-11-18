@@ -171,8 +171,6 @@
   slides: ../quarto/Lec-NCF-II-quarto/S.html
   pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_NCF.ipynb
   logistics: >
-    <span class="event">First 40–50 min: finish the <a href="../quarto/Lec-NN-quarto/S.html">Neural Networks deck</a> from Q4.<br>
-    Then switch to the NCF deck and the NCF-only notebook.</span><br>
     <span class="event"><strong>HW2 released</strong><br>
     <a href="https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/HW/STAT3009_HW2.ipynb" target="_blank">Open HW2 in Colab</a><br>
     <span class="deadline"><strong>Due:</strong> Thu 12/03 before lecture</span></span>
