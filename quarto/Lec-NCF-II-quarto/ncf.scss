@@ -1,0 +1,143 @@
+/*-- scss:rules --*/
+
+/* Dense code blocks for the NCF model definitions. */
+.reveal .slides section.ncf-dense pre.sourceCode {
+  font-size: 18px !important;
+  line-height: 1.30 !important;
+}
+
+.reveal .slides section.ncf-dense pre.sourceCode code {
+  max-height: none !important;
+  overflow: visible;
+  padding: 13px 18px;
+}
+
+/* Smaller code blocks for the longer biased-NCF and ANCF snippets. */
+.reveal .slides section.nn-code-sm pre.sourceCode {
+  font-size: 15px !important;
+  line-height: 1.22 !important;
+}
+
+.reveal .slides section.nn-code-sm pre.sourceCode code {
+  max-height: none !important;
+  overflow: visible;
+  padding: 10px 16px;
+}
+
+/* Two-branch flow for the MF concept slides: aligned like the P9 diagram. */
+.branch-flow {
+  display: grid;
+  grid-template-columns: 1.15fr 42px 1.15fr 42px 1.25fr 42px 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px 8px;
+  align-items: center;
+  margin: 30px 0 22px;
+}
+
+.branch-flow .bf-node {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border-top: 4px solid #a65b9f;
+  background: rgba(255, 255, 255, 0.035);
+  text-align: center;
+  font-size: 20px;
+}
+
+.branch-flow .bf-node b {
+  margin-top: 4px;
+  color: var(--cuhk-gold);
+  font-family: Menlo, monospace;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.branch-flow .bf-combine,
+.branch-flow .bf-output {
+  border-color: var(--cuhk-gold);
+}
+
+.branch-flow .bf-output {
+  background: rgba(221, 163, 0, 0.08);
+}
+
+.branch-flow .bf-arrow {
+  color: var(--cuhk-gold);
+  font-size: 30px;
+  font-style: normal;
+  text-align: center;
+}
+
+.branch-flow .bf-user { grid-column: 1; grid-row: 1; }
+.branch-flow .bf-user-arrow { grid-column: 2; grid-row: 1; }
+.branch-flow .bf-user-lookup { grid-column: 3; grid-row: 1; }
+.branch-flow .bf-user-merge { grid-column: 4; grid-row: 1; }
+.branch-flow .bf-combine { grid-column: 5; grid-row: 1 / span 2; }
+.branch-flow .bf-out-arrow { grid-column: 6; grid-row: 1 / span 2; }
+.branch-flow .bf-output { grid-column: 7; grid-row: 1 / span 2; }
+.branch-flow .bf-item { grid-column: 1; grid-row: 2; }
+.branch-flow .bf-item-arrow { grid-column: 2; grid-row: 2; }
+.branch-flow .bf-item-lookup { grid-column: 3; grid-row: 2; }
+.branch-flow .bf-item-merge { grid-column: 4; grid-row: 2; }
+
+/* Formula blocks inside lesson cards: keep the three-card row balanced. */
+.lesson-card .lesson-formula {
+  margin: 16px 0;
+  padding: 14px 16px;
+}
+
+.lesson-card .lesson-formula .math.display {
+  font-size: 26px;
+}
+
+/* Explicit pause-and-demo slide. */
+.coding-break .coding-cue {
+  margin: 10px 0 28px;
+  padding: 24px 30px;
+  border-left: 6px solid var(--cuhk-gold);
+  background: rgba(221, 163, 0, 0.08);
+}
+
+.coding-break .coding-cue-kicker {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: Menlo, monospace;
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: .08em;
+}
+
+.coding-break .coding-cue b {
+  display: block;
+  margin-top: 10px;
+  font-size: 34px;
+  line-height: 1.15;
+}
+
+.coding-break .coding-cue p {
+  margin: 8px 0 0 !important;
+  color: #c3c0c8;
+  font-size: 21px !important;
+}
+
+/* Stack cards beside a chart. */
+.lesson-stack > * + * {
+  margin-top: 16px;
+}
+
+/* Chart + cards: give the chart more width. */
+.chart-two-col {
+  display: grid;
+  grid-template-columns: 1.35fr .85fr;
+  gap: 32px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.chart-two-col .lesson-figure {
+  width: 100%;
+  max-height: 480px;
+  margin: 0 !important;
+}

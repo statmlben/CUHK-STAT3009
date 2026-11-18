@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="430" viewBox="0 0 1400 430" role="img" aria-label="RAG pipeline: query and documents are embedded, compared by cosine similarity, top-k passages go into a prompt, and an LLM answers.">
+  <defs>
+    <marker id="rp-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a65b9f"/>
+    </marker>
+    <marker id="rp-arrow-gold" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dda300"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="38" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="20" font-weight="700" fill="#f2f0eb">RAG: embed, compare, then prompt the LLM</text>
+
+  <!-- query -->
+  <rect x="40" y="70" width="280" height="66" rx="8" fill="rgba(255,255,255,0.04)" stroke="#d1cdd3" stroke-width="1.5"/>
+  <text x="60" y="98" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">query</text>
+  <text x="60" y="122" font-family="Menlo, monospace" font-size="15" fill="#c3c0c8">"best noodles near campus"</text>
+
+  <line x1="320" y1="103" x2="380" y2="103" stroke="#a65b9f" stroke-width="2.5" marker-end="url(#rp-arrow)"/>
+
+  <rect x="390" y="70" width="180" height="66" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="480" y="108" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">embedding model</text>
+
+  <line x1="570" y1="103" x2="620" y2="103" stroke="#a65b9f" stroke-width="2.5" marker-end="url(#rp-arrow)"/>
+
+  <rect x="630" y="78" width="100" height="50" rx="6" fill="rgba(221,163,0,0.10)" stroke="#dda300" stroke-width="2"/>
+  <text x="680" y="108" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#dda300">q (d,)</text>
+
+  <!-- documents -->
+  <rect x="40" y="230" width="280" height="110" rx="8" fill="rgba(255,255,255,0.04)" stroke="#d1cdd3" stroke-width="1.5"/>
+  <text x="60" y="258" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">documents</text>
+  <text x="60" y="284" font-family="Menlo, monospace" font-size="14" fill="#c3c0c8">doc 1 · canteen menu</text>
+  <text x="60" y="306" font-family="Menlo, monospace" font-size="14" fill="#c3c0c8">doc 2 · noodle review</text>
+  <text x="60" y="328" font-family="Menlo, monospace" font-size="14" fill="#c3c0c8">doc 3 · campus map</text>
+
+  <line x1="320" y1="285" x2="380" y2="285" stroke="#a65b9f" stroke-width="2.5" marker-end="url(#rp-arrow)"/>
+
+  <rect x="390" y="252" width="180" height="66" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="480" y="290" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">embedding model</text>
+
+  <line x1="570" y1="285" x2="620" y2="285" stroke="#a65b9f" stroke-width="2.5" marker-end="url(#rp-arrow)"/>
+
+  <rect x="630" y="260" width="100" height="50" rx="6" fill="rgba(221,163,0,0.10)" stroke="#dda300" stroke-width="2"/>
+  <text x="680" y="290" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#dda300">D (N,d)</text>
+
+  <!-- similarity -->
+  <line x1="730" y1="103" x2="800" y2="170" stroke="#dda300" stroke-width="2.5"/>
+  <line x1="730" y1="285" x2="800" y2="220" stroke="#dda300" stroke-width="2.5"/>
+  <rect x="805" y="165" width="190" height="60" rx="8" fill="rgba(221,163,0,0.10)" stroke="#dda300" stroke-width="2"/>
+  <text x="900" y="202" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#dda300">cosine similarity</text>
+
+  <line x1="995" y1="195" x2="1045" y2="195" stroke="#dda300" stroke-width="2.5" marker-end="url(#rp-arrow-gold)"/>
+
+  <rect x="1055" y="150" width="130" height="90" rx="8" fill="rgba(255,255,255,0.04)" stroke="#c3c0c8" stroke-width="1.5"/>
+  <text x="1120" y="180" text-anchor="middle" font-family="Menlo, monospace" font-size="15" fill="#f2f0eb">top-2</text>
+  <text x="1120" y="202" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#dda300">doc1 0.82</text>
+  <text x="1120" y="222" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#dda300">doc2 0.76</text>
+
+  <line x1="1185" y1="195" x2="1215" y2="195" stroke="#a65b9f" stroke-width="2.5" marker-end="url(#rp-arrow)"/>
+
+  <rect x="1225" y="150" width="140" height="90" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="1295" y="184" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">prompt +</text>
+  <text x="1295" y="208" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">LLM</text>
+  <text x="1295" y="228" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="14" fill="#c3c0c8">answer</text>
+
+  <text x="40" y="395" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#dda300">Embeddings turn retrieval into vector search; the LLM reads only the top-k passages.</text>
+</svg>

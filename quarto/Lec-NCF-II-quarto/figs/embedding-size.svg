@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-label="The embedding table has n_users rows and K columns. K is chosen before fitting; the entries are learned parameters.">
+  <line x1="160" y1="75" x2="580" y2="75" stroke="#c3c0c8" stroke-width="1.5"/>
+  <line x1="160" y1="68" x2="160" y2="82" stroke="#c3c0c8" stroke-width="1.5"/>
+  <line x1="580" y1="68" x2="580" y2="82" stroke="#c3c0c8" stroke-width="1.5"/>
+  <text x="370" y="58" text-anchor="middle" font-family="Menlo, monospace" font-size="15" fill="#dda300">K factors</text>
+
+  <!-- left bracket -->
+  <line x1="50" y1="100" x2="50" y2="320" stroke="#c3c0c8" stroke-width="1.5"/>
+  <line x1="42" y1="100" x2="58" y2="100" stroke="#c3c0c8" stroke-width="1.5"/>
+  <line x1="42" y1="320" x2="58" y2="320" stroke="#c3c0c8" stroke-width="1.5"/>
+  <text x="32" y="210" text-anchor="middle" font-family="Menlo, monospace" font-size="14" fill="#c3c0c8" transform="rotate(-90 32 210)">n_users</text>
+
+  <!-- table -->
+  <rect x="80" y="100" width="500" height="240" rx="10" fill="rgba(255,255,255,0.03)" stroke="#a65b9f" stroke-width="1.5"/>
+  <g font-family="Menlo, monospace" font-size="14" fill="#c3c0c8">
+    <text x="100" y="128">ID</text><text x="185" y="128">k1</text><text x="280" y="128">k2</text><text x="375" y="128">k3</text><text x="470" y="128">k4</text>
+  </g>
+  <g font-family="Menlo, monospace" font-size="14">
+    <rect x="90" y="140" width="480" height="38" fill="rgba(255,255,255,0.02)"/>
+    <text x="100" y="164" fill="#c3c0c8">0</text><text x="185" y="164" fill="#c3c0c8">0.12</text><text x="280" y="164" fill="#c3c0c8">-0.31</text><text x="375" y="164" fill="#c3c0c8">0.55</text><text x="470" y="164" fill="#c3c0c8">0.08</text>
+
+    <rect x="90" y="178" width="480" height="38" fill="rgba(255,255,255,0.02)"/>
+    <text x="100" y="202" fill="#c3c0c8">1</text><text x="185" y="202" fill="#c3c0c8">-0.22</text><text x="280" y="202" fill="#c3c0c8">0.44</text><text x="375" y="202" fill="#c3c0c8">0.10</text><text x="470" y="202" fill="#c3c0c8">-0.36</text>
+
+    <rect x="90" y="216" width="480" height="42" rx="4" fill="rgba(221,163,0,0.16)" stroke="#dda300" stroke-width="1.5"/>
+    <text x="100" y="243" fill="#dda300" font-weight="700">2</text><text x="185" y="243" fill="#dda300">0.40</text><text x="280" y="243" fill="#dda300">-0.20</text><text x="375" y="243" fill="#dda300">0.70</text><text x="470" y="243" fill="#dda300">0.10</text>
+
+    <text x="100" y="286" fill="#8f8b94">3</text><text x="185" y="286" fill="#8f8b94">0.05</text><text x="280" y="286" fill="#8f8b94">0.18</text><text x="375" y="286" fill="#8f8b94">-0.42</text><text x="470" y="286" fill="#8f8b94">0.27</text>
+    <text x="100" y="320" fill="#8f8b94">...</text><text x="185" y="320" fill="#8f8b94">...</text><text x="280" y="320" fill="#8f8b94">...</text><text x="375" y="320" fill="#8f8b94">...</text><text x="470" y="320" fill="#8f8b94">...</text>
+  </g>
+
+  <!-- right cards -->
+  <rect x="680" y="95" width="460" height="90" rx="10" fill="rgba(221,163,0,0.08)" stroke="#dda300" stroke-width="2"/>
+  <text x="705" y="128" font-family="Menlo, monospace" font-size="15" fill="#dda300">K · HYPERPARAMETER</text>
+  <text x="705" y="158" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="19" fill="#f2f0eb">Choose the width before fitting</text>
+
+  <rect x="680" y="200" width="460" height="90" rx="10" fill="rgba(166,91,159,0.10)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="705" y="233" font-family="Menlo, monospace" font-size="15" fill="#a65b9f">P, Q · LEARNED PARAMETERS</text>
+  <text x="705" y="263" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="19" fill="#f2f0eb">SGD updates the entries</text>
+
+  <rect x="680" y="315" width="460" height="44" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.10)"/>
+  <text x="705" y="344" font-family="Menlo, monospace" font-size="17" fill="#f2f0eb">nn.Embedding(n_users, K)</text>
+
+  <text x="80" y="390" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#dda300">K is chosen; the n_users × K table entries are learned.</text>
+</svg>

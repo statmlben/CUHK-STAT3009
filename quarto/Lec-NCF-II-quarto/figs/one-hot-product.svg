@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="A one-hot row times the embedding table selects one row.">
+  <text x="40" y="38" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="20" font-weight="700" fill="#f2f0eb">One-hot row × table = selected row</text>
+
+  <!-- one-hot vector -->
+  <text x="40" y="86" font-family="Menlo, monospace" font-size="16" fill="#c3c0c8">one-hot e_2</text>
+  <g font-family="Menlo, monospace" font-size="18" text-anchor="middle">
+    <rect x="40" y="100" width="52" height="48" fill="rgba(255,255,255,0.03)" stroke="#c3c0c8"/>
+    <text x="66" y="130" fill="#c3c0c8">0</text>
+    <rect x="92" y="100" width="52" height="48" fill="rgba(221,163,0,0.20)" stroke="#dda300" stroke-width="2"/>
+    <text x="118" y="130" fill="#dda300">1</text>
+    <rect x="144" y="100" width="52" height="48" fill="rgba(255,255,255,0.03)" stroke="#c3c0c8"/>
+    <text x="170" y="130" fill="#c3c0c8">0</text>
+    <rect x="196" y="100" width="52" height="48" fill="rgba(255,255,255,0.03)" stroke="#c3c0c8"/>
+    <text x="222" y="130" fill="#c3c0c8">0</text>
+  </g>
+
+  <text x="270" y="132" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="28" fill="#dda300">×</text>
+
+  <!-- table -->
+  <g font-family="Menlo, monospace" font-size="14" fill="#c3c0c8">
+    <text x="330" y="86">k1</text><text x="410" y="86">k2</text><text x="490" y="86">k3</text><text x="570" y="86">k4</text>
+  </g>
+  <g font-family="Menlo, monospace" font-size="14">
+    <rect x="320" y="100" width="320" height="48" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="330" y="128" fill="#c3c0c8">0.12</text><text x="410" y="128" fill="#c3c0c8">-0.31</text><text x="490" y="128" fill="#c3c0c8">0.55</text><text x="570" y="128" fill="#c3c0c8">0.08</text>
+
+    <rect x="320" y="148" width="320" height="48" fill="rgba(221,163,0,0.16)" stroke="#dda300" stroke-width="2"/>
+    <text x="330" y="176" fill="#dda300">0.40</text><text x="410" y="176" fill="#dda300">-0.20</text><text x="490" y="176" fill="#dda300">0.70</text><text x="570" y="176" fill="#dda300">0.10</text>
+
+    <rect x="320" y="196" width="320" height="48" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="330" y="224" fill="#c3c0c8">-0.22</text><text x="410" y="224" fill="#c3c0c8">0.44</text><text x="490" y="224" fill="#c3c0c8">0.10</text><text x="570" y="224" fill="#c3c0c8">-0.36</text>
+
+    <rect x="320" y="244" width="320" height="48" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="330" y="272" fill="#c3c0c8">0.05</text><text x="410" y="272" fill="#c3c0c8">0.18</text><text x="490" y="272" fill="#c3c0c8">-0.42</text><text x="570" y="272" fill="#c3c0c8">0.27</text>
+  </g>
+
+  <text x="665" y="132" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="28" fill="#dda300">=</text>
+
+  <!-- result -->
+  <rect x="710" y="148" width="380" height="48" rx="4" fill="rgba(221,163,0,0.12)" stroke="#dda300" stroke-width="2"/>
+  <g font-family="Menlo, monospace" font-size="15" fill="#dda300">
+    <text x="725" y="176">0.40</text><text x="805" y="176">-0.20</text><text x="885" y="176">0.70</text><text x="985" y="176">0.10</text>
+  </g>
+  <text x="900" y="222" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#f2f0eb">p_2</text>
+
+</svg>

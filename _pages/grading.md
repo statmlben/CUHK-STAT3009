@@ -9,7 +9,7 @@ permalink: /grading/
 - **Homework Assignments** (15%): Three homework assignments will be given, each requiring submission of a well-documented *Jupyter Notebook*.
 
   - Homework 1 (5%): Implementing k-fold cross-validation
-  - Homework 2 (5%): Practicing ALS-related algorithms
+  - Homework 2 (5%): Neural networks and neural collaborative filtering
   - Homework 3 (5%): Prototyping neural networks in recommender systems using PyTorch
 
 - **Midterm Jupyter Notebook Examination** (40%): In-class notebook exercise on **Thu 10/29**, covering the workflow from raw data to rating prediction. See midterm details below.

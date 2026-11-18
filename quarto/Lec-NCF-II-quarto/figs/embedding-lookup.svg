@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-label="A user-ID by factor table. User ID 2 selects the third row, which is the learned vector p2.">
+  <defs>
+    <marker id="emb-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dda300"/>
+    </marker>
+  </defs>
+
+
+  <!-- header -->
+  <rect x="70" y="80" width="520" height="52" rx="6" fill="#a65b9f" opacity="0.18" stroke="#a65b9f" stroke-width="1.5"/>
+  <text x="105" y="114" font-family="Menlo, monospace" font-size="19" fill="#f2f0eb">user ID</text>
+  <text x="245" y="114" font-family="Menlo, monospace" font-size="19" fill="#f2f0eb">k1</text>
+  <text x="335" y="114" font-family="Menlo, monospace" font-size="19" fill="#f2f0eb">k2</text>
+  <text x="425" y="114" font-family="Menlo, monospace" font-size="19" fill="#f2f0eb">k3</text>
+  <text x="515" y="114" font-family="Menlo, monospace" font-size="19" fill="#f2f0eb">k4</text>
+
+  <!-- rows -->
+  <g font-family="Menlo, monospace" font-size="19" fill="#c3c0c8">
+    <rect x="70" y="132" width="520" height="48" fill="rgba(255,255,255,0.025)"/>
+    <text x="105" y="163">0</text><text x="245" y="163">0.12</text><text x="335" y="163">-0.31</text><text x="425" y="163">0.55</text><text x="515" y="163">0.08</text>
+
+    <rect x="70" y="180" width="520" height="48" fill="rgba(255,255,255,0.045)"/>
+    <text x="105" y="211">1</text><text x="245" y="211">-0.22</text><text x="335" y="211">0.44</text><text x="425" y="211">0.10</text><text x="515" y="211">-0.36</text>
+
+    <rect x="70" y="228" width="520" height="52" fill="rgba(221,163,0,0.16)" stroke="#dda300" stroke-width="2"/>
+    <text x="105" y="261" fill="#dda300" font-weight="700">2</text><text x="245" y="261" fill="#dda300">0.40</text><text x="335" y="261" fill="#dda300">-0.20</text><text x="425" y="261" fill="#dda300">0.70</text><text x="515" y="261" fill="#dda300">0.10</text>
+
+    <rect x="70" y="280" width="520" height="48" fill="rgba(255,255,255,0.025)"/>
+    <text x="105" y="311">3</text><text x="245" y="311">0.05</text><text x="335" y="311">0.18</text><text x="425" y="311">-0.42</text><text x="515" y="311">0.27</text>
+
+    <rect x="70" y="328" width="520" height="48" fill="rgba(255,255,255,0.045)"/>
+    <text x="105" y="359">4</text><text x="245" y="359">-0.15</text><text x="335" y="359">0.09</text><text x="425" y="359">0.33</text><text x="515" y="359">0.61</text>
+  </g>
+
+  <text x="70" y="408" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="18" fill="#aaa8ae">Rows are parameters: training updates them; the ID only chooses a row.</text>
+
+  <!-- arrow -->
+  <line x1="610" y1="254" x2="735" y2="254" stroke="#dda300" stroke-width="4" marker-end="url(#emb-arrow)"/>
+
+  <!-- vector -->
+  <rect x="760" y="186" width="370" height="132" rx="10" fill="rgba(221,163,0,0.08)" stroke="#dda300" stroke-width="2"/>
+  <text x="790" y="222" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb">p2 = [</text>
+  <text x="790" y="252" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb" xml:space="preserve">  0.40, -0.20,</text>
+  <text x="790" y="282" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb" xml:space="preserve">  0.70,  0.10 ]</text>
+  <text x="790" y="306" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#aaa8ae">shape (K,) = (4,)</text>
+
+  <text x="760" y="352" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="19" fill="#dda300">P[u] = row u of the user table</text>
+</svg>

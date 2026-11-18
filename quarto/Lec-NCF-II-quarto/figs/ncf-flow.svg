@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="380" viewBox="0 0 1300 380" role="img" aria-label="NCF flow: user and item IDs are looked up, concatenated, passed through hidden layers, and scored.">
+  <defs>
+    <marker id="nf-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a65b9f"/>
+    </marker>
+    <marker id="nf-arrow-gold" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dda300"/>
+    </marker>
+  </defs>
+
+  <!-- user branch -->
+  <rect x="50" y="70" width="180" height="78" rx="8" fill="rgba(255,255,255,0.04)" stroke="#d1cdd3" stroke-width="1.5"/>
+  <text x="140" y="104" text-anchor="middle" font-family="Menlo, monospace" font-size="21" fill="#f2f0eb">user ID</text>
+  <text x="140" y="132" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">u</text>
+
+  <line x1="230" y1="109" x2="312" y2="109" stroke="#a65b9f" stroke-width="3" marker-end="url(#nf-arrow)"/>
+
+  <rect x="320" y="70" width="200" height="78" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="420" y="104" text-anchor="middle" font-family="Menlo, monospace" font-size="21" fill="#f2f0eb">p_u</text>
+  <text x="420" y="132" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#c3c0c8">lookup</text>
+
+  <!-- item branch -->
+  <rect x="50" y="220" width="180" height="78" rx="8" fill="rgba(255,255,255,0.04)" stroke="#d1cdd3" stroke-width="1.5"/>
+  <text x="140" y="254" text-anchor="middle" font-family="Menlo, monospace" font-size="21" fill="#f2f0eb">item ID</text>
+  <text x="140" y="282" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">i</text>
+
+  <line x1="230" y1="259" x2="312" y2="259" stroke="#a65b9f" stroke-width="3" marker-end="url(#nf-arrow)"/>
+
+  <rect x="320" y="220" width="200" height="78" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="420" y="254" text-anchor="middle" font-family="Menlo, monospace" font-size="21" fill="#f2f0eb">q_i</text>
+  <text x="420" y="282" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#c3c0c8">lookup</text>
+
+  <!-- merge -->
+  <path d="M 520 109 C 580 109, 580 184, 622 184" fill="none" stroke="#a65b9f" stroke-width="3"/>
+  <path d="M 520 259 C 580 259, 580 184, 622 184" fill="none" stroke="#a65b9f" stroke-width="3"/>
+  <line x1="614" y1="184" x2="630" y2="184" stroke="#a65b9f" stroke-width="3" marker-end="url(#nf-arrow)"/>
+
+  <rect x="640" y="145" width="210" height="78" rx="8" fill="rgba(221,163,0,0.08)" stroke="#dda300" stroke-width="2"/>
+  <text x="745" y="179" text-anchor="middle" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb">concat</text>
+  <text x="745" y="207" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">[p_u, q_i]</text>
+
+  <line x1="850" y1="184" x2="922" y2="184" stroke="#dda300" stroke-width="3" marker-end="url(#nf-arrow-gold)"/>
+
+  <rect x="930" y="145" width="170" height="78" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="1015" y="179" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#f2f0eb">hidden layers</text>
+  <text x="1015" y="207" text-anchor="middle" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#c3c0c8">learned interaction</text>
+
+  <line x1="1100" y1="184" x2="1162" y2="184" stroke="#a65b9f" stroke-width="3" marker-end="url(#nf-arrow)"/>
+
+  <rect x="1170" y="145" width="80" height="78" rx="8" fill="rgba(221,163,0,0.10)" stroke="#dda300" stroke-width="2"/>
+  <text x="1210" y="179" text-anchor="middle" font-family="Menlo, monospace" font-size="19" fill="#f2f0eb">score</text>
+  <text x="1210" y="207" text-anchor="middle" font-family="Menlo, monospace" font-size="16" fill="#c3c0c8">r_hat</text>
+
+  <text x="50" y="345" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="19" fill="#dda300">Same two branches as MF; only the merge changes.</text>
+  <text x="50" y="372" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#aaa8ae">The MLP can learn a nonlinear interaction; an embedding lookup still starts each branch.</text>
+</svg>
