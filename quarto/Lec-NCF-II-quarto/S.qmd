@@ -150,7 +150,7 @@ print(emb.weight.shape)                 # (10,4)
 <p class="lesson-takeaway"><code>weight</code> is a learned <code>(num_embeddings, embedding_dim)</code> matrix; <code>forward</code> only selects rows.</p>
 
 ::: {.notes}
-[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer `LongTensor`; the output appends one `embedding_dim` axis. `padding_idx` is a fixed zero row used for padding tokens; `sparse=True` gives sparse gradients for very large vocabularies. `max_norm` renormalizes rows whose norm exceeds a threshold, and `scale_grad_by_freq` scales gradients by inverse frequency; neither is needed for NCF. The NCF code uses `n_users`/`n_items` and `K`, and calls `.long()` on the ID columns.
+[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer `LongTensor`; the output appends one `embedding_dim` axis. `padding_idx` is a fixed zero row used for padding tokens; `sparse=True` gives sparse gradients for very large vocabularies. `max_norm` renormalizes rows whose norm exceeds a threshold, and `scale_grad_by_freq` scales gradients by inverse frequency. The notebook uses `max_norm=0.3` so plain SGD starts from a stable scale; `scale_grad_by_freq` is not needed here. The NCF code uses `n_users`/`n_items` and `K`, and calls `.long()` on the ID columns.
 :::
 
 ## MF is a tiny two-branch network {.lesson-slide}
@@ -258,6 +258,10 @@ class BiasedNCF(nn.Module):
 
 <p class="lesson-takeaway">The four embedding tables and the MLP are registered in one <code>Module</code>; one optimizer updates all of them.</p>
 
+::: {.notes}
+[Notebook] The runnable version uses `nn.Embedding(..., max_norm=0.3)` and stores the bias terms as `nn.Parameter(torch.zeros(...))`. This keeps the code free of `nn.init` calls and still gives plain SGD a stable starting scale.
+:::
+
 ## Add a nonlinear correction, keep MF {.lesson-slide}
 
 <div class="lesson-formula">$$\widehat r_{ui}=\mu+a_u+b_i+p_u^\top q_i+h_\phi([s_u,t_i])$$</div>
@@ -354,9 +358,9 @@ ncf.fit(X_train, y_train)
 ## What to expect: MF vs NCF {.lesson-slide}
 
 <table class="lesson-table"><thead><tr><th>model</th><th>interaction</th><th>flexibility</th><th>example test RMSE</th></tr></thead><tbody>
-<tr><td>Biased MF</td><td>$p_u^\top q_i$</td><td>fixed</td><td>0.972</td></tr>
-<tr><td>NCF</td><td>$g_\theta([p_u,q_i])$</td><td>learned</td><td>0.961</td></tr>
-<tr><td>Additive NCF</td><td>$p_u^\top q_i+h_\phi([s_u,t_i])$</td><td>both paths</td><td>0.960</td></tr>
+<tr><td>Biased MF</td><td>$p_u^\top q_i$</td><td>fixed</td><td>0.971</td></tr>
+<tr><td>NCF</td><td>$g_\theta([p_u,q_i])$</td><td>learned</td><td>0.974</td></tr>
+<tr><td>Additive NCF</td><td>$p_u^\top q_i+h_\phi([s_u,t_i])$</td><td>both paths</td><td>0.961</td></tr>
 </tbody></table>
 
 <p class="lesson-takeaway">The example is one fixed 50-epoch budget on the course split. More flexibility is not automatically better; validation decides.</p>
@@ -400,9 +404,9 @@ ncf.fit(X_train, y_train)
 
 ## CV snapshot: NCF over $K$ and hidden {.lesson-slide}
 
-<img class="lesson-figure short" src="figs/cv-bars.svg" alt="Cross-validation RMSE for four NCF settings; K=16 and hidden=32 is best.">
+<img class="lesson-figure short" src="figs/cv-bars.svg" alt="Cross-validation RMSE for four NCF settings; K=16 and hidden=16 is best.">
 
-<div class="lesson-grid"><div class="lesson-card"><span>SELECTED</span><b>$K=16,\ \mathrm{hidden}=32$</b><p>Lowest mean CV RMSE; <code>refit=True</code> refits it on all training rows.</p></div><div class="lesson-card"><span>TEST RMSE</span><b>0.9659</b><p>The search uses 30 epochs; the fixed comparison uses 50.</p></div></div>
+<div class="lesson-grid"><div class="lesson-card"><span>SELECTED</span><b>$K=16,\ \mathrm{hidden}=16$</b><p>Lowest mean CV RMSE; <code>refit=True</code> refits the winner.</p></div><div class="lesson-card"><span>TEST RMSE</span><b>0.9569</b><p>The search uses 30 epochs; the fixed comparison uses 50.</p></div></div>
 
 <p class="lesson-takeaway">CV ranks candidates; it is not a test score. The search budget also matters.</p>
 

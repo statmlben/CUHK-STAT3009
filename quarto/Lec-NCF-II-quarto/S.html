@@ -1312,7 +1312,7 @@ huge vocabularies
 <code>weight</code> is a learned <code>(num_embeddings, embedding_dim)</code> matrix; <code>forward</code> only selects rows.
 </p>
 <aside class="notes">
-<p>[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer <code>LongTensor</code>; the output appends one <code>embedding_dim</code> axis. <code>padding_idx</code> is a fixed zero row used for padding tokens; <code>sparse=True</code> gives sparse gradients for very large vocabularies. <code>max_norm</code> renormalizes rows whose norm exceeds a threshold, and <code>scale_grad_by_freq</code> scales gradients by inverse frequency; neither is needed for NCF. The NCF code uses <code>n_users</code>/<code>n_items</code> and <code>K</code>, and calls <code>.long()</code> on the ID columns.</p>
+<p>[Source] https://docs.pytorch.org/docs/2.15/generated/torch.nn.Embedding.html . The input is an integer <code>LongTensor</code>; the output appends one <code>embedding_dim</code> axis. <code>padding_idx</code> is a fixed zero row used for padding tokens; <code>sparse=True</code> gives sparse gradients for very large vocabularies. <code>max_norm</code> renormalizes rows whose norm exceeds a threshold, and <code>scale_grad_by_freq</code> scales gradients by inverse frequency. The notebook uses <code>max_norm=0.3</code> so plain SGD starts from a stable scale; <code>scale_grad_by_freq</code> is not needed here. The NCF code uses <code>n_users</code>/<code>n_items</code> and <code>K</code>, and calls <code>.long()</code> on the ID columns.</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
@@ -1515,6 +1515,19 @@ Adding the familiar bias terms gives the network a sensible starting point and i
 <p class="lesson-takeaway">
 The four embedding tables and the MLP are registered in one <code>Module</code>; one optimizer updates all of them.
 </p>
+<aside class="notes">
+<p>[Notebook] The runnable version uses <code>nn.Embedding(..., max_norm=0.3)</code> and stores the bias terms as <code>nn.Parameter(torch.zeros(...))</code>. This keeps the code free of <code>nn.init</code> calls and still gives plain SGD a stable starting scale.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
 </section>
 <section id="add-a-nonlinear-correction-keep-mf" class="slide level2 lesson-slide">
 <h2>Add a nonlinear correction, keep MF</h2>
@@ -1706,7 +1719,7 @@ Biased MF
 fixed
 </td>
 <td>
-0.972
+0.971
 </td>
 </tr>
 <tr>
@@ -1720,7 +1733,7 @@ NCF
 learned
 </td>
 <td>
-0.961
+0.974
 </td>
 </tr>
 <tr>
@@ -1734,7 +1747,7 @@ Additive NCF
 both paths
 </td>
 <td>
-0.960
+0.961
 </td>
 </tr>
 </tbody>
@@ -1842,16 +1855,16 @@ NCF is still a regression model: the same data, loss, and optimization questions
 </section>
 <section id="cv-snapshot-ncf-over-k-and-hidden" class="slide level2 lesson-slide">
 <h2>CV snapshot: NCF over <span class="math inline">\(K\)</span> and hidden</h2>
-<p><img role="img" aria-label="Cross-validation RMSE for four NCF settings; K=16 and hidden=32 is best." class="lesson-figure short" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjM4MCIgdmlld0JveD0iMCAwIDEyMDAgMzgwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkNyb3NzLXZhbGlkYXRpb24gUk1TRSBmb3IgZm91ciBOQ0Ygc2V0dGluZ3M7IEs9MTYgYW5kIGhpZGRlbj0zMiBpcyBiZXN0IGF0IDAuOTg3NC4iPgogIDx0ZXh0IHg9IjQwIiB5PSIzMiIgZm9udC1mYW1pbHk9IkF2ZW5pciBOZXh0LCBIZWx2ZXRpY2EgTmV1ZSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmMmYwZWIiPkNWIFJNU0UgKGxvd2VyIGlzIGJldHRlcik8L3RleHQ+CiAgPHRleHQgeD0iMTEyMCIgeT0iMzIiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtZmFtaWx5PSJBdmVuaXIgTmV4dCwgSGVsdmV0aWNhIE5ldWUsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE1IiBmaWxsPSIjYWFhOGFlIj5heGlzIHN0YXJ0cyBhdCAwLjk4NTwvdGV4dD4KCiAgPCEtLSByb3dzIC0tPgogIDxnIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZjJmMGViIiB0ZXh0LWFuY2hvcj0iZW5kIj4KICAgIDx0ZXh0IHg9IjIzMCIgeT0iMTA1Ij5LPTE2LCBoPTMyPC90ZXh0PgogICAgPHRleHQgeD0iMjMwIiB5PSIxNjUiPks9MTYsIGg9MTY8L3RleHQ+CiAgICA8dGV4dCB4PSIyMzAiIHk9IjIyNSI+Sz04LCBoPTMyPC90ZXh0PgogICAgPHRleHQgeD0iMjMwIiB5PSIyODUiPks9OCwgaD0xNjwvdGV4dD4KICA8L2c+CgogIDwhLS0gYmVzdCBtYXJrZXIgLS0+CiAgPGxpbmUgeDE9IjM5OCIgeTE9IjU1IiB4Mj0iMzk4IiB5Mj0iMzE1IiBzdHJva2U9IiNkZGEzMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNyA3IiBvcGFjaXR5PSIwLjY1Ii8+CiAgPHRleHQgeD0iNDA0IiB5PSI1MiIgZm9udC1mYW1pbHk9IkF2ZW5pciBOZXh0LCBIZWx2ZXRpY2EgTmV1ZSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiNkZGEzMDAiPmJlc3Q8L3RleHQ+CgogIDwhLS0gYmFyczogeCA9IDI2MCArICh2YWx1ZSAtIC45ODUpLy4wMTUgKiA4NjAgLS0+CiAgPHJlY3QgeD0iMjYwIiB5PSI4MCIgd2lkdGg9IjEzOCIgaGVpZ2h0PSIzNCIgcng9IjQiIGZpbGw9IiNkZGEzMDAiLz4KICA8dGV4dCB4PSI0MTAiIHk9IjEwNCIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkZGEzMDAiPjAuOTg3NDwvdGV4dD4KCiAgPHJlY3QgeD0iMjYwIiB5PSIxNDAiIHdpZHRoPSIzMTUiIGhlaWdodD0iMzQiIHJ4PSI0IiBmaWxsPSIjYTY1YjlmIi8+CiAgPHRleHQgeD0iNTg3IiB5PSIxNjQiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjYzNjMGM4Ij4wLjk5MDU8L3RleHQ+CgogIDxyZWN0IHg9IjI2MCIgeT0iMjAwIiB3aWR0aD0iNTczIiBoZWlnaHQ9IjM0IiByeD0iNCIgZmlsbD0iI2E2NWI5ZiIvPgogIDx0ZXh0IHg9Ijg0NSIgeT0iMjI0IiBmb250LWZhbWlseT0iTWVubG8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2MzYzBjOCI+MC45OTUwPC90ZXh0PgoKICA8cmVjdCB4PSIyNjAiIHk9IjI2MCIgd2lkdGg9IjU4NSIgaGVpZ2h0PSIzNCIgcng9IjQiIGZpbGw9IiNhNjViOWYiLz4KICA8dGV4dCB4PSI4NTciIHk9IjI4NCIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNjM2MwYzgiPjAuOTk1MjwvdGV4dD4KCiAgPCEtLSBheGlzIC0tPgogIDxsaW5lIHgxPSIyNjAiIHkxPSIzMTUiIHgyPSIxMTIwIiB5Mj0iMzE1IiBzdHJva2U9IiNjM2MwYzgiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGcgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiNhYWE4YWUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgPHRleHQgeD0iMjYwIiB5PSIzNDAiPjAuOTg1PC90ZXh0PgogICAgPHRleHQgeD0iNTQ3IiB5PSIzNDAiPjAuOTkwPC90ZXh0PgogICAgPHRleHQgeD0iODMzIiB5PSIzNDAiPjAuOTk1PC90ZXh0PgogICAgPHRleHQgeD0iMTEyMCIgeT0iMzQwIj4xLjAwMDwvdGV4dD4KICA8L2c+CgogIDx0ZXh0IHg9IjQwIiB5PSIzNzAiIGZvbnQtZmFtaWx5PSJBdmVuaXIgTmV4dCwgSGVsdmV0aWNhIE5ldWUsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE3IiBmaWxsPSIjZGRhMzAwIj5zZWxlY3RlZDogSz0xNiwgaGlkZGVuPTMyIMK3IHRlc3QgUk1TRSAwLjk2NTk8L3RleHQ+Cjwvc3ZnPgo=" alt="Cross-validation RMSE for four NCF settings; K=16 and hidden=32 is best."></p>
+<p><img role="img" aria-label="Cross-validation RMSE for four NCF settings; K=16 and hidden=16 is best." class="lesson-figure short" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjM4MCIgdmlld0JveD0iMCAwIDEyMDAgMzgwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkNyb3NzLXZhbGlkYXRpb24gUk1TRSBmb3IgZm91ciBOQ0Ygc2V0dGluZ3M7IEs9MTYgYW5kIGhpZGRlbj0xNiBpcyBiZXN0IGF0IDAuOTc5MS4iPgogIDx0ZXh0IHg9IjQwIiB5PSIzMiIgZm9udC1mYW1pbHk9IkF2ZW5pciBOZXh0LCBIZWx2ZXRpY2EgTmV1ZSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmMmYwZWIiPkNWIFJNU0UgKGxvd2VyIGlzIGJldHRlcik8L3RleHQ+CiAgPHRleHQgeD0iMTEyMCIgeT0iMzIiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtZmFtaWx5PSJBdmVuaXIgTmV4dCwgSGVsdmV0aWNhIE5ldWUsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE1IiBmaWxsPSIjYWFhOGFlIj5heGlzIHN0YXJ0cyBhdCAwLjk3NTwvdGV4dD4KCiAgPCEtLSByb3dzIC0tPgogIDxnIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZjJmMGViIiB0ZXh0LWFuY2hvcj0iZW5kIj4KICAgIDx0ZXh0IHg9IjIzMCIgeT0iMTA1Ij5LPTE2LCBoPTE2PC90ZXh0PgogICAgPHRleHQgeD0iMjMwIiB5PSIxNjUiPks9MTYsIGg9MzI8L3RleHQ+CiAgICA8dGV4dCB4PSIyMzAiIHk9IjIyNSI+Sz04LCBoPTMyPC90ZXh0PgogICAgPHRleHQgeD0iMjMwIiB5PSIyODUiPks9OCwgaD0xNjwvdGV4dD4KICA8L2c+CgogIDwhLS0gYmVzdCBtYXJrZXIgLS0+CiAgPGxpbmUgeDE9IjQwMSIgeTE9IjU1IiB4Mj0iNDAxIiB5Mj0iMzE1IiBzdHJva2U9IiNkZGEzMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNyA3IiBvcGFjaXR5PSIwLjY1Ii8+CiAgPHRleHQgeD0iNDA3IiB5PSI1MiIgZm9udC1mYW1pbHk9IkF2ZW5pciBOZXh0LCBIZWx2ZXRpY2EgTmV1ZSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiNkZGEzMDAiPmJlc3Q8L3RleHQ+CgogIDwhLS0gYmFyczogeCA9IDI2MCArICh2YWx1ZSAtIC45NzUpLy4wMjUgKiA4NjAgLS0+CiAgPHJlY3QgeD0iMjYwIiB5PSI4MCIgd2lkdGg9IjE0MSIgaGVpZ2h0PSIzNCIgcng9IjQiIGZpbGw9IiNkZGEzMDAiLz4KICA8dGV4dCB4PSI0MTEiIHk9IjEwNCIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkZGEzMDAiPjAuOTc5MTwvdGV4dD4KCiAgPHJlY3QgeD0iMjYwIiB5PSIxNDAiIHdpZHRoPSIzMDYiIGhlaWdodD0iMzQiIHJ4PSI0IiBmaWxsPSIjYTY1YjlmIi8+CiAgPHRleHQgeD0iNTc2IiB5PSIxNjQiIGZvbnQtZmFtaWx5PSJNZW5sbywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjYzNjMGM4Ij4wLjk4Mzk8L3RleHQ+CgogIDxyZWN0IHg9IjI2MCIgeT0iMjAwIiB3aWR0aD0iNTg1IiBoZWlnaHQ9IjM0IiByeD0iNCIgZmlsbD0iI2E2NWI5ZiIvPgogIDx0ZXh0IHg9Ijg1NSIgeT0iMjI0IiBmb250LWZhbWlseT0iTWVubG8sIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2MzYzBjOCI+MC45OTIwPC90ZXh0PgoKICA8cmVjdCB4PSIyNjAiIHk9IjI2MCIgd2lkdGg9IjY4OCIgaGVpZ2h0PSIzNCIgcng9IjQiIGZpbGw9IiNhNjViOWYiLz4KICA8dGV4dCB4PSI5NTgiIHk9IjI4NCIgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNjM2MwYzgiPjAuOTk1MDwvdGV4dD4KCiAgPCEtLSBheGlzIC0tPgogIDxsaW5lIHgxPSIyNjAiIHkxPSIzMTUiIHgyPSIxMTIwIiB5Mj0iMzE1IiBzdHJva2U9IiNjM2MwYzgiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGcgZm9udC1mYW1pbHk9Ik1lbmxvLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiNhYWE4YWUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgPHRleHQgeD0iMjYwIiB5PSIzNDAiPjAuOTc1PC90ZXh0PgogICAgPHRleHQgeD0iNTQ3IiB5PSIzNDAiPjAuOTgzPC90ZXh0PgogICAgPHRleHQgeD0iODMzIiB5PSIzNDAiPjAuOTkyPC90ZXh0PgogICAgPHRleHQgeD0iMTEyMCIgeT0iMzQwIj4xLjAwMDwvdGV4dD4KICA8L2c+CgogIDx0ZXh0IHg9IjQwIiB5PSIzNzAiIGZvbnQtZmFtaWx5PSJBdmVuaXIgTmV4dCwgSGVsdmV0aWNhIE5ldWUsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE3IiBmaWxsPSIjZGRhMzAwIj5zZWxlY3RlZDogSz0xNiwgaGlkZGVuPTE2IMK3IHRlc3QgUk1TRSAwLjk1Njk8L3RleHQ+Cjwvc3ZnPgo=" alt="Cross-validation RMSE for four NCF settings; K=16 and hidden=16 is best."></p>
 <div class="lesson-grid">
 <div class="lesson-card">
-<span>SELECTED</span><b><span class="math inline">\(K=16,\ \mathrm{hidden}=32\)</span></b>
+<span>SELECTED</span><b><span class="math inline">\(K=16,\ \mathrm{hidden}=16\)</span></b>
 <p>
-Lowest mean CV RMSE; <code>refit=True</code> refits it on all training rows.
+Lowest mean CV RMSE; <code>refit=True</code> refits the winner.
 </p>
 </div>
 <div class="lesson-card">
-<span>TEST RMSE</span><b>0.9659</b>
+<span>TEST RMSE</span><b>0.9569</b>
 <p>
 The search uses 30 epochs; the fixed comparison uses 50.
 </p>
