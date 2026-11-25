@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="620" viewBox="0 0 1400 620" role="img" aria-label="Continuous and categorical features are encoded into vectors and concatenated before an MLP.">
+  <defs>
+    <marker id="arrow-gold" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dda300"/>
+    </marker>
+    <marker id="arrow-muted" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8a8791"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: rgba(255,255,255,.20); stroke-width: 1.4; }
+      .gold { stroke: #dda300; }
+      .violet { stroke: #a65b9f; }
+      .cyan { stroke: #4fb3bf; }
+      .txt { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 21px; }
+      .small { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 15px; }
+      .kicker { fill: #dda300; font-family: Menlo, monospace; font-size: 14px; font-weight: 700; letter-spacing: .08em; }
+      .line { stroke: #8a8791; stroke-width: 1.6; fill: none; }
+      .line-gold { stroke: #dda300; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+
+  <text x="40" y="34" class="kicker">USER SIDE</text>
+  <rect x="40" y="54" width="240" height="64" rx="6" class="box gold"/>
+  <text x="60" y="82" class="txt">continuous <tspan class="small">x_u</tspan></text>
+  <text x="60" y="104" class="small">price, age, counts</text>
+
+  <rect x="320" y="54" width="240" height="64" rx="6" class="box violet"/>
+  <text x="340" y="82" class="txt">categorical <tspan class="small">c_u</tspan></text>
+  <text x="340" y="104" class="small">gender, occupation</text>
+
+  <rect x="600" y="54" width="220" height="64" rx="6" class="box violet"/>
+  <text x="620" y="82" class="txt">Embedding <tspan class="small">E_u</tspan></text>
+  <text x="620" y="104" class="small">learned lookup</text>
+
+  <rect x="860" y="54" width="260" height="64" rx="6" class="box gold"/>
+  <text x="880" y="82" class="txt">user vector</text>
+  <text x="880" y="104" class="small">[ x_u , e(c_u) ]</text>
+
+  <line x1="560" y1="86" x2="600" y2="86" class="line" marker-end="url(#arrow-muted)"/>
+  <polyline points="160,118 160,164 990,164 990,118" class="line" marker-end="url(#arrow-muted)"/>
+  <line x1="820" y1="86" x2="860" y2="86" class="line" marker-end="url(#arrow-muted)"/>
+
+  <text x="40" y="204" class="kicker">ITEM SIDE</text>
+  <rect x="40" y="224" width="240" height="64" rx="6" class="box gold"/>
+  <text x="60" y="252" class="txt">continuous <tspan class="small">z_i</tspan></text>
+  <text x="60" y="274" class="small">price, year, flags</text>
+
+  <rect x="320" y="224" width="240" height="64" rx="6" class="box violet"/>
+  <text x="340" y="252" class="txt">categorical <tspan class="small">g_i</tspan></text>
+  <text x="340" y="274" class="small">genre, category</text>
+
+  <rect x="600" y="224" width="220" height="64" rx="6" class="box violet"/>
+  <text x="620" y="252" class="txt">Embedding <tspan class="small">E_i</tspan></text>
+  <text x="620" y="274" class="small">learned lookup</text>
+
+  <rect x="860" y="224" width="260" height="64" rx="6" class="box gold"/>
+  <text x="880" y="252" class="txt">item vector</text>
+  <text x="880" y="274" class="small">[ z_i , e(g_i) ]</text>
+
+  <line x1="560" y1="256" x2="600" y2="256" class="line" marker-end="url(#arrow-muted)"/>
+  <polyline points="160,288 160,336 990,336 990,288" class="line" marker-end="url(#arrow-muted)"/>
+  <line x1="820" y1="256" x2="860" y2="256" class="line" marker-end="url(#arrow-muted)"/>
+
+  <rect x="40" y="404" width="780" height="64" rx="6" class="box cyan"/>
+  <text x="60" y="432" class="txt">concat [ user vector , item vector ]</text>
+  <text x="60" y="454" class="small">(B, d_u + d_i)</text>
+
+  <rect x="860" y="404" width="250" height="64" rx="6" class="box gold"/>
+  <text x="880" y="432" class="txt">MLP</text>
+  <text x="880" y="454" class="small">Linear → ReLU → Linear</text>
+
+  <rect x="1150" y="404" width="210" height="64" rx="6" class="box gold"/>
+  <text x="1235" y="443" class="txt" text-anchor="middle">rating</text>
+
+  <polyline points="990,118 990,370 400,370 400,404" class="line-gold" marker-end="url(#arrow-gold)"/>
+  <polyline points="1120,288 1120,380 460,380 460,404" class="line-gold" marker-end="url(#arrow-gold)"/>
+  <line x1="820" y1="436" x2="860" y2="436" class="line-gold" marker-end="url(#arrow-gold)"/>
+  <line x1="1110" y1="436" x2="1150" y2="436" class="line-gold" marker-end="url(#arrow-gold)"/>
+
+  <text x="40" y="548" class="txt" font-size="24">The encoder is interchangeable; the fusion block only sees vectors.</text>
+  <text x="40" y="580" class="small" font-size="18">Categorical features need an embedding table; continuous features need preprocessing.</text>
+</svg>

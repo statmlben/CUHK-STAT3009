@@ -196,3 +196,30 @@
     - >
       Optional: <a href="https://arxiv.org/abs/1907.06902">Dacrema et al.: Are We Really Making Much Progress?</a>
       (a reproducibility check on neural recommenders)
+- date: "2026-11-26"
+  title: >
+    <strong>Recommendation with Side Information</strong>
+  slides: ../quarto/Lec-side-quarto/S.html
+  pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_Side.ipynb
+  readings:
+    - >
+      <a href="https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html">PyTorch: <code>nn.Embedding</code></a>
+      (categorical features as learned lookup tables)
+    - >
+      <a href="https://scikit-learn.org/stable/modules/preprocessing.html">scikit-learn: Preprocessing</a>
+      (scaling, encoding, and missing values)
+    - >
+      <a href="https://www.sbert.net/">Sentence Transformers</a>
+      (text embeddings as dense side features)
+    - >
+      <a href="https://arxiv.org/abs/1606.07792">Cheng et al.: Wide &amp; Deep Learning</a>
+      (feature crosses and deep generalization)
+    - >
+      <a href="https://arxiv.org/abs/1703.04247">Guo et al.: DeepFM</a>
+      (factorized feature interactions)
+    - >
+      Optional: <a href="https://research.google/pubs/pub45530/">Covington et al.: YouTube Two-Tower</a>
+      (retrieval and ranking at scale)
+    - >
+      Optional: <a href="https://arxiv.org/abs/1905.06874">Chen et al.: Behavior Sequence Transformer</a>
+      (sequence side information in Alibaba)

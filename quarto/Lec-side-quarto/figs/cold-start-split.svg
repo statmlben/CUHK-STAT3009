@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="540" viewBox="0 0 1400 540" role="img" aria-label="Random split versus cold-start split. In a random split every user appears in training; in a cold-start split some users appear only in test.">
+  <defs>
+    <style>
+      .title { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 28px; font-weight: 700; }
+      .sub { fill: #c3c0c8; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 19px; }
+      .label { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 15px; }
+      .train { fill: #dda300; }
+      .test { fill: #a65b9f; }
+      .missing { fill: #20262d; }
+      .frame { fill: none; stroke: rgba(255,255,255,.18); stroke-width: 1.4; }
+    </style>
+  </defs>
+
+  <text x="60" y="42" class="title">Random split</text>
+  <text x="60" y="72" class="sub">every user and item appears in training</text>
+
+  <text x="760" y="42" class="title">Cold-start split</text>
+  <text x="760" y="72" class="sub">U5 and U6 have no training rows</text>
+
+  <!-- left matrix -->
+  <g transform="translate(60,110)">
+    <text x="-12" y="30" class="label" text-anchor="end">U1</text>
+    <text x="-12" y="76" class="label" text-anchor="end">U2</text>
+    <text x="-12" y="122" class="label" text-anchor="end">U3</text>
+    <text x="-12" y="168" class="label" text-anchor="end">U4</text>
+    <text x="-12" y="214" class="label" text-anchor="end">U5</text>
+    <text x="-12" y="260" class="label" text-anchor="end">U6</text>
+
+    <g transform="translate(0,0)">
+      <rect x="0" y="0" width="40" height="40" rx="4" class="train"/><rect x="46" y="0" width="40" height="40" rx="4" class="test"/><rect x="92" y="0" width="40" height="40" rx="4" class="train"/><rect x="138" y="0" width="40" height="40" rx="4" class="train"/><rect x="184" y="0" width="40" height="40" rx="4" class="test"/><rect x="230" y="0" width="40" height="40" rx="4" class="train"/>
+      <rect x="0" y="46" width="40" height="40" rx="4" class="train"/><rect x="46" y="46" width="40" height="40" rx="4" class="train"/><rect x="92" y="46" width="40" height="40" rx="4" class="test"/><rect x="138" y="46" width="40" height="40" rx="4" class="train"/><rect x="184" y="46" width="40" height="40" rx="4" class="train"/><rect x="230" y="46" width="40" height="40" rx="4" class="missing"/>
+      <rect x="0" y="92" width="40" height="40" rx="4" class="test"/><rect x="46" y="92" width="40" height="40" rx="4" class="train"/><rect x="92" y="92" width="40" height="40" rx="4" class="train"/><rect x="138" y="92" width="40" height="40" rx="4" class="test"/><rect x="184" y="92" width="40" height="40" rx="4" class="train"/><rect x="230" y="92" width="40" height="40" rx="4" class="train"/>
+      <rect x="0" y="138" width="40" height="40" rx="4" class="train"/><rect x="46" y="138" width="40" height="40" rx="4" class="test"/><rect x="92" y="138" width="40" height="40" rx="4" class="train"/><rect x="138" y="138" width="40" height="40" rx="4" class="train"/><rect x="184" y="138" width="40" height="40" rx="4" class="missing"/><rect x="230" y="138" width="40" height="40" rx="4" class="train"/>
+      <rect x="0" y="184" width="40" height="40" rx="4" class="train"/><rect x="46" y="184" width="40" height="40" rx="4" class="train"/><rect x="92" y="184" width="40" height="40" rx="4" class="test"/><rect x="138" y="184" width="40" height="40" rx="4" class="train"/><rect x="184" y="184" width="40" height="40" rx="4" class="train"/><rect x="230" y="184" width="40" height="40" rx="4" class="test"/>
+      <rect x="0" y="230" width="40" height="40" rx="4" class="test"/><rect x="46" y="230" width="40" height="40" rx="4" class="train"/><rect x="92" y="230" width="40" height="40" rx="4" class="train"/><rect x="138" y="230" width="40" height="40" rx="4" class="missing"/><rect x="184" y="230" width="40" height="40" rx="4" class="train"/><rect x="230" y="230" width="40" height="40" rx="4" class="train"/>
+    </g>
+
+    <text x="0" y="300" class="label">I1</text><text x="46" y="300" class="label">I2</text><text x="92" y="300" class="label">I3</text><text x="138" y="300" class="label">I4</text><text x="184" y="300" class="label">I5</text><text x="230" y="300" class="label">I6</text>
+  </g>
+
+  <!-- right matrix -->
+  <g transform="translate(760,110)">
+    <text x="-12" y="30" class="label" text-anchor="end">U1</text>
+    <text x="-12" y="76" class="label" text-anchor="end">U2</text>
+    <text x="-12" y="122" class="label" text-anchor="end">U3</text>
+    <text x="-12" y="168" class="label" text-anchor="end">U4</text>
+    <text x="-12" y="214" class="label" text-anchor="end" fill="#a65b9f">U5</text>
+    <text x="-12" y="260" class="label" text-anchor="end" fill="#a65b9f">U6</text>
+
+    <g transform="translate(0,0)">
+      <rect x="0" y="0" width="40" height="40" rx="4" class="train"/><rect x="46" y="0" width="40" height="40" rx="4" class="test"/><rect x="92" y="0" width="40" height="40" rx="4" class="train"/><rect x="138" y="0" width="40" height="40" rx="4" class="train"/><rect x="184" y="0" width="40" height="40" rx="4" class="test"/><rect x="230" y="0" width="40" height="40" rx="4" class="train"/>
+      <rect x="0" y="46" width="40" height="40" rx="4" class="train"/><rect x="46" y="46" width="40" height="40" rx="4" class="train"/><rect x="92" y="46" width="40" height="40" rx="4" class="test"/><rect x="138" y="46" width="40" height="40" rx="4" class="train"/><rect x="184" y="46" width="40" height="40" rx="4" class="train"/><rect x="230" y="46" width="40" height="40" rx="4" class="missing"/>
+      <rect x="0" y="92" width="40" height="40" rx="4" class="test"/><rect x="46" y="92" width="40" height="40" rx="4" class="train"/><rect x="92" y="92" width="40" height="40" rx="4" class="train"/><rect x="138" y="92" width="40" height="40" rx="4" class="test"/><rect x="184" y="92" width="40" height="40" rx="4" class="train"/><rect x="230" y="92" width="40" height="40" rx="4" class="train"/>
+      <rect x="0" y="138" width="40" height="40" rx="4" class="train"/><rect x="46" y="138" width="40" height="40" rx="4" class="test"/><rect x="92" y="138" width="40" height="40" rx="4" class="train"/><rect x="138" y="138" width="40" height="40" rx="4" class="train"/><rect x="184" y="138" width="40" height="40" rx="4" class="missing"/><rect x="230" y="138" width="40" height="40" rx="4" class="train"/>
+      <rect x="0" y="184" width="40" height="40" rx="4" class="test"/><rect x="46" y="184" width="40" height="40" rx="4" class="test"/><rect x="92" y="184" width="40" height="40" rx="4" class="test"/><rect x="138" y="184" width="40" height="40" rx="4" class="test"/><rect x="184" y="184" width="40" height="40" rx="4" class="test"/><rect x="230" y="184" width="40" height="40" rx="4" class="test"/>
+      <rect x="0" y="230" width="40" height="40" rx="4" class="test"/><rect x="46" y="230" width="40" height="40" rx="4" class="test"/><rect x="92" y="230" width="40" height="40" rx="4" class="test"/><rect x="138" y="230" width="40" height="40" rx="4" class="test"/><rect x="184" y="230" width="40" height="40" rx="4" class="test"/><rect x="230" y="230" width="40" height="40" rx="4" class="test"/>
+    </g>
+
+    <text x="0" y="300" class="label">I1</text><text x="46" y="300" class="label">I2</text><text x="92" y="300" class="label">I3</text><text x="138" y="300" class="label">I4</text><text x="184" y="300" class="label">I5</text><text x="230" y="300" class="label">I6</text>
+  </g>
+
+  <rect x="60" y="440" width="22" height="22" rx="3" class="train"/>
+  <text x="92" y="458" class="sub">training interaction</text>
+  <rect x="320" y="440" width="22" height="22" rx="3" class="test"/>
+  <text x="352" y="458" class="sub">test interaction</text>
+  <rect x="570" y="440" width="22" height="22" rx="3" class="missing"/>
+  <text x="602" y="458" class="sub">unobserved pair</text>
+
+  <text x="760" y="458" class="sub">A random split measures interpolation, not cold start.</text>
+</svg>
