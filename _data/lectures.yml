@@ -201,6 +201,11 @@
     <strong>Recommendation with Side Information</strong>
   slides: ../quarto/Lec-side-quarto/S.html
   pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_Side.ipynb
+  warmup:
+    label: Start here · Warm-up 07
+    title: NCF — implement, fit, select
+    meta: 18–20 min
+    href: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/warmup/NB_Warmup_07_NCF_Recap.ipynb
   readings:
     - >
       <a href="https://github.com/statmlben/CUHK-STAT3009/tree/main/dataset/amazon-video-games">Amazon Reviews 2023: Video Games subset</a>
@@ -211,6 +216,9 @@
     - >
       <a href="https://scikit-learn.org/stable/modules/preprocessing.html">scikit-learn: Preprocessing</a>
       (scaling, encoding, and missing values)
+    - >
+      <a href="https://huggingface.co/docs/transformers/main_classes/pipelines">Hugging Face: Pipelines</a>
+      (feature extraction for text and images)
     - >
       <a href="https://www.sbert.net/">Sentence Transformers</a>
       (text embeddings as dense side features)

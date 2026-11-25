@@ -1,6 +1,6 @@
 # Recommendation with Side Information · Quarto edition
 
-A 40-slide lecture built around one spine: **encode → fuse → evaluate**.
+A 41-slide lecture built around one spine: **encode → fuse → evaluate**.
 
 - **Part 0** motivates side information with the Amazon Reviews 2023 Video
   Games subset: 2,000 products, 39,796 ratings, 29,209 users, 300 images.
@@ -11,8 +11,10 @@ A 40-slide lecture built around one spine: **encode → fuse → evaluate**.
   a continuous + categorical fusion diagram.
 - **Part 3** compares fusion architectures: feature-only, additive MF,
   side-aware factors, and two-tower models, each paired with its equation.
-- **Part 4** covers the four questions, MSE, a compact PyTorch sketch,
-  random-row evaluation, leakage, and the Amazon ablation table.
+- **Part 4** covers the four questions, MSE, the named-input dict, a compact
+  PyTorch sketch, random-row evaluation, leakage, and the Amazon ablation.
+  On this split, text is the only clear gain; continuous and categorical are
+  flat, and image is neutral on its 300-product subset.
 - **Part 5** is optional text: product title/description → a MiniLM
   `feature-extraction` pipeline → mean-pooled 384-d vectors → a small additive
   block. Review text is not used because it is written with the rating.
@@ -46,6 +48,6 @@ The notebook `nb/STAT3009_Side.ipynb` starts from the NCF `MFNet` and adds one
 block at a time with `skorch.NeuralNetRegressor`: continuous features,
 categorical embeddings, a MiniLM text projection, and a ResNet18 image
 ablation. The target is the continuous 1–5 star rating; models are evaluated
-with RMSE and MAE on a random 80/20 rating-row split.
+with validation and test RMSE on a random 80/20 rating-row split.
 
 Render with `quarto render S.qmd`; `S.html` is self-contained.

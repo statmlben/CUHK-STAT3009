@@ -138,6 +138,80 @@
   max-height: 500px;
 }
 
+/* Larger code for the implementation sketch. */
+.reveal .slides section.sketch-code pre.sourceCode {
+  font-size: 18px !important;
+  line-height: 1.35 !important;
+}
+
+.reveal .slides section.sketch-code pre.sourceCode code {
+  padding: 18px 22px;
+}
+
+/* Ablation table and result cards. */
+.results-layout {
+  display: grid;
+  grid-template-columns: 1.42fr 0.58fr;
+  gap: 28px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.results-table th,
+.results-table td {
+  padding: 12px 14px;
+  font-size: 19px;
+}
+
+.results-table th {
+  font-size: 13px;
+}
+
+.result-stack > * + * {
+  margin-top: 12px;
+}
+
+.result-card {
+  padding: 14px 17px;
+  border-left: 5px solid #a65b9f;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.result-card.gain {
+  border-color: #4fb3bf;
+}
+
+.result-card.flat {
+  border-color: var(--cuhk-gold);
+}
+
+.result-card.neutral {
+  border-color: #d1cdd3;
+}
+
+.result-card span {
+  display: block;
+  color: var(--cuhk-gold);
+  font-family: Menlo, monospace;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+}
+
+.result-card b {
+  display: block;
+  margin-top: 6px;
+  font-size: 23px;
+  line-height: 1.15;
+}
+
+.result-card p {
+  margin: 8px 0 0 !important;
+  color: #c3c0c8;
+  font-size: 18px !important;
+  line-height: 1.35 !important;
+}
+
 /* Compact formula block used across the fusion slides. */
 .lesson-formula.dense {
   margin: 16px 0;

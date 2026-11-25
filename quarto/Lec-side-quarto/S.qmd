@@ -65,7 +65,7 @@ title-slide-attributes:
 </div>
 
 <div class="lesson-grid three">
-<div class="lesson-card"><span>RATINGS</span><b>1–5 stars</b><p>Continuous target; evaluate with RMSE and MAE.</p></div>
+<div class="lesson-card"><span>RATINGS</span><b>1–5 stars</b><p>Continuous target; evaluate with RMSE.</p></div>
 <div class="lesson-card"><span>PRODUCT METADATA</span><b>price + categories + text</b><p>Price, store, category path, title, description, features.</p></div>
 <div class="lesson-card"><span>SPLIT</span><b>random 80 / 20 rows</b><p>Each rating is assigned to train or test at random; all users and items can appear in both.</p></div>
 </div>
@@ -90,7 +90,7 @@ title-slide-attributes:
 <div class="lesson-grid three">
 <div class="lesson-card"><span>USER SIDE</span><b>history</b><p>User ID and activity count from training interactions.</p></div>
 <div class="lesson-card"><span>ITEM SIDE</span><b>metadata + text + image</b><p>Title/description, price, store/category, product photo.</p></div>
-<div class="lesson-card"><span>LABEL</span><b>rating 1–5</b><p>A continuous star rating, evaluated with RMSE and MAE.</p></div>
+<div class="lesson-card"><span>LABEL</span><b>rating 1–5</b><p>A continuous star rating, evaluated with RMSE.</p></div>
 </div>
 
 <p class="lesson-takeaway">All four modalities are available before the rating. Exclude <code>average_rating</code> and <code>rating_number</code>: they leak the target.</p>
@@ -136,7 +136,7 @@ title-slide-attributes:
 <div>2 → 16 → 1<br><b>g<sub>cont</sub>(x)</b></div>
 </div>
 
-<p class="lesson-takeaway">Exactly these two continuous columns enter the notebook. The text-length columns <code>description_len</code> and <code>feature_len</code> are not used here.</p>
+<p class="lesson-takeaway"><code>X[&quot;cont&quot;]</code> has exactly these two columns. The text-length columns <code>description_len</code> and <code>feature_len</code> are not used here.</p>
 
 ## Three ways to fuse continuous features {.lesson-slide}
 
@@ -171,6 +171,8 @@ title-slide-attributes:
 <div class="lesson-card"><span>ADD TO MF</span><b class="side-eq">$p_u^\top q_i+f(x_u,z_i)$</b><p>Keeps personalized ID factors and adds a feature contribution.</p></div>
 <div class="lesson-card"><span>SIDE-AWARE FACTORS</span><b class="side-eq">$p(u,x_u)^\top q(i,z_i)$</b><p>Builds each factor from ID and features together.</p></div>
 </div>
+
+<p class="lesson-small">Use features-only when IDs are weak; additive MF when IDs are strong; side-aware factors when both sides have rich features.</p>
 
 <p class="lesson-takeaway">The third approach makes the interaction depend on the features on <b>both</b> sides.</p>
 
@@ -214,17 +216,37 @@ $$</div>
 ## Four questions and the loss {.lesson-slide}
 
 <div class="lesson-grid four">
-<div class="lesson-card"><span>1 · MODEL</span><b>factors from IDs + features</b><p>Predict with $p(u,x_u)^\top q(i,z_i)$.</p></div>
-<div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$, hidden, $\lambda$</b><p>Choose before fitting; tune on validation.</p></div>
-<div class="lesson-card"><span>3 · CRITERION</span><b>rating error + penalty</b><p>MSE on star ratings, with a complexity penalty.</p></div>
-<div class="lesson-card"><span>4 · LEARNED</span><b>embeddings + maps</b><p>ID/category tables and feature maps $A,B$.</p></div>
+<div class="lesson-card"><span>1 · MODEL</span><b>ID score + one block per modality</b><p>Start with <code>MFNet</code>; add only the blocks the data supports.</p></div>
+<div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$, hidden, learning rate, epochs</b><p>Choose before fitting; tune on validation.</p></div>
+<div class="lesson-card"><span>3 · CRITERION</span><b>mean squared error</b><p>MSE on the observed 1–5 ratings.</p></div>
+<div class="lesson-card"><span>4 · LEARNED</span><b>tables + blocks</b><p>ID/category embeddings, biases, and the additive blocks.</p></div>
 </div>
 
-<div class="lesson-formula compact">$$\mathrm{L}(\theta)=\frac1{|\Omega|}\sum_{(u,i)\in\Omega}(r_{ui}-\widehat r_{ui})^2+\lambda\,\mathrm{Reg}(\theta)$$</div>
+<div class="lesson-formula compact">$$\mathrm{L}(\theta)=\frac1{|\Omega|}\sum_{(u,i)\in\Omega}(r_{ui}-\widehat r_{ui})^2$$</div>
 
-<p class="lesson-takeaway">One loss trains the ID tables, the feature maps, and the fusion block.</p>
+<p class="lesson-takeaway">One MSE trains the ID tables and every side-information block. Select hyperparameters on validation.</p>
 
-## A PyTorch implementation sketch {.lesson-slide .lesson-code .side-code-sm}
+## One dict, one named input per modality {.lesson-slide}
+
+<div class="lesson-formula compact dense">$$
+X=\{\mathrm{ids}:(N,2),\ \mathrm{cont}:(N,2),\ \mathrm{cat}:(N,3),\ \mathrm{text}:(N,384),\ \mathrm{image}:(N,512)\}
+$$</div>
+
+<div class="lesson-flow tight">
+<div><code>X[&quot;ids&quot;]</code><br><b>user, item</b></div><i>→</i>
+<div><code>forward(ids, ...)</code><br><b>named argument</b></div><i>→</i>
+<div><code>MFNet</code><br><b>base score</b></div>
+</div>
+
+<div class="lesson-grid three">
+<div class="lesson-card"><span>WHY A DICT</span><b>one key per modality</b><p>A new block adds a key; it does not move column positions.</p></div>
+<div class="lesson-card"><span>SKORCH</span><b>keys become arguments</b><p><code>X[&quot;cont&quot;]</code> is passed to <code>forward(..., cont)</code>.</p></div>
+<div class="lesson-card"><span>MODEL</span><b>take only what you need</b><p><code>MFNet</code> uses <code>ids</code>; <code>MFNetText</code> also uses <code>text</code>.</p></div>
+</div>
+
+<p class="lesson-takeaway">A new modality is a new dictionary key and a new named argument — not a new column index.</p>
+
+## A PyTorch implementation sketch {.lesson-slide .lesson-code .side-code-sm .sketch-code}
 
 ```python
 class MFNetCont(MFNet):
@@ -234,17 +256,18 @@ class MFNetCont(MFNet):
             nn.Linear(d_cont, 16), nn.ReLU(), nn.Linear(16, 1)
         )
 
-    def forward(self, x):
-        base = super().forward(x[:, :2])   # uid, iid
-        return base + self.cont(x[:, 2:4]) # price_z, user_count_z
+    def forward(self, ids, cont):
+        return super().forward(ids) + self.cont(cont)
 ```
 
-<p class="lesson-takeaway">One subclass, one new block. <code>forward</code> slices the named columns; <code>skorch</code> handles the training loop and prediction.</p>
+<p class="lesson-small">For this model, <code>X</code> only needs <code>ids</code> and <code>cont</code>; later models receive larger dicts.</p>
+
+<p class="lesson-takeaway">One subclass, one new block. The dict keys select the named arguments; <code>skorch</code> handles the training loop and prediction.</p>
 
 ## A random row split {.lesson-slide}
 
 <div class="lesson-grid three">
-<div class="lesson-card"><span>SPLIT</span><b>80 / 20 random rows</b><p>Each rating is assigned to train or test at random; no user or item is deliberately removed.</p></div>
+<div class="lesson-card"><span>SPLIT</span><b>80 / 20 random rows</b><p>31,836 train rows · 7,960 test rows. No user or item is deliberately removed.</p></div>
 <div class="lesson-card"><span>WHAT IT MEASURES</span><b>interpolation</b><p>IDs are not held out; most test rows reuse users and items seen in training.</p></div>
 <div class="lesson-card"><span>WHAT IT DOES NOT</span><b>new-item generalization</b><p>A random split does not test a genuinely new product or a new user.</p></div>
 </div>
@@ -254,21 +277,32 @@ class MFNetCont(MFNet):
 <div class="lesson-card"><span>LEAKY</span><b>rating-derived features</b><p>Rating mean, rating count, or quantile computed from the target leaks even in a random split.</p></div>
 </div>
 
-<p class="lesson-takeaway">The notebook uses a random 80/20 split, so report test RMSE/MAE and describe it as in-distribution interpolation.</p>
+<p class="lesson-takeaway">The notebook uses a random 80/20 split, so report test RMSE and describe it as in-distribution interpolation.</p>
 
 ## Baselines and ablation {.lesson-slide}
 
-<p class="lesson-lede">Amazon Video Games subset, random 80/20 rating split. Continuous 1–5 ratings; RMSE and MAE; compare models, not absolute values.</p>
+<p class="lesson-lede">Random 80/20 row split: 31,836 train rows · 7,960 test rows. Select on validation; report test once. Lower RMSE is better.</p>
 
-<!-- TODO: refresh these numbers after running the random-split notebook. -->
-<table class="lesson-table side-table"><thead><tr><th>model</th><th>side info</th><th>test RMSE</th><th>test MAE</th></tr></thead><tbody>
-<tr><td>MFNet</td><td>IDs only</td><td>1.165</td><td>0.918</td></tr>
-<tr><td>&plus; continuous</td><td>price, user_count</td><td>1.151</td><td>0.909</td></tr>
-<tr><td>&plus; categorical</td><td>store, category</td><td><b>1.144</b></td><td>0.879</td></tr>
-<tr><td>&plus; text</td><td>title + description embedding</td><td>1.145</td><td><b>0.876</b></td></tr>
+<div class="results-layout">
+<div>
+<table class="lesson-table side-table results-table"><thead><tr><th>model</th><th>added input</th><th>validation RMSE</th><th>test RMSE</th></tr></thead><tbody>
+<tr><td>MFNet</td><td>IDs only</td><td>1.1644</td><td>1.1587</td></tr>
+<tr><td>&plus; continuous</td><td>price + user_count</td><td>1.1656</td><td>1.1589</td></tr>
+<tr><td>&plus; categorical</td><td>store + category path</td><td>1.1635</td><td>1.1598</td></tr>
+<tr><td>&plus; text</td><td>MiniLM title + description</td><td><b>1.1589</b></td><td><b>1.1535</b></td></tr>
 </tbody></table>
+<p class="lesson-small">Image subset (300 products): text only <b>1.1437</b> → + image <b>1.1438</b>. Not comparable with the full table.</p>
+</div>
+<div class="result-stack">
+<div class="result-card gain"><span>CLEAR GAIN</span><b>&plus; text</b><p>0.0052 lower test RMSE than MFNet.</p></div>
+<div class="result-card flat"><span>NO RELIABLE GAIN</span><b>&plus; continuous / categorical</b><p>Changes are tiny and do not hold on test.</p></div>
+<div class="result-card neutral"><span>NEUTRAL</span><b>&plus; image</b><p>+0.0001 on the image subset.</p></div>
+</div>
+</div>
 
-<p class="lesson-takeaway">The continuous and categorical blocks give the main gain; text improves MAE but not RMSE. Image did not help on its 300-image subset.</p>
+<p class="lesson-takeaway">More side information is not automatically better. On this split, text is the only clear gain; the image block is neutral.</p>
+
+<p class="lesson-small">Intuition: with a random split the item ID is already seen in training, so price and category add little beyond the ID; text still adds product semantics.</p>
 
 ## Part 5 · Text side information {.section-break}
 
@@ -329,7 +363,7 @@ g_{\text{text}}(e)&=\mathrm{Linear}_{16}(\mathrm{ReLU}(\mathrm{Linear}_{32}(e)))
 \end{aligned}
 $$</div>
 
-<p class="lesson-small">Column layout: <code>[uid, iid, price_z, user_count_z, store, main, cat, e_text(384)]</code>; map each rating row to its item embedding by <code>item_id</code>.</p>
+<p class="lesson-small">New input: <code>X[&quot;text&quot;] = e_text</code>, shape <code>(N, 384)</code>. <code>MFNetText.forward(ids, cont, cat, text)</code>.</p>
 
 <div class="lesson-flow tight">
 <div>text embedding<br><b>e<sub>i</sub> ∈ ℝ<sup>384</sup></b></div><i>→</i>
@@ -371,7 +405,7 @@ $$</div>
 <p class="lesson-caption">One of the 300 product photos in the subset.</p>
 </div>
 <div class="lesson-stack">
-<div class="lesson-card"><span>SOURCE</span><b>image_path or image_url</b><p>Paths are relative to the dataset folder; use the URL fallback when running from Colab.</p></div>
+<div class="lesson-card"><span>SOURCE</span><b>image_path</b><p>Prefix with the local dataset folder; in Colab, prefix with the GitHub <code>BASE</code> URL.</p></div>
 <div class="lesson-card"><span>SUBSET</span><b>300 products</b><p>One embedding per product; the image ablation uses only rating rows for these products.</p></div>
 <div class="lesson-card"><span>LEAKAGE</span><b>available before the rating</b><p>The product photo is metadata, not review content. Do not use review images or rating-derived fields.</p></div>
 </div>
@@ -390,14 +424,13 @@ embed_image = pipeline(
 )
 
 image_items = items[items.image_path.notna()]
-paths = ((LOCAL + "/" + image_items.image_path).tolist()
-         if LOCAL else image_items.image_url.tolist())
+paths = [f"{LOCAL or BASE}/{p}" for p in image_items.image_path]
 
 image_vectors = np.array(
-    embed_image(paths, batch_size=32)
+    embed_image(paths, batch_size=32, pool=True)
 ).reshape(len(paths), -1)
-image_emb = pd.DataFrame(image_vectors,
-                         index=image_items.item_id)
+image_vectors /= np.linalg.norm(image_vectors, axis=1, keepdims=True)
+image_emb = pd.DataFrame(image_vectors, index=image_items.item_id)
 d_image = image_emb.shape[1]   # 512
 ```
 
@@ -407,6 +440,8 @@ d_image = image_emb.shape[1]   # 512
 <div>feature map<br><b>(1, 512, 1, 1)</b></div><i>→</i>
 <div>flatten<br><b>(512,)</b></div>
 </div>
+
+<p class="lesson-small"><code>pool=True</code> averages the 7×7 feature map; each vector is then L2-normalized.</p>
 
 <p class="lesson-takeaway"><code>image-feature-extraction</code> returns a spatial tensor; flatten it to one 512-d vector per product.</p>
 
@@ -419,7 +454,7 @@ g_{\text{image}}(v)&=\mathrm{Linear}_{16}(\mathrm{ReLU}(\mathrm{Linear}_{32}(v))
 \end{aligned}
 $$</div>
 
-<p class="lesson-small">Column layout: <code>[uid, iid, price_z, user_count_z, store, main, cat, e_text(384), e_image(512)]</code>.</p>
+<p class="lesson-small">New input: <code>X[&quot;image&quot;] = v_i</code>, shape <code>(N, 512)</code>. <code>MFNetImage.forward(ids, cont, cat, text, image)</code>.</p>
 
 <div class="lesson-flow tight image-flow">
 <div>image embedding<br><b>v<sub>i</sub> ∈ ℝ<sup>512</sup></b></div><i>→</i>
@@ -442,12 +477,12 @@ $$</div>
 
 <div class="lesson-grid four">
 <div class="lesson-card"><span>INPUT</span><b>300 images</b><p>Paths or URLs; batch 32.</p></div>
-<div class="lesson-card"><span>FEATURE</span><b>512-d</b><p>Flatten the pooled ResNet map.</p></div>
+<div class="lesson-card"><span>FEATURE</span><b>512-d unit vector</b><p>Flatten the pooled ResNet map; L2-normalize.</p></div>
 <div class="lesson-card"><span>BLOCK</span><b>512 → 32</b><p>then 16 → 1; small additive head.</p></div>
 <div class="lesson-card"><span>COST</span><b>one pass</b><p>Cache embeddings; no CNN at serving time.</p></div>
 </div>
 
-<p class="lesson-takeaway">Image features are expensive and often weak on small data. On this subset, the image block did not improve test RMSE; freeze first and measure.</p>
+<p class="lesson-takeaway">Image subset: text only <b>1.1437</b> → + image <b>1.1438</b>. No gain; freeze first and measure.</p>
 
 ## Part 7 · Industry systems {.section-break}
 
@@ -515,10 +550,10 @@ $$</div>
 <div class="lesson-grid three">
 <div class="lesson-card"><span>ENCODE</span><b>modality → vector</b><p>Scale, embed, or pretrain; the recommender sees vectors.</p></div>
 <div class="lesson-card"><span>FUSE</span><b>early or late</b><p>Additive maps for interpretability; two towers for new entities and retrieval.</p></div>
-<div class="lesson-card"><span>EVALUATE</span><b>match the claim</b><p>Random split: report test RMSE/MAE. Add new-entity splits only for generalization claims.</p></div>
+<div class="lesson-card"><span>EVALUATE</span><b>match the claim</b><p>Random split: report test RMSE. Add new-entity splits only for generalization claims.</p></div>
 </div>
 
-<p class="lesson-takeaway">Side information is a representation strategy, a fusion choice, and an evaluation protocol.</p>
+<p class="lesson-takeaway">Side information is a representation strategy, a fusion choice, and an evaluation protocol — and on this dataset, only text improved test RMSE.</p>
 
 ## References {.lesson-slide}
 
