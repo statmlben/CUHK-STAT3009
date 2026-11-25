@@ -203,6 +203,9 @@
   pynb: https://colab.research.google.com/github/statmlben/CUHK-STAT3009/blob/main/nb/STAT3009_Side.ipynb
   readings:
     - >
+      <a href="https://github.com/statmlben/CUHK-STAT3009/tree/main/dataset/amazon-video-games">Amazon Reviews 2023: Video Games subset</a>
+      (ratings, product metadata, text, and images used in the notebook)
+    - >
       <a href="https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html">PyTorch: <code>nn.Embedding</code></a>
       (categorical features as learned lookup tables)
     - >

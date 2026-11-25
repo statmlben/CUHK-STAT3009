@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="400" viewBox="0 0 1600 400" role="img" aria-label="Side-aware factors: user and item factors each sum an ID, a feature map, and a category embedding, then combine by a dot product.">
+  <defs>
+    <marker id="sa-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dda300"/>
+    </marker>
+    <marker id="sa-arrow-left" markerWidth="10" markerHeight="10" refX="1" refY="3" orient="auto">
+      <path d="M9,0 L9,6 L0,3 z" fill="#dda300"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: rgba(255,255,255,.22); stroke-width: 1.4; }
+      .violet { stroke: #a65b9f; }
+      .gold { stroke: #dda300; }
+      .cyan { stroke: #4fb3bf; }
+      .txt { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 22px; }
+      .small { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 15px; }
+      .kicker { fill: #dda300; font-family: Menlo, monospace; font-size: 15px; font-weight: 700; letter-spacing: .08em; }
+      .line { stroke: #dda300; stroke-width: 1.7; fill: none; }
+    </style>
+  </defs>
+
+  <!-- User side -->
+  <text x="40" y="32" class="kicker">USER FACTOR</text>
+
+  <rect x="60" y="58" width="190" height="52" rx="6" class="box violet"/>
+  <text x="155" y="82" text-anchor="middle" class="txt">user ID</text>
+  <text x="155" y="101" text-anchor="middle" class="small">u</text>
+
+  <rect x="60" y="126" width="190" height="52" rx="6" class="box cyan"/>
+  <text x="155" y="150" text-anchor="middle" class="txt">features</text>
+  <text x="155" y="169" text-anchor="middle" class="small">x</text>
+
+  <rect x="60" y="194" width="190" height="52" rx="6" class="box gold"/>
+  <text x="155" y="218" text-anchor="middle" class="txt">category</text>
+  <text x="155" y="237" text-anchor="middle" class="small">c</text>
+
+  <line x1="250" y1="84" x2="296" y2="116" class="line" marker-end="url(#sa-arrow)"/>
+  <line x1="250" y1="152" x2="296" y2="152" class="line" marker-end="url(#sa-arrow)"/>
+  <line x1="250" y1="220" x2="296" y2="188" class="line" marker-end="url(#sa-arrow)"/>
+
+  <rect x="298" y="98" width="110" height="112" rx="6" class="box gold"/>
+  <text x="353" y="146" text-anchor="middle" class="txt" font-size="28">Σ</text>
+  <text x="353" y="171" text-anchor="middle" class="small">sum</text>
+
+  <line x1="408" y1="154" x2="434" y2="154" class="line" marker-end="url(#sa-arrow)"/>
+
+  <rect x="436" y="110" width="250" height="88" rx="6" class="box violet"/>
+  <text x="561" y="147" text-anchor="middle" class="txt">user factor</text>
+  <text x="561" y="172" text-anchor="middle" class="small">p(u, x)</text>
+
+  <!-- Item side -->
+  <text x="1540" y="32" text-anchor="end" class="kicker">ITEM FACTOR</text>
+
+  <rect x="1350" y="58" width="190" height="52" rx="6" class="box gold"/>
+  <text x="1445" y="82" text-anchor="middle" class="txt">item ID</text>
+  <text x="1445" y="101" text-anchor="middle" class="small">i</text>
+
+  <rect x="1350" y="126" width="190" height="52" rx="6" class="box cyan"/>
+  <text x="1445" y="150" text-anchor="middle" class="txt">features</text>
+  <text x="1445" y="169" text-anchor="middle" class="small">z</text>
+
+  <rect x="1350" y="194" width="190" height="52" rx="6" class="box violet"/>
+  <text x="1445" y="218" text-anchor="middle" class="txt">category</text>
+  <text x="1445" y="237" text-anchor="middle" class="small">g</text>
+
+  <line x1="1350" y1="84" x2="1304" y2="116" class="line" marker-end="url(#sa-arrow-left)"/>
+  <line x1="1350" y1="152" x2="1304" y2="152" class="line" marker-end="url(#sa-arrow-left)"/>
+  <line x1="1350" y1="220" x2="1304" y2="188" class="line" marker-end="url(#sa-arrow-left)"/>
+
+  <rect x="1192" y="98" width="110" height="112" rx="6" class="box gold"/>
+  <text x="1247" y="146" text-anchor="middle" class="txt" font-size="28">Σ</text>
+  <text x="1247" y="171" text-anchor="middle" class="small">sum</text>
+
+  <line x1="1192" y1="154" x2="1166" y2="154" class="line" marker-end="url(#sa-arrow-left)"/>
+
+  <rect x="914" y="110" width="250" height="88" rx="6" class="box gold"/>
+  <text x="1039" y="147" text-anchor="middle" class="txt">item factor</text>
+  <text x="1039" y="172" text-anchor="middle" class="small">q(i, z)</text>
+
+  <!-- Interaction -->
+  <path d="M 561 198 L 561 244 L 700 244 L 700 266" fill="none" stroke="#dda300" stroke-width="1.7" marker-end="url(#sa-arrow)"/>
+  <path d="M 1039 198 L 1039 244 L 900 244 L 900 266" fill="none" stroke="#dda300" stroke-width="1.7" marker-end="url(#sa-arrow)"/>
+
+  <rect x="680" y="268" width="240" height="56" rx="6" class="box cyan"/>
+  <text x="800" y="294" text-anchor="middle" class="txt">dot product</text>
+  <text x="800" y="315" text-anchor="middle" class="small">user · item factor</text>
+
+  <line x1="800" y1="324" x2="800" y2="346" class="line" marker-end="url(#sa-arrow)"/>
+
+  <rect x="690" y="348" width="220" height="46" rx="6" class="box gold"/>
+  <text x="800" y="378" text-anchor="middle" class="txt">rating</text>
+</svg>

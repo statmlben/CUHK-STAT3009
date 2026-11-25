@@ -1,6 +1,6 @@
 ---
 title: "Recommendation with Side Information"
-subtitle: "Continuous, categorical, text, and image features — from cold start to two-tower models"
+subtitle: "Encoding and fusing continuous, categorical, text, and image signals"
 author: "Ben Dai"
 institute: "CUHK · Department of Statistics and Data Science"
 lang: en
@@ -34,63 +34,66 @@ title-slide-attributes:
   data-background-color: "#071018"
 ---
 
-## The ID-only limit {.lesson-slide}
+## The ID-only network is narrow {.lesson-slide}
 
-<div class="lesson-formula">$$\widehat r_{ui}=\mu+a_u+b_i+p_u^\top q_i$$</div>
+<img class="lesson-figure" src="figs/shape-contract.svg" alt="The ID-only network maps user and item IDs to embeddings, concatenates them, and passes them through a hidden layer to one score.">
 
-<div class="lesson-grid">
-<div class="lesson-card"><span>WARM START</span><b>Known user and item</b><p>Both ID rows were learned from training interactions. The dot product has something to look up.</p></div>
-<div class="lesson-card"><span>COLD START</span><b>New user or item</b><p>No fitted row exists for that ID. The model has no personal parameter to use.</p></div>
+<p class="lesson-takeaway">The ID-only graph has two inputs: a user ID and an item ID. Side information adds more inputs to the same graph.</p>
+
+## Modern recommenders have more signals {.lesson-slide}
+
+<div class="encoder-grid">
+<div><span>CONTINUOUS</span><b>price, age, time</b><p>Numeric signals from profiles, content, or context.</p></div>
+<div><span>CATEGORICAL</span><b>store, genre, device</b><p>Discrete labels that can become embeddings.</p></div>
+<div><span>TEXT</span><b>title, description</b><p>Product or item text, encoded by an LLM or a smaller model.</p></div>
+<div><span>IMAGE</span><b>photo, poster</b><p>Product or item images, encoded by a CNN or ViT.</p></div>
 </div>
 
-<p class="lesson-takeaway">A new ID is not a missing rating. It is a missing <b>representation</b>.</p>
+<div class="lesson-flow tight"><div>raw signal</div><i>→</i><div>encoder</div><i>→</i><div>vector</div><i>→</i><div>recommender</div></div>
 
-::: {.notes}
-[Teaching] Start from the MF model students already know. The key distinction is “new pair of known IDs” versus “new ID entirely”. Only the second is cold start.
-:::
+<p class="lesson-takeaway">The modelling question is not “do we have IDs?” but “how do we encode and fuse all the information we have?”</p>
 
-## Cold start is not an edge case {.lesson-slide}
+## The dataset: Amazon Reviews 2023 {.lesson-slide}
 
-<div class="stat-row">
-<div><b>74</b><span>test users absent from the Netflix training split</span></div>
-<div><b>584</b><span>test movies absent from the Netflix training split</span></div>
-<div><b>1,002</b><span>test rows with at least one unseen ID</span></div>
+<p class="lesson-lede">A classroom subset of the <b>Video Games</b> category, built from the 5-core rating-only split. One row is one rating; product metadata joins on <code>item_id</code>.</p>
+
+<div class="dataset-stats">
+<div><b>2,000</b><span>products</span></div>
+<div><b>39,796</b><span>ratings</span></div>
+<div><b>29,209</b><span>users</span></div>
+<div><b>300</b><span>product images</span></div>
 </div>
 
-<table class="lesson-table side-table"><thead><tr><th>test case</th><th>what training provides</th><th>what the model can do</th></tr></thead><tbody>
-<tr><td>Known IDs, new pair</td><td>history for both IDs</td><td>use learned user and item information</td></tr>
-<tr><td>New user</td><td>no history for this user</td><td>fallback or use user-side features</td></tr>
-<tr><td>New movie</td><td>no ratings for this movie</td><td>fallback or use item-side features</td></tr>
-</tbody></table>
+<div class="lesson-grid three">
+<div class="lesson-card"><span>RATINGS</span><b>1–5 stars</b><p>Continuous target; evaluate with RMSE and MAE.</p></div>
+<div class="lesson-card"><span>PRODUCT METADATA</span><b>price + categories + text</b><p>Price, store, category path, title, description, features.</p></div>
+<div class="lesson-card"><span>SPLIT</span><b>random 80 / 20 rows</b><p>Each rating is assigned to train or test at random; all users and items can appear in both.</p></div>
+</div>
 
-<p class="lesson-takeaway">A random rating split hides cold start. The important test is whether the <b>ID itself</b> was seen during training.</p>
+<p class="lesson-takeaway">Amazon Reviews 2023 (Hou et al., 2024). Rating-derived fields such as <code>average_rating</code> and <code>rating_number</code> are excluded; they would leak the target.</p>
 
-::: {.notes}
-Numbers computed from `dataset/netflix/train.csv` and `test.csv`; the same numbers appear in the course overview. This is why the lecture needs a cold-start split, not just a random holdout.
-:::
+## How each modality enters the network {.lesson-slide}
+
+<img class="lesson-figure" src="figs/modality-loading.svg" alt="Continuous, categorical, text, and image blocks each have an encoder; their vectors are concatenated and passed to a recommender head.">
+
+<p class="lesson-takeaway">Each block has a different encoder, but the head sees vectors. That is the whole “load side information into the network” pattern.</p>
 
 ## A concrete side-information table {.lesson-slide}
 
-<table class="lesson-table side-table"><thead><tr><th>user</th><th>preference</th><th>dish</th><th>price</th><th>category</th><th>flags</th><th>rating</th></tr></thead><tbody>
-<tr><td>17</td><td>Noodles</td><td>米線</td><td>42</td><td>Noodles</td><td>spicy=0, fried=0, healthy=0</td><td>4.5</td></tr>
-<tr><td>17</td><td>Noodles</td><td>三餸飯</td><td>35</td><td>Rice</td><td>spicy=0, fried=0, healthy=0</td><td>3.0</td></tr>
-<tr><td>42</td><td>Vegetarian &amp; lighter</td><td>野菜飯</td><td>38</td><td>Vegetarian</td><td>spicy=0, fried=0, healthy=1</td><td>5.0</td></tr>
-<tr><td>42</td><td>Vegetarian &amp; lighter</td><td>炸雞翼</td><td>28</td><td>Snacks</td><td>spicy=0, fried=1, healthy=0</td><td>2.0</td></tr>
+<table class="lesson-table side-table"><thead><tr><th>user</th><th>product</th><th>price</th><th>store</th><th>image</th><th>rating</th></tr></thead><tbody>
+<tr><td>AHNZ…</td><td>Pro Evolution Soccer 2013</td><td>20.25</td><td>Konami</td><td>yes</td><td>5</td></tr>
+<tr><td>AH5A…</td><td>Demon Slayer: Hinokami Chronicles</td><td>34.98</td><td>SEGA</td><td>yes</td><td>4</td></tr>
+<tr><td>AFXA…</td><td>Sim Theme Park</td><td>35.00</td><td>Electronic Arts</td><td>no</td><td>2</td></tr>
+<tr><td>AHJW…</td><td>Xbox One 1TB Console</td><td>349.99</td><td>Microsoft</td><td>no</td><td>1</td></tr>
 </tbody></table>
 
 <div class="lesson-grid three">
-<div class="lesson-card"><span>USER SIDE</span><b>$x_u$</b><p>Food preference, age group, stated interests.</p></div>
-<div class="lesson-card"><span>ITEM SIDE</span><b>$z_i$</b><p>Price, category, genre, flags, description.</p></div>
-<div class="lesson-card"><span>CONTEXT</span><b>$c_{ui}$</b><p>Time, device, location — only if available at prediction time.</p></div>
+<div class="lesson-card"><span>USER SIDE</span><b>history</b><p>User ID and activity count from training interactions.</p></div>
+<div class="lesson-card"><span>ITEM SIDE</span><b>metadata + text + image</b><p>Title/description, price, store/category, product photo.</p></div>
+<div class="lesson-card"><span>LABEL</span><b>rating 1–5</b><p>A continuous star rating, evaluated with RMSE and MAE.</p></div>
 </div>
 
-<p class="lesson-takeaway">The useful features are available <b>before</b> the rating exists.</p>
-
-## Random split vs cold-start split {.lesson-slide}
-
-<img class="lesson-figure" src="figs/cold-start-split.svg" alt="Random split keeps every user in training; cold-start split holds out entire users.">
-
-<p class="lesson-takeaway">A random split measures interpolation. Only a cold-start split measures extrapolation. Report <b>warm</b> and <b>cold</b> metrics separately.</p>
+<p class="lesson-takeaway">All four modalities are available before the rating. Exclude <code>average_rating</code> and <code>rating_number</code>: they leak the target.</p>
 
 ## The whole lecture in one picture {.lesson-slide}
 
@@ -101,112 +104,45 @@ Numbers computed from `dataset/netflix/train.csv` and `test.csv`; the same numbe
 <div><span>4 · OPTIONAL</span><b>Image</b><p>CNN or ViT produces a dense vector.</p></div>
 </div>
 
-<div class="lesson-flow"><div>encode<br><b>raw feature → vector</b></div><i>→</i><div>fuse<br><b>early concat or two towers</b></div><i>→</i><div>evaluate<br><b>warm and cold, without leakage</b></div></div>
+<div class="lesson-flow"><div>encode<br><b>raw feature → vector</b></div><i>→</i><div>fuse<br><b>early concat or two towers</b></div><i>→</i><div>evaluate<br><b>does it actually help?</b></div></div>
 
 <p class="lesson-takeaway">The encoder changes with the modality. The <b>fusion</b> and <b>evaluation</b> questions do not.</p>
 
 ## Part 1 · Continuous features {.section-break}
 
-<p>Already vectors — the work is preprocessing and fusion.</p>
+<p>Already vectors — preprocess, then fuse.</p>
 
-## A continuous feature is already a vector {.lesson-slide}
+## Continuous features: price and user_count {.lesson-slide}
 
-<div class="lesson-formula compact">$$x_u\in\mathbb R^{d_u},\qquad z_i\in\mathbb R^{d_i}$$</div>
+<div class="lesson-formula compact dense">$$x_{\text{cont}}=[\text{price}_z,\text{user count}_z]\in\mathbb R^2,\qquad g_{\text{cont}}(x)=\mathrm{Linear}_{16}(\mathrm{ReLU}(\mathrm{Linear}_2(x)))\in\mathbb R$$</div>
 
-<table class="lesson-table side-table"><thead><tr><th>feature</th><th>raw value</th><th>after preprocessing</th></tr></thead><tbody>
-<tr><td>price</td><td>42.0 HKD</td><td>standardized scalar</td></tr>
-<tr><td>spicy / fried / healthy</td><td>0 or 1</td><td>three binary columns</td></tr>
-<tr><td>age</td><td>21</td><td>scaled scalar or age-bin embedding</td></tr>
-<tr><td>rating count</td><td>137</td><td>log count, computed inside the fold</td></tr>
+<div class="side-two-col even">
+<div>
+<table class="lesson-table side-table"><thead><tr><th>feature</th><th>raw</th><th>notebook transform</th><th>unseen / missing</th></tr></thead><tbody>
+<tr><td><code>price</code></td><td>20.25</td><td><code>log1p</code> → train z-score</td><td>train median</td></tr>
+<tr><td><code>user_count</code></td><td>12</td><td>training count → z-score</td><td>0</td></tr>
 </tbody></table>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>USER</span><b>profile and behaviour</b><p>Age, signup tenure, activity, stated preferences.</p></div>
-<div class="lesson-card"><span>ITEM</span><b>content and price</b><p>Price, year, duration, flags, popularity.</p></div>
-<div class="lesson-card"><span>CONTEXT</span><b>the current event</b><p>Time, device, location — if known before the prediction.</p></div>
+</div>
+<div class="lesson-card"><span>NOTEBOOK BLOCK</span><b>2 → 16 → 1</b><p>Section 2 prepares the columns; <code>MFNetCont</code> adds this block to <code>MFNet</code>. Scalers and counts use training rows only.</p></div>
 </div>
 
-<p class="lesson-takeaway">No embedding is needed for the raw number. But raw scale is rarely the right input.</p>
-
-## Preprocess before you fuse {.lesson-slide}
-
-<div class="lesson-grid four">
-<div class="lesson-card"><span>MISSING</span><b>impute + indicator</b><p>Mean/median for the value; a separate “was missing” flag.</p></div>
-<div class="lesson-card"><span>OUTLIERS</span><b>clip or transform</b><p>Winsorize, log-transform, or use a robust scaler.</p></div>
-<div class="lesson-card"><span>SCALE</span><b>standardize</b><p>Fit the scaler on the training fold, then transform validation and test.</p></div>
-<div class="lesson-card"><span>FOLD</span><b>no leakage</b><p>Every preprocessing statistic is part of the model pipeline.</p></div>
+<div class="lesson-flow tight cont-flow">
+<div>price + user_count<br><b>2 raw numbers</b></div>
+<i>→</i>
+<div>log1p + z-score<br><b>training only</b></div>
+<i>→</i>
+<div>concat<br><b>x<sub>cont</sub> ∈ ℝ²</b></div>
+<i>→</i>
+<div>2 → 16 → 1<br><b>g<sub>cont</sub>(x)</b></div>
 </div>
 
-<table class="lesson-table side-table"><thead><tr><th>raw</th><th>z-score</th><th>missing flag</th></tr></thead><tbody>
-<tr><td>42.0</td><td>0.08</td><td>0</td></tr>
-<tr><td>—</td><td>0.00</td><td>1</td></tr>
-<tr><td>89.0</td><td>4.33</td><td>0</td></tr>
-</tbody></table>
+<p class="lesson-takeaway">Exactly these two continuous columns enter the notebook. The text-length columns <code>description_len</code> and <code>feature_len</code> are not used here.</p>
 
-<p class="lesson-takeaway">Preprocessing is not a separate notebook step. It is part of the model, and it belongs inside cross-validation.</p>
+## Three ways to fuse continuous features {.lesson-slide}
 
-## Transform the scale, not just the column {.lesson-slide}
+<img class="lesson-figure" src="figs/continuous-fusion.svg" alt="Three fusion diagrams: early concatenation into an MLP, an additive MF feature correction, and separate user and item towers followed by a dot product.">
 
-<table class="lesson-table side-table"><thead><tr><th>transformation</th><th>formula</th><th>what it captures</th></tr></thead><tbody>
-<tr><td>standardize</td><td>$(x-\mu)/\sigma$</td><td>linear effect on a comparable scale</td></tr>
-<tr><td>log</td><td>$\log(1+x)$</td><td>diminishing returns for price or counts</td></tr>
-<tr><td>bin</td><td>$b(x)\in\{1,\ldots,B\}$</td><td>nonlinear step effects; bin index can be embedded</td></tr>
-<tr><td>missing indicator</td><td>$\mathbf 1[x\text{ missing}]$</td><td>missingness itself may be informative</td></tr>
-</tbody></table>
-
-<div class="lesson-formula compact">$$\phi(x)=\big[\text{standardized }x,\ \log(1+x),\ \text{bin}(x),\ \text{missing flag}\big]$$</div>
-
-<p class="lesson-takeaway">The transformation is a hyperparameter. Choose it on validation, not by looking at the test score.</p>
-
-## Two ways to fuse a numeric vector {.lesson-slide}
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>EARLY CONCAT</span><b>one wide vector</b><p>$$z=[p_u,q_i,x_u,z_i]$$</p><p>The MLP sees all features at once. Flexible, but the ID rows still dominate when they exist.</p></div>
-<div class="lesson-card"><span>ADDITIVE MAP</span><b>modify the factor</b><p>$$p(u,x_u)=p_u+A x_u$$</p><p>The feature contribution is a learned linear map into the same latent space.</p></div>
-</div>
-
-<table class="lesson-table side-table"><thead><tr><th>fusion</th><th>strength</th><th>risk</th></tr></thead><tbody>
-<tr><td>early concat</td><td>learns arbitrary interactions</td><td>can overfit; hard to interpret</td></tr>
-<tr><td>additive map</td><td>interpretable, regularized</td><td>only linear feature effects</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">Start with the additive map; use concat when you have enough data to learn interactions.</p>
-
-## Continuous features in a two-tower model {.lesson-slide}
-
-<div class="lesson-flow tight"><div>user continuous<br><b>$x_u$</b></div><i>→</i><div>user tower<br><b>$F_u(u,x_u)$</b></div><i>→</i><div>user vector<br><b>$h_u$</b></div></div>
-
-<div class="lesson-flow tight"><div>item continuous<br><b>$z_i$</b></div><i>→</i><div>item tower<br><b>$F_i(i,z_i)$</b></div><i>→</i><div>item vector<br><b>$h_i$</b></div></div>
-
-<div class="lesson-formula compact">$$\widehat r_{ui}=\rho(h_u,h_i)$$</div>
-
-<p class="lesson-takeaway">Numeric features can enter either tower. Keep user and item encoders separate until the final interaction.</p>
-
-## Numeric interactions: explicit or learned {.lesson-slide}
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>EXPLICIT CROSS</span><b>engineer the product</b><p>Add terms such as “user price × item price” or a small set of domain-specific crosses.</p></div>
-<div class="lesson-card"><span>LEARNED CROSS</span><b>let the MLP learn it</b><p>Concatenate the numeric vectors and let the hidden layers approximate the interaction.</p></div>
-</div>
-
-<div class="lesson-formula compact">$$x_u\otimes z_i=\{x_{uj}z_{ik}\}_{j,k}$$</div>
-
-<p class="lesson-takeaway">Explicit crosses encode domain knowledge. Learned crosses need more data. Do not add every product blindly.</p>
-
-## Rating-derived features leak {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>feature</th><th>computed globally</th><th>computed inside the fold</th><th>available for a new ID?</th></tr></thead><tbody>
-<tr><td>user rating mean</td><td>uses held-out ratings</td><td>uses fitting rows only</td><td>no</td></tr>
-<tr><td>item rating count</td><td>uses held-out ratings</td><td>uses fitting rows only</td><td>no</td></tr>
-<tr><td>rating quantile</td><td>uses held-out ratings</td><td>uses fitting rows only</td><td>no</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>SAFE</span><b>profile or content</b><p>Food preference, price, category, description — available before the rating.</p></div>
-<div class="lesson-card"><span>LEAKY</span><b>rating summary</b><p>Mean, count, quantile — computed from ratings, and unavailable for a genuinely new ID.</p></div>
-</div>
-
-<p class="lesson-takeaway">If a feature is computed from the target, it must be computed inside the fitting fold. If it needs ratings, it cannot solve cold start.</p>
+<p class="lesson-takeaway"><b>Early concat</b> lets one MLP learn all interactions; <b>additive MF</b> keeps the ID score and adds a feature correction; <b>two towers</b> encode each side separately before the dot product.</p>
 
 ## Part 2 · Categorical features {.section-break}
 
@@ -214,109 +150,9 @@ Numbers computed from `dataset/netflix/train.csv` and `test.csv`; the same numbe
 
 ## A category is an ID {.lesson-slide}
 
-<table class="lesson-table side-table"><thead><tr><th>category</th><th>encoded index</th><th>one-hot</th><th>learned vector</th></tr></thead><tbody>
-<tr><td>Noodles</td><td>0</td><td>[1,0,0,0,0,0]</td><td>$e_0$</td></tr>
-<tr><td>Rice</td><td>1</td><td>[0,1,0,0,0,0]</td><td>$e_1$</td></tr>
-<tr><td>Vegetarian</td><td>2</td><td>[0,0,1,0,0,0]</td><td>$e_2$</td></tr>
-</tbody></table>
+<img class="lesson-figure" src="figs/categorical-id.svg" alt="A user ID and a store category both use the same embedding lookup: an integer index selects a learned row.">
 
-<div class="lesson-formula compact">$$j\;\longrightarrow\;\mathbf e_j\in\mathbb R^K$$</div>
-
-<p class="lesson-takeaway">The only difference from a user ID is the name of the column. Both select rows from a learned table.</p>
-
-## The embedding layer is a lookup {.lesson-slide}
-
-```python
-genre = nn.Embedding(num_embeddings=8, embedding_dim=16)
-j = torch.tensor([1, 3])       # (B,)
-e = genre(j)                    # (B,16)
-print(e.shape)                  # torch.Size([2, 16])
-```
-
-<div class="lesson-formula compact">$$\mathbf e_j=\text{onehot}(j)^\top E,\qquad E\in\mathbb R^{J\times K}$$</div>
-
-<table class="lesson-table side-table"><thead><tr><th>input shape</th><th>output shape</th><th>example</th></tr></thead><tbody>
-<tr><td>$(B,)$</td><td>$(B,K)$</td><td>one category per row</td></tr>
-<tr><td>$(B,T)$</td><td>$(B,T,K)$</td><td>a sequence of categories or tokens</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">The forward pass only selects rows. Gradients update the rows that were used.</p>
-
-## Choosing the embedding size {.lesson-slide}
-
-<div class="lesson-formula compact">$$\text{parameters}=J\times K$$</div>
-
-<table class="lesson-table side-table"><thead><tr><th>categorical field</th><th>$J$</th><th>$K$</th><th>parameters</th></tr></thead><tbody>
-<tr><td>food preference</td><td>6</td><td>4</td><td>24</td></tr>
-<tr><td>dish category</td><td>8</td><td>8</td><td>64</td></tr>
-<tr><td>dish ID</td><td>183</td><td>16</td><td>2,928</td></tr>
-<tr><td>movie ID</td><td>3,568</td><td>16</td><td>57,088</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>SMALL $J$</span><b>4–8</b><p>Food preference, gender, small category sets.</p></div>
-<div class="lesson-card"><span>LARGE $J$</span><b>8–32</b><p>Item IDs, occupations, zip codes; watch the parameter count.</p></div>
-</div>
-
-<p class="lesson-takeaway">$K$ is a hyperparameter. Too large overfits sparse categories; too small cannot separate them.</p>
-
-## Multi-valued categories {.lesson-slide}
-
-<div class="lesson-formula compact">$$\mathbf e(g_i)=\sum_{j\in g_i}\mathbf e_j\quad\text{or}\quad\frac{1}{|g_i|}\sum_{j\in g_i}\mathbf e_j$$</div>
-
-<table class="lesson-table side-table"><thead><tr><th>item</th><th>genre set</th><th>representation</th></tr></thead><tbody>
-<tr><td>Toy Story</td><td>{Adventure, Animation, Children, Comedy}</td><td>sum of four embeddings</td></tr>
-<tr><td>Jumanji</td><td>{Adventure, Children, Fantasy}</td><td>sum of three embeddings</td></tr>
-</tbody></table>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>SUM</span><b>preserves multiplicity</b><p>More genres contribute more signal.</p></div>
-<div class="lesson-card"><span>MEAN</span><b>normalizes count</b><p>Comparable scale across items with different numbers of tags.</p></div>
-<div class="lesson-card"><span>ATTENTION</span><b>learns weights</b><p>Useful when some tags matter more than others.</p></div>
-</div>
-
-<p class="lesson-takeaway">A multi-hot linear model with shared weights is exactly a sum of embeddings.</p>
-
-## High-cardinality categories {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>problem</th><th>technique</th><th>what it does</th></tr></thead><tbody>
-<tr><td>millions of categories</td><td>hashing</td><td>map many values into a fixed number of buckets</td></tr>
-<tr><td>rare categories</td><td>frequency threshold</td><td>send rare values to an “other” bucket</td></tr>
-<tr><td>long tail</td><td>count bucket</td><td>keep the count, not the exact identity</td></tr>
-<tr><td>target-dependent</td><td>out-of-fold target encoding</td><td>compute only on fitting rows; risky, use with care</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>WHY IT MATTERS</span><b>parameter blow-up</b><p>A table with $10^6$ rows and $K=32$ has 32 million parameters.</p></div>
-<div class="lesson-card"><span>DEFAULT</span><b>hashing + rare bucket</b><p>Cheap, robust, and easy to deploy online.</p></div>
-</div>
-
-<p class="lesson-takeaway">High cardinality is a memory and overfitting problem, not just an encoding problem.</p>
-
-## Unseen categories need a policy {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>policy</th><th>new category</th><th>trade-off</th></tr></thead><tbody>
-<tr><td>unknown token</td><td>one shared “unknown” embedding</td><td>simple; loses distinction between new values</td></tr>
-<tr><td>zero vector</td><td>no contribution</td><td>safe fallback; the model ignores the field</td></tr>
-<tr><td>parent category</td><td>fall back to a coarser level</td><td>requires a hierarchy</td></tr>
-<tr><td>feature fallback</td><td>use description or price</td><td>needs another available feature</td></tr>
-</tbody></table>
-
-<div class="lesson-formula compact">$$\text{new category}\;\longrightarrow\;\mathbf e_{\text{unk}}\quad\text{or}\quad\mathbf 0$$</div>
-
-<p class="lesson-takeaway">Decide the unknown-category policy before deployment. A crash at serving time is not a modelling choice.</p>
-
-## Feature crossing {.lesson-slide}
-
-<div class="lesson-formula compact">$$x_u\otimes z_i=\{x_{uj}z_{ik}\}_{j,k}$$</div>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>EXPLICIT</span><b>domain crosses</b><p>Food preference × category, price × healthy — chosen by the analyst.</p></div>
-<div class="lesson-card"><span>HASHED</span><b>many crosses</b><p>Hash the crossed index into a fixed table; cheap but opaque.</p></div>
-<div class="lesson-card"><span>LEARNED</span><b>MLP or DeepFM</b><p>Let the network learn the interaction from raw features.</p></div>
-</div>
-
-<p class="lesson-takeaway">A crossing is a new categorical feature. Treat it with the same encoding, cardinality, and leakage rules.</p>
+<p class="lesson-takeaway">User ID, store, category — the same <code>nn.Embedding</code> lookup; only the table size changes.</p>
 
 ## Continuous + categorical fusion {.lesson-slide}
 
@@ -331,70 +167,39 @@ print(e.shape)                  # torch.Size([2, 16])
 ## Three ways to use side information {.lesson-slide}
 
 <div class="lesson-grid three">
-<div class="lesson-card"><span>FEATURES ONLY</span><b>$f(x_u,z_i)$</b><p>Handles new IDs, but may miss individual preferences.</p></div>
-<div class="lesson-card"><span>ADD TO MF</span><b>$p_u^\top q_i+f(x_u,z_i)$</b><p>Keeps personalized ID factors and adds a feature contribution.</p></div>
-<div class="lesson-card"><span>SIDE-AWARE FACTORS</span><b>$p(u,x_u)^\top q(i,z_i)$</b><p>Builds each factor from ID and features together.</p></div>
+<div class="lesson-card"><span>FEATURES ONLY</span><b class="side-eq">$f(x_u,z_i)$</b><p>Handles new IDs, but may miss individual preferences.</p></div>
+<div class="lesson-card"><span>ADD TO MF</span><b class="side-eq">$p_u^\top q_i+f(x_u,z_i)$</b><p>Keeps personalized ID factors and adds a feature contribution.</p></div>
+<div class="lesson-card"><span>SIDE-AWARE FACTORS</span><b class="side-eq">$p(u,x_u)^\top q(i,z_i)$</b><p>Builds each factor from ID and features together.</p></div>
 </div>
 
 <p class="lesson-takeaway">The third approach makes the interaction depend on the features on <b>both</b> sides.</p>
 
-## Feature-only baseline {.lesson-slide}
+## Feature-only vs additive MF {.lesson-slide}
 
-<div class="lesson-formula">$$\widehat r_{ui}=f_\theta(x_u,z_i)$$</div>
+<div class="lesson-formula compact dense">$$
+\begin{aligned}
+\text{feature-only:}\quad & \widehat r_{ui}=f_\theta(x_u,z_i)\\
+\text{additive MF:}\quad & \widehat r_{ui}=\mu+a_u+b_i+p_u^\top q_i+f_\theta(x_u,z_i)
+\end{aligned}
+$$</div>
 
-<table class="lesson-table side-table"><thead><tr><th>advantage</th><th>limitation</th></tr></thead><tbody>
-<tr><td>works for a completely new user or item</td><td>no individual ID preference</td></tr>
-<tr><td>no huge ID tables</td><td>may underfit users with long histories</td></tr>
-<tr><td>easy to deploy for new content</td><td>feature quality becomes the bottleneck</td></tr>
-</tbody></table>
+<img class="lesson-figure" src="figs/feature-only-additive.svg" alt="Feature-only model uses features through one MLP. Additive MF keeps the ID score and adds a feature correction.">
 
-<p class="lesson-takeaway">Always fit this baseline. If it beats MF on warm users, the side features are unusually strong.</p>
-
-## Additive MF {.lesson-slide}
-
-<div class="lesson-formula compact">$$\widehat r_{ui}=\mu+a_u+b_i+p_u^\top q_i+f_\theta(x_u,z_i)$$</div>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>MF PATH</span><b>personalization</b><p>$p_u^\top q_i$ keeps the user–item interaction learned from the rating matrix.</p></div>
-<div class="lesson-card"><span>FEATURE PATH</span><b>generalization</b><p>$f_\theta(x_u,z_i)$ adds a signal that is available for new IDs.</p></div>
-</div>
-
-<p class="lesson-takeaway">This is a safe first model: it keeps the familiar MF result and adds features as a correction.</p>
+<p class="lesson-takeaway"><b>Feature-only</b> works for a new ID but has no individual preference. <b>Additive MF</b> keeps the ID score and adds a feature correction — the safest first model.</p>
 
 ## Side-aware factors {.lesson-slide}
 
-<div class="lesson-formula compact">$$p(u,x_u)=p_u+A x_u+e_{c(u)},\qquad q(i,z_i)=q_i+B z_i+e_{g(i)}$$</div>
+<div class="lesson-formula compact dense">$$
+\begin{aligned}
+p(u,x_u)&=p_u+A x_u+e_{c(u)}\\
+q(i,z_i)&=q_i+B z_i+e_{g(i)}\\
+\widehat r_{ui}&=p(u,x_u)^\top q(i,z_i)
+\end{aligned}
+$$</div>
 
-<div class="lesson-formula compact">$$\widehat r_{ui}=p(u,x_u)^\top q(i,z_i)$$</div>
+<img class="lesson-figure" src="figs/side-aware-factors.svg" alt="Side-aware user and item factors are each built from an ID residual, a feature map, and a category embedding, then combined by a dot product.">
 
-<div class="lesson-grid">
-<div class="lesson-card"><span>USER VECTOR</span><b>ID + numeric + category</b><p>$p_u$ is personalized; $A x_u$ and $e_{c(u)}$ bring in user features.</p></div>
-<div class="lesson-card"><span>ITEM VECTOR</span><b>ID + numeric + category</b><p>$q_i$ is item-specific; $B z_i$ and $e_{g(i)}$ bring in item features.</p></div>
-</div>
-
-<p class="lesson-takeaway">Features modify the factors themselves, not only the final score.</p>
-
-## Features as a prior, ID as a residual {.lesson-slide}
-
-<div class="lesson-formula">$$p_u=f_\theta(x_u)+e_u,\qquad q_i=g_\phi(z_i)+d_i$$</div>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>POPULATION</span><b>feature map</b><p>$f_\theta(x_u)$ predicts the average taste of users with this profile.</p></div>
-<div class="lesson-card"><span>INDIVIDUAL</span><b>ID residual</b><p>$e_u$ captures what the features miss about this specific user.</p></div>
-<div class="lesson-card"><span>NEW USER</span><b>$e_u=0$</b><p>The feature map becomes the prior; the residual is unavailable.</p></div>
-</div>
-
-<p class="lesson-takeaway">This is the mixed-effects view of side information: features explain the population, IDs explain the deviation.</p>
-
-::: {.notes}
-[Teaching] This slide is the statistical heart of the lecture. The model is not “IDs versus features”; it is a decomposition into a feature-based prior and an ID-specific residual. Regularization shrinks the residual toward zero.
-:::
-
-## The linear side-aware model as a network {.lesson-slide}
-
-<img class="lesson-figure" src="figs/linear-rs.svg" alt="ID rows, categorical embeddings, and continuous feature maps build user and item factors, then a dot product predicts the rating.">
-
-<p class="lesson-takeaway">Every box is differentiable. One optimizer learns the ID rows, the category tables, and the feature maps together.</p>
+<p class="lesson-takeaway">Features and category embeddings build each factor; the ID term is a learned residual. A new ID sets the residual to zero, but the feature path still produces a vector.</p>
 
 ## Two-tower architecture {.lesson-slide}
 
@@ -402,401 +207,290 @@ print(e.shape)                  # torch.Size([2, 16])
 
 <p class="lesson-takeaway">Each tower learns nonlinear interactions <b>within</b> its side; the final layer learns the interaction <b>across</b> sides.</p>
 
-## Shape contract and parameter count {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>step</th><th>input</th><th>operation</th><th>output</th></tr></thead><tbody>
-<tr><td>user ID</td><td>$(B,)$</td><td>embedding lookup</td><td>$(B,K)$</td></tr>
-<tr><td>item ID</td><td>$(B,)$</td><td>embedding lookup</td><td>$(B,K)$</td></tr>
-<tr><td>categories</td><td>$(B,)$ each</td><td>embedding lookup</td><td>$(B,K_c)$ each</td></tr>
-<tr><td>continuous</td><td>$(B,d)$</td><td>identity or linear map</td><td>$(B,d)$ or $(B,K)$</td></tr>
-<tr><td>fusion</td><td>all vectors</td><td><code>torch.cat</code></td><td>$(B,D)$</td></tr>
-<tr><td>head</td><td>$(B,D)$</td><td>MLP</td><td>$(B,1)$</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">Print every intermediate shape once. Most side-information bugs are shape or dtype bugs.</p>
-
-## Dot product, MLP, or bilinear? {.lesson-slide}
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>DOT</span><b>$h_u^\top h_i$</b><p>Cheap, retrieval-friendly, interpretable as matching.</p></div>
-<div class="lesson-card"><span>MLP</span><b>$\rho([h_u,h_i])$</b><p>More flexible; can learn non-matching interactions.</p></div>
-<div class="lesson-card"><span>BILINEAR</span><b>$h_u^\top W h_i$</b><p>A low-rank interaction matrix; a middle ground.</p></div>
-</div>
-
-<table class="lesson-table side-table"><thead><tr><th>choice</th><th>use when</th></tr></thead><tbody>
-<tr><td>dot product</td><td>large catalogue, retrieval, low latency</td></tr>
-<tr><td>MLP</td><td>small catalogue, rich features, ranking</td></tr>
-<tr><td>bilinear</td><td>you want learned interactions with fewer parameters</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">The interaction is a model choice, not a fixed part of “two-tower”.</p>
-
-## Cold-start fallback policies {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>policy</th><th>known ID</th><th>new ID</th><th>risk</th></tr></thead><tbody>
-<tr><td>zero embedding</td><td>learned row</td><td>zero vector</td><td>feature signal may be too weak</td></tr>
-<tr><td>feature-only</td><td>ignore ID</td><td>feature vector</td><td>loses personalization for warm users</td></tr>
-<tr><td>global mean</td><td>model score</td><td>training mean</td><td>safe but not personalized</td></tr>
-<tr><td>nearest neighbour</td><td>model score</td><td>average of similar feature profiles</td><td>needs a good feature distance</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">The fallback is part of the model. Evaluate it on the cold segment, not on the overall average.</p>
-
 ## Part 4 · Train, evaluate, diagnose {.section-break}
 
 <p>The model is only as good as the split.</p>
 
-## Four questions for the side-aware model {.lesson-slide}
+## Four questions and the loss {.lesson-slide}
 
 <div class="lesson-grid four">
 <div class="lesson-card"><span>1 · MODEL</span><b>factors from IDs + features</b><p>Predict with $p(u,x_u)^\top q(i,z_i)$.</p></div>
-<div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$, hidden width, $\lambda$</b><p>Choose before fitting; tune on validation.</p></div>
-<div class="lesson-card"><span>3 · CRITERION</span><b>rating error + penalty</b><p>Minimize errors on training pairs, with complexity control.</p></div>
+<div class="lesson-card"><span>2 · HYPERPARAMETERS</span><b>$K$, hidden, $\lambda$</b><p>Choose before fitting; tune on validation.</p></div>
+<div class="lesson-card"><span>3 · CRITERION</span><b>rating error + penalty</b><p>MSE on star ratings, with a complexity penalty.</p></div>
 <div class="lesson-card"><span>4 · LEARNED</span><b>embeddings + maps</b><p>ID/category tables and feature maps $A,B$.</p></div>
 </div>
 
-<div class="lesson-formula compact">$$\mathcal L(\theta)=\frac1{|\Omega|}\sum_{(u,i)\in\Omega}(r_{ui}-\widehat r_{ui})^2+\lambda\,\mathrm{Reg}(\theta)$$</div>
+<div class="lesson-formula compact">$$\mathrm{L}(\theta)=\frac1{|\Omega|}\sum_{(u,i)\in\Omega}(r_{ui}-\widehat r_{ui})^2+\lambda\,\mathrm{Reg}(\theta)$$</div>
 
-<p class="lesson-takeaway">The four questions do not change when the model gets bigger.</p>
-
-## Loss and regularization {.lesson-slide}
-
-<div class="lesson-formula">$$\mathcal L=\frac1{|\Omega|}\sum_{(u,i)\in\Omega}(r_{ui}-\widehat r_{ui})^2+\lambda_1\|E\|_2^2+\lambda_2\|W\|_2^2$$</div>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>MSE</span><b>rating error</b><p>Matches the RMSE evaluation and the 1–5 star target.</p></div>
-<div class="lesson-card"><span>WEIGHT DECAY</span><b>shrink maps</b><p>Controls the flexibility of the feature-to-factor maps.</p></div>
-<div class="lesson-card"><span>EMBEDDING NORM</span><b>shrink tables</b><p>Useful for rare IDs and rare categories.</p></div>
-</div>
-
-<p class="lesson-takeaway">One loss trains the ID tables, the category tables, and the feature maps. There is no separate “side-information loss”.</p>
-
-## One optimizer, three training modes {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>mode</th><th>trainable parameters</th><th>when</th></tr></thead><tbody>
-<tr><td>from scratch</td><td>everything</td><td>tabular features, enough data</td></tr>
-<tr><td>frozen encoder</td><td>fusion layers only</td><td>LLM or CNN features, small data, limited compute</td></tr>
-<tr><td>partial fine-tune</td><td>last encoder block + fusion</td><td>moderate data, domain shift, enough compute</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>FROZEN</span><b>cheap and stable</b><p>Precompute vectors once; train a small head. The recommender never backpropagates into the encoder.</p></div>
-<div class="lesson-card"><span>FINE-TUNED</span><b>expressive but risky</b><p>Can adapt to the domain, but overfits small data and increases serving cost.</p></div>
-</div>
-
-<p class="lesson-takeaway">Decide what is learned before you write the optimizer. The parameter groups are part of the model design.</p>
+<p class="lesson-takeaway">One loss trains the ID tables, the feature maps, and the fusion block.</p>
 
 ## A PyTorch implementation sketch {.lesson-slide .lesson-code .side-code-sm}
 
 ```python
-class SideNCF(nn.Module):
-    def __init__(self, n_users, n_items, n_ucat, n_icat,
-                 d_u, d_i, K=16, Kc=8, hidden=64):
-        super().__init__()
-        self.user_emb = nn.Embedding(n_users, K)
-        self.item_emb = nn.Embedding(n_items, K)
-        self.user_cat = nn.Embedding(n_ucat, Kc)
-        self.item_cat = nn.Embedding(n_icat, Kc)
-        self.net = nn.Sequential(
-            nn.Linear(2 * K + 2 * Kc + d_u + d_i, hidden),
-            nn.ReLU(),
-            nn.Linear(hidden, 1),
+class MFNetCont(MFNet):
+    def __init__(self, n_users, n_items, K=16, mu=0.0, d_cont=2):
+        super().__init__(n_users, n_items, K, mu)
+        self.cont = nn.Sequential(
+            nn.Linear(d_cont, 16), nn.ReLU(), nn.Linear(16, 1)
         )
 
-    def forward(self, u, i, uc, ic, xu, zi):
-        z = torch.cat([
-            self.user_emb(u), self.item_emb(i),
-            self.user_cat(uc), self.item_cat(ic),
-            xu, zi,
-        ], dim=1)
-        return self.net(z)
+    def forward(self, x):
+        base = super().forward(x[:, :2])   # uid, iid
+        return base + self.cont(x[:, 2:4]) # price_z, user_count_z
 ```
 
-<p class="lesson-takeaway">This is the whole “continuous + categorical” fusion: three lookups, two numeric blocks, one <code>torch.cat</code>, one MLP.</p>
+<p class="lesson-takeaway">One subclass, one new block. <code>forward</code> slices the named columns; <code>skorch</code> handles the training loop and prediction.</p>
 
-## Warm start and cold start are different tests {.lesson-slide}
+## A random row split {.lesson-slide}
 
-<table class="lesson-table side-table"><thead><tr><th>split</th><th>training sees</th><th>test asks</th><th>what it measures</th></tr></thead><tbody>
-<tr><td>random rows</td><td>every user and item</td><td>new pairs of known IDs</td><td>interpolation</td></tr>
-<tr><td>cold users</td><td>80% of users</td><td>20% unseen users</td><td>user-side generalization</td></tr>
-<tr><td>cold items</td><td>80% of items</td><td>20% unseen items</td><td>item-side generalization</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>REPORT</span><b>warm and cold separately</b><p>One aggregate RMSE can hide a cold segment that is no better than the global mean.</p></div>
-<div class="lesson-card"><span>COMPARE</span><b>same split, same features</b><p>Change one thing: features, fusion, or encoder. Do not change the split.</p></div>
+<div class="lesson-grid three">
+<div class="lesson-card"><span>SPLIT</span><b>80 / 20 random rows</b><p>Each rating is assigned to train or test at random; no user or item is deliberately removed.</p></div>
+<div class="lesson-card"><span>WHAT IT MEASURES</span><b>interpolation</b><p>IDs are not held out; most test rows reuse users and items seen in training.</p></div>
+<div class="lesson-card"><span>WHAT IT DOES NOT</span><b>new-item generalization</b><p>A random split does not test a genuinely new product or a new user.</p></div>
 </div>
 
-<p class="lesson-takeaway">A model that wins on a random split is not necessarily a model that solves cold start.</p>
+<div class="lesson-grid">
+<div class="lesson-card"><span>SAFE</span><b>fit preprocessing on training rows</b><p>Scalers and rating summaries use training rows only; ID vocabularies can use the catalogue.</p></div>
+<div class="lesson-card"><span>LEAKY</span><b>rating-derived features</b><p>Rating mean, rating count, or quantile computed from the target leaks even in a random split.</p></div>
+</div>
 
-## Leakage-safe cross-validation {.lesson-slide}
-
-<div class="lesson-flow tight"><div>split rows<br><b>train / validation</b></div><i>→</i><div>fit encoders<br><b>scalers, category maps</b></div><i>→</i><div>transform<br><b>validation rows</b></div><i>→</i><div>fit model<br><b>and score</b></div></div>
-
-<table class="lesson-table side-table"><thead><tr><th>step</th><th>safe</th><th>leaky</th></tr></thead><tbody>
-<tr><td>scaling</td><td>fit on training fold</td><td>fit on all rows</td></tr>
-<tr><td>category encoding</td><td>fit on training fold</td><td>use test categories to build the vocabulary</td></tr>
-<tr><td>rating summaries</td><td>out-of-fold only</td><td>use the held-out rating</td></tr>
-<tr><td>text/image encoder</td><td>pretrained on external data</td><td>fine-tune on the test labels</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">For each fold: split first → learn encodings and summaries on fitting rows → transform held-out rows → score.</p>
+<p class="lesson-takeaway">The notebook uses a random 80/20 split, so report test RMSE/MAE and describe it as in-distribution interpolation.</p>
 
 ## Baselines and ablation {.lesson-slide}
 
-<p class="lesson-lede">Canteen data, 20% of users held out entirely. Synthetic ratings; compare models, not absolute values.</p>
+<p class="lesson-lede">Amazon Video Games subset, random 80/20 rating split. Continuous 1–5 ratings; RMSE and MAE; compare models, not absolute values.</p>
 
-<table class="lesson-table side-table"><thead><tr><th>model</th><th>features used</th><th>warm RMSE</th><th>cold-user RMSE</th></tr></thead><tbody>
-<tr><td>global mean</td><td>none</td><td>0.913</td><td>0.911</td></tr>
-<tr><td>feature-only ridge</td><td>continuous + categorical</td><td>—</td><td>0.756</td></tr>
-<tr><td>ID-only MF</td><td>IDs only</td><td><b>0.316</b></td><td>0.910</td></tr>
-<tr><td>two-tower</td><td>IDs + continuous + categorical</td><td>—</td><td><b>0.346</b></td></tr>
+<!-- TODO: refresh these numbers after running the random-split notebook. -->
+<table class="lesson-table side-table"><thead><tr><th>model</th><th>side info</th><th>test RMSE</th><th>test MAE</th></tr></thead><tbody>
+<tr><td>MFNet</td><td>IDs only</td><td>1.165</td><td>0.918</td></tr>
+<tr><td>&plus; continuous</td><td>price, user_count</td><td>1.151</td><td>0.909</td></tr>
+<tr><td>&plus; categorical</td><td>store, category</td><td><b>1.144</b></td><td>0.879</td></tr>
+<tr><td>&plus; text</td><td>title + description embedding</td><td>1.145</td><td><b>0.876</b></td></tr>
 </tbody></table>
 
-<p class="lesson-takeaway">MF is excellent when IDs exist and useless when they do not. Side-aware models close most of the cold-start gap.</p>
-
-::: {.notes}
-[Source] Quick sanity check on `dataset/cuhk-food`. The data are synthetic and have a strong latent group structure, so the absolute RMSE is optimistic. The relative pattern is the teaching point: warm MF is strong; cold MF collapses; feature-only helps; a learned interaction helps much more.
-:::
-
-## What the results mean {.lesson-slide}
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>WARM</span><b>IDs dominate</b><p>When a user has history, the ID residual carries a lot of signal. Features may add only a small amount.</p></div>
-<div class="lesson-card"><span>COLD USER</span><b>features carry the model</b><p>The ID row is zero; the user tower must build a representation from the profile.</p></div>
-<div class="lesson-card"><span>COLD ITEM</span><b>content carries the model</b><p>The item tower must build a representation from category, price, text, or image.</p></div>
-</div>
-
-<table class="lesson-table side-table"><thead><tr><th>question</th><th>what to inspect</th></tr></thead><tbody>
-<tr><td>Did side info help?</td><td>cold RMSE vs global mean and feature-only baseline</td></tr>
-<tr><td>Did the interaction help?</td><td>two-tower vs additive feature model</td></tr>
-<tr><td>Did the encoder help?</td><td>with/without text or image, frozen vs fine-tuned</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">Always report the segment where the model is supposed to help.</p>
-
-## Common failure patterns {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>symptom</th><th>likely cause</th><th>next check</th></tr></thead><tbody>
-<tr><td>cold RMSE worse than global mean</td><td>feature pipeline mismatch or leakage</td><td>compare train/serve feature distributions</td></tr>
-<tr><td>unseen category crashes</td><td>no unknown token</td><td>audit the encoder vocabulary</td></tr>
-<tr><td>ID embedding dominates</td><td>features are too weak or too late</td><td>remove IDs and compare cold RMSE</td></tr>
-<tr><td>text model overfits</td><td>fine-tuned encoder on small data</td><td>freeze the encoder; add a projection</td></tr>
-<tr><td>validation great, test poor</td><td>leakage or a lucky split</td><td>audit every feature's timestamp</td></tr>
-<tr><td>huge parameter count</td><td>high-cardinality embeddings</td><td>hash, bucket, or reduce $K$</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">Most side-information failures are data-pipeline failures, not architecture failures.</p>
+<p class="lesson-takeaway">The continuous and categorical blocks give the main gain; text improves MAE but not RMSE. Image did not help on its 300-image subset.</p>
 
 ## Part 5 · Text side information {.section-break}
 
-<p><span class="optional-badge">Optional</span> Same fusion, different encoder.</p>
+<p><span class="optional-badge">Optional</span> Product text → embedding → a small additive block.</p>
 
-## Text is a high-dimensional side feature {.lesson-slide}
+## Text: what goes in {.lesson-slide}
 
-<div class="lesson-grid four">
-<div class="lesson-card"><span>ITEM</span><b>title</b><p>Short but informative; cheap to embed.</p></div>
-<div class="lesson-card"><span>ITEM</span><b>description</b><p>Longer content; may contain genre, style, or quality cues.</p></div>
-<div class="lesson-card"><span>USER</span><b>profile</b><p>Self-description, stated interests, or a query.</p></div>
-<div class="lesson-card"><span>FEEDBACK</span><b>review</b><p>Rich but risky: the review may mention the rating.</p></div>
+<div class="side-two-col even">
+<div>
+<table class="lesson-table side-table"><thead><tr><th>field</th><th>example</th><th>why</th></tr></thead><tbody>
+<tr><td><code>title</code></td><td>Pro Evolution Soccer 2013</td><td>short, high signal</td></tr>
+<tr><td><code>description</code></td><td>long product copy</td><td>use cases and context</td></tr>
+<tr><td><code>features</code></td><td>bullet list</td><td>structured attributes</td></tr>
+</tbody></table>
+<div class="lesson-formula compact dense">$$\text{text}_i=\text{title}_i\;\|\;\text{description}_i\;\|\;\text{features}_i$$</div>
+<p class="lesson-small">One string per <code>item_id</code>: 2,000 products, one embedding each.</p>
+</div>
+<div class="lesson-stack">
+<div class="lesson-card"><span>USE</span><b>product text</b><p>Title, description, and feature bullets are available before the rating.</p></div>
+<div class="lesson-card"><span>DO NOT USE</span><b>review text</b><p>Review title/text is written together with the star rating; it leaks the target.</p></div>
+</div>
 </div>
 
-<div class="lesson-formula compact">$$\text{text}\;\longrightarrow\;\mathbf e_{\text{text}}\in\mathbb R^{d}$$</div>
+<p class="lesson-takeaway">One string per product, built from product metadata only. Review text is not a feature.</p>
 
-<p class="lesson-takeaway">Text can describe an entity before it has any interactions — exactly what cold start needs.</p>
+## Text: the feature-extraction pipeline {.lesson-slide .lesson-code .side-code-sm .text-code}
 
-## From text to vector {.lesson-slide}
+```python
+# Colab: !pip -q install transformers
+import numpy as np
+from transformers import pipeline
 
-<table class="lesson-table side-table"><thead><tr><th>method</th><th>dimension</th><th>strength</th><th>limitation</th></tr></thead><tbody>
-<tr><td>TF-IDF + SVD</td><td>50–300</td><td>fast, interpretable, no GPU</td><td>no word order or semantics</td></tr>
-<tr><td>word2vec / GloVe</td><td>100–300</td><td>pretrained semantics</td><td>one vector per word; pooling loses structure</td></tr>
-<tr><td>LLM sentence embedding</td><td>384–4096</td><td>strong semantics, multilingual</td><td>cost, latency, versioning, dimension</td></tr>
-</tbody></table>
+embed = pipeline("feature-extraction", model="sentence-transformers/all-MiniLM-L6-v2")
+texts = (items.title.fillna("") + " " +
+         items.description.fillna("") + " " +
+         items.features.fillna("")).tolist()
+out = embed(texts, batch_size=64,
+            truncation=True, max_length=256)
+# out[i][0].shape -> (n_tokens, 384)
+text_vectors = np.array([np.mean(o[0], axis=0) for o in out])  # (n_items, 384)
+```
 
-<div class="lesson-flow tight"><div>raw text</div><i>→</i><div>tokenize</div><i>→</i><div>encoder</div><i>→</i><div>pool / normalize</div><i>→</i><div>e_text</div></div>
-
-<p class="lesson-takeaway">An LLM embedding is not magic. It is a high-quality encoder that turns text into a vector the recommender can use.</p>
-
-## Frozen or fine-tuned? {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>strategy</th><th>data needed</th><th>compute</th><th>latency</th></tr></thead><tbody>
-<tr><td>frozen encoder</td><td>small</td><td>low</td><td>precompute once</td></tr>
-<tr><td>last layer / adapter</td><td>medium</td><td>medium</td><td>moderate</td></tr>
-<tr><td>full fine-tune</td><td>large</td><td>high</td><td>high</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>START FROZEN</span><b>baseline first</b><p>Precompute embeddings, train a projection and the recommender head. This is cheap and reproducible.</p></div>
-<div class="lesson-card"><span>FINE-TUNE LATER</span><b>only with evidence</b><p>Fine-tune when the domain is specialized and the frozen embedding clearly underperforms.</p></div>
+<div class="lesson-flow tight text-flow">
+<div>one string<br><b>title + description + features</b></div><i>→</i>
+<div>tokenizer<br><b>truncate at 256</b></div><i>→</i>
+<div>MiniLM<br><b>(n_tokens, 384)</b></div><i>→</i>
+<div>mean pool<br><b>(384,)</b></div>
 </div>
 
-<p class="lesson-takeaway">The encoder is a modeling choice with a cost. “Use an LLM” is not a complete architecture.</p>
+<p class="lesson-takeaway"><code>feature-extraction</code> returns one vector per token, not one vector per product. Mean pooling turns it into a single 384-d embedding.</p>
 
-## Fuse text without drowning the model {.lesson-slide}
+## Text: append the vector and add a block {.lesson-slide}
 
-<div class="lesson-formula compact">$$\mathbf e_{\text{text}}=E_{\text{LLM}}(\text{text}),\qquad \mathbf z_{\text{text}}=W\mathbf e_{\text{text}}\in\mathbb R^{K}$$</div>
+<div class="lesson-formula compact dense">$$
+\begin{aligned}
+\widehat r_{ui}&=\text{MFNet}(u,i)+g_{\text{cont}}+g_{\text{cat}}+g_{\text{text}}(e_i)\\
+g_{\text{text}}(e)&=\mathrm{Linear}_{16}(\mathrm{ReLU}(\mathrm{Linear}_{32}(e)))\in\mathbb R
+\end{aligned}
+$$</div>
+
+<p class="lesson-small">Column layout: <code>[uid, iid, price_z, user_count_z, store, main, cat, e_text(384)]</code>; map each rating row to its item embedding by <code>item_id</code>.</p>
+
+<div class="lesson-flow tight">
+<div>text embedding<br><b>e<sub>i</sub> ∈ ℝ<sup>384</sup></b></div><i>→</i>
+<div>projection<br><b>384 → 32</b></div><i>→</i>
+<div>text block<br><b>32 → 16 → 1</b></div><i>→</i>
+<div>additive correction<br><b>+ g<sub>text</sub>(e<sub>i</sub>)</b></div>
+</div>
+
+<p class="lesson-small">Trainable parameters: 12,320 + 528 + 17 ≈ 12.9k; MiniLM stays frozen at ~22M.</p>
+
+<p class="lesson-takeaway">This is <code>MFNetText</code>: one projection, one small block, added to the existing score. The MiniLM encoder stays frozen.</p>
+
+## Text: frozen, fine-tuned, or fused {.lesson-slide}
 
 <div class="lesson-grid three">
-<div class="lesson-card"><span>PROJECT</span><b>match the width</b><p>Map 768 or 1024 dimensions down to the recommender's embedding size.</p></div>
-<div class="lesson-card"><span>NORMALIZE</span><b>comparable scale</b><p>L2-normalize or standardize before concatenation.</p></div>
-<div class="lesson-card"><span>FUSE</span><b>concat or tower</b><p>Early concat for ranking; item tower for retrieval and cold items.</p></div>
+<div class="lesson-card"><span>FROZEN</span><b>start here</b><p>Precompute 2,000 × 384; train only the projection and block. Cheap and reproducible.</p></div>
+<div class="lesson-card"><span>FINE-TUNED</span><b>only with evidence</b><p>Update MiniLM only when the domain is specialized and frozen features clearly underperform.</p></div>
+<div class="lesson-card"><span>FUSED</span><b>project first</b><p>Project 384 → 32, then add or concat. L2-normalize if using cosine-style retrieval.</p></div>
 </div>
 
-<img class="lesson-figure short" src="figs/text-image-pipeline.svg" alt="Text and image encoders produce vectors that are fused with tabular features.">
-
-<p class="lesson-takeaway">Text is high-dimensional. Project it before it competes with the ID embedding.</p>
-
-## Does text actually help? {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>comparison</th><th>what it answers</th></tr></thead><tbody>
-<tr><td>no text vs frozen text</td><td>is the text signal useful at all?</td></tr>
-<tr><td>frozen vs fine-tuned</td><td>is domain adaptation worth the cost?</td></tr>
-<tr><td>warm vs cold item</td><td>does text help the segment it is supposed to help?</td></tr>
-<tr><td>with vs without text leakage audit</td><td>did the review mention the rating?</td></tr>
-</tbody></table>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>COST</span><b>API or GPU</b><p>Embedding 1M items once is different from embedding every request.</p></div>
-<div class="lesson-card"><span>RISK</span><b>leakage and drift</b><p>Reviews can reveal ratings; encoder versions can change the feature distribution.</p></div>
+<div class="lesson-grid four">
+<div class="lesson-card"><span>BATCH</span><b>64</b><p>Embed in batches; cache the matrix.</p></div>
+<div class="lesson-card"><span>LENGTH</span><b>256 tokens</b><p>Truncate long descriptions.</p></div>
+<div class="lesson-card"><span>JOIN</span><b>item_id</b><p>One embedding per product; map to rating rows.</p></div>
+<div class="lesson-card"><span>COST</span><b>one pass</b><p>No encoder call at serving time.</p></div>
 </div>
 
-<p class="lesson-takeaway">Measure the text gain on the cold segment. A warm-user gain may just be extra capacity.</p>
+<p class="lesson-takeaway">Freeze first, cache the 2,000 embeddings, and measure on the same random split. Fine-tune only with evidence.</p>
 
 ## Part 6 · Image side information {.section-break}
 
-<p><span class="optional-badge">Optional</span> CNN or ViT as a feature extractor.</p>
+<p><span class="optional-badge">Optional</span> Product photo → 512-d vector → a small additive block.</p>
 
-## Image is another encoder {.lesson-slide}
+## Image: what goes in {.lesson-slide}
 
-<div class="lesson-grid four">
-<div class="lesson-card"><span>ITEM</span><b>product photo</b><p>Visual style, category, colour, quality.</p></div>
-<div class="lesson-card"><span>ITEM</span><b>dish photo</b><p>Portion, ingredients, presentation.</p></div>
-<div class="lesson-card"><span>USER</span><b>avatar</b><p>Weak signal, privacy-sensitive.</p></div>
-<div class="lesson-card"><span>CONTEXT</span><b>screenshot</b><p>Useful in UI or app recommendation.</p></div>
+<div class="side-two-col">
+<div>
+<img class="lesson-figure" src="figs/amazon-product.jpg" alt="A video game product photo from the Amazon subset.">
+<p class="lesson-caption">One of the 300 product photos in the subset.</p>
+</div>
+<div class="lesson-stack">
+<div class="lesson-card"><span>SOURCE</span><b>image_path or image_url</b><p>Paths are relative to the dataset folder; use the URL fallback when running from Colab.</p></div>
+<div class="lesson-card"><span>SUBSET</span><b>300 products</b><p>One embedding per product; the image ablation uses only rating rows for these products.</p></div>
+<div class="lesson-card"><span>LEAKAGE</span><b>available before the rating</b><p>The product photo is metadata, not review content. Do not use review images or rating-derived fields.</p></div>
+</div>
 </div>
 
-<div class="lesson-formula compact">$$\text{image}\;\longrightarrow\;\mathbf e_{\text{image}}\in\mathbb R^{d}$$</div>
+<p class="lesson-takeaway">Only a subset has an image, so image results are not directly comparable with the full-table numbers.</p>
 
-<p class="lesson-takeaway">An image encoder is a feature extractor. The recommender does not need to know whether the vector came from a photo or a table.</p>
+## Image: the feature-extraction pipeline {.lesson-slide .lesson-code .side-code-sm .image-code}
 
-## CNN or ViT? {.lesson-slide}
+```python
+from transformers import pipeline
 
-<table class="lesson-table side-table"><thead><tr><th>encoder</th><th>inductive bias</th><th>data need</th><th>compute</th></tr></thead><tbody>
-<tr><td>ResNet</td><td>local convolution, translation</td><td>moderate</td><td>moderate</td></tr>
-<tr><td>EfficientNet</td><td>scaled convolution</td><td>moderate</td><td>lower</td></tr>
-<tr><td>ViT</td><td>global attention, weak locality</td><td>large</td><td>high</td></tr>
-<tr><td>CLIP</td><td>image–text alignment</td><td>zero-shot / pretrained</td><td>moderate</td></tr>
-</tbody></table>
+embed_image = pipeline(
+    "image-feature-extraction",
+    model="microsoft/resnet-18",
+)
 
-<div class="lesson-grid">
-<div class="lesson-card"><span>SMALL DATA</span><b>frozen ResNet</b><p>Use penultimate features; train only the fusion head.</p></div>
-<div class="lesson-card"><span>ZERO-SHOT</span><b>CLIP embedding</b><p>Useful when you also have text labels or descriptions.</p></div>
+image_items = items[items.image_path.notna()]
+paths = ((LOCAL + "/" + image_items.image_path).tolist()
+         if LOCAL else image_items.image_url.tolist())
+
+image_vectors = np.array(
+    embed_image(paths, batch_size=32)
+).reshape(len(paths), -1)
+image_emb = pd.DataFrame(image_vectors,
+                         index=image_items.item_id)
+d_image = image_emb.shape[1]   # 512
+```
+
+<div class="lesson-flow tight image-flow">
+<div>image path / URL<br><b>300 products</b></div><i>→</i>
+<div>ResNet18<br><b>frozen backbone</b></div><i>→</i>
+<div>feature map<br><b>(1, 512, 1, 1)</b></div><i>→</i>
+<div>flatten<br><b>(512,)</b></div>
 </div>
 
-<p class="lesson-takeaway">Start with a pretrained backbone and frozen features. Fine-tuning a CNN on a small rating dataset is usually a trap.</p>
+<p class="lesson-takeaway"><code>image-feature-extraction</code> returns a spatial tensor; flatten it to one 512-d vector per product.</p>
 
-## Frozen, fine-tuned, or multimodal? {.lesson-slide}
+## Image: append the vector and add a block {.lesson-slide}
 
-<table class="lesson-table side-table"><thead><tr><th>strategy</th><th>what changes</th><th>when</th></tr></thead><tbody>
-<tr><td>frozen</td><td>fusion head only</td><td>small data, fast baseline</td></tr>
-<tr><td>last block</td><td>some visual adaptation</td><td>domain shift, medium data</td></tr>
-<tr><td>full fine-tune</td><td>the whole encoder</td><td>large data, compute available</td></tr>
-</tbody></table>
+<div class="lesson-formula compact dense">$$
+\begin{aligned}
+\widehat r_{ui}&=\text{MFNet}(u,i)+g_{\text{cont}}+g_{\text{cat}}+g_{\text{text}}(e_i)+g_{\text{image}}(v_i)\\
+g_{\text{image}}(v)&=\mathrm{Linear}_{16}(\mathrm{ReLU}(\mathrm{Linear}_{32}(v)))\in\mathbb R
+\end{aligned}
+$$</div>
+
+<p class="lesson-small">Column layout: <code>[uid, iid, price_z, user_count_z, store, main, cat, e_text(384), e_image(512)]</code>.</p>
+
+<div class="lesson-flow tight image-flow">
+<div>image embedding<br><b>v<sub>i</sub> ∈ ℝ<sup>512</sup></b></div><i>→</i>
+<div>projection<br><b>512 → 32</b></div><i>→</i>
+<div>image block<br><b>32 → 16 → 1</b></div><i>→</i>
+<div>additive correction<br><b>+ g<sub>image</sub>(v<sub>i</sub>)</b></div>
+</div>
+
+<p class="lesson-small">Trainable: 16,416 + 528 + 17 ≈ 17k; ResNet18 stays frozen. Evaluate on the 300-image subset.</p>
+
+<p class="lesson-takeaway"><code>MFNetImage</code> inherits <code>MFNetText</code> and adds one projection plus one block.</p>
+
+## Image: frozen, fine-tuned, or multimodal {.lesson-slide}
 
 <div class="lesson-grid three">
-<div class="lesson-card"><span>EARLY</span><b>concat</b><p>Image vector joins the item features before the MLP.</p></div>
-<div class="lesson-card"><span>LATE</span><b>item tower</b><p>Image encoder is one branch of the item tower.</p></div>
-<div class="lesson-card"><span>ALIGN</span><b>CLIP-style</b><p>Image and text vectors share a space; useful for zero-shot items.</p></div>
+<div class="lesson-card"><span>FROZEN</span><b>start here</b><p>Precompute 300 × 512; train only the projection and image block.</p></div>
+<div class="lesson-card"><span>FINE-TUNED</span><b>domain shift</b><p>Fine-tune the last block only when you have enough images and compute.</p></div>
+<div class="lesson-card"><span>MULTIMODAL</span><b>early or late</b><p>Concat for ranking; image tower for retrieval; CLIP-style alignment for zero-shot items.</p></div>
 </div>
-
-<p class="lesson-takeaway">Multimodal fusion is still fusion. Decide whether the modalities meet early or in separate towers.</p>
-
-## Image in practice {.lesson-slide}
 
 <div class="lesson-grid four">
-<div class="lesson-card"><span>COST</span><b>storage + GPU</b><p>Precompute embeddings; do not run a CNN on every request.</p></div>
-<div class="lesson-card"><span>PRIVACY</span><b>user images</b><p>Avatars and screenshots need explicit handling.</p></div>
-<div class="lesson-card"><span>RIGHTS</span><b>item photos</b><p>Copyright and licensing matter for production.</p></div>
-<div class="lesson-card"><span>QUALITY</span><b>resolution</b><p>Thumbnails and watermarks can destroy the signal.</p></div>
+<div class="lesson-card"><span>INPUT</span><b>300 images</b><p>Paths or URLs; batch 32.</p></div>
+<div class="lesson-card"><span>FEATURE</span><b>512-d</b><p>Flatten the pooled ResNet map.</p></div>
+<div class="lesson-card"><span>BLOCK</span><b>512 → 32</b><p>then 16 → 1; small additive head.</p></div>
+<div class="lesson-card"><span>COST</span><b>one pass</b><p>Cache embeddings; no CNN at serving time.</p></div>
 </div>
 
-<table class="lesson-table side-table"><thead><tr><th>comparison</th><th>what it answers</th></tr></thead><tbody>
-<tr><td>no image vs frozen image</td><td>is there useful visual signal?</td></tr>
-<tr><td>frozen vs last-block</td><td>is domain adaptation worth it?</td></tr>
-<tr><td>warm vs cold item</td><td>does the image help new items?</td></tr>
-</tbody></table>
-
-<p class="lesson-takeaway">Image features are expensive and often weak on small data. Measure before adding them to the model.</p>
+<p class="lesson-takeaway">Image features are expensive and often weak on small data. On this subset, the image block did not improve test RMSE; freeze first and measure.</p>
 
 ## Part 7 · Industry systems {.section-break}
 
-<p>Same pattern at scale.</p>
+<p><span class="optional-badge">Optional</span> Same pattern at scale.</p>
 
-## YouTube: retrieval and ranking {.lesson-slide}
+## YouTube: two-tower retrieval {.lesson-slide}
 
-<div class="lesson-flow tight"><div>user history<br><b>watch + search</b></div><i>+</i><div>user features<br><b>demographics, context</b></div><i>→</i><div>user tower</div></div>
-
-<div class="lesson-flow tight"><div>item features<br><b>video metadata</b></div><i>→</i><div>item tower</div><i>→</i><div>candidate generation</div></div>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>RETRIEVAL</span><b>millions → hundreds</b><p>Two-tower dot product, nearest-neighbour search.</p></div>
-<div class="lesson-card"><span>RANKING</span><b>hundreds → top few</b><p>Richer features and a larger model; latency matters.</p></div>
-<div class="lesson-card"><span>FEATURES</span><b>history is side info</b><p>Watch/search sequences represent the user before the current item.</p></div>
+<div class="side-two-col image-slide">
+<div class="paper-figure"><img src="figs/youtube.png" alt="YouTube two-tower retrieval architecture: watch and search embeddings, ReLU layers, user vector, softmax training, and nearest-neighbour serving."></div>
+<div class="lesson-stack">
+<div class="lesson-card"><span>USER TOWER</span><b>watch + search + context</b><p>Average embeddings, then ReLU layers produce the user vector <i>u</i>.</p></div>
+<div class="lesson-card"><span>ITEM TOWER</span><b>video vectors</b><p>Softmax trains the item side; nearest-neighbour search serves candidates.</p></div>
+<div class="lesson-card"><span>SIDE INFO</span><b>history is a feature</b><p>Watch/search sequences and demographics enter before the final interaction.</p></div>
+</div>
 </div>
 
 <p class="lesson-takeaway">The two-tower pattern is a retrieval architecture first; the same encoders can feed a ranking model later.</p>
 
-::: {.notes}
-[Source] Covington, Adams & Sargin (2016), “Deep Neural Networks for YouTube Recommendations”. The original deck has `youtube.png`; this slide is a simplified version of the same idea.
-:::
-
 ## eBay: sequence plus content {.lesson-slide}
 
-<div class="lesson-flow tight"><div>user event sequence<br><b>clicks, purchases</b></div><i>→</i><div>GRU<br><b>user embedding</b></div></div>
-
-<div class="lesson-flow tight"><div>item title<br><b>text</b></div><i>+</i><div>aspect / category<br><b>categorical</b></div><i>→</i><div>MLP<br><b>item embedding</b></div></div>
-
-<div class="lesson-formula compact">$$\text{affinity}=\langle h_{\text{user}},h_{\text{item}}\rangle$$</div>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>USER SIDE</span><b>behaviour sequence</b><p>Sequence models turn a variable-length history into a fixed vector.</p></div>
-<div class="lesson-card"><span>ITEM SIDE</span><b>text + category</b><p>Title and aspect embeddings handle new items with no interactions.</p></div>
+<div class="side-two-col image-slide">
+<div class="paper-figure"><img src="figs/ebay.png" alt="eBay two-tower architecture: GRU user tower over event sequences; title, aspect, and category item tower; dot product affinity."></div>
+<div class="lesson-stack">
+<div class="lesson-card"><span>USER TOWER</span><b>event sequence → GRU</b><p>Clicks and purchases become a user embedding.</p></div>
+<div class="lesson-card"><span>ITEM TOWER</span><b>text + category → MLP</b><p>Title and aspect CBOW embeddings plus a leaf-category embedding.</p></div>
+<div class="lesson-card"><span>SCORE</span><b>dot product</b><p>Affinity between the user and candidate item embedding.</p></div>
+</div>
 </div>
 
-<p class="lesson-takeaway">This is the same two-tower pattern, with a sequence encoder on the user side and a text/category encoder on the item side.</p>
+<p class="lesson-takeaway">Same two-tower pattern: a sequence encoder on the user side, a text/category encoder on the item side.</p>
 
-::: {.notes}
-[Source] Wang, Brovman & Madhvanath (2021), “Personalized Embedding-based E-commerce Recommendations at eBay”. The original deck has `ebay.png`.
-:::
+## Alibaba: behavior sequence + feature crossing {.lesson-slide}
 
-## Alibaba: behaviour sequence transformer {.lesson-slide}
-
-<div class="lesson-flow tight"><div>user profile<br><b>static</b></div><i>+</i><div>item features<br><b>categorical</b></div><i>+</i><div>context<br><b>time, position</b></div><i>+</i><div>cross features<br><b>interactions</b></div></div>
-
-<div class="lesson-flow tight"><div>behaviour sequence<br><b>clicked items</b></div><i>→</i><div>Transformer<br><b>sequence context</b></div><i>→</i><div>MLP<br><b>click probability</b></div></div>
-
-<div class="lesson-grid">
-<div class="lesson-card"><span>SEQUENCE</span><b>order matters</b><p>A transformer models which past actions are relevant now.</p></div>
-<div class="lesson-card"><span>EARLY FUSION</span><b>many features</b><p>User, item, context, and cross features are embedded and concatenated.</p></div>
+<div class="side-two-col image-slide">
+<div class="paper-figure"><img src="figs/alibaba.png" alt="Alibaba behavior sequence transformer architecture: user profile, item, context, cross features, and behavior sequence are embedded, passed through a Transformer, concatenated with the target item, and scored."></div>
+<div class="lesson-stack">
+<div class="lesson-card"><span>INPUT</span><b>profile + item + context</b><p>Other features and the user behavior sequence enter the embedding layer.</p></div>
+<div class="lesson-card"><span>SEQUENCE</span><b>Transformer</b><p>Multi-head self-attention models the order of past items.</p></div>
+<div class="lesson-card"><span>OUTPUT</span><b>click probability</b><p>Concatenate target item with sequence output; MLP + sigmoid.</p></div>
+</div>
 </div>
 
-<p class="lesson-takeaway">Alibaba uses early fusion for a rich feature set and a sequence encoder for behaviour — the same encode-and-fuse pattern.</p>
-
-::: {.notes}
-[Source] Chen et al. (2019), “Behavior Sequence Transformer for E-commerce Recommendation in Alibaba”. The original deck has `alibaba.png`.
-:::
-
-## Wide & Deep and DeepFM {.lesson-slide}
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>WIDE</span><b>linear memorization</b><p>Explicit crosses and rare patterns; easy to interpret.</p></div>
-<div class="lesson-card"><span>DEEP</span><b>nonlinear generalization</b><p>Embeddings → MLP; learns unseen combinations.</p></div>
-<div class="lesson-card"><span>DEEPFM</span><b>FM + MLP</b><p>Factorized pairwise interactions plus a deep network.</p></div>
-</div>
-
-<div class="lesson-formula compact">$$\widehat y=\sigma\big(w_{\text{wide}}^\top[x,\phi(x)]+w_{\text{deep}}^\top a^{(L)}\big)$$</div>
-
-<p class="lesson-takeaway">Wide &amp; Deep is an early-fusion architecture; the two-tower model is a late-fusion architecture. Both are ways to organize the same features.</p>
+<p class="lesson-takeaway">Alibaba uses a sequence Transformer plus feature crossing; Wide &amp; Deep and DeepFM are earlier early-fusion variants.</p>
 
 ## Retrieval vs ranking, and the feature store {.lesson-slide}
 
@@ -814,100 +508,25 @@ class SideNCF(nn.Module):
 
 <p class="lesson-takeaway">A side-information model is also a data-engineering contract. Training-serving skew is a modelling bug.</p>
 
-## The pattern behind all of them {.lesson-slide}
-
-<div class="lesson-grid four">
-<div class="lesson-card"><span>1 · ENCODE</span><b>modality → vector</b><p>Continuous maps, categorical embeddings, text/image encoders.</p></div>
-<div class="lesson-card"><span>2 · FUSE</span><b>early or late</b><p>Concat for ranking, two towers for retrieval.</p></div>
-<div class="lesson-card"><span>3 · RETRIEVE / RANK</span><b>two stages</b><p>Cheap candidate generation, richer final scoring.</p></div>
-<div class="lesson-card"><span>4 · EVALUATE</span><b>warm + cold</b><p>Segment metrics, leakage audit, ablation.</p></div>
-</div>
-
-<p class="lesson-takeaway">The industrial systems differ in encoders and scale, not in the basic statistical questions.</p>
-
-## Part 8 · Practice and close {.section-break}
-
-<p>Build the smallest side-aware recommender end to end.</p>
-
-## Coding break {.lesson-slide .coding-break}
-
-<div class="coding-cue">
-<span class="coding-cue-kicker">OPEN THE NOTEBOOK</span>
-<b><code>nb/STAT3009_Side.ipynb</code></b>
-<p>Run Sections 1–6. The goal is to see the cold-start split and the model comparison, not to wait for long training.</p>
-</div>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>1 · DATA</span><b>merge side features</b><p>Ratings + user profiles + dish attributes.</p></div>
-<div class="lesson-card"><span>2 · SPLIT</span><b>hold out users</b><p>Compare random and cold-user splits.</p></div>
-<div class="lesson-card"><span>3 · MODELS</span><b>baseline → MF → two-tower</b><p>Look at the comparison table.</p></div>
-</div>
-
-<p class="lesson-takeaway">When you return, we will read the warm and cold columns separately.</p>
-
-## Practice tasks {.lesson-slide}
-
-<ol class="lesson-list">
-<li><b>Add one feature.</b> Add a price bucket or a missing-value flag. Does cold-user RMSE improve?</li>
-<li><b>Change the encoder.</b> Replace the category embedding with a one-hot linear model. What changes?</li>
-<li><b>Test cold items.</b> Hold out 20% of dishes instead of users. Does the same model still help?</li>
-<li><b>Audit leakage.</b> Add a rating-mean feature computed globally, then recompute it inside the fold. Compare.</li>
-<li><b>Optional.</b> Add a precomputed text embedding for the dish name. Does it help the cold-item segment?</li>
-</ol>
-
-<p class="lesson-takeaway">Change one thing at a time. Keep the split fixed while comparing models.</p>
-
-## Debrief {.lesson-slide}
-
-<table class="lesson-table side-table"><thead><tr><th>comparison</th><th>what it tells you</th></tr></thead><tbody>
-<tr><td>global mean → feature-only</td><td>do the side features carry any signal?</td></tr>
-<tr><td>feature-only → two-tower</td><td>does a learned interaction help?</td></tr>
-<tr><td>MF warm → MF cold</td><td>how much does the ID representation matter?</td></tr>
-<tr><td>with/without text or image</td><td>is the optional encoder worth its cost?</td></tr>
-</tbody></table>
-
-<div class="lesson-grid three">
-<div class="lesson-card"><span>FEATURE QUALITY</span><b>more important than depth</b><p>A strong feature in a linear model can beat a weak feature in a deep model.</p></div>
-<div class="lesson-card"><span>CAPACITY</span><b>match the data</b><p>Two towers need enough interactions; otherwise start additive.</p></div>
-<div class="lesson-card"><span>EVALUATION</span><b>segment first</b><p>Report cold users and cold items separately.</p></div>
-</div>
-
-<p class="lesson-takeaway">The best model is the one that improves the segment you actually care about.</p>
-
-## Exit ticket {.lesson-slide}
-
-<ol class="lesson-list">
-<li>Why can an ID-only MF model not personalize a completely new user?</li>
-<li>What is the difference between a random split and a cold-start split?</li>
-<li>How does a categorical feature become an embedding?</li>
-<li>What is the difference between additive MF and side-aware factors?</li>
-<li>Why is a rating mean a dangerous side feature?</li>
-<li>When would you freeze a text or image encoder?</li>
-</ol>
-
-<p class="lesson-takeaway">If you can answer these six questions, you can design and audit a side-information recommender.</p>
-
 ## Summary {.lesson-slide}
 
-<div class="lesson-flow"><div>ID-only MF<br><b>personalization</b></div><i>→</i><div>continuous + categorical<br><b>tabular side info</b></div><i>→</i><div>text + image<br><b>optional encoders</b></div><i>→</i><div>two-tower<br><b>learned fusion</b></div><i>→</i><div>warm + cold<br><b>honest evaluation</b></div></div>
+<div class="lesson-flow"><div>ID-only MF<br><b>personalization</b></div><i>→</i><div>continuous + categorical<br><b>tabular side info</b></div><i>→</i><div>text + image<br><b>optional encoders</b></div><i>→</i><div>two-tower<br><b>learned fusion</b></div><i>→</i><div>random split<br><b>honest evaluation</b></div></div>
 
 <div class="lesson-grid three">
 <div class="lesson-card"><span>ENCODE</span><b>modality → vector</b><p>Scale, embed, or pretrain; the recommender sees vectors.</p></div>
-<div class="lesson-card"><span>FUSE</span><b>early or late</b><p>Additive maps for interpretability; two towers for cold start and retrieval.</p></div>
-<div class="lesson-card"><span>EVALUATE</span><b>cold segment</b><p>No cold split, no cold-start claim.</p></div>
+<div class="lesson-card"><span>FUSE</span><b>early or late</b><p>Additive maps for interpretability; two towers for new entities and retrieval.</p></div>
+<div class="lesson-card"><span>EVALUATE</span><b>match the claim</b><p>Random split: report test RMSE/MAE. Add new-entity splits only for generalization claims.</p></div>
 </div>
 
-<p class="lesson-takeaway">Side information is not a feature dump. It is a representation strategy, a fusion choice, and an evaluation protocol.</p>
+<p class="lesson-takeaway">Side information is a representation strategy, a fusion choice, and an evaluation protocol.</p>
 
 ## References {.lesson-slide}
 
 <ul class="lesson-list">
 <li>Covington, Adams &amp; Sargin (2016). <i>Deep Neural Networks for YouTube Recommendations</i>.</li>
 <li>Wang, Brovman &amp; Madhvanath (2021). <i>Personalized Embedding-based E-commerce Recommendations at eBay</i>.</li>
+<li>Hou et al. (2024). <i>Bridging Language and Items for Retrieval and Recommendation</i> (Amazon Reviews 2023).</li>
 <li>Chen et al. (2019). <i>Behavior Sequence Transformer for E-commerce Recommendation in Alibaba</i>.</li>
-<li>Cheng et al. (2016). <i>Wide &amp; Deep Learning for Recommender Systems</i>.</li>
-<li>Guo et al. (2017). <i>DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</i>.</li>
-<li>PyTorch <code>nn.Embedding</code>: <a href="https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html">docs</a>; scikit-learn <code>OneHotEncoder</code>, <code>StandardScaler</code>.</li>
-<li>Sentence Transformers: <a href="https://www.sbert.net/">sbert.net</a>; CLIP: <a href="https://openai.com/research/clip">openai.com/research/clip</a>.</li>
-<li>scikit-learn data leakage guidance: <a href="https://scikit-learn.org/stable/common_pitfalls.html">common pitfalls</a>.</li>
+<li>Cheng et al. (2016). <i>Wide &amp; Deep Learning for Recommender Systems</i>; Guo et al. (2017). <i>DeepFM</i>.</li>
+<li>PyTorch <code>nn.Embedding</code>; scikit-learn <code>OneHotEncoder</code>, <code>StandardScaler</code>; Hugging Face <code>pipeline("feature-extraction")</code> and <code>pipeline("image-feature-extraction")</code>; Sentence Transformers <code>all-MiniLM-L6-v2</code>; <code>microsoft/resnet-18</code>; CLIP.</li>
 </ul>

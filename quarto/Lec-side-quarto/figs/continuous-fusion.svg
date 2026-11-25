@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-label="Three ways to fuse continuous features: early concatenation into an MLP, an additive MF correction, and separate user and item towers.">
+  <defs>
+    <marker id="cf-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dda300"/>
+    </marker>
+    <marker id="cf-arrow-left" markerWidth="10" markerHeight="10" refX="1" refY="3" orient="auto">
+      <path d="M9,0 L9,6 L0,3 z" fill="#dda300"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: rgba(255,255,255,.22); stroke-width: 1.4; }
+      .violet { stroke: #a65b9f; }
+      .gold { stroke: #dda300; }
+      .cyan { stroke: #4fb3bf; }
+      .txt { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 21px; }
+      .small { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 14px; }
+      .kicker { fill: #dda300; font-family: Menlo, monospace; font-size: 15px; font-weight: 700; letter-spacing: .08em; }
+      .formula { fill: #f2f0eb; font-family: "Times New Roman", serif; font-size: 20px; font-style: italic; }
+      .line { stroke: #dda300; stroke-width: 1.7; fill: none; }
+      .divider { stroke: rgba(255,255,255,.10); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <line x1="530" y1="28" x2="530" y2="490" class="divider"/>
+  <line x1="1070" y1="28" x2="1070" y2="490" class="divider"/>
+
+  <!-- Panel 1: early concat -->
+  <text x="40" y="34" class="kicker">EARLY CONCAT</text>
+  <text x="40" y="66" class="formula">r = MLP([ p<tspan baseline-shift="sub" font-size="14">u</tspan> , q<tspan baseline-shift="sub" font-size="14">i</tspan> , x ])</text>
+
+  <rect x="40" y="92" width="130" height="56" rx="6" class="box violet"/>
+  <text x="105" y="117" text-anchor="middle" class="txt">p</text>
+  <text x="105" y="136" text-anchor="middle" class="small">user emb</text>
+
+  <rect x="188" y="92" width="130" height="56" rx="6" class="box gold"/>
+  <text x="253" y="117" text-anchor="middle" class="txt">q</text>
+  <text x="253" y="136" text-anchor="middle" class="small">item emb</text>
+
+  <rect x="336" y="92" width="150" height="56" rx="6" class="box cyan"/>
+  <text x="411" y="117" text-anchor="middle" class="txt">x</text>
+  <text x="411" y="136" text-anchor="middle" class="small">2 features</text>
+
+  <line x1="105" y1="148" x2="105" y2="178" class="line" marker-end="url(#cf-arrow)"/>
+  <line x1="253" y1="148" x2="253" y2="178" class="line" marker-end="url(#cf-arrow)"/>
+  <line x1="411" y1="148" x2="411" y2="178" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="40" y="180" width="446" height="50" rx="6" class="box gold"/>
+  <text x="263" y="211" text-anchor="middle" class="txt">concat</text>
+
+  <line x1="263" y1="230" x2="263" y2="260" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="40" y="262" width="446" height="50" rx="6" class="box gold"/>
+  <text x="263" y="285" text-anchor="middle" class="txt">MLP</text>
+  <text x="263" y="302" text-anchor="middle" class="small">one score</text>
+
+  <line x1="263" y1="312" x2="263" y2="342" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="150" y="344" width="226" height="50" rx="6" class="box gold"/>
+  <text x="263" y="375" text-anchor="middle" class="txt">rating</text>
+
+  <text x="40" y="450" class="small" font-size="16">One joint MLP. Flexible, but more parameters.</text>
+
+  <!-- Panel 2: additive MF -->
+  <text x="580" y="34" class="kicker">ADDITIVE MF</text>
+  <text x="580" y="66" class="formula">r = p<tspan baseline-shift="sub" font-size="14">u</tspan><tspan baseline-shift="super" font-size="14">T</tspan> q<tspan baseline-shift="sub" font-size="14">i</tspan> + g<tspan baseline-shift="sub" font-size="14">cont</tspan>(x)</text>
+
+  <rect x="580" y="92" width="410" height="56" rx="6" class="box violet"/>
+  <text x="785" y="117" text-anchor="middle" class="txt">ID score</text>
+  <text x="785" y="137" text-anchor="middle" class="small">personalization</text>
+
+  <rect x="580" y="170" width="410" height="56" rx="6" class="box cyan"/>
+  <text x="785" y="195" text-anchor="middle" class="txt">feature block</text>
+  <text x="785" y="215" text-anchor="middle" class="small">2 → 16 → 1</text>
+
+  <path d="M 990 120 L 1002 120 L 1002 262 L 785 262" fill="none" stroke="#dda300" stroke-width="1.7"/>
+  <line x1="870" y1="226" x2="870" y2="262" class="line"/>
+  <line x1="785" y1="262" x2="785" y2="274" class="line" marker-end="url(#cf-arrow)"/>
+
+  <circle cx="785" cy="292" r="18" fill="rgba(221,163,0,.10)" stroke="#dda300" stroke-width="1.7"/>
+  <text x="785" y="299" text-anchor="middle" class="txt" font-size="24">+</text>
+
+  <line x1="785" y1="310" x2="785" y2="334" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="660" y="336" width="250" height="50" rx="6" class="box gold"/>
+  <text x="785" y="367" text-anchor="middle" class="txt">rating</text>
+
+  <text x="580" y="450" class="small" font-size="16">Keep the MF score; add a feature correction.</text>
+
+  <!-- Panel 3: two towers -->
+  <text x="1120" y="34" class="kicker">TWO TOWERS</text>
+  <text x="1120" y="66" class="formula">r = h<tspan baseline-shift="sub" font-size="14">u</tspan><tspan baseline-shift="super" font-size="14">T</tspan> h<tspan baseline-shift="sub" font-size="14">i</tspan></text>
+
+  <rect x="1120" y="92" width="180" height="56" rx="6" class="box violet"/>
+  <text x="1210" y="117" text-anchor="middle" class="txt">user side</text>
+  <text x="1210" y="136" text-anchor="middle" class="small">ID + features</text>
+
+  <line x1="1300" y1="120" x2="1320" y2="120" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="1322" y="92" width="108" height="56" rx="6" class="box violet"/>
+  <text x="1376" y="117" text-anchor="middle" class="txt">F</text>
+  <text x="1376" y="136" text-anchor="middle" class="small">MLP</text>
+
+  <line x1="1430" y1="120" x2="1452" y2="120" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="1454" y="92" width="106" height="56" rx="6" class="box gold"/>
+  <text x="1507" y="117" text-anchor="middle" class="txt">h</text>
+  <text x="1507" y="136" text-anchor="middle" class="small">vector</text>
+
+  <rect x="1120" y="170" width="180" height="56" rx="6" class="box gold"/>
+  <text x="1210" y="195" text-anchor="middle" class="txt">item side</text>
+  <text x="1210" y="214" text-anchor="middle" class="small">ID + features</text>
+
+  <line x1="1300" y1="198" x2="1320" y2="198" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="1322" y="170" width="108" height="56" rx="6" class="box gold"/>
+  <text x="1376" y="195" text-anchor="middle" class="txt">F</text>
+  <text x="1376" y="214" text-anchor="middle" class="small">MLP</text>
+
+  <line x1="1430" y1="198" x2="1452" y2="198" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="1454" y="170" width="106" height="56" rx="6" class="box gold"/>
+  <text x="1507" y="195" text-anchor="middle" class="txt">h</text>
+  <text x="1507" y="214" text-anchor="middle" class="small">vector</text>
+
+  <path d="M 1560 120 L 1582 120 L 1582 294 L 1574 294" fill="none" stroke="#dda300" stroke-width="1.7" marker-end="url(#cf-arrow-left)"/>
+  <line x1="1507" y1="226" x2="1507" y2="264" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="1320" y="266" width="250" height="56" rx="6" class="box cyan"/>
+  <text x="1445" y="291" text-anchor="middle" class="txt">dot product</text>
+  <text x="1445" y="310" text-anchor="middle" class="small">h · h</text>
+
+  <line x1="1445" y1="322" x2="1445" y2="346" class="line" marker-end="url(#cf-arrow)"/>
+
+  <rect x="1320" y="348" width="250" height="50" rx="6" class="box gold"/>
+  <text x="1445" y="379" text-anchor="middle" class="txt">rating</text>
+
+  <text x="1120" y="450" class="small" font-size="16">Encode each side, then interact at the end.</text>
+</svg>

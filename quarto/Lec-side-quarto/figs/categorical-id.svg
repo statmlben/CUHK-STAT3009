@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="440" viewBox="0 0 1400 440" role="img" aria-label="A user ID and a store category both use the same embedding lookup: an integer index selects a learned row.">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dda300"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: rgba(255,255,255,.20); stroke-width: 1.4; }
+      .gold { stroke: #dda300; }
+      .violet { stroke: #a65b9f; }
+      .cyan { stroke: #4fb3bf; }
+      .txt { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 21px; }
+      .small { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 15px; }
+      .kicker { fill: #dda300; font-family: Menlo, monospace; font-size: 14px; font-weight: 700; letter-spacing: .08em; }
+      .line { stroke: #dda300; stroke-width: 1.7; fill: none; }
+    </style>
+  </defs>
+
+  <text x="40" y="42" class="kicker">ID</text>
+  <rect x="40" y="62" width="220" height="70" rx="6" class="box violet"/>
+  <text x="58" y="90" class="txt">user ID</text>
+  <text x="58" y="114" class="small">integer index</text>
+
+  <rect x="330" y="62" width="300" height="70" rx="6" class="box violet"/>
+  <text x="348" y="90" class="txt">embedding table</text>
+  <text x="348" y="114" class="small">n_users × K rows</text>
+
+  <rect x="700" y="62" width="200" height="70" rx="6" class="box gold"/>
+  <text x="718" y="90" class="txt">p_u</text>
+  <text x="718" y="114" class="small">(B,K)</text>
+
+  <text x="40" y="204" class="kicker">GENERAL CATEGORICAL FEATURE</text>
+  <rect x="40" y="224" width="220" height="70" rx="6" class="box violet"/>
+  <text x="58" y="252" class="txt">store = Nintendo</text>
+  <text x="58" y="276" class="small">integer index</text>
+
+  <rect x="330" y="224" width="300" height="70" rx="6" class="box violet"/>
+  <text x="348" y="252" class="txt">embedding table</text>
+  <text x="348" y="276" class="small">n_stores × K rows</text>
+
+  <rect x="700" y="224" width="200" height="70" rx="6" class="box gold"/>
+  <text x="718" y="252" class="txt">e_store</text>
+  <text x="718" y="276" class="small">(B,K)</text>
+
+  <rect x="980" y="120" width="360" height="140" rx="6" class="box cyan"/>
+  <text x="1000" y="164" class="txt">same mechanism</text>
+  <text x="1000" y="190" class="small">index → row of a learned matrix</text>
+  <text x="1000" y="216" class="small">only the table size changes</text>
+
+  <line x1="260" y1="97" x2="330" y2="97" class="line" marker-end="url(#arrow)"/>
+  <line x1="630" y1="97" x2="700" y2="97" class="line" marker-end="url(#arrow)"/>
+  <line x1="260" y1="259" x2="330" y2="259" class="line" marker-end="url(#arrow)"/>
+  <line x1="630" y1="259" x2="700" y2="259" class="line" marker-end="url(#arrow)"/>
+  <line x1="900" y1="97" x2="980" y2="150" class="line" marker-end="url(#arrow)"/>
+  <line x1="900" y1="259" x2="980" y2="230" class="line" marker-end="url(#arrow)"/>
+
+  <text x="40" y="380" class="txt" font-size="23">A category is another ID: the same <tspan class="small" font-size="23">nn.Embedding</tspan> lookup.</text>
+  <text x="40" y="412" class="small" font-size="17">The field decides the table size; the mechanism is identical.</text>
+</svg>

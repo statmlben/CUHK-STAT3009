@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="500" viewBox="0 0 1300 500" role="img" aria-label="ID-only network shape contract: user and item IDs map to embeddings of width K, concatenate, pass through a hidden layer, and produce one score.">
+  <defs>
+    <marker id="ncf-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a65b9f"/>
+    </marker>
+    <marker id="ncf-arrow-gold" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dda300"/>
+    </marker>
+  </defs>
+
+
+  <!-- user branch -->
+  <rect x="60" y="78" width="180" height="86" rx="8" fill="rgba(255,255,255,0.04)" stroke="#d1cdd3" stroke-width="1.5"/>
+  <text x="150" y="112" text-anchor="middle" font-family="Menlo, monospace" font-size="21" fill="#f2f0eb">user ID</text>
+  <text x="150" y="142" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">shape (B,)</text>
+
+  <line x1="240" y1="121" x2="320" y2="121" stroke="#a65b9f" stroke-width="3" marker-end="url(#ncf-arrow)"/>
+
+  <rect x="330" y="78" width="220" height="86" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="440" y="112" text-anchor="middle" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb">Embedding</text>
+  <text x="440" y="142" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">(B,K)</text>
+
+  <!-- item branch -->
+  <rect x="60" y="204" width="180" height="86" rx="8" fill="rgba(255,255,255,0.04)" stroke="#d1cdd3" stroke-width="1.5"/>
+  <text x="150" y="238" text-anchor="middle" font-family="Menlo, monospace" font-size="21" fill="#f2f0eb">item ID</text>
+  <text x="150" y="268" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">shape (B,)</text>
+
+  <line x1="240" y1="247" x2="320" y2="247" stroke="#a65b9f" stroke-width="3" marker-end="url(#ncf-arrow)"/>
+
+  <rect x="330" y="204" width="220" height="86" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="440" y="238" text-anchor="middle" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb">Embedding</text>
+  <text x="440" y="268" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">(B,K)</text>
+
+  <!-- join -->
+  <path d="M 550 121 C 610 121, 610 184, 660 184" fill="none" stroke="#a65b9f" stroke-width="3"/>
+  <path d="M 550 247 C 610 247, 610 184, 660 184" fill="none" stroke="#a65b9f" stroke-width="3"/>
+  <line x1="652" y1="184" x2="668" y2="184" stroke="#a65b9f" stroke-width="3" marker-end="url(#ncf-arrow)"/>
+
+  <rect x="680" y="140" width="200" height="88" rx="8" fill="rgba(221,163,0,0.08)" stroke="#dda300" stroke-width="2"/>
+  <text x="780" y="176" text-anchor="middle" font-family="Menlo, monospace" font-size="20" fill="#f2f0eb">torch.cat</text>
+  <text x="780" y="206" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">(B,2K)</text>
+
+  <line x1="880" y1="184" x2="950" y2="184" stroke="#dda300" stroke-width="3" marker-end="url(#ncf-arrow-gold)"/>
+
+  <rect x="960" y="140" width="190" height="88" rx="8" fill="rgba(166,91,159,0.12)" stroke="#a65b9f" stroke-width="2"/>
+  <text x="1055" y="176" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#f2f0eb">Linear + ReLU</text>
+  <text x="1055" y="206" text-anchor="middle" font-family="Menlo, monospace" font-size="18" fill="#c3c0c8">(B,H)</text>
+
+  <line x1="1150" y1="184" x2="1190" y2="184" stroke="#a65b9f" stroke-width="3"/>
+
+  <rect x="1195" y="140" width="80" height="88" rx="8" fill="rgba(221,163,0,0.10)" stroke="#dda300" stroke-width="2"/>
+  <text x="1235" y="176" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#f2f0eb">Linear</text>
+  <text x="1235" y="206" text-anchor="middle" font-family="Menlo, monospace" font-size="17" fill="#c3c0c8">(B,1)</text>
+
+  <!-- annotations under the boxes -->
+  <text x="330" y="320" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#c3c0c8">ID → width-K vector</text>
+  <text x="660" y="320" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#c3c0c8">keep both vectors</text>
+  <text x="960" y="320" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="17" fill="#c3c0c8">learn the interaction</text>
+
+  <text x="60" y="380" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="20" fill="#dda300">The first dimension B is the batch size; every brick must keep it.</text>
+  <text x="60" y="420" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="19" fill="#aaa8ae">Side information adds more inputs to this graph; the shape contract stays the same.</text>
+  <text x="60" y="456" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="19" fill="#aaa8ae">Every added modality must become a vector before it can enter the head.</text>
+</svg>

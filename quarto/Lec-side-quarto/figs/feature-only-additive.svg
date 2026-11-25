@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="340" viewBox="0 0 1600 340" role="img" aria-label="Feature-only model versus additive matrix factorization: the feature-only model uses only features, while additive MF keeps the ID score and adds a feature correction.">
+  <defs>
+    <marker id="fa-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dda300"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: rgba(255,255,255,.22); stroke-width: 1.4; }
+      .violet { stroke: #a65b9f; }
+      .gold { stroke: #dda300; }
+      .cyan { stroke: #4fb3bf; }
+      .txt { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 22px; }
+      .small { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 15px; }
+      .kicker { fill: #dda300; font-family: Menlo, monospace; font-size: 15px; font-weight: 700; letter-spacing: .08em; }
+      .line { stroke: #dda300; stroke-width: 1.7; fill: none; }
+      .divider { stroke: rgba(255,255,255,.10); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <line x1="790" y1="20" x2="790" y2="320" class="divider"/>
+
+  <!-- Feature-only -->
+  <text x="40" y="32" class="kicker">FEATURE-ONLY</text>
+
+  <rect x="40" y="58" width="680" height="64" rx="6" class="box cyan"/>
+  <text x="380" y="86" text-anchor="middle" class="txt">user features + item features</text>
+  <text x="380" y="108" text-anchor="middle" class="small">no ID embedding</text>
+
+  <line x1="380" y1="122" x2="380" y2="150" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="40" y="152" width="680" height="64" rx="6" class="box gold"/>
+  <text x="380" y="180" text-anchor="middle" class="txt">feature MLP</text>
+  <text x="380" y="202" text-anchor="middle" class="small">fθ</text>
+
+  <line x1="380" y1="216" x2="380" y2="244" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="230" y="246" width="300" height="50" rx="6" class="box gold"/>
+  <text x="380" y="278" text-anchor="middle" class="txt">rating</text>
+
+  <text x="40" y="325" class="small" font-size="17">Works for a new ID; no individual preference.</text>
+
+  <!-- Additive MF -->
+  <text x="820" y="32" class="kicker">ADDITIVE MF</text>
+
+  <rect x="820" y="58" width="180" height="58" rx="6" class="box violet"/>
+  <text x="910" y="84" text-anchor="middle" class="txt">user + item IDs</text>
+  <text x="910" y="105" text-anchor="middle" class="small">ID path</text>
+
+  <line x1="1000" y1="87" x2="1020" y2="87" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="1022" y="58" width="160" height="58" rx="6" class="box violet"/>
+  <text x="1102" y="84" text-anchor="middle" class="txt">ID factors</text>
+  <text x="1102" y="105" text-anchor="middle" class="small">embeddings</text>
+
+  <line x1="1182" y1="87" x2="1202" y2="87" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="1204" y="58" width="230" height="58" rx="6" class="box gold"/>
+  <text x="1319" y="84" text-anchor="middle" class="txt">MF score</text>
+  <text x="1319" y="105" text-anchor="middle" class="small">personalization</text>
+
+  <rect x="820" y="140" width="180" height="58" rx="6" class="box cyan"/>
+  <text x="910" y="166" text-anchor="middle" class="txt">features</text>
+  <text x="910" y="187" text-anchor="middle" class="small">user + item</text>
+
+  <line x1="1000" y1="169" x2="1020" y2="169" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="1022" y="140" width="160" height="58" rx="6" class="box gold"/>
+  <text x="1102" y="166" text-anchor="middle" class="txt">feature MLP</text>
+  <text x="1102" y="187" text-anchor="middle" class="small">fθ</text>
+
+  <line x1="1182" y1="169" x2="1202" y2="169" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="1204" y="140" width="230" height="58" rx="6" class="box cyan"/>
+  <text x="1319" y="166" text-anchor="middle" class="txt">feature correction</text>
+  <text x="1319" y="187" text-anchor="middle" class="small">g(x)</text>
+
+  <line x1="1434" y1="87" x2="1447" y2="116" class="line" marker-end="url(#fa-arrow)"/>
+  <line x1="1434" y1="169" x2="1447" y2="144" class="line" marker-end="url(#fa-arrow)"/>
+
+  <circle cx="1462" cy="130" r="18" fill="rgba(221,163,0,.10)" stroke="#dda300" stroke-width="1.7"/>
+  <text x="1462" y="137" text-anchor="middle" class="txt" font-size="24">+</text>
+
+  <line x1="1462" y1="148" x2="1462" y2="196" class="line" marker-end="url(#fa-arrow)"/>
+
+  <rect x="1362" y="198" width="200" height="50" rx="6" class="box gold"/>
+  <text x="1462" y="230" text-anchor="middle" class="txt">rating</text>
+
+  <text x="820" y="325" class="small" font-size="17">Keeps ID personalization; adds a feature correction.</text>
+</svg>

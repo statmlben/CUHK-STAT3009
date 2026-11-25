@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-label="Each side-information modality has its own encoder; the resulting vectors are concatenated and passed to a recommender head.">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dda300"/>
+    </marker>
+    <style>
+      .box { fill: #151b22; stroke: rgba(255,255,255,.20); stroke-width: 1.4; }
+      .gold { stroke: #dda300; }
+      .violet { stroke: #a65b9f; }
+      .cyan { stroke: #4fb3bf; }
+      .txt { fill: #f2f0eb; font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif; font-size: 20px; }
+      .small { fill: #c3c0c8; font-family: Menlo, monospace; font-size: 14px; }
+      .kicker { fill: #dda300; font-family: Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
+      .line { stroke: #dda300; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+
+  <!-- continuous -->
+  <text x="40" y="45" class="kicker">CONTINUOUS</text>
+  <rect x="40" y="62" width="220" height="64" rx="6" class="box gold"/>
+  <text x="58" y="88" class="txt">price, lengths</text>
+  <text x="58" y="110" class="small">(B, d_num)</text>
+  <rect x="330" y="62" width="280" height="64" rx="6" class="box gold"/>
+  <text x="348" y="88" class="txt">Linear</text>
+  <text x="348" y="110" class="small">scale + projection</text>
+  <rect x="690" y="62" width="170" height="64" rx="6" class="box gold"/>
+  <text x="708" y="88" class="txt">vector</text>
+  <text x="708" y="110" class="small">(B, K)</text>
+
+  <!-- categorical -->
+  <text x="40" y="150" class="kicker">CATEGORICAL</text>
+  <rect x="40" y="168" width="220" height="64" rx="6" class="box violet"/>
+  <text x="58" y="194" class="txt">store, category</text>
+  <text x="58" y="216" class="small">integer index</text>
+  <rect x="330" y="168" width="280" height="64" rx="6" class="box violet"/>
+  <text x="348" y="194" class="txt">Embedding</text>
+  <text x="348" y="216" class="small">learned lookup</text>
+  <rect x="690" y="168" width="170" height="64" rx="6" class="box violet"/>
+  <text x="708" y="194" class="txt">vector</text>
+  <text x="708" y="216" class="small">(B, K)</text>
+
+  <!-- text -->
+  <text x="40" y="256" class="kicker">TEXT</text>
+  <rect x="40" y="274" width="220" height="64" rx="6" class="box cyan"/>
+  <text x="58" y="300" class="txt">title, description</text>
+  <text x="58" y="322" class="small">raw text</text>
+  <rect x="330" y="274" width="280" height="64" rx="6" class="box cyan"/>
+  <text x="348" y="300" class="txt">LLM encoder</text>
+  <text x="348" y="322" class="small">then Linear</text>
+  <rect x="690" y="274" width="170" height="64" rx="6" class="box cyan"/>
+  <text x="708" y="300" class="txt">vector</text>
+  <text x="708" y="322" class="small">(B, K)</text>
+
+  <!-- image -->
+  <text x="40" y="362" class="kicker">IMAGE</text>
+  <rect x="40" y="380" width="220" height="64" rx="6" class="box gold"/>
+  <text x="58" y="406" class="txt">product photo</text>
+  <text x="58" y="428" class="small">raw image</text>
+  <rect x="330" y="380" width="280" height="64" rx="6" class="box gold"/>
+  <text x="348" y="406" class="txt">CNN / ViT</text>
+  <text x="348" y="428" class="small">then Linear</text>
+  <rect x="690" y="380" width="170" height="64" rx="6" class="box gold"/>
+  <text x="708" y="406" class="txt">vector</text>
+  <text x="708" y="428" class="small">(B, K)</text>
+
+  <!-- arrows left to encoder -->
+  <line x1="260" y1="94" x2="330" y2="94" class="line" marker-end="url(#arrow)"/>
+  <line x1="260" y1="200" x2="330" y2="200" class="line" marker-end="url(#arrow)"/>
+  <line x1="260" y1="306" x2="330" y2="306" class="line" marker-end="url(#arrow)"/>
+  <line x1="260" y1="412" x2="330" y2="412" class="line" marker-end="url(#arrow)"/>
+
+  <!-- arrows encoder to vector -->
+  <line x1="610" y1="94" x2="690" y2="94" class="line" marker-end="url(#arrow)"/>
+  <line x1="610" y1="200" x2="690" y2="200" class="line" marker-end="url(#arrow)"/>
+  <line x1="610" y1="306" x2="690" y2="306" class="line" marker-end="url(#arrow)"/>
+  <line x1="610" y1="412" x2="690" y2="412" class="line" marker-end="url(#arrow)"/>
+
+  <!-- bracket -->
+  <path d="M 880 94 L 910 94 L 910 412 L 880 412" fill="none" stroke="#dda300" stroke-width="2"/>
+  <line x1="860" y1="94" x2="880" y2="94" class="line"/>
+  <line x1="860" y1="200" x2="880" y2="200" class="line"/>
+  <line x1="860" y1="306" x2="880" y2="306" class="line"/>
+  <line x1="860" y1="412" x2="880" y2="412" class="line"/>
+  <line x1="910" y1="253" x2="970" y2="253" class="line" marker-end="url(#arrow)"/>
+
+  <!-- head -->
+  <rect x="980" y="200" width="220" height="106" rx="6" class="box cyan"/>
+  <text x="998" y="240" class="txt">concat</text>
+  <text x="998" y="264" class="small">[ v_num, v_cat,</text>
+  <text x="998" y="284" class="small">  v_text, v_img ]</text>
+
+  <rect x="1240" y="220" width="160" height="66" rx="6" class="box gold"/>
+  <text x="1258" y="246" class="txt">MLP</text>
+  <text x="1258" y="268" class="small">head</text>
+
+  <rect x="1440" y="220" width="120" height="66" rx="6" class="box gold"/>
+  <text x="1500" y="260" class="txt" text-anchor="middle">rating</text>
+
+  <line x1="1200" y1="253" x2="1240" y2="253" class="line" marker-end="url(#arrow)"/>
+  <line x1="1400" y1="253" x2="1440" y2="253" class="line" marker-end="url(#arrow)"/>
+
+  <text x="40" y="490" class="txt" font-size="22">Each modality has its own encoder; the recommender head sees only vectors.</text>
+</svg>

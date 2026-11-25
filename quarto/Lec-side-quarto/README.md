@@ -1,32 +1,51 @@
 # Recommendation with Side Information · Quarto edition
 
-A full-length lecture on side information for rating prediction. The deck follows
-one spine: **encode → fuse → evaluate**.
+A 40-slide lecture built around one spine: **encode → fuse → evaluate**.
 
-- **Part 0** motivates cold start with the Netflix split and the canteen dataset.
-- **Parts 1–2** cover the required tabular encoders: continuous preprocessing and
-  categorical embeddings, including multi-valued and high-cardinality features.
-- **Part 3** compares fusion architectures: feature-only, additive MF, side-aware
-  factors, “features as prior / ID as residual”, and two-tower models.
-- **Part 4** covers training, leakage-safe cross-validation, warm-vs-cold
-  evaluation, and the canteen ablation table.
-- **Parts 5–6** are optional extensions: text via LLM embeddings and images via
-  CNN/ViT encoders. They keep the same fusion interface.
-- **Part 7** connects the pattern to YouTube, eBay, Alibaba, Wide & Deep, and
-  DeepFM using the examples in `slides/Lec-side/S.tex`.
-- **Part 8** is the coding break, practice, exit ticket, and summary.
+- **Part 0** motivates side information with the Amazon Reviews 2023 Video
+  Games subset: 2,000 products, 39,796 ratings, 29,209 users, 300 images.
+- **Part 1** covers continuous features: `price` and `user_count`, training-only
+  preprocessing, and three fusion diagrams (early concat, additive MF, two
+  towers).
+- **Part 2** covers categorical features: store and category embeddings, then
+  a continuous + categorical fusion diagram.
+- **Part 3** compares fusion architectures: feature-only, additive MF,
+  side-aware factors, and two-tower models, each paired with its equation.
+- **Part 4** covers the four questions, MSE, a compact PyTorch sketch,
+  random-row evaluation, leakage, and the Amazon ablation table.
+- **Part 5** is optional text: product title/description → a MiniLM
+  `feature-extraction` pipeline → mean-pooled 384-d vectors → a small additive
+  block. Review text is not used because it is written with the rating.
+- **Part 6** is optional image: product photos → a Hugging Face
+  `image-feature-extraction` pipeline with `microsoft/resnet-18` → flattened
+  512-d vectors → a small additive block. The image ablation is honest about
+  the 300-image subset.
+- **Part 7** is optional: network diagrams from the original LaTeX lecture for
+  YouTube, eBay, and Alibaba, plus the Wide & Deep / DeepFM connection.
+- The deck closes with **Summary** and **References**.
 
 Theme-aware SVGs in `figs/`:
 
+- `shape-contract.svg` — the ID-only network and its shape contract.
+- `modality-loading.svg` — how continuous, categorical, text, and image blocks
+  enter one recommender head.
+- `categorical-id.svg` — user ID and a general categorical feature share the
+  same embedding lookup.
 - `feature-fusion.svg` — continuous and categorical features enter one MLP.
-- `linear-rs.svg` — ID rows, categorical embeddings, and numeric maps build
-  user and item factors.
+- `continuous-fusion.svg` — early concat, additive MF, and two towers side by
+  side.
+- `feature-only-additive.svg` — feature-only model versus additive MF.
+- `side-aware-factors.svg` — ID residual + feature map + category prior, then a
+  dot product.
 - `two-tower.svg` — separate user and item towers with a final interaction.
-- `cold-start-split.svg` — random split versus cold-start split.
-- `text-image-pipeline.svg` — text/image encoders produce vectors for fusion.
+- `youtube.png`, `ebay.png`, `alibaba.png` — industry network diagrams from
+  `slides/Lec-side/figs`.
+- `amazon-product.jpg` — a real product image from the demo subset.
 
-The notebook `nb/STAT3009_Side.ipynb` uses `dataset/cuhk-food` to reproduce the
-cold-user comparison. It uses the ALS `BiasedMF` from the MF notebook for the ID
-baseline and a small PyTorch two-tower model for the side-aware model.
+The notebook `nb/STAT3009_Side.ipynb` starts from the NCF `MFNet` and adds one
+block at a time with `skorch.NeuralNetRegressor`: continuous features,
+categorical embeddings, a MiniLM text projection, and a ResNet18 image
+ablation. The target is the continuous 1–5 star rating; models are evaluated
+with RMSE and MAE on a random 80/20 rating-row split.
 
 Render with `quarto render S.qmd`; `S.html` is self-contained.
