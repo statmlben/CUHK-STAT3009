@@ -238,6 +238,7 @@
 - date: "2026-12-03"
   quiz: >
     <strong>Final Quiz: Jupyter Notebook Exercise</strong><br>
-    Comprehensive final: all course content, including baseline methods and matrix factorization from before the midterm, plus neural networks, NCF, and side information
+    Comprehensive final: all course content, including baseline methods and matrix factorization from before the midterm, plus neural networks, NCF, and side information<br>
+    <a href="../quarto/Lec-review-quarto/S.html" target="_blank">Final review slides</a>
   logistics: >
     <span class="event"><strong>HW2 due</strong> before this quiz</span>
