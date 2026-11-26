@@ -136,7 +136,7 @@ title-slide-attributes:
 <div>2 → 16 → 1<br><b>g<sub>cont</sub>(x)</b></div>
 </div>
 
-<p class="lesson-takeaway"><code>X[&quot;cont&quot;]</code> has exactly these two columns. The text-length columns <code>description_len</code> and <code>feature_len</code> are not used here.</p>
+<p class="lesson-takeaway"><code>X[&quot;cont&quot;]</code> has exactly these two columns. Other product metadata belongs to the categorical, text, or image block.</p>
 
 ## Three ways to fuse continuous features {.lesson-slide}
 

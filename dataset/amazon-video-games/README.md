@@ -1,29 +1,29 @@
 # Amazon Reviews 2023 · Video Games subset
 
 A small classroom subset of the **Amazon Reviews 2023** dataset (McAuley Lab,
-UCSD). It is designed to demonstrate four kinds of side information with a
-continuous 1–5 star rating:
+UCSD). It is designed for the side-information notebook, with a continuous 1–5
+star rating and four kinds of product signal:
 
-- **continuous:** price, title/description length
-- **categorical:** store, main category, category path
-- **text:** product title, description, and features (precomputed MiniLM
-  embeddings)
-- **image:** product photo (precomputed ResNet18 embeddings)
+- **continuous:** `price`, `user_count` (computed from training rows)
+- **categorical:** `store`, `main_category`, `categories`
+- **text:** `title`, `description`, `features` (encoded in the notebook)
+- **image:** one product photo for 300 products (encoded in the notebook)
 
 ## Files
 
 - `ratings.csv` — 39,796 ratings from 29,209 users on 2,000 products.
   Columns: `user_id`, `item_id`, `rating`, `timestamp`.
-- `items.csv` — product metadata. Columns include `item_id`, `title`,
-  `description`, `features`, `categories`, `main_category`, `store`, `price`,
-  `image_path`, and text-length fields.
-- `users.csv` — user activity counts. Columns: `user_id`,
-  `review_count_full`, `review_count_subset`.
-- `text_embeddings_llm.csv` — 384-dimensional MiniLM embeddings of
-  `title + description + features`, keyed by `item_id`.
-- `image_embeddings.csv` — 128-dimensional PCA of ResNet18 penultimate
-  features for 300 products, keyed by `item_id`.
-- `images/` — 300 product images, resized to 224×224 JPEG.
+- `items.csv` — product metadata for the 2,000 products. Columns:
+  `item_id`, `title`, `description`, `features`, `categories`,
+  `main_category`, `store`, `price`, `image_path`.
+- `images/` — 300 product images, resized to 224×224 JPEG. `image_path` in
+  `items.csv` is relative to this folder.
+
+The text and image embeddings are **not stored here**. `STAT3009_Side.ipynb`
+computes them with Hugging Face pipelines:
+
+- text: `sentence-transformers/all-MiniLM-L6-v2`
+- image: `microsoft/resnet-18`
 
 ## How the subset was built
 
@@ -38,7 +38,7 @@ product. The images were downloaded from the metadata URLs.
   They would leak the target and are unavailable for a genuinely new product.
 - Review `title`/`text` are **not** used for rating prediction: the review is
   written together with the rating.
-- For a cold-item split, item IDs are unseen; only metadata, text, and images
+- For a new-item split, item IDs are unseen; only metadata, text, and images
   can represent the product.
 
 ## Source and citation
