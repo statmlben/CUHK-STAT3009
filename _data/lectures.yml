@@ -238,6 +238,6 @@
 - date: "2026-12-03"
   quiz: >
     <strong>Final Quiz: Jupyter Notebook Exercise</strong><br>
-    Neural networks, neural collaborative filtering, and recommendation with side information
+    Comprehensive final: all course content, including baseline methods and matrix factorization from before the midterm, plus neural networks, NCF, and side information
   logistics: >
     <span class="event"><strong>HW2 due</strong> before this quiz</span>
