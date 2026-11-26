@@ -43,7 +43,6 @@ title-slide-attributes:
 <tr><td>Global mean</td><td>$\mu$</td><td>one number for everyone</td></tr>
 <tr><td>User / item bias</td><td>$\mu+a_u$, $\mu+b_i$</td><td>generous users; popular items</td></tr>
 <tr><td>Biased MF</td><td>$\mu+a_u+b_i+p_u^\top q_i$</td><td>latent user–item interaction</td></tr>
-<tr><td>SVD++</td><td>MF + implicit feedback</td><td>what the user interacted with</td></tr>
 </tbody></table>
 <p class="lesson-small">The ladder adds structure, not new data.</p>
 </div>
