@@ -1,0 +1,91 @@
+/*-- scss:rules --*/
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1.28fr 0.72fr;
+  gap: 32px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.review-kicker {
+  margin: 0 0 10px !important;
+  color: #dda300;
+  font-family: Menlo, monospace;
+  font-size: 14px !important;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.review-table {
+  margin-top: 0;
+}
+
+.review-table th,
+.review-table td {
+  padding: 13px 14px;
+  font-size: 19px;
+}
+
+.review-table th {
+  font-size: 13px;
+}
+
+.review-stack > * + * {
+  margin-top: 12px;
+}
+
+.review-card {
+  padding: 15px 18px;
+  border-left: 4px solid #a65b9f;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.review-card:nth-child(2) {
+  border-color: #dda300;
+}
+
+.review-card:nth-child(3) {
+  border-color: #4fb3bf;
+}
+
+.review-card span {
+  display: block;
+  color: #dda300;
+  font-family: Menlo, monospace;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+}
+
+.review-card b {
+  display: block;
+  margin-top: 7px;
+  font-size: 22px;
+  line-height: 1.18;
+}
+
+.review-card p {
+  margin: 8px 0 0 !important;
+  color: #c3c0c8;
+  font-size: 17px !important;
+  line-height: 1.35 !important;
+}
+
+.review-card code {
+  font-size: 0.9em;
+}
+
+.review-flow {
+  margin: 24px 0 0;
+  gap: 12px;
+}
+
+.review-flow > div {
+  padding: 12px 14px;
+  font-size: 18px;
+}
+
+.review-flow > i {
+  font-size: 28px;
+}
