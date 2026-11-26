@@ -234,3 +234,10 @@
     - >
       Optional: <a href="https://arxiv.org/abs/1905.06874">Chen et al.: Behavior Sequence Transformer</a>
       (sequence side information in Alibaba)
+
+- date: "2026-12-03"
+  quiz: >
+    <strong>Final Quiz: Jupyter Notebook Exercise</strong><br>
+    Neural networks, neural collaborative filtering, and recommendation with side information
+  logistics: >
+    <span class="event"><strong>HW2 due</strong> before this quiz</span>
